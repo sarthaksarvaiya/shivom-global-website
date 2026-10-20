@@ -1,0 +1,104 @@
+/* ==========================================================================
+   SHIVOM GLOBAL — Design System Tokens
+   Phase: SG-WEBSITE-PHASE-02
+   Governance: Authoritative Visual Foundation
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     1. COLOUR SYSTEM
+     Strict Rule: Light/Neutral ~65-75%, Green/Dark ~20-25%, Gold ~5% or less
+     -------------------------------------------------------------------------- */
+  
+  /* Primary Identity & Structure */
+  --color-primary-green: #0D3829;     /* Deep Estate Green — Primary identity */
+  --color-primary-dark: #072218;      /* Deep Forest — Header, hero, dark sections */
+  --color-dark-section: #0A1F17;      /* Dark Section — Hero / CTA container backgrounds */
+  
+  /* Accent & Action (Warm Gold) */
+  --color-accent-gold: #C59B27;       /* Warm Gold — Primary action & CTA */
+  --color-accent-gold-hover: #B0871D; /* Hover/active gold */
+  --color-gold-sheen: #FEF08A;        /* Gold Sheen — Micro highlight only */
+  
+  /* Surfaces & Backgrounds */
+  --bg-page: #FBFBFA;                 /* Warm Off-White — Main page background */
+  --bg-surface: #FFFFFF;              /* Pure White — Cards & content modules */
+  --bg-surface-subtle: #F4F5F3;       /* Subtle Green-Grey — Alternating sections */
+  
+  /* Typography Colours */
+  --text-main: #111827;               /* Near Black — Maximum legibility */
+  --text-muted: #4B5563;              /* Balanced Slate — Body text & descriptions */
+  --text-dim: #9CA3AF;                /* Soft Grey — Metadata, hints & labels */
+  --text-inverse: #FFFFFF;            /* White text for dark sections */
+  --text-inverse-muted: #D1D5DB;      /* Muted text for dark sections */
+  
+  /* Borders & Dividers */
+  --border-subtle: #E5E7EB;           /* Subtle grey border */
+  --border-medium: #D1D5DB;           /* Form element border */
+  --border-accent: rgba(197, 155, 39, 0.4); /* Gold accent border framing */
+  --border-dark-subtle: rgba(255, 255, 255, 0.12); /* Subtle divider for dark areas */
+
+  /* Shadows (Controlled, Commercial) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 4px 6px -1px rgba(13, 56, 41, 0.08), 0 2px 4px -2px rgba(13, 56, 41, 0.04);
+  --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+
+  /* --------------------------------------------------------------------------
+     2. TYPOGRAPHY SYSTEM
+     Rule: Plus Jakarta Sans for structure/narrative. Space Grotesk for specs.
+     -------------------------------------------------------------------------- */
+  --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* Line Heights */
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* --------------------------------------------------------------------------
+     3. SPACING SCALE
+     Consistent scale: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 120px
+     -------------------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+
+  /* --------------------------------------------------------------------------
+     4. CONTAINER & LAYOUT DIMENSIONS
+     -------------------------------------------------------------------------- */
+  --container-max-width: 1240px;
+  --container-padding-desktop: var(--space-8);
+  --container-padding-tablet: var(--space-6);
+  --container-padding-mobile: var(--space-4);
+
+  /* Border Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* --------------------------------------------------------------------------
+     5. MOTION & TRANSITIONS
+     Restrained, purposeful, non-distracting
+     -------------------------------------------------------------------------- */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}

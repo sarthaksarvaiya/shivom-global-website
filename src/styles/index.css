@@ -1,0 +1,493 @@
+/* ==========================================================================
+   SHIVOM GLOBAL — Global CSS & Component Primitives
+   Phase: SG-WEBSITE-PHASE-02
+   ========================================================================== */
+
+@import './tokens.css';
+
+/* --------------------------------------------------------------------------
+   RESET & BOX MODEL
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: var(--leading-normal);
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  color: var(--text-main);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw + 1rem, 3.25rem); /* 32px to 52px */
+  font-weight: var(--weight-extrabold);
+}
+
+h2 {
+  font-size: clamp(1.625rem, 3vw + 0.5rem, 2.375rem); /* 26px to 38px */
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw + 0.25rem, 1.5rem); /* 20px to 24px */
+}
+
+h4 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: var(--weight-semibold);
+}
+
+p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: var(--leading-relaxed);
+}
+
+p.lead {
+  font-size: 1.125rem;
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+}
+
+small, .text-sm {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+/* Technical Specification Font (Space Grotesk) */
+.font-spec,
+.grade-badge,
+.spec-code,
+.spec-value {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT & CONTAINERS
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-desktop);
+  padding-right: var(--container-padding-desktop);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--container-padding-mobile);
+    padding-right: var(--container-padding-mobile);
+  }
+}
+
+/* Section Wrappers */
+.section {
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
+}
+
+.section-alt {
+  background-color: var(--bg-surface-subtle);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-dark {
+  background-color: var(--color-primary-dark);
+  color: var(--text-inverse);
+}
+
+.section-dark h1,
+.section-dark h2,
+.section-dark h3 {
+  color: var(--text-inverse);
+}
+
+.section-dark p {
+  color: var(--text-inverse-muted);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+}
+
+/* Grid System */
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1024px) {
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   BUTTON SYSTEM
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 12px 24px;
+  font-family: var(--font-primary);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
+/* Primary Button (Warm Gold on Dark) */
+.btn-primary {
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-dark);
+  border-color: var(--color-accent-gold);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-gold-hover);
+  border-color: var(--color-accent-gold-hover);
+}
+
+/* Secondary Button (Deep Estate Green on Light) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary-green);
+  border-color: var(--color-primary-green);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(13, 56, 41, 0.05);
+}
+
+/* Secondary Button (Outlined on Dark Background) */
+.btn-secondary-dark {
+  background-color: transparent;
+  color: var(--text-inverse);
+  border-color: var(--border-dark-subtle);
+}
+
+.btn-secondary-dark:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-gold);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 14px 28px;
+  font-size: 1rem;
+}
+
+/* Mobile full-width helper */
+@media (max-width: 640px) {
+  .btn-mobile-full {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CARD SYSTEM
+   Commercial information modules, restrained, clean
+   -------------------------------------------------------------------------- */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-interactive.active,
+.card-interactive:focus-within {
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 1px var(--color-accent-gold);
+}
+
+.card-header {
+  margin-bottom: var(--space-4);
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-main);
+  margin-bottom: var(--space-2);
+}
+
+.card-body {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: var(--leading-relaxed);
+  flex-grow: 1;
+}
+
+/* --------------------------------------------------------------------------
+   FORM SYSTEM
+   Structured commercial intake
+   -------------------------------------------------------------------------- */
+.form-group {
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-label-required::after {
+  content: " *";
+  color: var(--color-accent-gold);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-family: var(--font-primary);
+  font-size: 0.9375rem;
+  color: var(--text-main);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 2px rgba(197, 155, 39, 0.2);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-hint {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+
+.form-input-error {
+  border-color: #DC2626 !important;
+  box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.5) !important;
+}
+
+.form-input-error:focus {
+  border-color: #DC2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25) !important;
+}
+
+.form-error-msg {
+  font-size: 0.8125rem;
+  color: #DC2626;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.form-banner-error {
+  background-color: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+}
+
+/* --------------------------------------------------------------------------
+   TECHNICAL SPECIFICATION BADGES
+   Using Space Grotesk
+   -------------------------------------------------------------------------- */
+.spec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px 10px;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary-green);
+}
+
+.spec-badge-gold {
+  background-color: rgba(197, 155, 39, 0.1);
+  border-color: rgba(197, 155, 39, 0.3);
+  color: var(--color-accent-gold-hover);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER & NAVIGATION STYLES
+   -------------------------------------------------------------------------- */
+.nav-link {
+  color: var(--text-inverse-muted);
+  font-size: 0.9375rem;
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  padding: 6px 0;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-accent-gold);
+}
+
+.nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent-gold);
+}
+
+.mobile-nav-link {
+  color: var(--text-inverse);
+  font-size: 1.125rem;
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-accent-gold);
+}
+
+@media (max-width: 1024px) {
+  .desktop-nav,
+  .desktop-cta {
+    display: none !important;
+  }
+
+  .mobile-toggle {
+    display: block !important;
+  }
+
+  .grade-spotlight-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-6) !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY & REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
