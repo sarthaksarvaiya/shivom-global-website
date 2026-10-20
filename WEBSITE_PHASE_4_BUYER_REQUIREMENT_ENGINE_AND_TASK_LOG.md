@@ -651,3 +651,22 @@
 ### Formal Decision (DEC-WEBSITE-03):
 **RESOLVED: CHOICE A (Keep the current 11-field form)**
 - **Founder Rationale:** The primary objective of the public website is foreign B2B buyers submitting useful sourcing requirements without top-of-funnel friction. Operational commercial purpose is already captured via `requirementType` + `qualitySpecs` + `packaging` + `volume`. Detailed buyer role segmentation (Importer vs Blender vs Retailer) will be conducted during trade desk qualification/follow-up rather than adding extra dropdown friction on the initial form.
+
+---
+
+## 8. Release Record — Production Homepage Release
+
+- **RELEASE:** Production Homepage Release
+- **DATE:** 2026-10-20
+- **STATUS:** RELEASED (Git Repository & Remote Push Complete; Hosting Connection Pending Founder Deployment Link)
+- **GIT REPOSITORY STATUS:** Initialized & Clean (`main` branch)
+- **BRANCH:** `main`
+- **COMMIT HASH:** `49a2680` (`feat: release production-ready homepage`)
+- **PUSH STATUS:** Pushed successfully to `https://github.com/sarthaksarvaiya/shivom-global-website.git`
+- **PRODUCTION DEPLOYMENT STATUS:** Ready for hosting import / configuration link (No new hosting provider or DNS migration executed without Founder dashboard credentials)
+- **PRODUCTION URL:** Repository live at `https://github.com/sarthaksarvaiya/shivom-global-website.git`
+- **LIVE LOCAL VERIFICATION RESULT:** Dev server verified responding at `http://127.0.0.1:5174/` with HTTP 200 OK
+- **HERO BACKGROUND ASSET VERIFICATION:** `public/images/hero-bg.jpg` verified loading at `/images/hero-bg.jpg` (HTTP 200 OK, 300 KB) with authentic Assam tea-origin landscape and balanced dark forest overlay
+- **BUILD VERIFICATION:** `npm run build` compiled in `1.08s` with 0 errors
+- **UNRESOLVED ISSUES:** Technical issues: None. Production hosting link pending Founder choice/credentials for target platform (e.g. Vercel, Cloudflare, or AWS).
+- **GOVERNANCE NOTE:** Phase 5 is NOT marked as completed. Submission architecture remains in truthful frontend preview mode until Option 4 is implemented in a future session.
