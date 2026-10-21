@@ -53,28 +53,17 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '76px' }}>
-        {/* Brand Logo Enclosure — Retains Official Logo Unaltered with Refined Gold Framing */}
+        {/* Brand Logo — Integrated Directly into Dark Green Header */}
         <a 
           href="#hero" 
           onClick={(e) => handleLinkClick(e, 'hero')}
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            textDecoration: 'none',
-            backgroundColor: '#FFFFFF',
-            padding: '6px 14px',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid rgba(197, 155, 39, 0.35)',
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)',
-            height: '48px',
-            transition: 'border-color var(--transition-fast)',
-          }}
+          className="header-brand-link"
           aria-label="SHIVOM GLOBAL Home"
         >
           <img 
-            src="/Shivom_Global_Logo.svg" 
+            src="/Shivom_Global_Header_Logo.svg" 
             alt="SHIVOM GLOBAL — Indian Tea Exporter" 
-            style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+            className="header-brand-img"
           />
         </a>
 
