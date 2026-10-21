@@ -44,16 +44,12 @@ export const SiteFooter: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div style={{ 
               display: 'inline-flex',
-              backgroundColor: '#FFFFFF',
-              padding: '6px 14px',
-              borderRadius: 'var(--radius-sm)',
-              boxShadow: 'var(--shadow-sm)',
               width: 'fit-content',
             }}>
               <img 
-                src="/Shivom_Global_Logo.svg" 
-                alt="SHIVOM GLOBAL — Official Logo" 
-                style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
+                src="/Shivom_Global_Header_Logo.svg" 
+                alt="SHIVOM GLOBAL" 
+                style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
               />
             </div>
 

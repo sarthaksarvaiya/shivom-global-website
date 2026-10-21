@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 850" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 76" width="100%" height="100%">
   <defs>
     <!-- Metallic Gold Linear Gradients -->
     <linearGradient id="goldLinear" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#CA8A04" />
-      <stop offset="25%" stop-color="#FACC15" />
+      <stop offset="25%" stop-color="#FDE047" />
       <stop offset="50%" stop-color="#EAB308" />
       <stop offset="75%" stop-color="#FEF08A" />
       <stop offset="100%" stop-color="#A16207" />
@@ -11,45 +11,51 @@
 
     <linearGradient id="goldSheen" x1="0%" y1="50%" x2="100%" y2="50%">
       <stop offset="0%" stop-color="#854D0E" />
-      <stop offset="35%" stop-color="#FDE047" />
-      <stop offset="65%" stop-color="#CA8A04" />
+      <stop offset="30%" stop-color="#FEF08A" />
+      <stop offset="55%" stop-color="#EAB308" />
+      <stop offset="80%" stop-color="#CA8A04" />
       <stop offset="100%" stop-color="#713F12" />
     </linearGradient>
 
-    <!-- Deep Maritime Navy Gradients -->
-    <radialGradient id="globeRadial" cx="45%" cy="40%" r="65%">
+    <linearGradient id="goldTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="35%" stop-color="#FACC15" />
+      <stop offset="70%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+
+    <!-- Deep Maritime Navy Radial Gradient for Globe -->
+    <radialGradient id="globeRadial" cx="42%" cy="38%" r="65%">
       <stop offset="0%" stop-color="#1E3A8A" />
       <stop offset="45%" stop-color="#0F172A" />
       <stop offset="85%" stop-color="#020617" />
       <stop offset="100%" stop-color="#000000" />
     </radialGradient>
 
-    <!-- Header Integrated Text Gradient: Crisp White / Silver for Dark Navbars -->
-    <linearGradient id="navyTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- Luminous Silver / Platinum Gradient for Brand Letters -->
+    <linearGradient id="silverTextGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="60%" stop-color="#F8FAFC" />
-      <stop offset="100%" stop-color="#E2E8F0" />
+      <stop offset="50%" stop-color="#F8FAFC" />
+      <stop offset="85%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#CBD5E1" />
     </linearGradient>
 
     <!-- Continental Landmass Gradient -->
     <linearGradient id="continentGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EAB308" />
-      <stop offset="50%" stop-color="#CA8A04" />
-      <stop offset="100%" stop-color="#A16207" />
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="45%" stop-color="#EAB308" />
+      <stop offset="85%" stop-color="#CA8A04" />
+      <stop offset="100%" stop-color="#9A3412" />
     </linearGradient>
 
-    <!-- Filters & Glows -->
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35" />
-    </filter>
-
-    <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="6" result="blur" />
+    <!-- Subtle Filters -->
+    <filter id="glowSubtle" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
 
     <filter id="indiaBeaconGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
@@ -57,21 +63,20 @@
     </filter>
   </defs>
 
-  <!-- ========================================== -->
-  <!-- 1. THE EMBLEM: GLOBE, ORBIT & CARGO SHIP   -->
-  <!-- ========================================== -->
-  <g transform="translate(400, 260)" filter="url(#softShadow)">
-
-    <!-- Outer Concentric Golden Ring Layer 1 -->
-    <circle cx="0" cy="0" r="195" fill="none" stroke="url(#goldSheen)" stroke-width="7" opacity="0.8" />
+  <!-- ======================================================== -->
+  <!-- 1. LEFT EMBLEM: GLOBE, INDIA BEACON, ORBIT & CARGO SHIP   -->
+  <!-- ======================================================== -->
+  <g id="brand-emblem" transform="translate(46, 38) scale(0.185)">
+    <!-- Outer Concentric Golden Ring Layer -->
+    <circle cx="0" cy="0" r="195" fill="none" stroke="url(#goldSheen)" stroke-width="7" opacity="0.9" />
     <circle cx="0" cy="0" r="185" fill="none" stroke="#0F172A" stroke-width="3" />
-    <circle cx="0" cy="0" r="180" fill="none" stroke="url(#goldLinear)" stroke-width="4" />
+    <circle cx="0" cy="0" r="180" fill="none" stroke="url(#goldLinear)" stroke-width="4.5" />
 
-    <!-- The 3D Dark Oceanic Globe Sphere -->
+    <!-- 3D Maritime Navy Globe Sphere -->
     <circle cx="0" cy="0" r="174" fill="url(#globeRadial)" />
 
-    <!-- Latitude / Longitude Subtle Wireframe Grid -->
-    <g stroke="#38BDF8" stroke-opacity="0.12" stroke-width="1.2" fill="none">
+    <!-- Latitude & Longitude Subtle Grid -->
+    <g stroke="#38BDF8" stroke-opacity="0.22" stroke-width="1.4" fill="none">
       <ellipse cx="0" cy="0" rx="170" ry="60" />
       <ellipse cx="0" cy="0" rx="170" ry="120" />
       <ellipse cx="0" cy="0" rx="70" ry="170" />
@@ -80,179 +85,176 @@
       <line x1="0" y1="-174" x2="0" y2="174" />
     </g>
 
-    <!-- ========================================== -->
-    <!-- CONTINENTS (GOLDEN METALLIC LANDMASSES)   -->
-    <!-- ========================================== -->
-    <g fill="url(#continentGold)" opacity="0.95" stroke="#FDE047" stroke-width="0.7">
+    <!-- Continents (Golden Metallic Landmasses) -->
+    <g fill="url(#continentGold)" opacity="0.95" stroke="#FEF08A" stroke-width="0.8">
       <!-- Africa & Middle East -->
       <path d="M-130,-40 C-115,-70 -85,-75 -50,-65 C-40,-50 -35,-20 -40,10 C-45,30 -60,60 -75,85 C-90,105 -105,120 -115,80 C-125,50 -130,20 -135,-10 Z" />
-      <path d="M-45,-70 C-30,-80 -10,-75 0,-60 C-5,-45 -20,-40 -35,-45 Z" /> <!-- Arabian Peninsula -->
-
+      <path d="M-45,-70 C-30,-80 -10,-75 0,-60 C-5,-45 -20,-40 -35,-45 Z" />
       <!-- Europe & Central Asia -->
       <path d="M-110,-110 C-80,-130 -40,-125 -10,-115 C10,-105 40,-95 70,-110 C100,-120 120,-90 90,-70 C60,-50 30,-60 10,-80 C-20,-75 -60,-80 -90,-90 Z" />
-
       <!-- Asia & East Asia -->
       <path d="M40,-95 C80,-100 130,-80 145,-50 C150,-20 130,10 105,25 C80,30 65,0 45,-20 C35,-50 30,-70 40,-95 Z" />
-
-      <!-- Southeast Asia & Maritime Archipelagos -->
+      <!-- Southeast Asia & Archipelagos -->
       <circle cx="85" cy="55" r="7" />
       <circle cx="105" cy="70" r="9" />
       <circle cx="120" cy="85" r="6" />
       <circle cx="65" cy="80" r="5" />
-
-      <!-- Madagascar Island -->
+      <!-- Madagascar -->
       <ellipse cx="-40" cy="100" rx="6" ry="14" transform="rotate(-20 -40 100)" />
     </g>
 
-    <!-- ========================================== -->
-    <!-- INDIA — RADIANT GOLDEN HUB (THE HEART)    -->
-    <!-- ========================================== -->
+    <!-- India — Radiant Golden Hub -->
     <g filter="url(#indiaBeaconGlow)">
-      <!-- Detailed Indian Subcontinent Polygon -->
       <path d="M15,-55 L35,-50 L42,-35 L30,-10 L20,15 L10,35 L0,20 L-5,0 L5,-35 Z" 
-            fill="#FEF08A" stroke="#FFFFFF" stroke-width="2" />
-      
-      <!-- Central Hub Beacon -->
-      <circle cx="15" cy="-10" r="6" fill="#FFFFFF" />
-      <circle cx="15" cy="-10" r="10" fill="none" stroke="#FDE047" stroke-width="2" opacity="0.8" />
+            fill="#FEF08A" stroke="#FFFFFF" stroke-width="2.5" />
+      <circle cx="15" cy="-10" r="7" fill="#FFFFFF" />
+      <circle cx="15" cy="-10" r="12" fill="none" stroke="#FDE047" stroke-width="2.5" opacity="0.9" />
     </g>
 
-    <!-- Trade Route Arc Lines from India -->
-    <g fill="none" stroke="#FEF08A" stroke-width="1.8" stroke-dasharray="3,3" opacity="0.9">
-      <!-- Route 1: India to UAE / Dubai -->
-      <path d="M15,-10 Q-10,-35 -30,-50" />
-      <!-- Route 2: India to Europe -->
-      <path d="M15,-10 Q-20,-70 -65,-95" />
-      <!-- Route 3: India to East Africa -->
-      <path d="M15,-10 Q-30,40 -70,75" />
-      <!-- Route 4: India to Southeast Asia -->
-      <path d="M15,-10 Q60,10 105,40" />
+    <!-- Dotted Trade Route Arcs Radiating from India -->
+    <g fill="none" stroke="#FEF08A" stroke-width="2.2" stroke-dasharray="4,3" opacity="0.95">
+      <path d="M15,-10 Q-10,-35 -30,-50" /> <!-- India to Middle East -->
+      <path d="M15,-10 Q-20,-70 -65,-95" /> <!-- India to Europe -->
+      <path d="M15,-10 Q-30,40 -70,75" />   <!-- India to Africa -->
+      <path d="M15,-10 Q60,10 105,40" />    <!-- India to SE Asia -->
     </g>
 
     <!-- Trade Destination Nodes -->
-    <g fill="#FFFFFF" stroke="#CA8A04" stroke-width="2">
-      <circle cx="-30" cy="-50" r="4.5" /> <!-- UAE Node -->
-      <circle cx="-65" cy="-95" r="4" />   <!-- Europe Node -->
-      <circle cx="-70" cy="75" r="4" />    <!-- Africa Node -->
-      <circle cx="105" cy="40" r="4" />    <!-- SE Asia Node -->
+    <g fill="#FFFFFF" stroke="#CA8A04" stroke-width="2.5">
+      <circle cx="-30" cy="-50" r="5.5" />
+      <circle cx="-65" cy="-95" r="5" />
+      <circle cx="-70" cy="75" r="5" />
+      <circle cx="105" cy="40" r="5" />
     </g>
 
-    <!-- Globe Sphere Shading Overlay (Light from Top-Left) -->
-    <circle cx="0" cy="0" r="174" fill="url(#globeRadial)" opacity="0.25" style="mix-blend-mode: overlay;" />
+    <!-- Globe Sphere Shading Overlay -->
+    <circle cx="0" cy="0" r="174" fill="url(#globeRadial)" opacity="0.22" style="mix-blend-mode: overlay;" />
 
-    <!-- Outer Orbital Golden Swoosh Band -->
+    <!-- Outer Orbital Golden Swoosh Band with Arrow -->
     <path d="M-225,45 C-235,110 -150,175 -20,175 C80,175 160,135 220,80 L235,90 L275,55 L215,55 L225,70 C165,125 90,160 -15,160 C-135,160 -215,105 -205,50 Z" 
-          fill="url(#goldLinear)" filter="url(#goldGlow)" />
+          fill="url(#goldLinear)" />
 
-    <!-- Orbital Dynamic Swoosh Ring (Behind & Around) -->
+    <!-- Orbital Dynamic Swoosh Ring -->
     <path d="M-245,-15 C-255,50 -200,120 -100,165 L-95,150 C-180,110 -235,45 -225,-10 Z" 
-          fill="url(#goldSheen)" opacity="0.8" />
+          fill="url(#goldSheen)" opacity="0.85" />
 
-    <!-- ========================================== -->
-    <!-- CONTAINER CARGO SHIP ON ORBITAL SWOOSH    -->
-    <!-- ========================================== -->
+    <!-- Container Cargo Ship on Orbital Swoosh -->
     <g transform="translate(170, 20) rotate(-14)">
-      <!-- Ship Hull (Deep Navy Maritime Blue) -->
-      <path d="M0,35 L95,35 L125,10 L115,8 L75,8 L15,18 Z" fill="#0F172A" stroke="#334155" stroke-width="1.5" />
+      <!-- Ship Hull (Maritime Navy) -->
+      <path d="M0,35 L95,35 L125,10 L115,8 L75,8 L15,18 Z" fill="#0F172A" stroke="#334155" stroke-width="1.8" />
       <path d="M15,18 L115,8 L120,12 L0,35 Z" fill="#1E293B" />
-
-      <!-- Bulwark / Red Waterline Accent -->
+      <!-- Red Waterline Accent Stripe -->
       <path d="M0,33 L95,33 L118,12 L115,10 L92,30 L0,30 Z" fill="#DC2626" />
-
-      <!-- Cargo Containers (Multi-Color Stack) -->
-      <!-- Tier 1 -->
+      <!-- Cargo Containers Stack -->
       <rect x="25" y="0" width="16" height="15" fill="#C2410C" stroke="#7C2D12" stroke-width="0.8" />
       <rect x="42" y="-1" width="16" height="15" fill="#1D4ED8" stroke="#1E3A8A" stroke-width="0.8" />
       <rect x="59" y="-2" width="16" height="15" fill="#0D9488" stroke="#115E59" stroke-width="0.8" />
       <rect x="76" y="-3" width="16" height="15" fill="#B45309" stroke="#78350F" stroke-width="0.8" />
-      <!-- Tier 2 -->
       <rect x="30" y="-14" width="15" height="14" fill="#1E293B" stroke="#0F172A" stroke-width="0.8" />
       <rect x="46" y="-15" width="15" height="14" fill="#DC2626" stroke="#991B1B" stroke-width="0.8" />
       <rect x="62" y="-16" width="15" height="14" fill="#D97706" stroke="#92400E" stroke-width="0.8" />
-
-      <!-- Bridge Superstructure (White) & Radar Mast -->
-      <rect x="94" y="-18" width="18" height="26" fill="#F8FAFC" stroke="#94A3B8" stroke-width="0.8" />
-      <rect x="97" y="-14" width="12" height="4" fill="#0284C7" /> <!-- Bridge Windows -->
+      <!-- White Superstructure Bridge & Windows -->
+      <rect x="94" y="-18" width="18" height="26" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" />
+      <rect x="97" y="-14" width="12" height="4" fill="#0284C7" />
       <!-- Mast -->
       <line x1="103" y1="-18" x2="103" y2="-28" stroke="#0F172A" stroke-width="2" />
       <line x1="99" y1="-24" x2="107" y2="-24" stroke="#0F172A" stroke-width="1.5" />
     </g>
-
   </g>
 
-  <!-- ========================================== -->
-  <!-- 2. BRAND TYPOGRAPHY: "SHIVOM"              -->
-  <!-- ========================================== -->
-  <g transform="translate(400, 600)" text-anchor="middle">
+  <!-- ======================================================== -->
+  <!-- 2. BRAND TYPOGRAPHY: "SHIVOM" WITH SIGNATURE "O" MEDALLION-->
+  <!-- ======================================================== -->
+  <g id="brand-wordmark" transform="translate(104, 0)">
     
-    <!-- Wordmark Group -->
-    <g id="shivom-text" font-family="'Cinzel', 'Times New Roman', 'Playfair Display', 'Georgia', serif" font-weight="900">
-      
-      <!-- S -->
-      <text x="-240" y="0" font-size="108" fill="url(#navyTextGrad)" stroke="url(#goldSheen)" stroke-width="1.8" letter-spacing="2">S</text>
-      
-      <!-- H -->
-      <text x="-145" y="0" font-size="108" fill="url(#navyTextGrad)" stroke="url(#goldSheen)" stroke-width="1.8" letter-spacing="2">H</text>
-      
-      <!-- I -->
-      <text x="-70" y="0" font-size="108" fill="url(#navyTextGrad)" stroke="url(#goldSheen)" stroke-width="1.8" letter-spacing="2">I</text>
-      
-      <!-- V -->
-      <text x="-5" y="0" font-size="108" fill="url(#navyTextGrad)" stroke="url(#goldSheen)" stroke-width="1.8" letter-spacing="2">V</text>
+    <!-- Letter S -->
+    <text x="14" y="36" 
+          font-family="'Cinzel', 'Playfair Display', 'Times New Roman', 'Georgia', serif" 
+          font-size="33" font-weight="900" 
+          fill="url(#silverTextGrad)" stroke="url(#goldSheen)" stroke-width="0.8"
+          filter="url(#glowSubtle)">S</text>
 
-      <!-- ========================================== -->
-      <!-- THE SIGNATURE "O" EMBLEM (YIN-YANG SWIRL)  -->
-      <!-- ========================================== -->
-      <g transform="translate(95, -34)">
-        <!-- Outer Gold Ring -->
-        <circle cx="0" cy="0" r="44" fill="none" stroke="url(#goldSheen)" stroke-width="4.5" />
-        
-        <!-- Inner White & Gold Curved Swirl Petals (Tea Leaf / Yin-Yang Motif) -->
-        <!-- White/Silver Arc -->
-        <path d="M0,-42 C24,-42 42,-24 42,0 C42,24 24,42 0,42 C12,24 10,-8 -12,-20 C-26,-28 -28,-38 0,-42 Z" 
-              fill="url(#navyTextGrad)" />
-        
-        <!-- Golden Flowing Arc -->
-        <path d="M0,42 C-24,42 -42,24 -42,0 C-42,-24 -24,-42 0,-42 C-12,-24 -10,8 12,20 C26,28 28,38 0,42 Z" 
-              fill="url(#goldLinear)" />
+    <!-- Letter H -->
+    <text x="56" y="36" 
+          font-family="'Cinzel', 'Playfair Display', 'Times New Roman', 'Georgia', serif" 
+          font-size="33" font-weight="900" 
+          fill="url(#silverTextGrad)" stroke="url(#goldSheen)" stroke-width="0.8"
+          filter="url(#glowSubtle)">H</text>
 
-        <!-- Center Swirl Golden Accents -->
-        <path d="M-18,-8 C-5,-2 15,-15 28,-18 C20,-4 8,8 -10,12 Z" fill="#FEF08A" opacity="0.8" />
-      </g>
-      
-      <!-- M -->
-      <text x="215" y="0" font-size="108" fill="url(#navyTextGrad)" stroke="url(#goldSheen)" stroke-width="1.8" letter-spacing="2">M</text>
+    <!-- Letter I -->
+    <text x="104" y="36" 
+          font-family="'Cinzel', 'Playfair Display', 'Times New Roman', 'Georgia', serif" 
+          font-size="33" font-weight="900" 
+          fill="url(#silverTextGrad)" stroke="url(#goldSheen)" stroke-width="0.8"
+          filter="url(#glowSubtle)">I</text>
+
+    <!-- Letter V -->
+    <text x="130" y="36" 
+          font-family="'Cinzel', 'Playfair Display', 'Times New Roman', 'Georgia', serif" 
+          font-size="33" font-weight="900" 
+          fill="url(#silverTextGrad)" stroke="url(#goldSheen)" stroke-width="0.8"
+          filter="url(#glowSubtle)">V</text>
+
+    <!-- ========================================== -->
+    <!-- THE SIGNATURE "O" MEDALLION (YIN-YANG SWIRL)-->
+    <!-- ========================================== -->
+    <g transform="translate(182, 24)">
+      <!-- Outer Golden Rim -->
+      <circle cx="0" cy="0" r="14.5" fill="none" stroke="url(#goldSheen)" stroke-width="2.4" />
+      <circle cx="0" cy="0" r="13.2" fill="#0F172A" />
+
+      <!-- Inner White/Silver Curved Swirl -->
+      <path d="M0,-13 C7.5,-13 13,-7.5 13,0 C13,7.5 7.5,13 0,13 C3.8,7.5 3.1,-2.5 -3.8,-6.2 C-8.1,-8.7 -8.7,-11.8 0,-13 Z" 
+            fill="url(#silverTextGrad)" />
+
+      <!-- Golden Curved Swirl -->
+      <path d="M0,13 C-7.5,13 -13,7.5 -13,0 C-13,-7.5 -7.5,-13 0,-13 C-3.8,-7.5 -3.1,2.5 3.8,6.2 C8.1,8.7 8.7,11.8 0,13 Z" 
+            fill="url(#goldLinear)" />
+
+      <!-- Center Swirl Golden Star Highlight -->
+      <path d="M-5.6,-2.5 C-1.5,-0.6 4.6,-4.6 8.7,-5.6 C6.2,-1.2 2.5,2.5 -3.1,3.7 Z" fill="#FEF08A" opacity="0.9" />
     </g>
 
-    <!-- ========================================== -->
-    <!-- 3. SUBTITLE: "— GLOBAL —"                  -->
-    <!-- ========================================== -->
-    <g transform="translate(0, 68)">
-      <!-- Left Golden Divider Rule -->
-      <line x1="-330" y1="-14" x2="-160" y2="-14" stroke="url(#goldSheen)" stroke-width="3" />
-      <polygon points="-160,-17 -152,-14 -160,-11" fill="url(#goldLinear)" />
+    <!-- Letter M -->
+    <text x="212" y="36" 
+          font-family="'Cinzel', 'Playfair Display', 'Times New Roman', 'Georgia', serif" 
+          font-size="33" font-weight="900" 
+          fill="url(#silverTextGrad)" stroke="url(#goldSheen)" stroke-width="0.8"
+          filter="url(#glowSubtle)">M</text>
+
+    <!-- ======================================================== -->
+    <!-- 3. SUBTITLE: "— GLOBAL —" WITH GOLDEN ACCENT RULES       -->
+    <!-- ======================================================== -->
+    <g transform="translate(0, 52)">
+      <!-- Left Golden Divider Rule & Diamond -->
+      <line x1="16" y1="-4" x2="80" y2="-4" stroke="url(#goldSheen)" stroke-width="1.4" />
+      <polygon points="80,-6 84,-4 80,-2" fill="url(#goldLinear)" />
 
       <!-- "GLOBAL" Text -->
-      <text x="0" y="0" font-family="'Trajan Pro', 'Cinzel', 'Times New Roman', serif" 
-            font-size="52" font-weight="700" fill="url(#goldSheen)" letter-spacing="14">GLOBAL</text>
+      <text x="135" y="0" text-anchor="middle"
+            font-family="'Trajan Pro', 'Cinzel', 'Times New Roman', serif" 
+            font-size="14.5" font-weight="800" 
+            fill="url(#goldTextGrad)" letter-spacing="8">GLOBAL</text>
 
-      <!-- Right Golden Divider Rule -->
-      <polygon points="160,-17 152,-14 160,-11" fill="url(#goldLinear)" />
-      <line x1="160" y1="-14" x2="330" y2="-14" stroke="url(#goldSheen)" stroke-width="3" />
+      <!-- Right Golden Divider Rule & Diamond -->
+      <polygon points="186,-6 190,-4 186,-2" fill="url(#goldLinear)" />
+      <line x1="190" y1="-4" x2="254" y2="-4" stroke="url(#goldSheen)" stroke-width="1.4" />
     </g>
 
-    <!-- ========================================== -->
-    <!-- 4. OFFICIAL TAGLINE                        -->
-    <!-- ========================================== -->
-    <g transform="translate(0, 118)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="800" letter-spacing="4">
-      <text x="0" y="0">
+    <!-- ======================================================== -->
+    <!-- 4. OFFICIAL TAGLINE: INDIAN • IMPORT • EXPORT • GLOBAL... -->
+    <!-- ======================================================== -->
+    <g transform="translate(0, 68)" 
+       font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+       font-size="7.2" font-weight="800" letter-spacing="1.2">
+      <text x="135" y="0" text-anchor="middle">
         <tspan fill="#FACC15">INDIAN</tspan>
         <tspan fill="#94A3B8">  •  </tspan>
-        <tspan fill="#FFFFFF">IMPORT</tspan>
+        <tspan fill="#F8FAFC">IMPORT</tspan>
         <tspan fill="#94A3B8">  •  </tspan>
-        <tspan fill="#FFFFFF">EXPORT</tspan>
+        <tspan fill="#F8FAFC">EXPORT</tspan>
         <tspan fill="#94A3B8">  •  </tspan>
-        <tspan fill="#FFFFFF">GLOBAL OPPORTUNITIES</tspan>
+        <tspan fill="#F8FAFC">GLOBAL OPPORTUNITIES</tspan>
       </text>
     </g>
 
