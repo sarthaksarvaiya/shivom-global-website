@@ -868,7 +868,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **COMPLETED** | 6 Assam CTC grades, B2B comparison matrix, mobile stacked cards, specification disclaimer note, grade inquiry preselection. |
 | **Section 9: Export Credibility** | `ExportCredibilitySection.tsx` | **COMPLETED** | 3 document category cards (Commercial, Shipping, Compliance), factual credibility statement, 6-step export sequence. |
 | **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **COMPLETED** | 4 logical field groups, optional commercial fields (buyer role, target price, notes), B2B CTA, verified Supabase + Resend pipeline. |
-| **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **PENDING** | Existing statutory disclosure footer. |
+| **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **COMPLETED** | 4-column B2B footer, entity registration transparency, logistics ports, statutory disclosure note, clean principle badge. |
 
 ---
 
@@ -1156,4 +1156,37 @@ The website improvement work will be considered complete and ready for productio
   - Minimum touch targets >= 44–52px. Zero horizontal overflow.
   - Semantic form labels, `aria-invalid`, `aria-describedby`, error alert live regions, and ref-based focus management upon validation errors.
 - **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.05s).
+
+---
+
+### Detailed Task Log: Section 11 — Site Footer & Statutory Disclosures
+- **Status:** `COMPLETED`
+- **Files Modified:**
+  - `src/components/layout/SiteFooter.tsx` (Rebuilt — 4-column B2B footer, entity registration transparency, complete 10-section anchor navigation, logistics ports, commercial disclosure strip, clean principle badge)
+  - `src/styles/index.css` (Added dedicated `.site-footer` design system styles, logo plaque styling, responsive 4/2/1 grid, hover transitions)
+- **Architecture & Content Highlights:**
+  - **Column 1: Brand & Entity Transparency:**
+    - High-contrast SVG brandmark logo on clean plaque.
+    - Clear corporate overview: "SHIVOM GLOBAL is an Indian tea sourcing and export coordination firm dedicated to supplying commercial blenders, packers, and private-label brands across international destinations."
+    - Entity disclosure: Sole Proprietorship (Proprietor: Sarthak Sarvaiya), Udyam MSME Registered (Govt. of India), Principal Base: Bhavnagar, Gujarat, India.
+  - **Column 2: Tea Sourcing Portfolio:**
+    - Direct anchors to Assam CTC Black Tea, Orthodox Black Tea, Darjeeling GI Specialty, Specialty & Regional Teas, Commercial Grade Matrix, and Private Label & OEM Hub.
+  - **Column 3: Commercial Navigation:**
+    - Complete, verified anchors matching all 10 homepage sections (01 Categories, 02 Assam CTC, 03 Private Label, 04 Who We Serve, 05 How We Work, 06 Why SHIVOM GLOBAL, 07 Grade Reference, 08 Export & Documentation, 09 Submit Requirement).
+  - **Column 4: Trade Desk & Logistics:**
+    - Base: Bhavnagar, Gujarat, India.
+    - Loading Ports: Kolkata, Haldia, Mundra, Nhava Sheva (JNPT).
+    - Incoterms: FOB Indian Loading Ports / CIF Destination Ports.
+    - Trade Desk Inquiries: `inquiries@shivomglobal.com`.
+    - Direct CTA button: `Submit Requirement →`.
+  - **Commercial Disclosure Strip:**
+    - "SHIVOM GLOBAL operates as an Indian tea merchant sourcing and export coordination firm. Tea specifications, cup profiles, packaging formats, and commercial pricing are confirmed against individual buyer specifications, formal quotations, and contracted export sales agreements."
+  - **Anti-Fabrication Compliance:**
+    - Removed unverified 24-hour SLA promise.
+    - Removed internal `(DEC-001)` code from public badge. Cleaned to: `"Buyer-First, Inventory-Last • Sourced Against Confirmed Parameters"`.
+- **Responsive Layout & Accessibility:**
+  - Desktop (>1024px): 4-column balanced grid with bottom legal row.
+  - Tablet (641px–1024px): 2x2 grid.
+  - Mobile (<=640px): 1-column stacked with minimum 44px tap targets.
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.11s. Zero errors.
 

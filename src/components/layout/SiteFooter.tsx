@@ -1,5 +1,12 @@
 import React from 'react';
-import { MapPin, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { 
+  MapPin, 
+  ShieldCheck, 
+  ArrowRight, 
+  Anchor, 
+  Mail, 
+  FileText
+} from 'lucide-react';
 
 export const SiteFooter: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -18,164 +25,147 @@ export const SiteFooter: React.FC = () => {
   };
 
   return (
-    <footer 
-      id="footer"
-      style={{
-        backgroundColor: 'var(--color-primary-dark)',
-        color: 'var(--text-inverse)',
-        borderTop: '1px solid var(--border-dark-subtle)',
-        paddingTop: 'var(--space-16)',
-        paddingBottom: 'var(--space-12)',
-      }}
-    >
+    <footer id="footer" className="site-footer" aria-label="Site Footer and Corporate Disclosures">
       <div className="container">
         
         {/* Main Footer 4-Column Grid */}
-        <div 
-          className="grid grid-cols-4" 
-          style={{ 
-            gap: 'var(--space-8)', 
-            paddingBottom: 'var(--space-12)', 
-            borderBottom: '1px solid var(--border-dark-subtle)' 
-          }}
-        >
+        <div className="footer-top-grid">
           
-          {/* Column 1: Brand & Corporate Disclosure */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            <div style={{ 
-              display: 'inline-flex',
-              width: 'fit-content',
-            }}>
+          {/* Column 1: Brand & Entity Transparency */}
+          <div className="footer-brand-col">
+            <div className="footer-logo-wrap">
               <img 
                 src="/Shivom_Global_Header_Logo.svg" 
                 alt="SHIVOM GLOBAL" 
-                style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+                className="footer-logo-img"
               />
             </div>
 
-            <p style={{ color: 'var(--text-inverse-muted)', fontSize: '0.875rem', lineHeight: 'var(--leading-relaxed)' }}>
-              SHIVOM GLOBAL is an Indian tea merchant export firm dedicated to supplying 
-              commercial blenders, packers, and private-label brands across international markets.
+            <p className="footer-brand-desc">
+              SHIVOM GLOBAL is an Indian tea sourcing and export coordination firm dedicated to supplying 
+              commercial blenders, packers, and private-label brands across international destinations.
             </p>
 
-            <div style={{ 
-              backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-              padding: '10px 12px', 
-              borderRadius: 'var(--radius-sm)', 
-              border: '1px solid var(--border-dark-subtle)',
-              fontSize: '0.75rem',
-              color: 'var(--text-inverse-muted)',
-            }}>
-              <div style={{ fontWeight: 700, color: 'var(--color-accent-gold)', marginBottom: '2px' }}>
-                Entity Registration & Compliance
+            <div className="footer-entity-card">
+              <div className="footer-entity-heading">
+                Entity Registration & Commercial Base
               </div>
-              <div>Sole Proprietorship (Sarthak Sarvaiya)</div>
-              <div>Udyam MSME: Verified on File</div>
-              <div>Principal Base: Bhavnagar, Gujarat, India</div>
+              <div className="footer-entity-item">Sole Proprietorship (Proprietor: Sarthak Sarvaiya)</div>
+              <div className="footer-entity-item">Udyam MSME Registered (Govt. of India)</div>
+              <div className="footer-entity-item">Principal Base: Bhavnagar, Gujarat, India</div>
             </div>
           </div>
 
-          {/* Column 2: Tea Categories & Terroirs */}
-          <div>
-            <h4 style={{ color: 'var(--text-inverse)', fontSize: '1rem', marginBottom: 'var(--space-4)', letterSpacing: '0.02em' }}>
-              Tea Categories
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-              <li>
-                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="nav-link" style={{ fontSize: '0.875rem' }}>
+          {/* Column 2: Tea Categories & Grades */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">Tea Sourcing Portfolio</h4>
+            <ul className="footer-nav-list">
+              <li className="footer-nav-item">
+                <a href="#assam-ctc" onClick={(e) => handleScrollTo(e, 'assam-ctc')} className="footer-nav-link">
                   Assam CTC Black Tea
                 </a>
               </li>
-              <li>
-                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Orthodox Black Tea
+              <li className="footer-nav-item">
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
+                  Orthodox Black Tea (Whole & Broken Leaf)
                 </a>
               </li>
-              <li>
-                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Darjeeling GI Specialty
+              <li className="footer-nav-item">
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
+                  Darjeeling GI Specialty Tea
                 </a>
               </li>
-              <li>
-                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Indian Mountain Green Tea
+              <li className="footer-nav-item">
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
+                  Specialty & Regional Teas (On-Demand)
                 </a>
               </li>
-              <li>
-                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Custom Sieve & Blend Formulations
+              <li className="footer-nav-item">
+                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-nav-link">
+                  Commercial Tea Grade Reference Matrix
                 </a>
               </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Commercial Navigation */}
-          <div>
-            <h4 style={{ color: 'var(--text-inverse)', fontSize: '1rem', marginBottom: 'var(--space-4)', letterSpacing: '0.02em' }}>
-              Commercial Navigation
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-              <li>
-                <a href="#what-we-do" onClick={(e) => handleScrollTo(e, 'what-we-do')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Bulk Supply Solutions (25kg)
-                </a>
-              </li>
-              <li>
-                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Tea by Grade (BOP, BP, PF, PD, Dust)
-                </a>
-              </li>
-              <li>
-                <a href="#how-we-work" onClick={(e) => handleScrollTo(e, 'how-we-work')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  How We Work (6-Step Roadmap)
-                </a>
-              </li>
-              <li>
-                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Private Label & OEM Solutions
-                </a>
-              </li>
-              <li>
-                <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="nav-link" style={{ fontSize: '0.875rem' }}>
-                  Why Buyers Work With Us
-                </a>
-              </li>
-              <li>
-                <a href="#requirement-form" onClick={(e) => handleScrollTo(e, 'requirement-form')} className="nav-link" style={{ fontSize: '0.875rem', color: 'var(--color-accent-gold)', fontWeight: 600 }}>
-                  Submit Tea Requirement
+              <li className="footer-nav-item">
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-nav-link">
+                  Private Label & OEM Contract Packing Hub
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Sourcing & Inquiry SLA */}
-          <div>
-            <h4 style={{ color: 'var(--text-inverse)', fontSize: '1rem', marginBottom: 'var(--space-4)', letterSpacing: '0.02em' }}>
-              Export Coordination
-            </h4>
+          {/* Column 3: Commercial Homepage Navigation */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">Commercial Navigation</h4>
+            <ul className="footer-nav-list">
+              <li className="footer-nav-item">
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
+                  What We Supply (Categories)
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#assam-ctc" onClick={(e) => handleScrollTo(e, 'assam-ctc')} className="footer-nav-link">
+                  Assam CTC Spotlight
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#who-we-serve" onClick={(e) => handleScrollTo(e, 'who-we-serve')} className="footer-nav-link">
+                  Who We Serve (Buyer Segments)
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#how-we-work" onClick={(e) => handleScrollTo(e, 'how-we-work')} className="footer-nav-link">
+                  How We Work (Sourcing Journey)
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="footer-nav-link">
+                  Why SHIVOM GLOBAL
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#export-documentation" onClick={(e) => handleScrollTo(e, 'export-documentation')} className="footer-nav-link">
+                  Export & Documentation
+                </a>
+              </li>
+              <li className="footer-nav-item">
+                <a href="#requirement-form" onClick={(e) => handleScrollTo(e, 'requirement-form')} className="footer-nav-link footer-nav-highlight">
+                  Submit Commercial Requirement
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Trade Desk & Export Logistics */}
+          <div className="footer-col">
+            <h4 className="footer-col-title">Trade Desk & Logistics</h4>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', fontSize: '0.875rem', color: 'var(--text-inverse-muted)' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                <MapPin size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>Principal Base: Bhavnagar, Gujarat, India</span>
+            <div className="footer-contact-list">
+              <div className="footer-contact-item">
+                <MapPin size={15} className="footer-contact-icon" />
+                <span>Base: Bhavnagar, Gujarat, India</span>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                <Clock size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>Commercial Review SLA: 24 Business Hours</span>
+              <div className="footer-contact-item">
+                <Anchor size={15} className="footer-contact-icon" />
+                <span>Loading Ports: Kolkata, Haldia, Mundra, Nhava Sheva (JNPT)</span>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                <ShieldCheck size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <span>Shipping Incoterms: FOB Indian Ports / CIF Global Ports</span>
+              <div className="footer-contact-item">
+                <ShieldCheck size={15} className="footer-contact-icon" />
+                <span>Trade Terms: FOB Indian Ports / CIF Destination Ports</span>
               </div>
 
-              <div style={{ marginTop: 'var(--space-2)' }}>
+              <div className="footer-contact-item">
+                <Mail size={15} className="footer-contact-icon" />
+                <span>Trade Desk: inquiries@shivomglobal.com</span>
+              </div>
+
+              <div className="footer-action-wrap">
                 <a 
                   href="#requirement-form" 
                   onClick={(e) => handleScrollTo(e, 'requirement-form')}
-                  className="btn btn-primary btn-sm"
-                  style={{ width: '100%', justifyContent: 'center' }}
+                  className="footer-cta-btn"
+                  aria-label="Submit commercial tea requirement to SHIVOM GLOBAL"
                 >
                   <span>Submit Requirement</span>
                   <ArrowRight size={14} />
@@ -186,26 +176,29 @@ export const SiteFooter: React.FC = () => {
 
         </div>
 
+        {/* Middle Statutory Disclosure Note */}
+        <div className="footer-disclosure-strip">
+          <FileText size={16} className="footer-disclosure-icon" />
+          <p className="footer-disclosure-text">
+            <strong>Commercial Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea merchant sourcing and export coordination firm. 
+            Tea specifications, cup profiles, packaging formats, and commercial pricing are confirmed against individual buyer specifications, 
+            formal quotations, and contracted export sales agreements.
+          </p>
+        </div>
+
         {/* Bottom Legal & Governance Sub-Footer */}
-        <div style={{ 
-          paddingTop: 'var(--space-6)', 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          flexWrap: 'wrap', 
-          gap: 'var(--space-4)',
-          fontSize: '0.8125rem',
-          color: 'var(--text-dim)',
-        }}>
-          <div>
-            © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Registered Indian Enterprise.
+        <div className="footer-bottom-row">
+          <div className="footer-copyright">
+            © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Indian Registered Commercial Enterprise.
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-            <span className="spec-badge" style={{ backgroundColor: 'rgba(255, 255, 255, 0.06)', color: 'var(--color-gold-sheen)' }}>
-              "Buyer-First, Inventory-Last" (DEC-001)
+          <div className="footer-badges">
+            <span className="spec-badge footer-principle-badge">
+              Buyer-First, Inventory-Last • Sourced Against Confirmed Parameters
             </span>
-            <span>B2B Commercial Tea Sourcing</span>
+            <span className="footer-market-scope">
+              B2B International Tea Sourcing
+            </span>
           </div>
         </div>
 
