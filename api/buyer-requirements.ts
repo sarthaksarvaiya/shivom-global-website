@@ -530,11 +530,14 @@ export default async function handler(
 
   // Supabase Persistence (System of Record)
   const supabaseUrl = process.env.SUPABASE_URL?.trim();
-  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  const supabaseServiceRoleKey = (
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SECRET_KEY
+  )?.trim();
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     console.error(
-      '[CRITICAL_BACKEND_CONFIG] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment variables.'
+      '[CRITICAL_BACKEND_CONFIG] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SECRET_KEY in environment variables.'
     );
     sendJsonResponse(500, {
       success: false,
