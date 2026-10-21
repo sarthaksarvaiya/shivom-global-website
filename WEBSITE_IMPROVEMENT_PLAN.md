@@ -860,8 +860,8 @@ The website improvement work will be considered complete and ready for productio
 | :--- | :--- | :--- | :--- |
 | **Section 1: Hero** | `HeroSection.tsx` | **COMPLETED** | Refined copy, visible tea landscape, full-screen height (`100vh - 76px`), horizontal header logo. |
 | **Section 2: What We Supply** | `TeaCategoriesSection.tsx` | **COMPLETED** | 4-category grid (Assam CTC, Orthodox, Darjeeling, Specialty), B2B tone, bottom requirement CTA. |
-| **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **PENDING** | Next planned implementation step. |
-| **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **PENDING** | Existing MVP component to be hardened. |
+| **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **COMPLETED** | Technical commercial showcase, 6 core grades, 4 applications, authentic cupping photo, buyer-first banner. |
+| **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **PENDING** | Next planned implementation step. |
 | **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **PENDING** | Planned 4-archetype buyer grid. |
 | **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Existing 6-stage roadmap. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
@@ -886,4 +886,41 @@ The website improvement work will be considered complete and ready for productio
 - **Bottom CTA:** Direct routing to commercial buyer requirement intake (`#requirement-form`) and grade matrix explorer (`#tea-by-grade`).
 - **Responsive Behavior:** 2 cards per row on desktop/tablet, 1 column on mobile. Touch targets $\ge 44\text{px}$.
 - **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`). Zero lint errors.
-- **Next Recommended Section:** Section 3 — Assam CTC Spotlight.
+
+---
+
+### Detailed Task Log: Section 3 — Assam CTC Spotlight
+- **Status:** `COMPLETED (Local Verification Ready)`
+- **Files Created / Modified:**
+  - `src/components/home/AssamCtcSpotlight.tsx` (Created — technical-commercial showcase component)
+  - `src/components/home/HomePage.tsx` (Modified — inserted Section 3 between Section 2 and GradeMatrix; wired category navigation and form pre-selection)
+  - `src/styles/index.css` (Modified — added 5-block section layout, responsive 6/3/2/1 grade grid, 4/2/1 application cards, buyer-first banner, and image hover treatment)
+  - `public/images/assam-ctc-spotlight.jpg` (Created — authentic editorial macro commercial CTC black tea granules on cupping table, 4:3 aspect ratio)
+- **Copy & Messaging Architecture:**
+  - **Eyebrow:** `ASSAM CTC`
+  - **Heading:** `Assam CTC Sourced to Your Commercial Specification`
+  - **Introduction:** "Assam CTC is a core commercial tea category in our sourcing portfolio, with grades selected according to cup profile, application, volume and buyer specification. From strong blend components to tea-bag applications, we coordinate sourcing around the specification that matters to your market."
+  - **Core Sourcing Parameters:** Origin (Brahmaputra Valley, Assam), Standard Packaging (25kg multi-wall kraft sack with food-grade poly-liner), Process (Unblended Indian Crush, Tear, Curl black tea).
+- **Buyer-First Principle Banner:**
+  - Headline: *"The right grade depends on the requirement."*
+  - Body: *"We match sourcing to your required grade, cup profile, application, packing format and commercial parameters before moving to sampling and quotation."*
+  - Badge: "Buyer-First, Inventory-Last • Sourced Against Confirmed Parameters"
+- **Commercial Grade Structure (6 Verified Grades):**
+  1. `BOP` (Broken Orange Pekoe): Standard primary commercial cut for strong commercial blends & full-bodied base packs.
+  2. `BOPSM` (BOP Small / Mixed): Smaller granular cut for fast extraction, high-color commercial blends.
+  3. `BP` (Broken Pekoe): Medium-bold granular grain profile; uniform blending backbone.
+  4. `PF` (Pekoe Fannings): Fine, even-cut fanning particles; commercial tea bag manufacturing & instant infusion.
+  5. `PD` (Pekoe Dust): Fine granular profile; high-strength milk tea (Karak / Chai) & commercial catering.
+  6. `Dust` (Commercial Dust): Highest density micro-granular cut; high-yield catering & foodservice.
+- **Commercial Applications Grid:**
+  1. `Tea Bags & Filter Packs` (PF • PD)
+  2. `Commercial Bulk Blending` (BOP • BOPSM • BP)
+  3. `Private Label Formulations` (BOP • BOPSM • PF)
+  4. `Foodservice & Karak Chai` (PD • Dust • BOPSM)
+- **CTA Routing:**
+  - Primary CTA: `Submit Assam CTC Requirement` (pre-sets `formRequirementType = 'Assam CTC'` & `formGrade = 'BOP'`, smooth scrolls to `#requirement-form`).
+  - Secondary CTA: `View All Tea Categories` (smooth scrolls to `#our-teas`).
+  - Interactive Grade Click: Clicking any grade card pre-selects that exact grade in the intake form.
+- **Compliance with Rule 02 (Anti-Fabrication):** Zero fabricated estate ownership, monthly production volume, laboratory certificates, or chemical guarantees. Uses qualified terminology ("Representative commercial use", "Specification confirmed during quotation/sample stage").
+- **Validation:** `npm run build` passes with 0 errors in 1.01s.
+- **Next Recommended Section:** Section 4 — Private Label & Contract Packing Solutions.

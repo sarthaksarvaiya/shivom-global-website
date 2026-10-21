@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { HeroSection } from '@/components/home/HeroSection';
 import { TeaCategoriesSection } from '@/components/home/TeaCategoriesSection';
+import { AssamCtcSpotlight } from '@/components/home/AssamCtcSpotlight';
 import { GradeMatrix } from '@/components/home/GradeMatrix';
 import { ExportProcessFlow } from '@/components/home/ExportProcessFlow';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
@@ -55,7 +56,25 @@ export const HomePage: React.FC = () => {
     }
   };
 
+  const scrollToAssamCtc = () => {
+    const assamElement = document.getElementById('assam-ctc');
+    if (assamElement) {
+      const headerOffset = 80;
+      const elementPosition = assamElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   const handleSelectCategory = (categoryName: string, defaultGrade?: string) => {
+    if (categoryName.toLowerCase().includes('assam ctc')) {
+      scrollToAssamCtc();
+      return;
+    }
     setFormRequirementType(categoryName);
     if (defaultGrade) {
       setFormGrade(defaultGrade);
@@ -92,6 +111,21 @@ export const HomePage: React.FC = () => {
           onSelectCategory={handleSelectCategory}
           onSubmitRequirement={scrollToForm}
           onExploreGrades={scrollToGrades}
+        />
+
+        {/* Section 3: Assam CTC Spotlight */}
+        <AssamCtcSpotlight 
+          onSubmitRequirement={(grade) => {
+            setFormRequirementType('Assam CTC');
+            if (grade) setFormGrade(grade);
+            scrollToForm();
+          }}
+          onViewAllCategories={scrollToCategories}
+          onSelectGrade={(gradeCode) => {
+            setFormRequirementType('Assam CTC');
+            setFormGrade(gradeCode);
+            scrollToForm();
+          }}
         />
 
         {/* Section 8: Interactive Grade Matrix */}
