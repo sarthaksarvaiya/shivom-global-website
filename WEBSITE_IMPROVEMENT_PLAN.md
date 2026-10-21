@@ -863,7 +863,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **COMPLETED** | Technical commercial showcase, 6 core grades, 4 applications, authentic cupping photo, buyer-first banner. |
 | **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **COMPLETED** | B2B OEM coordination hub, bulk vs OEM distinction, 4-step workflow, 4 packaging formats, project scoping checklist. |
 | **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **COMPLETED** | 5 commercial buyer archetypes, balanced 3+2 grid, specification-led requirements, buyer-first principle banner. |
-| **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Next planned implementation step. |
+| **Section 6: How It Works** | `HowWeWorkSection.tsx` | **COMPLETED** | 6-step commercial sourcing workflow, Buyer-First principle card, inquiry scoping checklist, dual CTAs. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
 | **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
@@ -983,4 +983,43 @@ The website improvement work will be considered complete and ready for productio
   - Tablet (641px–1024px): 2 columns, with 5th card spanning 2 columns.
   - Mobile (<=640px): 1 column with full-width touch targets.
 - **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.02s. Zero errors.
-- **Next Recommended Section:** Section 6 — How We Work (6-Stage Commercial Sourcing Roadmap).
+
+---
+
+### Detailed Task Log: Section 6 — How We Work (From Requirement to Shipment)
+- **Status:** `COMPLETED`
+- **Files Created / Modified:**
+  - `src/components/home/HowWeWorkSection.tsx` (Created — 6-step commercial sourcing journey, Buyer-First principle card, inquiry scoping checklist, dual CTAs)
+  - `src/components/home/ExportProcessFlow.tsx` (Modified — alias re-export pointing to `HowWeWorkSection` for backwards compatibility)
+  - `src/components/home/HomePage.tsx` (Modified — positioned Section 6 immediately after Section 5: Who We Serve; wired requirement & category smooth-scroll navigation)
+  - `src/styles/index.css` (Modified — added Deep Forest dark surface, warm gold trade desk styling, 3-column desktop / 2-column tablet / 1-column mobile grid, hover depth, and focus-visible indicators)
+- **Core Message & Anti-Fabrication Rule Compliance (Rule 02):**
+  - Section explains the commercial journey: *Buyer Requirement → Specification Review → Sourcing & Lot Selection → Sample / Verification → Commercial Confirmation → Packing & Export Coordination*.
+  - Strictly honest: SHIVOM GLOBAL is presented as a commercial sourcing partner that coordinates sourcing around buyer specifications, NOT as a factory/plantation owner.
+  - Zero unsupported SLAs (no 24h/48h response, 3-day sample dispatch, or 7-day delivery claims).
+  - Zero unverified certification badges (no ISO, NABL, GMP, FDA, or GSO logos).
+  - Zero transit time guarantees (no fixed transit claims).
+- **6 Process Steps Implemented:**
+  1. `01 — Share Your Requirement:` Tell us what you need — tea category, grade, application, quantity, packing format and destination.
+  2. `02 — Review the Specification:` We review the requested tea type, grade, application and commercial parameters to understand the actual sourcing requirement.
+  3. `03 — Source Suitable Lots:` We identify suitable Indian tea sourcing options against the buyer's specification and commercial requirement.
+  4. `04 — Sampling & Verification:` Where applicable, samples and relevant specifications are reviewed before moving toward commercial confirmation.
+  5. `05 — Confirm the Commercial Specification:` Tea specification, quantity, packing, pricing and commercial terms are confirmed before execution.
+  6. `06 — Packing & Export Coordination:` Once confirmed, packing, documentation and dispatch requirements are coordinated for the agreed shipment.
+- **Buyer-First Principle Card:**
+  - Title: `Buyer-First, Inventory-Last`
+  - Supporting text: *"We begin with the requirement rather than assuming a fixed product or inventory position. Sourcing, sampling, and commercial specifications are coordinated specifically around the buyer’s confirmed target profile and application."*
+- **What We Need to Start (Inquiry Scoping Block):**
+  - Displays 7 commercial parameters buyers typically prepare: `Tea Category`, `Grade / Specification`, `Application`, `Estimated Quantity`, `Packing Format`, `Destination`, `Commercial Terms`.
+  - Zero extra form fields or duplicate backend routes; maintains existing single pipeline.
+- **CTA Routing:**
+  - Primary CTA: `Submit Your Commercial Requirement →` (smooth scrolls to `#requirement-form`).
+  - Secondary CTA: `Explore Tea Categories →` (smooth scrolls to `#our-teas`).
+- **Responsive Layout & Accessibility:**
+  - Desktop (>1024px): 3 columns with stage indicators and directional Next cues.
+  - Tablet (641px–1024px): 2 columns.
+  - Mobile (<=640px): 1 column clean vertical sequence with zero horizontal scroll overflow.
+  - Accessibility: Semantic `<section>`, `<h2>`, `<h3>`, ARIA step labels, visible focus rings, WCAG AA contrast.
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.02s. Zero errors.
+- **Next Recommended Section:** Section 7 — Why SHIVOM GLOBAL (Credibility Pillars).
+

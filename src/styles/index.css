@@ -2677,15 +2677,410 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   }
 }
 
-@media (max-width: 640px) {
-  .who-we-serve-grid {
+/* ==========================================================================
+   SECTION 6: HOW WE WORK (COMMERCIAL SOURCING ROADMAP)
+   Design System: Deep Forest Canvas with Warm Gold Trade Desk Detailing
+   ========================================================================== */
+
+.how-we-work-section {
+  background: linear-gradient(180deg, #072218 0%, #0A291D 50%, #051A12 100%);
+  color: var(--text-inverse);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.how-we-work-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.45), transparent);
+  pointer-events: none;
+}
+
+/* Header */
+.how-we-work-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.how-we-work-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  padding: 5px 14px;
+  border-radius: 9999px;
+}
+
+.how-we-work-title {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin: 0 0 var(--space-4) 0;
+  letter-spacing: -0.02em;
+}
+
+.how-we-work-lead {
+  font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
+  color: #CBD5E1;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 6-Step Commercial Workflow Process */
+.how-we-work-process-wrap {
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.how-we-work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.how-we-work-step-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid rgba(212, 175, 55, 0.45);
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  outline: none;
+}
+
+.how-we-work-step-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.45), 0 0 20px rgba(212, 175, 55, 0.12);
+}
+
+.how-we-work-step-card:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 3px;
+  border-color: #D4AF37;
+}
+
+.how-we-work-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.how-we-work-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.how-we-work-step-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.how-we-work-step-tag {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #E2E8F0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.how-we-work-step-number {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #D4AF37;
+  letter-spacing: -0.02em;
+}
+
+.how-we-work-step-content {
+  flex-grow: 1;
+}
+
+.how-we-work-step-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.3;
+  margin: 0 0 8px 0;
+}
+
+.how-we-work-step-desc {
+  font-size: 0.875rem;
+  color: #CBD5E1;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.how-we-work-step-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.how-we-work-step-indicator {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.06em;
+}
+
+.how-we-work-step-next-hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  color: #D4AF37;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* Buyer-First Principle Statement Banner */
+.how-we-work-principle-card {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: var(--radius-md);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(2rem, 4vw, 3.25rem);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.3);
+}
+
+.how-we-work-principle-tag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.how-we-work-principle-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+}
+
+.how-we-work-principle-text {
+  font-size: 0.9375rem;
+  color: #E2E8F0;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* What We Need to Start Block */
+.how-we-work-checklist-block {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.how-we-work-checklist-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.how-we-work-checklist-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.how-we-work-checklist-title {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 8px 0;
+}
+
+.how-we-work-checklist-intro {
+  font-size: 0.875rem;
+  color: #CBD5E1;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.how-we-work-params-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.how-we-work-param-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.how-we-work-param-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.how-we-work-param-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.how-we-work-param-check {
+  color: #D4AF37;
+  flex-shrink: 0;
+}
+
+.how-we-work-param-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+}
+
+.how-we-work-param-detail {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  line-height: 1.4;
+  padding-left: 23px;
+}
+
+/* Action CTAs */
+.how-we-work-cta-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.how-we-work-primary-btn {
+  padding: 14px 28px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.how-we-work-secondary-btn {
+  padding: 14px 24px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.how-we-work-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.how-we-work-cta-note {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.4;
+}
+
+/* Responsive Breakpoints for Section 6 */
+@media (max-width: 1024px) {
+  .how-we-work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .how-we-work-params-grid {
     grid-template-columns: 1fr;
   }
-  .who-we-serve-card:last-child {
-    grid-column: span 1;
+  .how-we-work-cta-wrap {
+    flex-direction: column;
+    width: 100%;
   }
-  .who-we-serve-card-top {
-    flex-direction: row;
+  .how-we-work-primary-btn,
+  .how-we-work-secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .how-we-work-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .how-we-work-step-next-hint {
+    display: none;
+  }
+  .how-we-work-step-card {
+    padding: 16px;
   }
 }
 

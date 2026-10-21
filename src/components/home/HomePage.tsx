@@ -3,11 +3,11 @@ import { SiteHeader } from '@/components/layout/SiteHeader';
 import { HeroSection } from '@/components/home/HeroSection';
 import { TeaCategoriesSection } from '@/components/home/TeaCategoriesSection';
 import { AssamCtcSpotlight } from '@/components/home/AssamCtcSpotlight';
-import { GradeMatrix } from '@/components/home/GradeMatrix';
-import { ExportProcessFlow } from '@/components/home/ExportProcessFlow';
-import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
 import { PrivateLabelSection } from '@/components/home/PrivateLabelSection';
 import { WhoWeServeSection } from '@/components/home/WhoWeServeSection';
+import { HowWeWorkSection } from '@/components/home/HowWeWorkSection';
+import { GradeMatrix } from '@/components/home/GradeMatrix';
+import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 
@@ -144,13 +144,16 @@ export const HomePage: React.FC = () => {
           onSubmitRequirement={scrollToForm}
         />
 
+        {/* Section 6: How We Work — Commercial Sourcing & Export Journey */}
+        <HowWeWorkSection 
+          onSubmitRequirement={scrollToForm}
+          onExploreCategories={scrollToCategories}
+        />
+
         {/* Section 8: Interactive Grade Matrix */}
         <GradeMatrix 
           onSelectGrade={handleSelectGrade}
         />
-
-        {/* P3-06: Export Process Flow */}
-        <ExportProcessFlow />
 
         {/* P3-07: Why Buyers Work With Us */}
         <WhyShivomGlobal />
