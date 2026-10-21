@@ -150,15 +150,17 @@ export const HomePage: React.FC = () => {
           onExploreCategories={scrollToCategories}
         />
 
+        {/* Section 7: Why SHIVOM GLOBAL — Value Pillars & Sourcing Model */}
+        <WhyShivomGlobal 
+          onSubmitRequirement={scrollToForm}
+        />
+
         {/* Section 8: Interactive Grade Matrix */}
         <GradeMatrix 
           onSelectGrade={handleSelectGrade}
         />
 
-        {/* P3-07: Why Buyers Work With Us */}
-        <WhyShivomGlobal />
-
-        {/* P3-09: Buyer Requirement Form */}
+        {/* Section 10: Buyer Requirement Form */}
         <BuyerRequirementForm 
           initialRequirementType={formRequirementType}
           initialGrade={formGrade}

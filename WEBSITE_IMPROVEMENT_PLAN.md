@@ -864,7 +864,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **COMPLETED** | B2B OEM coordination hub, bulk vs OEM distinction, 4-step workflow, 4 packaging formats, project scoping checklist. |
 | **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **COMPLETED** | 5 commercial buyer archetypes, balanced 3+2 grid, specification-led requirements, buyer-first principle banner. |
 | **Section 6: How It Works** | `HowWeWorkSection.tsx` | **COMPLETED** | 6-step commercial sourcing workflow, Buyer-First principle card, inquiry scoping checklist, dual CTAs. |
-| **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
+| **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **COMPLETED** | Editorial value pillars, 4 core pillars, Buyer-First Inventory-Last highlight banner, clean B2B copy. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
 | **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
 | **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **PENDING** | Hardened in Phase 4. |
@@ -1027,4 +1027,35 @@ The website improvement work will be considered complete and ready for productio
   - Accessibility: Semantic `<section>`, `<h2>`, `<h3>`, ARIA step attributes, visible focus rings, WCAG AA contrast.
 - **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.06s. Zero errors.
 - **Next Recommended Section:** Section 7 — Why SHIVOM GLOBAL (Credibility Pillars).
+
+---
+
+### Detailed Task Log: Section 7 — Why SHIVOM GLOBAL
+- **Status:** `COMPLETED`
+- **Files Modified:**
+  - `src/components/home/WhyShivomGlobal.tsx` (Rebuilt — 4 core value pillars, editorial layout, principle highlight banner, B2B commercial copy)
+  - `src/components/home/HomePage.tsx` (Repositioned Section 7 directly after Section 6 HowWeWorkSection)
+  - `src/styles/index.css` (Added dedicated editorial styling, responsive 4/2/1 grid, hover interactions, gold/forest gradient principle banner)
+- **Messaging & Pillar Architecture:**
+  - **Eyebrow:** `WHY SHIVOM GLOBAL`
+  - **Heading:** `A Sourcing Partner Built Around the Buyer`
+  - **Lead:** "We coordinate Indian tea sourcing around the buyer's specification, application, packing requirements and commercial destination rather than treating every requirement as a standard product order."
+  - **4 Core Pillars:**
+    1. `01 — Buyer-First Sourcing`: "We begin with the buyer's requirement and identify suitable sourcing options around the requested specification."
+    2. `02 — Specification-Led Selection`: "Tea category, grade, application, cup profile and commercial requirements are considered before sourcing and sampling."
+    3. `03 — Flexible Commercial Formats`: "Support can be structured around bulk tea supply, private-label requirements and different commercial packing formats depending on the order."
+    4. `04 — Export Coordination`: "We coordinate the commercial, packing and documentation requirements needed to move an agreed order toward export."
+  - **Supporting Principle Banner:**
+    - Headline: `Buyer-First, Inventory-Last`
+    - Copy: "Our model is designed around confirmed commercial requirements rather than speculative inventory positioning."
+    - Direct CTA: `Discuss Your Requirement →` (smooth scrolls to `#requirement-form`).
+- **Anti-Fabrication & Quality Compliance (Rule 02):**
+  - Zero fake statistics, counters, years of experience, customer counts, or fake certifications.
+  - No claims of owning plantations, warehouses, or shipping infrastructure.
+- **Responsive Layout & Accessibility:**
+  - Desktop (>1024px): 4-card horizontal editorial grid.
+  - Tablet (641px–1024px): 2x2 grid.
+  - Mobile (<=640px): 1-column stacked cards, full touch targets, zero overflow.
+- **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors).
+- **Next Step:** Section 8 — Tea Grade / Specification Matrix.
 

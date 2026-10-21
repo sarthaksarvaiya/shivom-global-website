@@ -1,146 +1,129 @@
 import React from 'react';
 import { 
-  Target, 
-  FlaskConical, 
-  PackageCheck, 
-  FileCheck2, 
-  Calculator, 
-  UserCheck,
-  ShieldAlert
+  Compass, 
+  Layers, 
+  Boxes, 
+  Ship, 
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react';
 
-export const WhyShivomGlobal: React.FC = () => {
+export interface WhyShivomGlobalProps {
+  onSubmitRequirement?: () => void;
+}
+
+export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequirement }) => {
   const pillars = [
     {
-      title: 'Requirement-Based Sourcing',
-      category: 'Zero Speculative Stock',
-      icon: Target,
-      description: 'We do not push aging warehouse inventory onto buyers. Every shipment is freshly procured directly from primary Assam auctions and vetted estate partners to match your exact commercial order.',
+      numeral: '01',
+      title: 'Buyer-First Sourcing',
+      icon: Compass,
+      description: 'We begin with the buyer\'s requirement and identify suitable sourcing options around the requested specification.',
+      tag: 'Requirement-Led',
     },
     {
-      title: 'Strict Quality Parameters',
-      category: 'Laboratory Verified',
-      icon: FlaskConical,
-      description: 'Pre-shipment batch testing for moisture (max 6.5%–7.0%), total ash, water-soluble ash, and GSO 978 / FSSAI pesticide residue limits conducted by accredited testing laboratories.',
+      numeral: '02',
+      title: 'Specification-Led Selection',
+      icon: Layers,
+      description: 'Tea category, grade, application, cup profile and commercial requirements are considered before sourcing and sampling.',
+      tag: 'Application-Matched',
     },
     {
-      title: 'Export-Grade Packaging',
-      category: 'Maritime Barrier Protection',
-      icon: PackageCheck,
-      description: 'Standard 25kg multi-wall kraft paper sacks with food-grade virgin LDPE moisture liners. Palletized, shrink-wrapped, and banded to prevent moisture ingress during humid ocean transits.',
+      numeral: '03',
+      title: 'Flexible Commercial Formats',
+      icon: Boxes,
+      description: 'Support can be structured around bulk tea supply, private-label requirements and different commercial packing formats depending on the order.',
+      tag: 'Bulk & OEM Formats',
     },
     {
-      title: 'Complete Export Documentation',
-      category: 'Seamless Customs Handover',
-      icon: FileCheck2,
-      description: 'Full statutory paperwork delivered promptly: Certificate of Origin, Phytosanitary Certificate, Commercial Invoice, Detailed Packing List, Bill of Lading, and Certificate of Analysis (COA).',
-    },
-    {
-      title: 'Transparent Commercial Costing',
-      category: 'FOB / CIF Clarity',
-      icon: Calculator,
-      description: 'Clear, uninflated commercial quotations detailing ex-factory tea costs, export packaging, testing certifications, and sea freight milestones to your discharging port.',
-    },
-    {
-      title: 'Direct Founder Communication',
-      category: 'Fast Decision-Making',
-      icon: UserCheck,
-      description: 'Direct collaboration with the founder. Rapid inquiry response times, transparent stock availability reports, and flexible commercial problem-solving without corporate bureaucracy.',
+      numeral: '04',
+      title: 'Export Coordination',
+      icon: Ship,
+      description: 'We coordinate the commercial, packing and documentation requirements needed to move an agreed order toward export.',
+      tag: 'Documentation & Transit',
     },
   ];
 
+  const handleInquire = () => {
+    if (onSubmitRequirement) {
+      onSubmitRequirement();
+      return;
+    }
+    const formElement = document.getElementById('requirement-form');
+    if (formElement) {
+      const headerOffset = 80;
+      const elementPosition = formElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section id="why-us" className="section section-alt">
+    <section id="why-us" className="why-shivom-section" aria-labelledby="why-shivom-title">
       <div className="container">
+        
         {/* Section Header */}
-        <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto var(--space-12)' }}>
-          <span className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            COMMERCIAL INTEGRITY & DILIGENCE
-          </span>
-          <h2 style={{ marginBottom: 'var(--space-4)' }}>
-            Why International Buyers Work With Us
+        <div className="why-shivom-header">
+          <div className="why-shivom-eyebrow">
+            <span className="spec-badge spec-badge-gold">WHY SHIVOM GLOBAL</span>
+          </div>
+          <h2 id="why-shivom-title" className="why-shivom-title">
+            A Sourcing Partner Built Around the Buyer
           </h2>
-          <p className="lead">
-            Built for commercial tea blenders, packers, and importers who demand specification accuracy, 
-            verified testing, export-barrier packaging, and reliable execution.
+          <p className="why-shivom-lead">
+            We coordinate Indian tea sourcing around the buyer's specification, application, 
+            packing requirements and commercial destination rather than treating every requirement 
+            as a standard product order.
           </p>
         </div>
 
-        {/* 6 Pillars Grid */}
-        <div className="grid grid-cols-3" style={{ gap: 'var(--space-6)' }}>
+        {/* 4 Core Value Pillars Grid */}
+        <div className="why-shivom-grid">
           {pillars.map((pillar) => {
-            const IconComp = pillar.icon;
+            const Icon = pillar.icon;
             return (
-              <div 
-                key={pillar.title} 
-                className="card card-interactive"
-                style={{
-                  padding: 'var(--space-6)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                    <div style={{
-                      padding: '10px',
-                      backgroundColor: 'rgba(13, 56, 41, 0.06)',
-                      borderRadius: 'var(--radius-sm)',
-                      color: 'var(--color-primary-green)',
-                      display: 'inline-flex',
-                    }}>
-                      <IconComp size={22} />
-                    </div>
-                    <span className="spec-badge" style={{ fontSize: '0.75rem' }}>
-                      {pillar.category}
-                    </span>
+              <div key={pillar.numeral} className="why-pillar-card">
+                <div className="why-pillar-top">
+                  <span className="why-pillar-num">{pillar.numeral}</span>
+                  <div className="why-pillar-icon-box">
+                    <Icon size={20} strokeWidth={2} />
                   </div>
+                </div>
 
-                  <h3 className="card-title" style={{ fontSize: '1.1875rem', marginBottom: 'var(--space-2)' }}>
-                    {pillar.title}
-                  </h3>
-
-                  <div className="card-body" style={{ padding: 0 }}>
-                    <p style={{ fontSize: '0.9375rem', lineHeight: 'var(--leading-relaxed)' }}>
-                      {pillar.description}
-                    </p>
-                  </div>
+                <div className="why-pillar-body">
+                  <div className="why-pillar-tag">{pillar.tag}</div>
+                  <h3 className="why-pillar-heading">{pillar.title}</h3>
+                  <p className="why-pillar-desc">{pillar.description}</p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Governance Commitment Strip */}
-        <div style={{ 
-          marginTop: 'var(--space-12)',
-          padding: 'var(--space-6)',
-          backgroundColor: 'var(--color-primary-dark)',
-          color: 'var(--text-inverse)',
-          borderRadius: 'var(--radius-md)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 'var(--space-4)',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <div style={{ padding: '8px', backgroundColor: 'rgba(197, 155, 39, 0.15)', borderRadius: 'var(--radius-sm)', color: 'var(--color-accent-gold)' }}>
-              <ShieldAlert size={22} />
+        {/* Supporting Principle Highlight Banner: Buyer-First, Inventory-Last */}
+        <div className="why-principle-banner">
+          <div className="why-principle-left">
+            <div className="why-principle-badge">
+              <ShieldCheck size={18} className="why-principle-shield-icon" />
+              <span>COMMERCIAL SOURCING PRINCIPLE</span>
             </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-inverse)' }}>
-                Our Operating Standard: No Speculation, No Fake Claims
-              </div>
-              <div style={{ color: 'var(--text-inverse-muted)', fontSize: '0.875rem', marginTop: '2px' }}>
-                We do not invent garden capacities or show fake counters. Every lot is verifiable, authentic, and contract-backed.
-              </div>
-            </div>
+            <h3 className="why-principle-title">Buyer-First, Inventory-Last</h3>
+            <p className="why-principle-copy">
+              Our model is designed around confirmed commercial requirements rather than speculative inventory positioning.
+            </p>
           </div>
-          <span className="spec-badge spec-badge-gold" style={{ fontSize: '0.8125rem' }}>
-            DEC-001 & DEC-008 COMPLIANT
-          </span>
+
+          <div className="why-principle-action">
+            <button
+              type="button"
+              onClick={handleInquire}
+              className="why-principle-btn"
+              aria-label="Discuss your commercial tea requirement"
+            >
+              <span>Discuss Your Requirement</span>
+              <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
 
       </div>
