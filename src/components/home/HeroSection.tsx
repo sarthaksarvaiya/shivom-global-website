@@ -1,12 +1,23 @@
 import React from 'react';
-import { ArrowRight, CheckCircle2, ShieldCheck, Globe2, Package, Clock } from 'lucide-react';
+import { 
+  ArrowRight, 
+  CheckCircle2, 
+  Globe2, 
+  Package, 
+  Clock, 
+  Layers, 
+  ShieldCheck, 
+  Workflow 
+} from 'lucide-react';
 
 export interface HeroSectionProps {
+  onExploreCategories?: () => void;
   onExploreGrades?: () => void;
   onSubmitRequirement?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
+  onExploreCategories,
   onExploreGrades,
   onSubmitRequirement,
 }) => {
@@ -25,179 +36,203 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     }
   };
 
+  const handlePrimaryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onSubmitRequirement) {
+      e.preventDefault();
+      onSubmitRequirement();
+    } else {
+      handleScrollTo(e, 'requirement-form');
+    }
+  };
+
+  const handleSecondaryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onExploreCategories) {
+      e.preventDefault();
+      onExploreCategories();
+    } else if (onExploreGrades) {
+      e.preventDefault();
+      onExploreGrades();
+    } else {
+      handleScrollTo(e, 'our-teas');
+    }
+  };
+
   return (
     <section 
       id="hero" 
       className="hero-section"
-      style={{
-        backgroundColor: 'var(--color-primary-dark)',
-        color: 'var(--text-inverse)',
-        paddingTop: 'var(--space-20)',
-        paddingBottom: 'var(--space-16)',
-        position: 'relative',
-        overflow: 'hidden',
-        borderBottom: '1px solid var(--border-dark-subtle)',
-      }}
+      aria-label="Commercial Tea Sourcing Overview"
     >
-      {/* 
-        HERO BACKGROUND IMAGE & ATMOSPHERIC OVERLAY LAYER
-        Authentic Assam tea plantation photography with tuned Deep Forest brand overlay.
-        Preserves 75-80% darkening behind headline for white text legibility, while reducing 
-        edge darkening to 40-55% so the tea plantation, rolling hills, and textures are clearly recognizable.
-      */}
-      <div 
-        className="hero-bg-layer"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(
-              180deg, 
-              rgba(7, 34, 24, 0.42) 0%, 
-              rgba(7, 34, 24, 0.52) 42%, 
-              rgba(7, 34, 24, 0.65) 100%
-            ),
-            radial-gradient(
-              ellipse at 50% 38%, 
-              rgba(7, 34, 24, 0.65) 0%, 
-              rgba(7, 34, 24, 0.32) 55%, 
-              rgba(7, 34, 24, 0.10) 85%
-            ),
-            url('/images/hero-bg.jpg')
-          `,
-          backgroundSize: 'auto, auto, cover',
-          backgroundPosition: 'center, center, center 35%',
-          backgroundRepeat: 'no-repeat',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }} 
-      />
+      {/* Background layer with authentic Indian tea landscape photography */}
+      <div className="hero-bg-layer" aria-hidden="true" />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-        <div style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
+      <div className="container hero-container">
+        {/* Main 2-Column Desktop Grid / Stacked Mobile Layout */}
+        <div className="hero-grid">
           
-          {/* Trust Eyebrow Badge */}
-          {/* Trust Eyebrow Badge */}
-          <div className="hero-eyebrow-badge">
-            <Globe2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} />
-            <span>
-              International Tea Sourcing & Export Gateway
-            </span>
+          {/* Left Column: Commercial Positioning, Headline, Narrative & CTAs */}
+          <div className="hero-content">
+            
+            {/* Commercial Eyebrow Badge */}
+            <div className="hero-eyebrow-badge">
+              <Globe2 size={15} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+              <span>INDIA TEA SOURCING &bull; COMMERCIAL EXPORT</span>
+            </div>
+
+            {/* Primary Main H1 Headline */}
+            <h1 className="hero-headline">
+              Indian Tea Sourcing for Global Buyers
+            </h1>
+
+            {/* Value Narrative Body */}
+            <p className="hero-narrative">
+              Requirement-led sourcing of bulk Indian teas and private-label packaging for international commercial buyers. 
+              From specification matching and origin lot selection to sampling and export documentation — coordinated directly 
+              against your commercial parameters.
+            </p>
+
+            {/* Dual Action CTAs */}
+            <div className="hero-cta-group">
+              <a 
+                href="#requirement-form" 
+                onClick={handlePrimaryClick}
+                className="btn btn-primary btn-lg"
+                id="hero-primary-cta"
+                aria-label="Submit Commercial Requirement"
+              >
+                <span>Submit Commercial Requirement</span>
+                <ArrowRight size={18} aria-hidden="true" />
+              </a>
+
+              <a 
+                href="#our-teas" 
+                onClick={handleSecondaryClick}
+                className="btn btn-secondary-dark btn-lg"
+                id="hero-secondary-cta"
+                aria-label="Explore Tea Categories"
+              >
+                <Layers size={17} style={{ marginRight: '6px' }} aria-hidden="true" />
+                <span>Explore Tea Categories</span>
+              </a>
+            </div>
+
+            {/* Compact Trust Qualification Strip */}
+            <div className="hero-trust-anchors" aria-label="Core Commercial Qualifications">
+              <div className="hero-trust-chip">
+                <CheckCircle2 size={15} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+                <span>Requirement-Led Sourcing</span>
+              </div>
+              <div className="hero-trust-chip">
+                <CheckCircle2 size={15} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+                <span>Indian Tea Categories</span>
+              </div>
+              <div className="hero-trust-chip">
+                <CheckCircle2 size={15} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+                <span>Export Documentation</span>
+              </div>
+              <div className="hero-trust-chip">
+                <CheckCircle2 size={15} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+                <span>Commercial Trade Desk</span>
+              </div>
+            </div>
+
           </div>
 
-          {/* Primary Main Headline */}
-          <h1 style={{ color: 'var(--text-inverse)', marginBottom: 'var(--space-6)', fontWeight: 800, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
-            Indian Tea Sourced for International Markets
-          </h1>
+          {/* Right Column: Commercial Sourcing Model Panel */}
+          <div className="hero-panel-col">
+            <div className="hero-sourcing-panel">
+              <div className="hero-panel-header">
+                <div className="hero-panel-eyebrow">
+                  <Workflow size={13} color="var(--color-accent-gold)" aria-hidden="true" />
+                  <span>COMMERCIAL SOURCING MODEL</span>
+                </div>
+                <div className="hero-panel-title">
+                  Specification-Led Execution
+                </div>
+              </div>
 
-          {/* Value Narrative Body */}
-          <p className="lead" style={{ color: 'var(--text-inverse-muted)', maxWidth: '740px', margin: '0 auto var(--space-8)', fontSize: '1.1875rem', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>
-            Reliable B2B supply of bulk Indian teas and customized private-label packaging. 
-            Tell us your preferred origin, grade, volume, and discharging port — we source, test, 
-            and deliver to your exact commercial specification.
-          </p>
+              <div className="hero-panel-steps">
+                <div className="hero-step-item">
+                  <span className="hero-step-num font-spec">01</span>
+                  <div className="hero-step-body">
+                    <div className="hero-step-title">Specification Intake</div>
+                    <div className="hero-step-desc">Target particle cut, volume, packaging & destination port</div>
+                  </div>
+                </div>
 
-          {/* Dual Action CTAs */}
-          <div className="hero-cta-group" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-12)' }}>
-            <a 
-              href="#requirement-form" 
-              onClick={(e) => {
-                if (onSubmitRequirement) {
-                  e.preventDefault();
-                  onSubmitRequirement();
-                } else {
-                  handleScrollTo(e, 'requirement-form');
-                }
-              }}
-              className="btn btn-primary btn-lg"
-              style={{ fontWeight: 700, boxShadow: '0 4px 14px rgba(197, 155, 39, 0.35)' }}
-            >
-              <span>Submit Your Requirement</span>
-              <ArrowRight size={18} />
-            </a>
+                <div className="hero-step-item">
+                  <span className="hero-step-num font-spec">02</span>
+                  <div className="hero-step-body">
+                    <div className="hero-step-title">Origin Lot Sourcing</div>
+                    <div className="hero-step-desc">Assam, Darjeeling & North Indian primary auction ecosystems</div>
+                  </div>
+                </div>
 
-            <a 
-              href="#tea-by-grade" 
-              onClick={(e) => {
-                if (onExploreGrades) {
-                  e.preventDefault();
-                  onExploreGrades();
-                } else {
-                  handleScrollTo(e, 'tea-by-grade');
-                }
-              }}
-              className="btn btn-secondary-dark btn-lg"
-            >
-              <span>Explore Tea Grades</span>
-            </a>
-          </div>
+                <div className="hero-step-item">
+                  <span className="hero-step-num font-spec">03</span>
+                  <div className="hero-step-body">
+                    <div className="hero-step-title">Sampling & Verification</div>
+                    <div className="hero-step-desc">Organoleptic cupping evaluation & lab parameter check</div>
+                  </div>
+                </div>
 
-          {/* Core Trust Anchors */}
-          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', color: 'var(--text-inverse-muted)', fontSize: '0.875rem' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span>Direct Origin Sourcing (Assam & North India)</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span>Bulk Supply (25kg Sacks) & Private Label Solutions</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span>Target Laboratory & Mesh Specification Matching</span>
+                <div className="hero-step-item">
+                  <span className="hero-step-num font-spec">04</span>
+                  <div className="hero-step-body">
+                    <div className="hero-step-title">Packaging & Dispatch</div>
+                    <div className="hero-step-desc">25kg barrier sacks or OEM retail packs to Port Mundra</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hero-panel-footer">
+                <ShieldCheck size={14} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} aria-hidden="true" />
+                <span>Sourced Fresh to Order &bull; Zero Speculative Stock</span>
+              </div>
             </div>
           </div>
+
         </div>
 
-        {/* Commercial Pillar Strip (Zero Fake Counters) */}
-        <div 
-          className="hero-pillars-grid"
-          style={{
-            marginTop: 'var(--space-16)',
-            paddingTop: 'var(--space-8)',
-            borderTop: '1px solid var(--border-dark-subtle)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 'var(--space-6)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
-            <div style={{ padding: '8px', backgroundColor: 'rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', color: 'var(--color-accent-gold)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <Globe2 size={20} />
+        {/* Commercial Pillar Strip Across Base of Hero */}
+        <div className="hero-pillars-grid" aria-label="Commercial Sourcing Pillars">
+          <div className="hero-pillar-item">
+            <div className="hero-pillar-icon" aria-hidden="true">
+              <Globe2 size={18} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--text-inverse-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Origins Sourced</div>
-              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-inverse)', marginTop: '2px' }}>Assam, Darjeeling & Terroirs</div>
+              <div className="hero-pillar-label">Origins Sourced</div>
+              <div className="hero-pillar-value">Assam, Darjeeling & Terroirs</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
-            <div style={{ padding: '8px', backgroundColor: 'rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', color: 'var(--color-accent-gold)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <ShieldCheck size={20} />
+          <div className="hero-pillar-item">
+            <div className="hero-pillar-icon" aria-hidden="true">
+              <ShieldCheck size={18} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--text-inverse-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Grading Standards</div>
-              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-inverse)', marginTop: '2px' }} className="font-spec">BOP, BOPSM, BP, PF, PD, Dust</div>
+              <div className="hero-pillar-label">Grading Standards</div>
+              <div className="hero-pillar-value font-spec">BOP, BOPSM, BP, PF, PD, Dust</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
-            <div style={{ padding: '8px', backgroundColor: 'rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', color: 'var(--color-accent-gold)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <Package size={20} />
+          <div className="hero-pillar-item">
+            <div className="hero-pillar-icon" aria-hidden="true">
+              <Package size={18} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--text-inverse-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Export Packaging</div>
-              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-inverse)', marginTop: '2px' }}>25kg Multi-wall Kraft + Liner</div>
+              <div className="hero-pillar-label">Export Formats</div>
+              <div className="hero-pillar-value">Bulk (25kg Kraft) & Private Label</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
-            <div style={{ padding: '8px', backgroundColor: 'rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)', color: 'var(--color-accent-gold)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <Clock size={20} />
+          <div className="hero-pillar-item">
+            <div className="hero-pillar-icon" aria-hidden="true">
+              <Clock size={18} />
             </div>
             <div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--text-inverse-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Commercial Review</div>
-              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text-inverse)', marginTop: '2px' }}>24h Business Hour Assessment</div>
+              <div className="hero-pillar-label">Commercial Review</div>
+              <div className="hero-pillar-value">Direct Trade Desk Assessment</div>
             </div>
           </div>
         </div>
