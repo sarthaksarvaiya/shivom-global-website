@@ -170,11 +170,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
         {/* Form Container Card */}
         <div 
-          className="card" 
+          className="card requirement-form-card" 
           style={{ 
             maxWidth: '860px', 
             margin: '0 auto', 
-            padding: 'var(--space-8)',
             backgroundColor: 'var(--bg-surface)',
             color: 'var(--text-main)',
             boxShadow: 'var(--shadow-elevated)',
@@ -220,7 +219,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 maxWidth: '560px',
                 margin: '0 auto var(--space-6)',
                 fontSize: '0.875rem',
-                textAlign: 'left'
+                textAlign: 'left',
+                overflowWrap: 'break-word',
+                wordBreak: 'break-word',
+                boxSizing: 'border-box',
               }}>
                 <div style={{ fontWeight: 700, marginBottom: '12px', color: 'var(--color-primary-green)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -613,31 +615,31 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                 <button 
                   type="submit" 
-                  className="btn btn-primary btn-lg" 
+                  className="btn btn-primary btn-lg btn-requirement-submit" 
                   disabled={formStatus === 'SUBMITTING'}
                   style={{ width: '100%', justifyContent: 'center', fontWeight: 700 }}
                 >
                   {formStatus === 'SUBMITTING' ? (
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                      <RefreshCw size={18} className="animate-spin" />
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                      <RefreshCw size={18} className="animate-spin" style={{ flexShrink: 0 }} />
                       <span>Validating Requirement Parameters...</span>
                     </span>
                   ) : (
-                    <>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
                       <span>Submit Requirement for Commercial Evaluation</span>
-                      <Send size={18} />
-                    </>
+                      <Send size={18} style={{ flexShrink: 0 }} />
+                    </span>
                   )}
                 </button>
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', fontSize: '0.75rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', fontSize: '0.75rem', color: 'var(--text-muted)', flexWrap: 'wrap', textAlign: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <FileCheck2 size={13} color="var(--color-primary-green)" />
+                    <FileCheck2 size={13} color="var(--color-primary-green)" style={{ flexShrink: 0 }} />
                     <span>Direct Commercial Desk Review</span>
                   </div>
                   <div>•</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <ShieldCheck size={13} color="var(--color-primary-green)" />
+                    <ShieldCheck size={13} color="var(--color-primary-green)" style={{ flexShrink: 0 }} />
                     <span>Confidential B2B Trade Inquiries Only</span>
                   </div>
                 </div>

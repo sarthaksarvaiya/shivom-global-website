@@ -155,7 +155,7 @@ export const GradeMatrix: React.FC<GradeMatrixProps> = ({ onSelectGrade }) => {
         </div>
 
         {/* Active Grade Deep-Dive Spotlight Card */}
-        <div className="card" style={{ padding: 'var(--space-8)', maxWidth: '960px', margin: '0 auto' }}>
+        <div className="card grade-spotlight-card" style={{ maxWidth: '960px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)' }} className="grade-spotlight-grid">
             
             {/* Left Column: Grade Overview & Sizing */}
@@ -240,8 +240,10 @@ export const GradeMatrix: React.FC<GradeMatrixProps> = ({ onSelectGrade }) => {
                   className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center' }}
                 >
-                  <span>Request Quotation for {activeGrade.code} Grade</span>
-                  <ArrowRight size={16} />
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <span>Request Quotation for {activeGrade.code} Grade</span>
+                    <ArrowRight size={16} style={{ flexShrink: 0 }} />
+                  </span>
                 </button>
               </div>
             </div>

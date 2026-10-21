@@ -130,7 +130,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({ onStar
         </div>
 
         {/* Packaging Formats Available Strip */}
-        <div className="card" style={{ padding: 'var(--space-8)', backgroundColor: 'var(--bg-surface)' }}>
+        <div className="card private-label-packaging-card" style={{ backgroundColor: 'var(--bg-surface)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)', alignItems: 'center' }} className="grade-spotlight-grid">
             <div>
               <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--color-primary-green)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
@@ -145,7 +145,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({ onStar
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                 {packagingFormats.map((fmt) => (
-                  <div key={fmt.name} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                  <div key={fmt.name} style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
                     <CheckCircle2 size={18} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} />
                     <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-main)' }}>{fmt.name}:</span>
                     <span className="font-spec" style={{ fontSize: '0.875rem', color: 'var(--color-primary-green)' }}>{fmt.spec}</span>
@@ -164,6 +164,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({ onStar
               flexDirection: 'column',
               justifyContent: 'space-between',
               height: '100%',
+              boxSizing: 'border-box',
             }}>
               <div>
                 <span className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
@@ -182,8 +183,10 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({ onStar
                 className="btn btn-primary"
                 style={{ width: '100%', justifyContent: 'center' }}
               >
-                <span>Discuss Private Label Project</span>
-                <ArrowRight size={16} />
+                <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <span>Discuss Private Label Project</span>
+                  <ArrowRight size={16} style={{ flexShrink: 0 }} />
+                </span>
               </button>
             </div>
           </div>

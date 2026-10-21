@@ -198,13 +198,53 @@ small, .text-sm {
   font-family: var(--font-primary);
   font-size: 0.9375rem;
   font-weight: var(--weight-semibold);
-  line-height: 1;
+  line-height: 1.35;
   text-decoration: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-normal);
   border: 1px solid transparent;
-  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  min-height: 44px;
+}
+
+.btn svg {
+  flex-shrink: 0;
+}
+
+/* Preserve desktop compactness where space permits */
+@media (min-width: 769px) {
+  .btn:not(.btn-wrap):not([style*="width: 100%"]):not([style*="width:100%"]):not(.btn-requirement-submit) {
+    white-space: nowrap;
+  }
+}
+
+/* Mobile & narrow viewports: allow graceful text wrap and auto-adapting height */
+@media (max-width: 768px) {
+  .btn {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-height: 1.35;
+    min-height: 44px;
+    height: auto;
+  }
+
+  .btn-lg {
+    padding: 12px 18px;
+    font-size: 0.9375rem;
+  }
+
+  .btn-sm {
+    padding: 8px 14px;
+    font-size: 0.8125rem;
+  }
+
+  .btn-mobile-full {
+    width: 100%;
+  }
 }
 
 .btn:focus-visible {
@@ -256,6 +296,28 @@ small, .text-sm {
 .btn-lg {
   padding: 14px 28px;
   font-size: 1rem;
+}
+
+/* Dedicated High-Priority Requirement Submit CTA */
+.btn-requirement-submit {
+  width: 100% !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  height: auto !important;
+  min-height: 48px !important;
+  padding: 14px 20px !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 480px) {
+  .btn-requirement-submit {
+    padding: 12px 14px !important;
+    font-size: 0.9375rem !important;
+  }
 }
 
 /* Mobile full-width helper */
@@ -478,6 +540,111 @@ small, .text-sm {
     grid-template-columns: 1fr !important;
     gap: var(--space-6) !important;
   }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE COMPONENT ADJUSTMENTS (MOBILE, TABLET, DESKTOP)
+   -------------------------------------------------------------------------- */
+
+/* Responsive Card Paddings across major interactive sections */
+.requirement-form-card,
+.grade-spotlight-card,
+.tea-catalog-card,
+.private-label-packaging-card {
+  padding: var(--space-8);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .requirement-form-card,
+  .grade-spotlight-card,
+  .tea-catalog-card,
+  .private-label-packaging-card {
+    padding: var(--space-5);
+  }
+
+  /* Prevent iOS Safari from auto-zooming on focus while keeping touch comfort */
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .requirement-form-card,
+  .grade-spotlight-card,
+  .tea-catalog-card,
+  .private-label-packaging-card {
+    padding: var(--space-4);
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hero-pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+}
+
+/* Hero Eyebrow Trust Badge — Mobile Responsive */
+.hero-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-6);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-eyebrow-badge span {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-accent-gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .hero-eyebrow-badge {
+    border-radius: var(--radius-md);
+    padding: 6px 10px;
+  }
+
+  .hero-eyebrow-badge span {
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Universal Layout Overflow Defenses */
+.grid > *,
+.card,
+.form-group,
+button,
+input,
+select,
+textarea {
+  min-width: 0;
+}
+
+p, span, h1, h2, h3, h4, h5, h6, a, label {
+  overflow-wrap: break-word;
 }
 
 /* --------------------------------------------------------------------------

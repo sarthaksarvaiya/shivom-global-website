@@ -77,18 +77,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
           
           {/* Trust Eyebrow Badge */}
-          <div style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            gap: '8px', 
-            backgroundColor: 'rgba(255, 255, 255, 0.08)', 
-            border: '1px solid rgba(197, 155, 39, 0.3)', 
-            padding: '6px 14px', 
-            borderRadius: 'var(--radius-full)', 
-            marginBottom: 'var(--space-6)' 
-          }}>
-            <Globe2 size={16} color="var(--color-accent-gold)" />
-            <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--color-accent-gold)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+          {/* Trust Eyebrow Badge */}
+          <div className="hero-eyebrow-badge">
+            <Globe2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0 }} />
+            <span>
               International Tea Sourcing & Export Gateway
             </span>
           </div>
@@ -106,7 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
 
           {/* Dual Action CTAs */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-12)' }}>
+          <div className="hero-cta-group" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-4)', flexWrap: 'wrap', marginBottom: 'var(--space-12)' }}>
             <a 
               href="#requirement-form" 
               onClick={(e) => {
@@ -142,16 +134,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Core Trust Anchors */}
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)', color: 'var(--text-inverse-muted)', fontSize: '0.875rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" />
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>Direct Origin Sourcing (Assam & North India)</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" />
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>Bulk Supply (25kg Sacks) & Private Label Solutions</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 size={16} color="var(--color-accent-gold)" />
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
+              <CheckCircle2 size={16} color="var(--color-accent-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>Target Laboratory & Mesh Specification Matching</span>
             </div>
           </div>
@@ -159,6 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Commercial Pillar Strip (Zero Fake Counters) */}
         <div 
+          className="hero-pillars-grid"
           style={{
             marginTop: 'var(--space-16)',
             paddingTop: 'var(--space-8)',

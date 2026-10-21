@@ -205,7 +205,7 @@ export const SiteFooter: React.FC = () => {
             © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Registered Indian Enterprise.
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
             <span className="spec-badge" style={{ backgroundColor: 'rgba(255, 255, 255, 0.06)', color: 'var(--color-gold-sheen)' }}>
               "Buyer-First, Inventory-Last" (DEC-001)
             </span>

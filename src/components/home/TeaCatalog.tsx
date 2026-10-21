@@ -113,9 +113,8 @@ export const TeaCatalog: React.FC<TeaCatalogProps> = ({ onSelectCategory }) => {
           {teaCategories.map((tea) => (
             <div 
               key={tea.id} 
-              className="card"
+              className="card tea-catalog-card"
               style={{
-                padding: 'var(--space-8)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -126,7 +125,7 @@ export const TeaCatalog: React.FC<TeaCatalogProps> = ({ onSelectCategory }) => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-3)' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '0.8125rem', marginBottom: '4px' }}>
-                      <MapPin size={14} color="var(--color-primary-green)" />
+                      <MapPin size={14} color="var(--color-primary-green)" style={{ flexShrink: 0 }} />
                       <span>{tea.origin}</span>
                     </div>
                     <h3 style={{ fontSize: '1.375rem', color: 'var(--text-main)', margin: 0 }}>
@@ -156,7 +155,7 @@ export const TeaCatalog: React.FC<TeaCatalogProps> = ({ onSelectCategory }) => {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px' }}>
                     {tea.parameters.map((param) => (
-                      <div key={param.label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8125rem' }}>
+                      <div key={param.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px', fontSize: '0.8125rem' }}>
                         <span style={{ color: 'var(--text-muted)' }}>{param.label}:</span>
                         <span style={{ fontWeight: 600, color: 'var(--color-primary-green)' }} className="font-spec">
                           {param.value}
@@ -179,8 +178,10 @@ export const TeaCatalog: React.FC<TeaCatalogProps> = ({ onSelectCategory }) => {
                   className="btn btn-secondary"
                   style={{ width: '100%', justifyContent: 'center' }}
                 >
-                  <span>Request Specifications & Samples</span>
-                  <ArrowRight size={16} />
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <span>Request Specifications & Samples</span>
+                    <ArrowRight size={16} style={{ flexShrink: 0 }} />
+                  </span>
                 </button>
               </div>
             </div>
