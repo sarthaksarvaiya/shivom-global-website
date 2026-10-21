@@ -171,7 +171,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
                 &ldquo;Your brand. Your specification. Indian tea sourced and coordinated around your requirements.&rdquo;
               </span>
               <span className="private-label-quote-sub">
-                B2B Sourcing & Coordination Partner • Anti-Fabrication Discipline
+                B2B Sourcing & Coordination Partner • Confirmed Specification & Sample Process
               </span>
             </div>
 

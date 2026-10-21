@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageCircle, Mail, Phone } from 'lucide-react';
 
 export interface SiteHeaderProps {
   onNavigate?: (sectionId: string) => void;
@@ -118,7 +118,17 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
         </nav>
 
         {/* Desktop CTA Button */}
-        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+          <a
+            href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-whatsapp-btn"
+            aria-label="Chat with SHIVOM GLOBAL on WhatsApp"
+          >
+            <MessageCircle size={16} />
+            <span>WhatsApp</span>
+          </a>
           <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
@@ -205,7 +215,37 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             Why Buyers Work With Us
           </a>
 
-          <div style={{ paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-dark-subtle)' }}>
+          {/* Mobile Contact Quick Links */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', padding: 'var(--space-4) 0', borderTop: '1px solid var(--border-dark-subtle)' }}>
+            <a
+              href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-contact-link mobile-contact-whatsapp"
+              aria-label="WhatsApp SHIVOM GLOBAL"
+            >
+              <MessageCircle size={18} />
+              <span>+91 97370 30437</span>
+            </a>
+            <a
+              href="mailto:shivomglobal1010@gmail.com"
+              className="mobile-contact-link"
+              aria-label="Email SHIVOM GLOBAL"
+            >
+              <Mail size={16} />
+              <span>shivomglobal1010@gmail.com</span>
+            </a>
+            <a
+              href="tel:+919737030437"
+              className="mobile-contact-link"
+              aria-label="Call SHIVOM GLOBAL"
+            >
+              <Phone size={16} />
+              <span>+91 97370 30437</span>
+            </a>
+          </div>
+
+          <div style={{ paddingTop: 'var(--space-2)' }}>
             <a 
               href="#requirement-form" 
               onClick={(e) => handleLinkClick(e, 'requirement-form')}

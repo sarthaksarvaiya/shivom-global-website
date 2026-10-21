@@ -44,7 +44,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       tag: 'Requirement Intake',
       description: 'Tell us what you need — tea category, grade, application, quantity, packing format and destination.',
       buyerProvides: 'Tea category (CTC, Orthodox, Darjeeling, Specialty), target grade/cut, end-use application, estimated quantity, packing preference, and target discharge port.',
-      shivomCoordinates: 'Intake through the Commercial Requirement Engine, initial feasibility assessment against harvest availability, and prompt trade desk acknowledgement.',
+      shivomCoordinates: 'Initial feasibility assessment against origin availability and harvest calendars, followed by prompt trade desk acknowledgement.',
       keyDeliverable: 'Logged commercial inquiry profile & parameter scoping',
       icon: FileText,
     },
@@ -64,7 +64,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       tag: 'Origin Sourcing',
       description: "We identify suitable Indian tea sourcing options against the buyer's specification and commercial requirement.",
       buyerProvides: 'Delivery milestones, shipping window requirements, and commercial target pricing parameters.',
-      shivomCoordinates: 'Evaluation of auction catalogues and primary garden lots across Assam and North India to identify matching batches without speculative inventory holding.',
+      shivomCoordinates: 'Evaluation of auction catalogues and primary garden lots across Assam and North India to identify matching batches aligned to the buyer specification.',
       keyDeliverable: 'Qualified origin lot options matching commercial parameters',
       icon: Search,
     },
@@ -290,10 +290,10 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
 
           {/* Buyer-First Principle Strip (Cardless Accent) */}
           <div className="cardless-principle-strip">
-            <div className="principle-strip-badge font-spec">OUR CORE CAPITAL RULE</div>
-            <h3 className="principle-strip-title">Buyer-First, Inventory-Last</h3>
+            <div className="principle-strip-badge font-spec">OUR SOURCING APPROACH</div>
+            <h3 className="principle-strip-title">Requirement-Led Sourcing</h3>
             <p className="principle-strip-text">
-              We begin with your commercial requirement rather than assuming a fixed product or speculative inventory position. Every lot, sample, and specification is sourced and verified around your target application.
+              We begin with your commercial requirement. Every lot, sample, and specification is sourced and verified around your target application and destination market.
             </p>
           </div>
 
@@ -346,7 +346,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
             </div>
 
             <div className="how-we-work-cta-note">
-              Inquiries feed directly into our commercial requirement engine. No speculative commitments or automated purchase checkout.
+              Inquiries are reviewed directly by our commercial trade desk. Each requirement is assessed individually before any commitment or quotation is issued.
             </div>
           </div>
 

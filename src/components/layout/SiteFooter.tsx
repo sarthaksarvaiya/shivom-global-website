@@ -5,7 +5,9 @@ import {
   ArrowRight, 
   Anchor, 
   Mail, 
-  FileText
+  FileText,
+  Phone,
+  MessageCircle
 } from 'lucide-react';
 
 export const SiteFooter: React.FC = () => {
@@ -156,8 +158,25 @@ export const SiteFooter: React.FC = () => {
               </div>
 
               <div className="footer-contact-item">
+                <Phone size={15} className="footer-contact-icon" />
+                <a href="tel:+919737030437" className="footer-contact-link">+91 97370 30437</a>
+              </div>
+
+              <div className="footer-contact-item">
+                <MessageCircle size={15} className="footer-contact-icon" />
+                <a
+                  href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-contact-link footer-whatsapp-link"
+                >
+                  WhatsApp: +91 97370 30437
+                </a>
+              </div>
+
+              <div className="footer-contact-item">
                 <Mail size={15} className="footer-contact-icon" />
-                <span>Trade Desk: inquiries@shivomglobal.com</span>
+                <a href="mailto:shivomglobal1010@gmail.com" className="footer-contact-link">shivomglobal1010@gmail.com</a>
               </div>
 
               <div className="footer-action-wrap">
@@ -194,7 +213,7 @@ export const SiteFooter: React.FC = () => {
 
           <div className="footer-badges">
             <span className="spec-badge footer-principle-badge">
-              Buyer-First, Inventory-Last • Sourced Against Confirmed Parameters
+              Requirement-Led Sourcing • Confirmed Specifications &amp; Terms
             </span>
             <span className="footer-market-scope">
               B2B International Tea Sourcing

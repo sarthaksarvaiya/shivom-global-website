@@ -100,16 +100,16 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequir
           })}
         </div>
 
-        {/* Supporting Principle Highlight Banner: Buyer-First, Inventory-Last */}
+        {/* Supporting Principle Highlight Banner */}
         <div className="why-principle-banner">
           <div className="why-principle-left">
             <div className="why-principle-badge">
               <ShieldCheck size={18} className="why-principle-shield-icon" />
               <span>COMMERCIAL SOURCING PRINCIPLE</span>
             </div>
-            <h3 className="why-principle-title">Buyer-First, Inventory-Last</h3>
+            <h3 className="why-principle-title">Requirement-Led, Confirmation-Driven</h3>
             <p className="why-principle-copy">
-              Our model is designed around confirmed commercial requirements rather than speculative inventory positioning.
+              Our model is designed around confirmed commercial requirements. Specifications, pricing, and availability are verified before any commercial commitment is made.
             </p>
           </div>
 

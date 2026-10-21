@@ -11,6 +11,7 @@ import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
 import { ExportCredibilitySection } from '@/components/home/ExportCredibilitySection';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 
 export const HomePage: React.FC = () => {
   const [formRequirementType, setFormRequirementType] = useState<string>('Assam CTC');
@@ -173,8 +174,11 @@ export const HomePage: React.FC = () => {
         />
       </main>
 
-      {/* P3-10: Site Footer */}
+      {/* Site Footer */}
       <SiteFooter />
+
+      {/* Floating WhatsApp Button */}
+      <WhatsAppFloat />
     </div>
   );
 };

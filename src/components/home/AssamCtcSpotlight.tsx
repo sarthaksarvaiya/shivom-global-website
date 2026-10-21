@@ -264,7 +264,7 @@ export const AssamCtcSpotlight: React.FC<AssamCtcSpotlightProps> = ({
             We match sourcing to your required grade, cup profile, application, packing format and commercial parameters before moving to sampling and quotation.
           </p>
           <div className="assam-ctc-banner-footprint font-spec">
-            Inventory-Last Capital Discipline • Exact Lot Testing Prior to Dispatch
+            Specification-Matched Sourcing • Lot Testing Prior to Dispatch
           </div>
         </div>
 

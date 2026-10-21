@@ -250,7 +250,7 @@ export const WhoWeServeSection: React.FC<WhoWeServeSectionProps> = ({
               We start with the requirement — tea category, grade, application, packing, quantity and destination — then coordinate sourcing around the commercial need.
             </p>
             <div className="who-we-serve-banner-footprint font-spec">
-              Buyer-First, Inventory-Last • Sourced Around Your Market's Requirement
+              Requirement-Led Sourcing • Confirmed Specifications, Samples & Terms
             </div>
           </div>
 
