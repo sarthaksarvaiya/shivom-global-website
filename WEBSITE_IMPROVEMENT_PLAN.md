@@ -865,7 +865,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **COMPLETED** | 5 commercial buyer archetypes, balanced 3+2 grid, specification-led requirements, buyer-first principle banner. |
 | **Section 6: How It Works** | `HowWeWorkSection.tsx` | **COMPLETED** | 6-step commercial sourcing workflow, Buyer-First principle card, inquiry scoping checklist, dual CTAs. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **COMPLETED** | Editorial value pillars, 4 core pillars, Buyer-First Inventory-Last highlight banner, clean B2B copy. |
-| **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
+| **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **COMPLETED** | 6 Assam CTC grades, B2B comparison matrix, mobile stacked cards, specification disclaimer note, grade inquiry preselection. |
 | **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
 | **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **PENDING** | Hardened in Phase 4. |
 | **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **PENDING** | Existing statutory disclosure footer. |
@@ -1058,4 +1058,36 @@ The website improvement work will be considered complete and ready for productio
   - Mobile (<=640px): 1-column stacked cards, full touch targets, zero overflow.
 - **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors).
 - **Next Step:** Section 8 — Tea Grade / Specification Matrix.
+
+---
+
+### Detailed Task Log: Section 8 — Tea Grade / Specification Matrix
+- **Status:** `COMPLETED`
+- **Files Modified:**
+  - `src/components/home/GradeMatrix.tsx` (Rebuilt — clean B2B comparative table, 6 Assam CTC grades, mobile stacked cards, specification disclaimer note, preselection routing)
+  - `src/styles/index.css` (Added table styling, hover/active row states, mobile stacked card views, disclaimer banner, custom specification CTA box)
+- **Messaging & Matrix Architecture:**
+  - **Eyebrow:** `TEA GRADE REFERENCE`
+  - **Heading:** `Compare Tea Grades by Commercial Application`
+  - **Lead:** "Tea grade selection depends on the intended application, cup profile, extraction requirements and buyer specification."
+  - **6 Core Assam CTC Grades (Section 3 Consistent):**
+    1. `BOP` (Broken Orange Pekoe): Commercial blends / full-bodied applications | Larger broken CTC cut | *Full-Bodied Base*
+    2. `BOPSM` (BOP Small / Mixed): Commercial blends / faster extraction | Smaller granular cut | *Rapid Extraction*
+    3. `BP` (Broken Pekoe): Blending applications | Medium broken cut | *Uniform Granulation*
+    4. `PF` (Pekoe Fannings): Tea bags / filter applications | Fine cut | *Quick-Infusing*
+    5. `PD` (Pekoe Dust): Strong tea / milk tea / commercial applications | Fine granular cut | *High-Density Strength*
+    6. `Dust` (Commercial Dust): High-strength / foodservice applications | Fine granular cut | *Maximum Liquor Yield*
+  - **Specification Disclaimer Note:**
+    - "Grade descriptions are indicative commercial references. Final grade, cup profile, packing and specification are confirmed against the buyer requirement and sample/quotation stage."
+  - **Custom Specifications Banner:**
+    - Guidance for buyers seeking Orthodox whole leaf, Darjeeling invoices, or custom mesh sieve formulations.
+- **Interactions & Pipeline Wiring:**
+  - Clicking any grade row selects it and enables direct routing via `Inquire Grade →` (smooth scrolls to `#requirement-form` and sets the form grade).
+  - Maintained single pipeline (`handleSelectGrade` in `HomePage.tsx`).
+- **Responsive Layout & Accessibility:**
+  - Desktop / Tablet (>768px): Authoritative tabular layout with semantic `<table>`, `<thead>`, `<th>`, `scope="col"`.
+  - Mobile (<=768px): Clean stacked specification cards with labeled key-value metadata and full-width tap targets.
+  - Zero unverified particle size measurements, moisture numbers, or laboratory claims.
+- **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.04s).
+- **Next Step:** Section 9 — Export Credibility & Documentation.
 

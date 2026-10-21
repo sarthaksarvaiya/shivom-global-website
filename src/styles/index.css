@@ -3427,6 +3427,354 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* --------------------------------------------------------------------------
+   SECTION 8: TEA GRADE / SPECIFICATION MATRIX
+   -------------------------------------------------------------------------- */
+.grade-matrix-section {
+  position: relative;
+  background-color: #FAF8F5;
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.grade-matrix-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.grade-matrix-eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.grade-matrix-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.grade-matrix-lead {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: #4B5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Table Wrapper */
+.grade-matrix-table-wrap {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.grade-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.grade-matrix-table thead tr {
+  background-color: #0D3829;
+  color: #FFFFFF;
+}
+
+.grade-matrix-table th {
+  padding: 16px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #D4AF37;
+  text-transform: uppercase;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.grade-matrix-table td {
+  padding: 16px 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #F0ECE4;
+  font-size: 0.9375rem;
+  transition: background-color 0.2s ease;
+}
+
+.grade-row {
+  cursor: pointer;
+}
+
+.grade-row:hover td {
+  background-color: #F8F5EE;
+}
+
+.grade-row-selected td {
+  background-color: #F5EFE3;
+  border-bottom-color: #E2D7C3;
+}
+
+.grade-code-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grade-code-text {
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: var(--color-primary-dark);
+  background: #FAF8F5;
+  border: 1px solid #D1C7B7;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.grade-feature-pill {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #92400E;
+  background: #FEF3C7;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.grade-full-name {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.grade-app-text {
+  color: #374151;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.grade-pos-text {
+  color: #6B7280;
+  font-size: 0.875rem;
+}
+
+.grade-inquire-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0D3829;
+  background-color: #FFFFFF;
+  border: 1px solid #D4AF37;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.grade-row:hover .grade-inquire-btn,
+.grade-inquire-btn-active {
+  background-color: #D4AF37;
+  color: #0D3829;
+  border-color: #D4AF37;
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.25);
+}
+
+/* Mobile Stacked Cards Layout */
+.grade-matrix-mobile-cards {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.grade-mobile-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.grade-mobile-card:hover,
+.grade-mobile-card-selected {
+  border-color: #D4AF37;
+  box-shadow: 0 6px 16px rgba(13, 56, 41, 0.08);
+  background: #FFFDF9;
+}
+
+.grade-mobile-top {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F0ECE4;
+}
+
+.grade-mobile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.grade-mobile-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6B7280;
+}
+
+.grade-mobile-val {
+  font-size: 0.9375rem;
+  color: #1F2937;
+  line-height: 1.4;
+}
+
+.grade-mobile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 6px;
+  background-color: #0D3829;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.grade-mobile-btn:hover {
+  background-color: #14533C;
+}
+
+/* Disclaimer Note */
+.grade-disclaimer-strip {
+  background: #FFFFFF;
+  border: 1px solid #E5E0D5;
+  border-left: 3px solid #D4AF37;
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.grade-disclaimer-icon {
+  color: #B45309;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.grade-disclaimer-text {
+  font-size: 0.875rem;
+  color: #4B5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Custom Specification Banner */
+.grade-custom-box {
+  background: linear-gradient(135deg, #0D3829 0%, #154734 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px -4px rgba(13, 56, 41, 0.25);
+}
+
+.grade-custom-left {
+  max-width: 680px;
+}
+
+.grade-custom-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #FBBF24;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.grade-custom-title {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.grade-custom-copy {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.grade-custom-action {
+  flex-shrink: 0;
+}
+
+.grade-custom-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background-color: #D4AF37;
+  color: #0D3829;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.grade-custom-btn:hover {
+  background-color: #E2BF4A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35);
+}
+
+@media (max-width: 768px) {
+  .grade-matrix-table-wrap {
+    display: none;
+  }
+  .grade-matrix-mobile-cards {
+    display: flex;
+  }
+  .grade-custom-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .grade-custom-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
    ACCESSIBILITY & REDUCED MOTION
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
