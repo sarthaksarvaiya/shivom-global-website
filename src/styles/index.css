@@ -3775,6 +3775,391 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* --------------------------------------------------------------------------
+   SECTION 9: EXPORT CREDIBILITY & DOCUMENTATION
+   -------------------------------------------------------------------------- */
+.export-cred-section {
+  position: relative;
+  background-color: #FFFFFF;
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.export-cred-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.export-cred-eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.export-cred-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.export-cred-lead {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: #4B5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 2-Column Split */
+.export-cred-split-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.export-cred-overview {
+  display: flex;
+  flex-direction: column;
+}
+
+.export-overview-title {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.25;
+  margin: 0 0 var(--space-4) 0;
+  letter-spacing: -0.01em;
+}
+
+.export-overview-text {
+  font-size: 0.9375rem;
+  color: #4B5563;
+  line-height: 1.6;
+  margin: 0 0 var(--space-6) 0;
+}
+
+/* Factual Credibility Statement Card */
+.export-statement-card {
+  background: linear-gradient(135deg, #0A281D 0%, #0D3829 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: var(--radius-md);
+  padding: clamp(1.5rem, 2.5vw, 1.75rem);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  color: #FFFFFF;
+  margin-bottom: var(--space-6);
+  box-shadow: 0 8px 24px -4px rgba(10, 40, 29, 0.25);
+}
+
+.export-statement-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #FBBF24;
+}
+
+.export-statement-tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #FBBF24;
+  margin-bottom: 6px;
+}
+
+.export-statement-quote {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.45;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.export-statement-sub {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.export-destination-note {
+  background: #FAF8F5;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+}
+
+.export-destination-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary-green);
+  margin-bottom: 4px;
+}
+
+.export-destination-text {
+  font-size: 0.875rem;
+  color: #4B5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Right Column: 3 Document Category Cards */
+.export-docs-column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.export-doc-card {
+  background: #FAF8F5;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 2vw, 1.5rem);
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.export-doc-card:hover {
+  transform: translateY(-3px);
+  background: #FFFFFF;
+  border-color: #D4AF37;
+  box-shadow: 0 12px 28px -6px rgba(13, 56, 41, 0.08);
+}
+
+.export-doc-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.export-doc-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(13, 56, 41, 0.06);
+  color: var(--color-primary-green);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.export-doc-card:hover .export-doc-icon-box {
+  background: #FEF3C7;
+  color: #92400E;
+  transform: scale(1.06);
+}
+
+.export-doc-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.export-doc-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #92400E;
+}
+
+.export-doc-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.export-doc-desc {
+  font-size: 0.875rem;
+  color: #4B5563;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.export-doc-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #ECE7DE;
+}
+
+.export-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.export-doc-check {
+  color: #059669;
+  flex-shrink: 0;
+}
+
+/* Bottom Strip: Simple Export Flow Sequence */
+.export-flow-container {
+  background: #FAF8F5;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-md);
+  padding: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+.export-flow-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.export-flow-heading {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+
+.export-flow-sub {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.export-flow-timeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.export-flow-step {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.export-flow-node {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.export-flow-num {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #0D3829;
+  background: #FFFFFF;
+  border: 2px solid #D4AF37;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.export-flow-connector {
+  position: absolute;
+  left: 32px;
+  right: -12px;
+  top: 50%;
+  height: 2px;
+  background-color: #E2D7C3;
+  z-index: 1;
+}
+
+.export-flow-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1F2937;
+  line-height: 1.3;
+}
+
+.export-flow-action {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+  border-top: 1px solid #ECE7DE;
+}
+
+.export-flow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #0D3829;
+  color: #FFFFFF;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.export-flow-btn:hover {
+  background-color: #14533C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(13, 56, 41, 0.25);
+}
+
+@media (max-width: 1024px) {
+  .export-cred-split-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .export-flow-timeline {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .export-flow-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .export-flow-timeline {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .export-flow-step {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+  .export-flow-node {
+    margin-bottom: 0;
+  }
+  .export-flow-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
    ACCESSIBILITY & REDUCED MOTION
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

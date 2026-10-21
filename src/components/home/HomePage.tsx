@@ -8,6 +8,7 @@ import { WhoWeServeSection } from '@/components/home/WhoWeServeSection';
 import { HowWeWorkSection } from '@/components/home/HowWeWorkSection';
 import { GradeMatrix } from '@/components/home/GradeMatrix';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
+import { ExportCredibilitySection } from '@/components/home/ExportCredibilitySection';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 
@@ -158,6 +159,11 @@ export const HomePage: React.FC = () => {
         {/* Section 8: Interactive Grade Matrix */}
         <GradeMatrix 
           onSelectGrade={handleSelectGrade}
+        />
+
+        {/* Section 9: Export Credibility & Documentation */}
+        <ExportCredibilitySection 
+          onSubmitRequirement={scrollToForm}
         />
 
         {/* Section 10: Buyer Requirement Form */}

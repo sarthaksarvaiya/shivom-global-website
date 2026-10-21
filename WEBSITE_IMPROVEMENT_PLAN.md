@@ -866,7 +866,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 6: How It Works** | `HowWeWorkSection.tsx` | **COMPLETED** | 6-step commercial sourcing workflow, Buyer-First principle card, inquiry scoping checklist, dual CTAs. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **COMPLETED** | Editorial value pillars, 4 core pillars, Buyer-First Inventory-Last highlight banner, clean B2B copy. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **COMPLETED** | 6 Assam CTC grades, B2B comparison matrix, mobile stacked cards, specification disclaimer note, grade inquiry preselection. |
-| **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
+| **Section 9: Export Credibility** | `ExportCredibilitySection.tsx` | **COMPLETED** | 3 document category cards (Commercial, Shipping, Compliance), factual credibility statement, 6-step export sequence. |
 | **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **PENDING** | Hardened in Phase 4. |
 | **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **PENDING** | Existing statutory disclosure footer. |
 
@@ -1090,4 +1090,33 @@ The website improvement work will be considered complete and ready for productio
   - Zero unverified particle size measurements, moisture numbers, or laboratory claims.
 - **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.04s).
 - **Next Step:** Section 9 — Export Credibility & Documentation.
+
+---
+
+### Detailed Task Log: Section 9 — Export Credibility & Documentation
+- **Status:** `COMPLETED`
+- **Files Created / Modified:**
+  - `src/components/home/ExportCredibilitySection.tsx` (Created — 2-column split layout, 3 document category cards, factual credibility statement, 6-node linear export flow)
+  - `src/components/home/HomePage.tsx` (Modified — wired Section 9 between GradeMatrix and BuyerRequirementForm)
+  - `src/styles/index.css` (Added dedicated Section 9 styling, responsive grid, card hover elevations, export sequence timeline)
+- **Messaging & Documentation Architecture:**
+  - **Eyebrow:** `EXPORT & DOCUMENTATION`
+  - **Heading:** `Prepared for Commercial Export`
+  - **Lead:** "Export requirements depend on the product, destination, shipment and buyer requirements. We coordinate the applicable commercial and shipping documentation for confirmed orders."
+  - **3 Document Categories:**
+    1. `Commercial Documents`: Commercial Invoice, Packing List, Quotation / Proforma Documentation.
+    2. `Shipping & Export Documentation`: Shipping documentation (Bill of Lading / Waybill), Transport & gate pass documentation, Applicable Indian export paperwork.
+    3. `Product & Compliance Documentation (Where Applicable)`: Product specifications & technical parameters, Certificate / test documentation (where agreed), Origin-related documentation (Certificate of Origin), Other destination-specific import paperwork.
+  - **Credibility Statement (Anti-Fabrication Compliant):**
+    - Quote: *"Documentation is coordinated according to the agreed product, shipment and destination requirements."*
+    - Zero fake certification logos, badges, or claims of owning cargo fleets/customs authorities.
+  - **Export Coordination Sequence:**
+    - `01 Buyer Requirement` → `02 Commercial Confirmation` → `03 Packing` → `04 Documentation` → `05 Dispatch` → `06 Destination`
+    - Action CTA: `Discuss Commercial Export Requirements →` (smooth scrolls to `#requirement-form`).
+- **Responsive Layout & Accessibility:**
+  - Desktop (>1024px): 2-column split with connected 6-node linear flow.
+  - Tablet (641px–1024px): Stacked overview & document cards, 3-column timeline.
+  - Mobile (<=640px): 1-column cards and timeline, touch targets >= 44px, zero horizontal overflow.
+- **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.28s).
+- **Next Step:** Section 10 — Buyer Requirement Engine.
 
