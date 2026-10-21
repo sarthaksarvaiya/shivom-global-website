@@ -867,7 +867,7 @@ The website improvement work will be considered complete and ready for productio
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **COMPLETED** | Editorial value pillars, 4 core pillars, Buyer-First Inventory-Last highlight banner, clean B2B copy. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **COMPLETED** | 6 Assam CTC grades, B2B comparison matrix, mobile stacked cards, specification disclaimer note, grade inquiry preselection. |
 | **Section 9: Export Credibility** | `ExportCredibilitySection.tsx` | **COMPLETED** | 3 document category cards (Commercial, Shipping, Compliance), factual credibility statement, 6-step export sequence. |
-| **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **PENDING** | Hardened in Phase 4. |
+| **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **COMPLETED** | 4 logical field groups, optional commercial fields (buyer role, target price, notes), B2B CTA, verified Supabase + Resend pipeline. |
 | **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **PENDING** | Existing statutory disclosure footer. |
 
 ---
@@ -1119,4 +1119,41 @@ The website improvement work will be considered complete and ready for productio
   - Mobile (<=640px): 1-column cards and timeline, touch targets >= 44px, zero horizontal overflow.
 - **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.28s).
 - **Next Step:** Section 10 — Buyer Requirement Engine.
+
+---
+
+### Detailed Task Log: Section 10 — Buyer Requirement Engine
+- **Status:** `COMPLETED`
+- **Files Created / Modified:**
+  - `src/components/home/BuyerRequirementForm.tsx` (Rebuilt — 4 logical field groups, improved labels/hints, trust banner, B2B CTA `Submit Commercial Requirement`, honest success state with real reference ID)
+  - `src/types/buyerRequirement.ts` (Added optional `buyerRole`, `targetPrice`, `additionalMessage`)
+  - `src/utils/requirementValidation.ts` (Safely bundled optional fields into `qualitySpecs` for backend backwards compatibility)
+  - `vite.config.ts` (Configured `loadEnv` to populate `process.env` in local dev serverless middleware)
+  - `src/styles/index.css` (Added dedicated Section 10 styles, gradient dark forest canvas, high-conversion white card, structured grid layouts, hover states, error recovery box)
+- **Messaging & Field Group Architecture:**
+  - **Eyebrow:** `START A COMMERCIAL DISCUSSION`
+  - **Heading:** `Tell Us What You Need`
+  - **Lead:** "Share your tea requirement and commercial parameters. Our trade desk can review the requirement and coordinate the appropriate sourcing path."
+  - **4 Logical Field Groups:**
+    1. `01 PRODUCT REQUIREMENT`: Tea Category / Scope, Grade / Specification, Target Application & Cup Profile Notes (Optional).
+    2. `02 COMMERCIAL REQUIREMENT`: Estimated Quantity / Order Scope, Packing Format, Discharging Port & Destination Country, Target Price / Commercial Expectation (Optional).
+    3. `03 BUYER CORPORATE PROFILE`: Company Legal Name, Contact Person & Title, Corporate Email, Phone / WhatsApp, Registration Country, Buyer Role (Optional).
+    4. `04 ADDITIONAL CONTEXT`: Additional Message or Sourcing Notes (Optional).
+  - **Commercial Sourcing Trust Banner:**
+    - "Your requirement is reviewed as a commercial sourcing request. Final availability, specification, pricing and terms are confirmed during the quotation and sampling process."
+  - **Final CTA Action:**
+    - `Submit Commercial Requirement` (avoiding retail words like "Buy Now" or "Order").
+  - **Authoritative Success State:**
+    - Displays `Requirement received.` with actual backend-generated reference code (format: `SG-REQ-YYYYMMDD-XXXX`).
+    - Full summary snapshot of all submitted product, commercial, and buyer profile parameters.
+- **Backend Pipeline & Security Preservation:**
+  - Preserved single pipeline: `POST /api/buyer-requirements`.
+  - Zero duplicate tables or alternate endpoints created.
+  - Server-side rate limiting (15 req / 10 min window), RFC 5322 email regex, international phone validation, honeypot bot trap, and payload size bounds (50KB) preserved.
+  - End-to-end verified with live Supabase persistence and Resend notification.
+- **Responsive Layout & Accessibility:**
+  - Tested across responsive widths: 375px, 390px, 412px, 768px, 1024px, 1440px.
+  - Minimum touch targets >= 44–52px. Zero horizontal overflow.
+  - Semantic form labels, `aria-invalid`, `aria-describedby`, error alert live regions, and ref-based focus management upon validation errors.
+- **Validation:** Build validated with `npm run build` (0 TypeScript / 0 Vite build errors in 1.05s).
 

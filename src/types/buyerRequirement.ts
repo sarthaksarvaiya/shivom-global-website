@@ -54,6 +54,9 @@ export interface BuyerRequirementFormData {
   businessEmail: string;
   phoneWhatsApp: string;
   country: string;
+  buyerRole?: string;
+  targetPrice?: string;
+  additionalMessage?: string;
 }
 
 export interface BuyerRequirementRecord extends BuyerRequirementFormData {

@@ -140,18 +140,36 @@ export const generateRequirementReference = (): string => {
  * Build a sanitized commercial requirement record
  */
 export const buildRequirementRecord = (data: BuyerRequirementFormData): BuyerRequirementRecord => {
+  const specsParts: string[] = [];
+  if (data.buyerRole && data.buyerRole.trim()) {
+    specsParts.push(`Buyer Role: ${data.buyerRole.trim()}`);
+  }
+  if (data.targetPrice && data.targetPrice.trim()) {
+    specsParts.push(`Target Price / Commercial Term: ${data.targetPrice.trim()}`);
+  }
+  if (data.qualitySpecs && data.qualitySpecs.trim()) {
+    specsParts.push(`Technical Specs: ${data.qualitySpecs.trim()}`);
+  }
+  if (data.additionalMessage && data.additionalMessage.trim()) {
+    specsParts.push(`Additional Message: ${data.additionalMessage.trim()}`);
+  }
+  const assembledQualitySpecs = specsParts.length > 0 ? specsParts.join('\n\n') : sanitizeInput(data.qualitySpecs || '');
+
   return {
     requirementType: sanitizeInput(data.requirementType),
     grade: sanitizeInput(data.grade),
     volume: sanitizeInput(data.volume),
     packaging: sanitizeInput(data.packaging),
     destinationPort: sanitizeInput(data.destinationPort),
-    qualitySpecs: sanitizeInput(data.qualitySpecs),
+    qualitySpecs: assembledQualitySpecs.slice(0, 2000),
     companyName: sanitizeInput(data.companyName),
     contactPerson: sanitizeInput(data.contactPerson),
     businessEmail: sanitizeInput(data.businessEmail),
     phoneWhatsApp: sanitizeInput(data.phoneWhatsApp),
     country: sanitizeInput(data.country),
+    buyerRole: data.buyerRole ? sanitizeInput(data.buyerRole) : undefined,
+    targetPrice: data.targetPrice ? sanitizeInput(data.targetPrice) : undefined,
+    additionalMessage: data.additionalMessage ? sanitizeInput(data.additionalMessage) : undefined,
     referenceId: generateRequirementReference(),
     submittedAt: new Date().toISOString(),
     schemaVersion: '1.0.0',

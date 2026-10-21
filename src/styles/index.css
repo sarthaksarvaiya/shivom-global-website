@@ -4160,6 +4160,403 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* --------------------------------------------------------------------------
+   SECTION 10: BUYER REQUIREMENT ENGINE
+   -------------------------------------------------------------------------- */
+.buyer-engine-section {
+  position: relative;
+  background: linear-gradient(180deg, #071E15 0%, #0D3829 100%);
+  padding: clamp(4.5rem, 8vw, 7rem) 0;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.buyer-engine-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.buyer-engine-eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.buyer-engine-title {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.buyer-engine-lead {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Card Container */
+.buyer-engine-card {
+  max-width: 880px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  color: var(--text-main);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Form Root & Field Groups */
+.buyer-form-root {
+  display: flex;
+  flex-direction: column;
+}
+
+.buyer-form-group-section {
+  padding-bottom: clamp(1.5rem, 2.5vw, 2rem);
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
+  border-bottom: 1px solid #ECE7DE;
+}
+
+.buyer-form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-4);
+}
+
+.buyer-section-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #FEF3C7;
+  color: #92400E;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.buyer-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.buyer-section-num {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--color-accent-gold);
+}
+
+.buyer-section-title {
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--color-primary-dark);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.buyer-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.buyer-form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+/* Trust Banner */
+.buyer-form-trust-banner {
+  background: #FAF8F5;
+  border: 1px solid #E5E0D5;
+  border-left: 3px solid #D4AF37;
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: var(--space-6);
+}
+
+.buyer-trust-icon-box {
+  color: #B45309;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.buyer-trust-text {
+  font-size: 0.8125rem;
+  color: #4B5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Error Banner in Section 10 */
+.buyer-error-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.buyer-error-icon {
+  color: #991B1B;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.buyer-error-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #991B1B;
+  margin-bottom: 2px;
+}
+
+.buyer-error-msg {
+  font-size: 0.8125rem;
+  color: #7F1D1D;
+  line-height: 1.45;
+}
+
+.buyer-error-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.buyer-error-fallback {
+  font-size: 0.8125rem;
+  color: #7F1D1D;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Action Area */
+.buyer-form-action-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.buyer-submit-btn {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 28px;
+  background-color: #D4AF37;
+  color: #0D3829;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buyer-submit-btn:hover:not(:disabled) {
+  background-color: #E2BF4A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
+}
+
+.buyer-submit-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.buyer-btn-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.buyer-micro-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: #6B7280;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.buyer-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.buyer-badge-dot {
+  color: #D1D5DB;
+}
+
+/* Success State Styles */
+.buyer-engine-success {
+  text-align: center;
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--space-2);
+}
+
+.buyer-success-icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(13, 56, 41, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+.buyer-success-icon {
+  color: var(--color-primary-green);
+}
+
+.buyer-success-badge-wrap {
+  margin-bottom: var(--space-2);
+}
+
+.buyer-success-title {
+  font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.buyer-success-lead {
+  max-width: 600px;
+  margin: 0 auto var(--space-5);
+  font-size: 0.9375rem;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+.buyer-success-ref-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FAF8F5;
+  border: 1px solid #D4AF37;
+  padding: 8px 18px;
+  border-radius: 6px;
+  margin-bottom: var(--space-6);
+}
+
+.buyer-success-ref-label {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.buyer-success-ref-val {
+  font-size: 1.125rem;
+  color: #92400E;
+  letter-spacing: 0.04em;
+}
+
+.buyer-success-summary {
+  background: #FAF8F5;
+  border: 1px solid #E5E0D5;
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  max-width: 640px;
+  margin: 0 auto var(--space-6);
+  text-align: left;
+}
+
+.buyer-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #E5E0D5;
+  margin-bottom: 12px;
+}
+
+.buyer-summary-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buyer-summary-ref {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+}
+
+.buyer-summary-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #1F2937;
+}
+
+.buyer-summary-timestamp {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px dashed #E5E0D5;
+  text-align: center;
+}
+
+.buyer-success-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.buyer-success-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  background-color: #FFFFFF;
+  border: 1px solid #D1C7B7;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.buyer-success-reset-btn:hover {
+  background-color: #FAF8F5;
+  border-color: #D4AF37;
+}
+
+@media (max-width: 768px) {
+  .buyer-form-grid-2,
+  .buyer-form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
    ACCESSIBILITY & REDUCED MOTION
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
