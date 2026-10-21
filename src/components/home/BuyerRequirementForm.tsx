@@ -2,6 +2,9 @@ import { CONTACT_INFO } from '@/constants/contact';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Send, 
+  MessageCircle,
+  Phone,
+  MapPin,
   CheckCircle2, 
   ShieldCheck, 
   RotateCcw, 
@@ -149,7 +152,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
       }
     } catch {
       setFormStatus('SUBMISSION_ERROR');
-      setSubmissionError('Network error communicating with the commercial submission desk. Please verify your connection and try again.');
+      setSubmissionError('Network error communicating with the submission desk. Please verify your connection and try again.');
     }
   };
 
@@ -168,15 +171,75 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
         {/* Section Header */}
         <div className="buyer-engine-header">
           <div className="buyer-engine-eyebrow">
-            <span className="spec-badge spec-badge-gold">START A COMMERCIAL DISCUSSION</span>
+            <span className="spec-badge spec-badge-gold">SUBMIT YOUR REQUIREMENT</span>
           </div>
           <h2 id="buyer-engine-heading" className="buyer-engine-title">
             Tell Us What You Need
           </h2>
           <p className="buyer-engine-lead">
-            Share your tea requirement and commercial parameters. Our trade desk can review the requirement 
-            and coordinate the appropriate sourcing path.
+            Share your tea specifications and order parameters. Our trade desk will review your requirement and coordinate matching sourcing options.
           </p>
+        </div>
+
+        {/* Direct Contact Channels Strip */}
+        <div className="contact-direct-strip" role="region" aria-label="Direct trade desk contact options">
+          <div className="contact-direct-top">
+            <h3 className="contact-direct-title">Prefer Direct Contact?</h3>
+            <p className="contact-direct-desc">
+              Reach our trade desk directly via WhatsApp, Phone, or Email for immediate questions or inquiries:
+            </p>
+          </div>
+
+          <div className="contact-direct-grid">
+            <a 
+              href={CONTACT_INFO.whatsapp.getLink()} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="contact-direct-card card-whatsapp"
+              aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+            >
+              <div className="contact-direct-icon-wrap wa-icon-wrap" aria-hidden="true">
+                <MessageCircle size={20} />
+              </div>
+              <div className="contact-direct-info">
+                <span className="contact-direct-type">WhatsApp Us</span>
+                <span className="contact-direct-val">{CONTACT_INFO.whatsapp.display}</span>
+              </div>
+            </a>
+
+            <a 
+              href={CONTACT_INFO.phone.telLink} 
+              className="contact-direct-card card-phone"
+              aria-label={CONTACT_INFO.phone.ariaLabel}
+            >
+              <div className="contact-direct-icon-wrap phone-icon-wrap" aria-hidden="true">
+                <Phone size={18} />
+              </div>
+              <div className="contact-direct-info">
+                <span className="contact-direct-type">Call Us</span>
+                <span className="contact-direct-val">{CONTACT_INFO.phone.display}</span>
+              </div>
+            </a>
+
+            <a 
+              href={CONTACT_INFO.email.mailtoLink} 
+              className="contact-direct-card card-email"
+              aria-label={CONTACT_INFO.email.ariaLabel}
+            >
+              <div className="contact-direct-icon-wrap email-icon-wrap" aria-hidden="true">
+                <Mail size={18} />
+              </div>
+              <div className="contact-direct-info">
+                <span className="contact-direct-type">Email Us</span>
+                <span className="contact-direct-val">{CONTACT_INFO.email.address}</span>
+              </div>
+            </a>
+          </div>
+
+          <div className="contact-direct-footer-note">
+            <MapPin size={14} aria-hidden="true" />
+            <span>Principal Commercial Base: <strong>{CONTACT_INFO.address.display}</strong></span>
+          </div>
         </div>
 
         {/* Form Container Card */}
@@ -184,7 +247,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
           
           {formStatus === 'SUCCESS' && submittedRecord ? (
             /* Authoritative Success State (Actual Backend Reference ID) */
-            <div className="buyer-engine-success" role="region" aria-label="Commercial Requirement Confirmation">
+            <div className="buyer-engine-success" role="region" aria-label="Requirement Confirmation">
               <div className="buyer-success-icon-wrap">
                 <CheckCircle2 size={40} className="buyer-success-icon" />
               </div>
@@ -198,12 +261,12 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. Your commercial tea sourcing parameters have been received by the SHIVOM GLOBAL trade desk. 
-                Our commercial team will review your specification against origin availability.
+                Thank you. Your tea sourcing parameters have been received by the SHIVOM GLOBAL trade desk. 
+                Our team will review your specification against origin availability and contact you promptly.
               </p>
 
               <div className="buyer-success-ref-box">
-                <span className="buyer-success-ref-label">Commercial Reference:</span>
+                <span className="buyer-success-ref-label">Reference ID:</span>
                 <strong className="font-spec buyer-success-ref-val">
                   {submittedRecord.referenceId}
                 </strong>
@@ -214,7 +277,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <div className="buyer-summary-header">
                   <div className="buyer-summary-title">
                     <FileCheck2 size={16} />
-                    <span>Commercial Requirement Summary</span>
+                    <span>Requirement Summary</span>
                   </div>
                   <span className="font-spec buyer-summary-ref">
                     {submittedRecord.referenceId}
@@ -297,7 +360,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-describedby={errors.requirementType ? 'requirementType-error' : undefined}
                     >
                       <option value="Bulk Tea for Repacking">Bulk Tea Supply (25kg Kraft Sacks)</option>
-                      <option value="Assam CTC">Assam CTC Black Tea (Core Commercial)</option>
+                      <option value="Assam CTC">Assam CTC Black Tea</option>
                       <option value="Orthodox">Orthodox Black Tea (Whole & Broken Leaf)</option>
                       <option value="Darjeeling">Darjeeling Specialty Tea (GI Protected)</option>
                       <option value="Green Tea">Indian Mountain Green Tea</option>
@@ -331,7 +394,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       <option value="BP">BP — Broken Pekoe (Blending Backbone)</option>
                       <option value="PF">PF — Pekoe Fannings (Tea Bags / Quick Brew)</option>
                       <option value="PD">PD — Pekoe Dust (High-Density / Chai / Karak)</option>
-                      <option value="Dust">Dust / CD — Commercial Dust (High Yield)</option>
+                      <option value="Dust">Dust / D1 (High Extraction & Color)</option>
                       <option value="Open to Recommendation">Open to Recommendation (Based on Application)</option>
                       <option value="Custom">Custom Sieve / Counter-Sample Formulation</option>
                     </select>
@@ -353,7 +416,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     id="qualitySpecs"
                     name="qualitySpecs"
                     className={`form-textarea ${errors.qualitySpecs ? 'form-input-error' : ''}`}
-                    placeholder="e.g. For commercial milk tea / Samovar preparation, target liquor color, leaf appearance, or specific regulatory limits (GSO, EU, etc.)..."
+                    placeholder="e.g. Target liquor color, leaf appearance, extraction strength, or destination regulatory parameters..."
                     value={formData.qualitySpecs}
                     onChange={(e) => handleFieldChange('qualitySpecs', e.target.value)}
                     rows={2}
@@ -373,7 +436,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </div>
               </div>
 
-              {/* GROUP 2: COMMERCIAL REQUIREMENT */}
+              {/* GROUP 2: ORDER & SHIPPING SPECIFICATIONS */}
               <div className="buyer-form-group-section">
                 <div className="buyer-form-section-header">
                   <div className="buyer-section-icon-box">
@@ -381,7 +444,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                   <div className="buyer-section-title-wrap">
                     <span className="buyer-section-num">02</span>
-                    <h3 className="buyer-section-title">COMMERCIAL REQUIREMENT</h3>
+                    <h3 className="buyer-section-title">ORDER & SHIPPING PARAMETERS</h3>
                   </div>
                 </div>
 
@@ -401,7 +464,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-describedby={errors.volume ? 'volume-error' : undefined}
                     >
                       <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg)</option>
-                      <option value="Commercial LCL (1 – 5 MT)">Commercial LCL (1 – 5 MT)</option>
+                      <option value="LCL (1 – 5 MT)">LCL (1 – 5 MT)</option>
                       <option value="Full Container Load (1x20ft FCL ~10–12 MT)">Full Container Load (1x20ft FCL ~10–12 MT)</option>
                       <option value="Multi-Container Contract (2+ FCL)">Multi-Container Contract (2+ FCL)</option>
                     </select>
@@ -475,7 +538,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Target Price (Optional) */}
                   <div className="form-group">
                     <label htmlFor="targetPrice" className="form-label">
-                      Target Price / Commercial Expectation (Optional)
+                      Target Price Expectation (Optional)
                     </label>
                     <input 
                       id="targetPrice"
@@ -488,7 +551,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-describedby="targetPrice-hint"
                     />
                     <span id="targetPrice-hint" className="form-hint">
-                      Optional benchmark for commercial feasibility matching.
+                      Optional benchmark for price matching.
                     </span>
                   </div>
                 </div>
@@ -645,7 +708,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                 </div>
 
-                {/* Buyer Commercial Role (Optional) */}
+                {/* Buyer Business Type (Optional) */}
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label htmlFor="buyerRole" className="form-label">
                     Buyer Role (Optional)
@@ -662,7 +725,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     <option value="Private Label / Retail Brand">Private Label / Retail Brand</option>
                     <option value="Foodservice / Hospitality">Foodservice / Hospitality</option>
                     <option value="Distributor / Wholesaler">Distributor / Wholesaler</option>
-                    <option value="Other">Other Commercial Enterprise</option>
+                    <option value="Other">Other Business Enterprise</option>
                   </select>
                 </div>
               </div>
@@ -701,8 +764,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <Lock size={16} />
                 </div>
                 <p className="buyer-trust-text">
-                  Your requirement is reviewed as a commercial sourcing request. 
-                  Final availability, specification, pricing and terms are confirmed during the quotation and sampling process.
+                  Your requirement is reviewed directly by our trade desk. Final availability, specifications, pricing, and terms are confirmed during the sampling and quotation process.
                 </p>
               </div>
 
@@ -716,7 +778,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                         {formStatus === 'SUBMISSION_ERROR' ? 'Submission Temporarily Unavailable' : 'Please Review Required Fields'}
                       </div>
                       <div className="buyer-error-msg">
-                        {submissionError || 'Some required commercial fields are missing or contain formatting errors. Please correct the highlighted fields above.'}
+                        {submissionError || 'Some required fields are missing or contain formatting errors. Please correct the highlighted fields above.'}
                       </div>
                       {formStatus === 'SUBMISSION_ERROR' && (
                         <div className="buyer-error-actions">
@@ -745,16 +807,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   type="submit" 
                   className="buyer-submit-btn" 
                   disabled={formStatus === 'SUBMITTING'}
-                  aria-label="Submit commercial tea requirement"
+                  aria-label="Submit Buyer Requirement"
                 >
                   {formStatus === 'SUBMITTING' ? (
                     <span className="buyer-btn-inner">
                       <RefreshCw size={18} className="animate-spin" />
-                      <span>Transmitting Commercial Requirement...</span>
+                      <span>Transmitting Requirement...</span>
                     </span>
                   ) : (
                     <span className="buyer-btn-inner">
-                      <span>Submit Commercial Requirement</span>
+                      <span>Submit Buyer Requirement</span>
                       <Send size={18} />
                     </span>
                   )}
@@ -768,7 +830,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <span className="buyer-badge-dot">•</span>
                   <div className="buyer-badge-item">
                     <ShieldCheck size={13} color="var(--color-primary-green)" />
-                    <span>Strict B2B Commercial Confidentiality</span>
+                    <span>Strict B2B Confidentiality</span>
                   </div>
                 </div>
               </div>

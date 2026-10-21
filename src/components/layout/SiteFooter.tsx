@@ -60,18 +60,18 @@ export const SiteFooter: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Tea Categories & Grades */}
+          {/* Column 2: Tea Portfolio */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Tea Sourcing Portfolio</h4>
+            <h4 className="footer-col-title">Tea Portfolio</h4>
             <ul className="footer-nav-list">
               <li className="footer-nav-item">
-                <a href="#assam-ctc" onClick={(e) => handleScrollTo(e, 'assam-ctc')} className="footer-nav-link">
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
                   Assam CTC Black Tea
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  Orthodox Black Tea (Whole & Broken Leaf)
+                  Orthodox Black Tea (Whole &amp; Broken)
                 </a>
               </li>
               <li className="footer-nav-item">
@@ -81,44 +81,44 @@ export const SiteFooter: React.FC = () => {
               </li>
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  Specialty & Regional Teas (On-Demand)
+                  Indian Green Tea (Mountain Terroirs)
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-nav-link">
-                  Commercial Tea Grade Reference Matrix
+                  Tea Grade Specification Table
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-nav-link">
-                  Private Label & OEM Contract Packing Hub
+                  Private Label &amp; Custom Packaging
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Commercial Homepage Navigation */}
+          {/* Column 3: Site Navigation */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Commercial Navigation</h4>
+            <h4 className="footer-col-title">Site Navigation</h4>
             <ul className="footer-nav-list">
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  What We Supply (Categories)
+                  Teas We Supply
                 </a>
               </li>
               <li className="footer-nav-item">
-                <a href="#assam-ctc" onClick={(e) => handleScrollTo(e, 'assam-ctc')} className="footer-nav-link">
-                  Assam CTC Spotlight
+                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-nav-link">
+                  Tea Grade Table
                 </a>
               </li>
               <li className="footer-nav-item">
-                <a href="#who-we-serve" onClick={(e) => handleScrollTo(e, 'who-we-serve')} className="footer-nav-link">
-                  Who We Serve (Buyer Segments)
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-nav-link">
+                  Private Label Solutions
                 </a>
               </li>
               <li className="footer-nav-item">
-                <a href="#how-we-work" onClick={(e) => handleScrollTo(e, 'how-we-work')} className="footer-nav-link">
-                  How We Work (Sourcing Journey)
+                <a href="#how-it-works" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="footer-nav-link">
+                  How It Works
                 </a>
               </li>
               <li className="footer-nav-item">
@@ -127,13 +127,8 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </li>
               <li className="footer-nav-item">
-                <a href="#export-documentation" onClick={(e) => handleScrollTo(e, 'export-documentation')} className="footer-nav-link">
-                  Export & Documentation
-                </a>
-              </li>
-              <li className="footer-nav-item">
                 <a href="#requirement-form" onClick={(e) => handleScrollTo(e, 'requirement-form')} className="footer-nav-link footer-nav-highlight">
-                  Submit Commercial Requirement
+                  Submit Buyer Requirement
                 </a>
               </li>
             </ul>
@@ -215,9 +210,9 @@ export const SiteFooter: React.FC = () => {
                   href="#requirement-form" 
                   onClick={(e) => handleScrollTo(e, 'requirement-form')}
                   className="footer-cta-btn"
-                  aria-label="Submit commercial tea requirement to SHIVOM GLOBAL"
+                  aria-label="Submit buyer requirement to SHIVOM GLOBAL"
                 >
-                  <span>Submit Requirement</span>
+                  <span>Submit Buyer Requirement</span>
                   <ArrowRight size={14} aria-hidden="true" />
                 </a>
               </div>
@@ -230,16 +225,14 @@ export const SiteFooter: React.FC = () => {
         <div className="footer-disclosure-strip">
           <FileText size={16} className="footer-disclosure-icon" aria-hidden="true" />
           <p className="footer-disclosure-text">
-            <strong>Commercial Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea merchant sourcing and export coordination firm. 
-            Tea specifications, cup profiles, packaging formats, and commercial pricing are confirmed against individual buyer specifications, 
-            formal quotations, and contracted export sales agreements.
+            <strong>Statutory & Export Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea export merchant firm. Tea specifications, cup profiles, packaging formats, and pricing are confirmed against confirmed buyer specifications, formal quotations, and contracted export sales agreements.
           </p>
         </div>
 
         {/* Bottom Legal & Commercial Sub-Footer */}
         <div className="footer-bottom-row">
           <div className="footer-copyright">
-            © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Indian Registered Commercial Enterprise.
+            © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Registered Indian Enterprise.
           </div>
 
           <div className="footer-badges">

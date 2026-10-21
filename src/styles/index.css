@@ -5176,3 +5176,405 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
     display: none;
   }
 }
+
+/* ==========================================================================
+   7-SECTION RESTRUCTURE STYLES
+   ========================================================================== */
+
+/* --- 1. Teas Category Enhancements --- */
+.tea-category-origin {
+  font-size: 0.8125rem;
+  color: var(--color-accent-gold);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.tea-category-char-row {
+  font-size: 0.8125rem;
+  line-height: var(--leading-normal);
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.tea-category-char-row strong {
+  color: var(--color-primary-green);
+  font-weight: 700;
+}
+
+/* --- 2. Authoritative Grade Specification Table --- */
+.grade-table-scroll-hint {
+  display: none;
+  font-size: 0.75rem;
+  color: var(--color-accent-gold);
+  text-align: center;
+  margin-bottom: var(--space-3);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 900px) {
+  .grade-table-scroll-hint {
+    display: block;
+  }
+}
+
+.grade-matrix-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-6);
+}
+
+.grade-matrix-table {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.grade-matrix-table th {
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--color-accent-gold);
+}
+
+.grade-matrix-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+  font-size: 0.875rem;
+}
+
+.grade-row:nth-child(even) {
+  background-color: #faf9f6;
+}
+
+.grade-row:hover {
+  background-color: rgba(13, 56, 41, 0.04);
+}
+
+.grade-row-selected {
+  background-color: rgba(197, 155, 39, 0.08) !important;
+}
+
+.grade-profile-detail {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  line-height: var(--leading-normal);
+}
+
+/* --- 3. Private Label Streamlined Capabilities --- */
+.private-label-capabilities-box {
+  margin-top: var(--space-8);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-green) 100%);
+  border-radius: var(--radius-md);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+}
+
+.private-label-capabilities-left {
+  flex: 1 1 500px;
+}
+
+.private-label-caps-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.private-label-cap-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  line-height: var(--leading-normal);
+}
+
+.cap-check-icon {
+  flex-shrink: 0;
+  color: var(--color-accent-gold);
+  margin-top: 2px;
+}
+
+.private-label-capabilities-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* --- 4. How It Works (4-Step Concise Process) --- */
+.how-it-works-section {
+  padding: clamp(4rem, 7vw, 6rem) 0;
+  background: linear-gradient(180deg, #FAF8F5 0%, #F5F1E8 100%);
+}
+
+.how-it-works-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-10);
+}
+
+.how-it-works-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.how-it-works-lead {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-10);
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .how-it-works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .how-it-works-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.how-it-works-step-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.how-it-works-step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent-gold);
+}
+
+.step-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.step-card-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: rgba(13, 56, 41, 0.08);
+  color: var(--color-primary-green);
+  border-radius: var(--radius-sm);
+}
+
+.step-card-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-accent-gold);
+  letter-spacing: 0.05em;
+}
+
+.step-card-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.step-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.how-it-works-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+}
+
+.how-it-works-reassurance {
+  font-size: 0.9375rem;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+/* --- 5. Contact Section Direct Strip --- */
+.contact-direct-strip {
+  margin-bottom: var(--space-8);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(197, 155, 39, 0.3);
+  border-radius: var(--radius-md);
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.contact-direct-top {
+  margin-bottom: var(--space-4);
+}
+
+.contact-direct-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.contact-direct-desc {
+  font-size: 0.875rem;
+  color: var(--text-inverse-muted);
+  margin: 0;
+}
+
+.contact-direct-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .contact-direct-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.contact-direct-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.contact-direct-card:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.contact-direct-card:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
+.card-whatsapp {
+  border-left: 4px solid #25D366;
+}
+.card-whatsapp .contact-direct-type {
+  color: #4bdd82;
+}
+
+.card-phone {
+  border-left: 4px solid var(--color-accent-gold);
+}
+.card-phone .contact-direct-type {
+  color: var(--color-accent-gold);
+}
+
+.card-email {
+  border-left: 4px solid #60a5fa;
+}
+.card-email .contact-direct-type {
+  color: #93c5fd;
+}
+
+.contact-direct-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.wa-icon-wrap {
+  background-color: rgba(37, 211, 102, 0.2);
+  color: #25D366;
+}
+.phone-icon-wrap {
+  background-color: rgba(197, 155, 39, 0.2);
+  color: var(--color-accent-gold);
+}
+.email-icon-wrap {
+  background-color: rgba(96, 165, 250, 0.2);
+  color: #60a5fa;
+}
+
+.contact-direct-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-direct-type {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contact-direct-val {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.contact-direct-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-inverse-muted);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-direct-footer-note strong {
+  color: #ffffff;
+}

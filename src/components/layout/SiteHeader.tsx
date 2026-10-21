@@ -73,39 +73,25 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
           />
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links — 7-Section Architecture */}
         <nav 
           className="desktop-nav"
           style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}
           aria-label="Main Navigation"
         >
           <a 
-            href="#what-we-do" 
-            onClick={(e) => handleLinkClick(e, 'what-we-do')}
-            className="nav-link"
-          >
-            Capabilities
-          </a>
-          <a 
             href="#our-teas" 
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="nav-link"
           >
-            Our Teas
+            Teas
           </a>
           <a 
             href="#tea-by-grade" 
             onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
             className="nav-link"
           >
-            Tea by Grade
-          </a>
-          <a 
-            href="#how-we-work" 
-            onClick={(e) => handleLinkClick(e, 'how-we-work')}
-            className="nav-link"
-          >
-            How We Work
+            Grade Table
           </a>
           <a 
             href="#private-label" 
@@ -115,11 +101,25 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             Private Label
           </a>
           <a 
+            href="#how-it-works" 
+            onClick={(e) => handleLinkClick(e, 'how-it-works')}
+            className="nav-link"
+          >
+            How It Works
+          </a>
+          <a 
             href="#why-us" 
             onClick={(e) => handleLinkClick(e, 'why-us')}
             className="nav-link"
           >
             Why Us
+          </a>
+          <a 
+            href="#requirement-form" 
+            onClick={(e) => handleLinkClick(e, 'requirement-form')}
+            className="nav-link"
+          >
+            Contact
           </a>
         </nav>
 
@@ -271,46 +271,46 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
           </div>
 
           <a 
-            href="#what-we-do" 
-            onClick={(e) => handleLinkClick(e, 'what-we-do')}
-            className="mobile-nav-link"
-          >
-            Capabilities
-          </a>
-          <a 
             href="#our-teas" 
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="mobile-nav-link"
           >
-            Our Teas
+            Teas We Supply
           </a>
           <a 
             href="#tea-by-grade" 
             onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
             className="mobile-nav-link"
           >
-            Tea by Grade
-          </a>
-          <a 
-            href="#how-we-work" 
-            onClick={(e) => handleLinkClick(e, 'how-we-work')}
-            className="mobile-nav-link"
-          >
-            How We Work
+            Grade Specification Table
           </a>
           <a 
             href="#private-label" 
             onClick={(e) => handleLinkClick(e, 'private-label')}
             className="mobile-nav-link"
           >
-            Private Label & OEM
+            Private Label & Packaging
+          </a>
+          <a 
+            href="#how-it-works" 
+            onClick={(e) => handleLinkClick(e, 'how-it-works')}
+            className="mobile-nav-link"
+          >
+            How It Works
           </a>
           <a 
             href="#why-us" 
             onClick={(e) => handleLinkClick(e, 'why-us')}
             className="mobile-nav-link"
           >
-            Why Buyers Work With Us
+            Why SHIVOM GLOBAL
+          </a>
+          <a 
+            href="#requirement-form" 
+            onClick={(e) => handleLinkClick(e, 'requirement-form')}
+            className="mobile-nav-link"
+          >
+            Contact Trade Desk
           </a>
 
           <div style={{ paddingTop: 'var(--space-2)' }}>

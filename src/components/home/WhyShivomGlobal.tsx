@@ -1,11 +1,12 @@
 import React from 'react';
 import { 
-  Compass, 
   Layers, 
+  Globe2, 
+  FileCheck2, 
   Boxes, 
-  Ship, 
-  ArrowRight,
-  ShieldCheck
+  PackageCheck, 
+  MessageCircle,
+  ArrowRight
 } from 'lucide-react';
 
 export interface WhyShivomGlobalProps {
@@ -13,34 +14,42 @@ export interface WhyShivomGlobalProps {
 }
 
 export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequirement }) => {
-  const pillars = [
+  const points = [
     {
-      numeral: '01',
-      title: 'Requirement-Led Sourcing',
-      icon: Compass,
-      description: 'We begin with the buyer\'s requirement and identify suitable sourcing options around the requested specification.',
-      tag: 'Requirement-Led',
-    },
-    {
-      numeral: '02',
-      title: 'Specification-Led Selection',
+      num: '01',
+      title: 'Specification-Led Sourcing',
+      description: 'Every lot is procured and tested around your required particle size, liquor profile, and target parameters.',
       icon: Layers,
-      description: 'Tea category, grade, application, cup profile and commercial requirements are considered before sourcing and sampling.',
-      tag: 'Application-Matched',
     },
     {
-      numeral: '03',
-      title: 'Flexible Commercial Formats',
+      num: '02',
+      title: 'Multiple Origin Terroirs',
+      description: 'Access to primary Assam auctions and vetted estate gardens across Assam, Darjeeling, and North India.',
+      icon: Globe2,
+    },
+    {
+      num: '03',
+      title: 'Export Documentation Support',
+      description: 'Full statutory export documentation provided: Certificate of Origin, Phytosanitary, laboratory COA, and Bill of Lading.',
+      icon: FileCheck2,
+    },
+    {
+      num: '04',
+      title: 'Flexible Order Formats',
+      description: 'Support structured around trial orders (250kg–500kg), commercial LCL shipments, and multi-container (FCL) contracts.',
       icon: Boxes,
-      description: 'Support can be structured around bulk tea supply, private-label requirements and different commercial packing formats depending on the order.',
-      tag: 'Bulk & OEM Formats',
     },
     {
-      numeral: '04',
-      title: 'Export Coordination',
-      icon: Ship,
-      description: 'We coordinate the commercial, packing and documentation requirements needed to move an agreed order toward export.',
-      tag: 'Documentation & Transit',
+      num: '05',
+      title: 'Private-Label Capabilities',
+      description: 'Custom packaging solutions from 25kg bulk moisture-barrier sacks to retail-ready pouches, tins, and tea bags.',
+      icon: PackageCheck,
+    },
+    {
+      num: '06',
+      title: 'Direct Trade Desk Contact',
+      description: 'Direct communication with trade desk decision-makers for quick quotes, sample dispatch, and straightforward problem-solving.',
+      icon: MessageCircle,
     },
   ];
 
@@ -68,48 +77,43 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequir
             <span className="spec-badge spec-badge-gold">WHY SHIVOM GLOBAL</span>
           </div>
           <h2 id="why-shivom-title" className="why-shivom-title">
-            A Sourcing Partner Built Around the Buyer
+            Built for International Tea Buyers
           </h2>
           <p className="why-shivom-lead">
-            We coordinate Indian tea sourcing around the buyer's specification, application, 
-            packing requirements and commercial destination rather than treating every requirement 
-            as a standard product order.
+            We coordinate Indian tea sourcing around your exact grade, application, packing, and destination market requirements.
           </p>
         </div>
 
-        {/* 4 Core Value Pillars Grid */}
-        <div className="why-shivom-grid">
-          {pillars.map((pillar) => {
-            const Icon = pillar.icon;
+        {/* 6 Value Points Grid */}
+        <div className="why-shivom-grid" role="list">
+          {points.map((pt) => {
+            const Icon = pt.icon;
             return (
-              <div key={pillar.numeral} className="why-pillar-card">
+              <div key={pt.num} className="why-pillar-card" role="listitem">
                 <div className="why-pillar-top">
-                  <span className="why-pillar-num">{pillar.numeral}</span>
-                  <div className="why-pillar-icon-box">
+                  <span className="why-pillar-num font-spec">{pt.num}</span>
+                  <div className="why-pillar-icon-box" aria-hidden="true">
                     <Icon size={20} strokeWidth={2} />
                   </div>
                 </div>
 
                 <div className="why-pillar-body">
-                  <div className="why-pillar-tag">{pillar.tag}</div>
-                  <h3 className="why-pillar-heading">{pillar.title}</h3>
-                  <p className="why-pillar-desc">{pillar.description}</p>
+                  <h3 className="why-pillar-heading">{pt.title}</h3>
+                  <p className="why-pillar-desc">{pt.description}</p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Supporting Principle Highlight Banner */}
+        {/* Bottom Reassurance Banner */}
         <div className="why-principle-banner">
           <div className="why-principle-left">
-            <div className="why-principle-badge">
-              <ShieldCheck size={18} className="why-principle-shield-icon" />
-              <span>COMMERCIAL SOURCING PRINCIPLE</span>
-            </div>
-            <h3 className="why-principle-title">Requirement-Led, Confirmation-Driven</h3>
-            <p className="why-principle-copy">
-              Our model is designed around confirmed commercial requirements. Specifications, pricing, and availability are verified before any commercial commitment is made.
+            <h3 className="why-principle-title" style={{ margin: '0 0 6px 0', fontSize: '1.25rem' }}>
+              Have a Specific Tea Requirement or Benchmark Sample?
+            </h3>
+            <p className="why-principle-copy" style={{ margin: 0 }}>
+              Share your target specifications, target price, or sample parameters with our trade desk for prompt evaluation.
             </p>
           </div>
 
@@ -117,11 +121,12 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequir
             <button
               type="button"
               onClick={handleInquire}
-              className="why-principle-btn"
-              aria-label="Discuss your commercial tea requirement"
+              className="btn btn-primary btn-gold"
+              aria-label="Discuss your tea sourcing requirement"
+              id="btn-why-us-inquire"
             >
-              <span>Discuss Your Requirement</span>
-              <ArrowRight size={16} />
+              <span>Submit Sourcing Requirement</span>
+              <ArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
         </div>
