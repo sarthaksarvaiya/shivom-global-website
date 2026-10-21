@@ -202,17 +202,24 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
               <div style={{ marginBottom: 'var(--space-2)' }}>
                 <span className="spec-badge spec-badge-gold" style={{ fontSize: '0.75rem' }}>
-                  SPECIFICATION TRANSMITTED
+                  REQUIREMENT RECEIVED
                 </span>
               </div>
 
               <h3 style={{ fontSize: '1.5rem', marginBottom: 'var(--space-3)' }}>
-                Requirement Transmitted to Commercial Desk
+                Requirement Received
               </h3>
               
-              <p style={{ maxWidth: '620px', margin: '0 auto var(--space-6)', fontSize: '0.9375rem', lineHeight: 'var(--leading-relaxed)' }}>
-                Thank you, <strong>{submittedRecord.contactPerson}</strong>. Your commercial tea specification has been logged with our export desk under reference <strong className="font-spec" style={{ color: 'var(--color-accent-gold)' }}>{submittedRecord.referenceId}</strong>. An export specialist will evaluate current lot availability and respond to <strong>{submittedRecord.businessEmail}</strong> with indicative commercial terms.
+              <p style={{ maxWidth: '620px', margin: '0 auto var(--space-4)', fontSize: '0.9375rem', lineHeight: 'var(--leading-relaxed)' }}>
+                Thank you. Your commercial requirement has been successfully submitted to SHIVOM GLOBAL. Our export desk will review your requirement and respond with availability and commercial terms.
               </p>
+
+              <div style={{ marginBottom: 'var(--space-6)', fontSize: '0.9375rem' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Commercial Reference: </span>
+                <strong className="font-spec" style={{ color: 'var(--color-accent-gold)', fontSize: '1.0625rem', letterSpacing: '0.04em' }}>
+                  {submittedRecord.referenceId}
+                </strong>
+              </div>
 
               <div style={{ 
                 backgroundColor: 'var(--bg-surface-subtle)', 
@@ -230,7 +237,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <div style={{ fontWeight: 700, marginBottom: '12px', color: 'var(--color-primary-green)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <FileCheck2 size={16} />
-                    <span>Validated Requirement Summary</span>
+                    <span>Commercial Requirement Summary</span>
                   </span>
                   <span className="font-spec" style={{ fontSize: '0.75rem', color: 'var(--color-accent-gold)', fontWeight: 700 }}>
                     {submittedRecord.referenceId}
