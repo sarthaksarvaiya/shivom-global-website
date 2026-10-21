@@ -858,6 +858,499 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   overflow-wrap: break-word;
 }
 
+/* ==========================================================================
+   SECTION 2: WHAT WE SUPPLY / TEA CATEGORIES — Elegant B2B Introduction
+   ========================================================================== */
+.tea-categories-section {
+  position: relative;
+  background-color: var(--color-bg-alt);
+  padding-top: clamp(4rem, 7vw, 6.5rem);
+  padding-bottom: clamp(4.5rem, 7.5vw, 7rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tea-categories-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+}
+
+.tea-categories-headline {
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.tea-categories-lead {
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 0 auto;
+  max-width: 660px;
+}
+
+.tea-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: stretch;
+}
+
+.tea-category-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.tea-category-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ambient glow layer inside each card */
+.tea-category-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 0;
+}
+
+.tea-category-card:hover .tea-category-ambient-glow,
+.tea-category-card:focus-visible .tea-category-ambient-glow {
+  opacity: 1;
+}
+
+.tea-category-card:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   INDIVIDUAL SPECIAL CARD EFFECTS (4 Distinct Visible Color Themes)
+   ========================================================================== */
+
+/* --- Card 1: Assam CTC Black Tea (Warm Honey Amber & Molten Gold) --- */
+.tea-card-assam {
+  background: linear-gradient(180deg, #FFFDF8 0%, #FEF9EE 100%);
+  border: 1px solid rgba(217, 119, 6, 0.26);
+  border-top: 4px solid #D97706;
+}
+
+.tea-card-assam .tea-category-ambient-glow {
+  background: radial-gradient(circle at 92% 10%, rgba(217, 119, 6, 0.22) 0%, rgba(180, 83, 9, 0.08) 50%, transparent 75%);
+}
+
+.tea-card-assam .tea-category-icon-wrap {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FCD34D;
+  transition: all 0.28s ease;
+}
+
+.tea-card-assam .tea-category-badge-assam-ctc {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.tea-card-assam .tea-category-specs-box {
+  background-color: #FEF3C7;
+  border: 1px solid #FDE68A;
+}
+
+.tea-card-assam .tea-category-grade-chip {
+  background-color: #FFFFFF;
+  border: 1px solid #FCD34D;
+  color: #92400E;
+}
+
+.tea-card-assam .tea-category-check-icon {
+  color: #D97706;
+}
+
+.tea-card-assam .tea-category-action {
+  color: #B45309;
+  border-top: 1px solid rgba(217, 119, 6, 0.22);
+}
+
+.tea-card-assam:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px -10px rgba(180, 83, 9, 0.24), 0 8px 16px -6px rgba(217, 119, 6, 0.14);
+  border-color: #F59E0B;
+}
+
+.tea-card-assam:hover .tea-category-icon-wrap {
+  background: #FDE68A;
+  color: #92400E;
+  box-shadow: 0 0 18px rgba(245, 158, 11, 0.55);
+  transform: scale(1.1);
+}
+
+.tea-card-assam:hover .tea-category-grade-chip {
+  border-color: #F59E0B;
+  background-color: #FFFBEB;
+}
+
+/* --- Card 2: Orthodox Black Tea (Estate Botanical Green) --- */
+.tea-card-orthodox {
+  background: linear-gradient(180deg, #F0FDF4 0%, #E7F8ED 100%);
+  border: 1px solid rgba(22, 163, 74, 0.28);
+  border-top: 4px solid #16A34A;
+}
+
+.tea-card-orthodox .tea-category-ambient-glow {
+  background: radial-gradient(circle at 92% 10%, rgba(22, 163, 74, 0.22) 0%, rgba(21, 128, 61, 0.08) 50%, transparent 75%);
+}
+
+.tea-card-orthodox .tea-category-icon-wrap {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+  transition: all 0.28s ease;
+}
+
+.tea-card-orthodox .tea-category-badge-orthodox {
+  background-color: #DCFCE7;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+}
+
+.tea-card-orthodox .tea-category-specs-box {
+  background-color: #DCFCE7;
+  border: 1px solid #BBF7D0;
+}
+
+.tea-card-orthodox .tea-category-grade-chip {
+  background-color: #FFFFFF;
+  border: 1px solid #86EFAC;
+  color: #166534;
+}
+
+.tea-card-orthodox .tea-category-check-icon {
+  color: #16A34A;
+}
+
+.tea-card-orthodox .tea-category-action {
+  color: #15803D;
+  border-top: 1px solid rgba(22, 163, 74, 0.22);
+}
+
+.tea-card-orthodox:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px -10px rgba(22, 163, 74, 0.26), 0 8px 16px -6px rgba(22, 163, 74, 0.14);
+  border-color: #22C55E;
+}
+
+.tea-card-orthodox:hover .tea-category-icon-wrap {
+  background: #BBF7D0;
+  color: #14532D;
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.5);
+  transform: scale(1.1);
+}
+
+.tea-card-orthodox:hover .tea-category-grade-chip {
+  border-color: #22C55E;
+  background-color: #F0FDF4;
+}
+
+/* --- Card 3: Darjeeling Tea (Royal Himalayan Muscatel Plum) --- */
+.tea-card-darjeeling {
+  background: linear-gradient(180deg, #FAF5FF 0%, #F3E8FF 100%);
+  border: 1px solid rgba(139, 92, 246, 0.26);
+  border-top: 4px solid #8B5CF6;
+}
+
+.tea-card-darjeeling .tea-category-ambient-glow {
+  background: radial-gradient(circle at 92% 10%, rgba(139, 92, 246, 0.24) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 75%);
+}
+
+.tea-card-darjeeling .tea-category-icon-wrap {
+  background: #EDE9FE;
+  color: #7C3AED;
+  border: 1px solid #DDD6FE;
+  transition: all 0.28s ease;
+}
+
+.tea-card-darjeeling .tea-category-badge-darjeeling {
+  background-color: #EDE9FE;
+  color: #6D28D9;
+  border: 1px solid #DDD6FE;
+}
+
+.tea-card-darjeeling .tea-category-specs-box {
+  background-color: #EDE9FE;
+  border: 1px solid #DDD6FE;
+}
+
+.tea-card-darjeeling .tea-category-grade-chip {
+  background-color: #FFFFFF;
+  border: 1px solid #DDD6FE;
+  color: #6D28D9;
+}
+
+.tea-card-darjeeling .tea-category-check-icon {
+  color: #7C3AED;
+}
+
+.tea-card-darjeeling .tea-category-action {
+  color: #7C3AED;
+  border-top: 1px solid rgba(139, 92, 246, 0.22);
+}
+
+.tea-card-darjeeling:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px -10px rgba(124, 58, 237, 0.24), 0 8px 16px -6px rgba(139, 92, 246, 0.14);
+  border-color: #A78BFA;
+}
+
+.tea-card-darjeeling:hover .tea-category-icon-wrap {
+  background: #DDD6FE;
+  color: #5B21B6;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.55);
+  transform: rotate(12deg) scale(1.12);
+}
+
+.tea-card-darjeeling:hover .tea-category-grade-chip {
+  border-color: #8B5CF6;
+  background-color: #F5F3FF;
+}
+
+/* --- Card 4: Specialty & Regional Teas (Maritime Sapphire & Nilgiri Blue) --- */
+.tea-card-specialty {
+  background: linear-gradient(180deg, #F0F7FF 0%, #E2EEFA 100%);
+  border: 1px solid rgba(37, 99, 235, 0.26);
+  border-top: 4px solid #2563EB;
+}
+
+.tea-card-specialty .tea-category-ambient-glow {
+  background: radial-gradient(circle at 92% 10%, rgba(37, 99, 235, 0.22) 0%, rgba(29, 78, 216, 0.08) 50%, transparent 75%);
+}
+
+.tea-card-specialty .tea-category-icon-wrap {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+  transition: all 0.28s ease;
+}
+
+.tea-card-specialty .tea-category-badge-specialty {
+  background-color: #DBEAFE;
+  color: #1E40AF;
+  border: 1px solid #BFDBFE;
+}
+
+.tea-card-specialty .tea-category-specs-box {
+  background-color: #DBEAFE;
+  border: 1px solid #BFDBFE;
+}
+
+.tea-card-specialty .tea-category-grade-chip {
+  background-color: #FFFFFF;
+  border: 1px solid #93C5FD;
+  color: #1E40AF;
+}
+
+.tea-card-specialty .tea-category-check-icon {
+  color: #2563EB;
+}
+
+.tea-card-specialty .tea-category-action {
+  color: #1D4ED8;
+  border-top: 1px solid rgba(37, 99, 235, 0.22);
+}
+
+.tea-card-specialty:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px -10px rgba(37, 99, 235, 0.26), 0 8px 16px -6px rgba(37, 99, 235, 0.14);
+  border-color: #3B82F6;
+}
+
+.tea-card-specialty:hover .tea-category-icon-wrap {
+  background: #BFDBFE;
+  color: #1E3A8A;
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+  transform: scale(1.1);
+}
+
+.tea-card-specialty:hover .tea-category-grade-chip {
+  border-color: #3B82F6;
+  background-color: #EFF6FF;
+}
+
+/* Card Content Structure */
+.tea-category-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: 8px;
+}
+
+.tea-category-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tea-category-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.tea-category-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1.25;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.tea-category-description {
+  font-size: 0.90625rem;
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-5) 0;
+}
+
+.tea-category-specs-box {
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.tea-category-specs-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.tea-category-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.tea-category-grade-chip {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.tea-category-char-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.78125rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tea-category-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-green);
+  transition: color var(--transition-fast);
+}
+
+.tea-category-arrow {
+  transition: transform var(--transition-fast);
+}
+
+.tea-category-card:hover .tea-category-action {
+  color: var(--color-accent-gold);
+}
+
+.tea-category-card:hover .tea-category-arrow {
+  transform: translateX(4px);
+}
+
+/* Bottom CTA Strip */
+.tea-categories-bottom-cta {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tea-categories-cta-text {
+  max-width: 580px;
+}
+
+.tea-categories-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tea-categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tea-categories-bottom-cta {
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .tea-categories-cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tea-categories-cta-actions .btn {
+    width: 100%;
+  }
+}
+
 /* --------------------------------------------------------------------------
    ACCESSIBILITY & REDUCED MOTION
    -------------------------------------------------------------------------- */

@@ -853,10 +853,37 @@ The website improvement work will be considered complete and ready for productio
 
 ---
 
-## 23. NEXT ACTION
+## 23. IMPLEMENTATION TRACKING & TASK LOG
 
-## CURRENT STATUS
-Planning only — implementation not started.
+### Section Implementation Status Matrix
+| Section | Component / Module | Status | Notes |
+| :--- | :--- | :--- | :--- |
+| **Section 1: Hero** | `HeroSection.tsx` | **COMPLETED** | Refined copy, visible tea landscape, full-screen height (`100vh - 76px`), horizontal header logo. |
+| **Section 2: What We Supply** | `TeaCategoriesSection.tsx` | **COMPLETED** | 4-category grid (Assam CTC, Orthodox, Darjeeling, Specialty), B2B tone, bottom requirement CTA. |
+| **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **PENDING** | Next planned implementation step. |
+| **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **PENDING** | Existing MVP component to be hardened. |
+| **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **PENDING** | Planned 4-archetype buyer grid. |
+| **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Existing 6-stage roadmap. |
+| **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
+| **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
+| **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
+| **Section 10: Buyer Requirement Intake** | `BuyerRequirementForm.tsx`| **PENDING** | Hardened in Phase 4. |
+| **Section 11: Site Footer & Disclosures**| `SiteFooter.tsx` | **PENDING** | Existing statutory disclosure footer. |
 
-## NEXT ACTION
-Founder review of WEBSITE_IMPROVEMENT_PLAN.md.
+---
+
+### Detailed Task Log: Section 2 — What We Supply / Tea Categories
+- **Status:** `COMPLETED`
+- **Files Created / Modified:**
+  - `src/components/home/TeaCategoriesSection.tsx` (Created — 4 category cards, accessibility attributes, interactive handlers)
+  - `src/components/home/HomePage.tsx` (Modified — positioned Section 2 immediately after HeroSection, connected category selection and grade routing)
+  - `src/styles/index.css` (Modified — 2x2 grid layout, individual custom color themes & hover glows for all 4 cards, typography, badge styling, and bottom CTA strip)
+- **Category Structure & Color Schemes:**
+  1. **Assam CTC Black Tea** (`Core Commercial Benchmark`): Warm Honey Amber & Molten Gold theme. High-volume Indian black tea for commercial blends, tea bags and everyday consumption. Grades: `BOP`, `BOPSM`, `BP`, `PF`, `PD`, `Dust`.
+  2. **Orthodox Black Tea** (`Whole & Broken Leaf`): Estate Botanical Green theme. Whole-leaf and orthodox-style Indian teas for differentiated cup profiles and premium applications. Grades: `TGFOP`, `FBOP`, `BOP`, `BOPF`.
+  3. **Darjeeling Tea** (`Distinctive Terroir`): Royal Muscatel Plum / Purple theme. Distinctive Darjeeling teas for buyers seeking a recognised Indian origin and differentiated character. Grades: `FTGFOP1`, `SFTGFOP1`, `GFBOP`, `Whole Leaf`.
+  4. **Specialty & Regional Teas** (`On-Demand Sourcing`): Maritime Sapphire & Nilgiri Blue theme. Selected Indian origins and tea profiles matched to specific buyer requirements. Language: *Available based on specification and sourcing requirement.* Scope: `High-Elevation Green`, `Nilgiri Terroirs`, `Custom Formulations`.
+- **Bottom CTA:** Direct routing to commercial buyer requirement intake (`#requirement-form`) and grade matrix explorer (`#tea-by-grade`).
+- **Responsive Behavior:** 2 cards per row on desktop/tablet, 1 column on mobile. Touch targets $\ge 44\text{px}$.
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`). Zero lint errors.
+- **Next Recommended Section:** Section 3 — Assam CTC Spotlight.

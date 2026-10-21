@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { HeroSection } from '@/components/home/HeroSection';
-import { RequirementRouter } from '@/components/home/RequirementRouter';
-import { TeaCatalog } from '@/components/home/TeaCatalog';
+import { TeaCategoriesSection } from '@/components/home/TeaCategoriesSection';
 import { GradeMatrix } from '@/components/home/GradeMatrix';
 import { ExportProcessFlow } from '@/components/home/ExportProcessFlow';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
@@ -11,7 +10,7 @@ import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 
 export const HomePage: React.FC = () => {
-  const [formRequirementType, setFormRequirementType] = useState<string>('Bulk Tea for Repacking');
+  const [formRequirementType, setFormRequirementType] = useState<string>('Assam CTC');
   const [formGrade, setFormGrade] = useState<string>('BOP');
 
   const scrollToForm = () => {
@@ -19,6 +18,20 @@ export const HomePage: React.FC = () => {
     if (formElement) {
       const headerOffset = 80;
       const elementPosition = formElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const scrollToCategories = () => {
+    const categoriesElement = document.getElementById('our-teas');
+    if (categoriesElement) {
+      const headerOffset = 80;
+      const elementPosition = categoriesElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
@@ -42,16 +55,11 @@ export const HomePage: React.FC = () => {
     }
   };
 
-  const handleSelectRequirement = (type: string, grade?: string) => {
-    setFormRequirementType(type);
-    if (grade) {
-      setFormGrade(grade);
-    }
-    scrollToForm();
-  };
-
-  const handleSelectCategory = (categoryName: string) => {
+  const handleSelectCategory = (categoryName: string, defaultGrade?: string) => {
     setFormRequirementType(categoryName);
+    if (defaultGrade) {
+      setFormGrade(defaultGrade);
+    }
     scrollToForm();
   };
 
@@ -67,28 +75,26 @@ export const HomePage: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)' }}>
-      {/* P3-01: Site Header */}
+      {/* Site Header */}
       <SiteHeader />
 
       {/* Main Content Area */}
       <main style={{ flexGrow: 1 }}>
-        {/* P3-02: Hero Section */}
+        {/* Section 1: Hero Section */}
         <HeroSection 
+          onSubmitRequirement={scrollToForm}
+          onExploreCategories={scrollToCategories}
+          onExploreGrades={scrollToGrades}
+        />
+
+        {/* Section 2: What We Supply — Tea Categories Overview */}
+        <TeaCategoriesSection 
+          onSelectCategory={handleSelectCategory}
           onSubmitRequirement={scrollToForm}
           onExploreGrades={scrollToGrades}
         />
 
-        {/* P3-03: Requirement Router */}
-        <RequirementRouter 
-          onSelectRequirement={handleSelectRequirement}
-        />
-
-        {/* P3-04: Tea Catalog */}
-        <TeaCatalog 
-          onSelectCategory={handleSelectCategory}
-        />
-
-        {/* P3-05: Grade Matrix */}
+        {/* Section 8: Interactive Grade Matrix */}
         <GradeMatrix 
           onSelectGrade={handleSelectGrade}
         />
