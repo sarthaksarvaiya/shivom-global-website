@@ -1,7 +1,7 @@
 /**
- * SHIVOM GLOBAL — Submission Adapter Boundary
- * Phase: SG-WEBSITE-PHASE-04
- * Architecture Pattern: Form UI -> Validation -> Normalized Object -> Submission Adapter -> Future Backend
+ * SHIVOM GLOBAL — Commercial Submission Adapter Boundary
+ * Pipeline: Form UI -> Client Validation -> Normalized Record -> POST /api/buyer-requirements -> Trade Desk Pipeline
+ * System of Record: Supabase Database (Table: buyer_requirements) + Transactional Email Notification
  */
 
 import { BuyerRequirementRecord } from '../types/buyerRequirement';
@@ -13,27 +13,68 @@ export interface SubmissionResponse {
   message: string;
   record?: BuyerRequirementRecord;
   error?: string;
+  details?: Record<string, string>;
 }
 
 /**
- * Clean submission boundary adapter.
- * Currently operates in explicit FRONTEND PREVIEW mode because no production backend
- * has been formally approved or provisioned.
- * When an approved backend (e.g. Serverless Function, Supabase Inbound Table, or Form Gateway)
- * is provisioned, this adapter is the single point of connection.
+ * Production submission adapter.
+ * Dispatches client-validated requirement parameters to the Vercel serverless function
+ * at POST /api/buyer-requirements for server validation, Supabase persistence,
+ * and commercial email dispatch.
  */
 export const submitBuyerRequirement = async (
-  record: BuyerRequirementRecord
+  record: BuyerRequirementRecord,
+  honeypot?: string
 ): Promise<SubmissionResponse> => {
-  // Simulate network dispatch latency
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  try {
+    const payload = {
+      ...record,
+      website_hp: honeypot || '',
+    };
 
-  // Explicit frontend preview return: zero false claims of database persistence or email dispatch
-  return {
-    success: true,
-    mode: 'PREVIEW',
-    referenceId: record.referenceId,
-    message: 'Your specification has passed frontend validation. Submission integration is currently in preview mode.',
-    record,
-  };
+    const res = await fetch('/api/buyer-requirements', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json().catch(() => null);
+
+    if (res.ok && data?.success) {
+      return {
+        success: true,
+        mode: 'LIVE',
+        referenceId: data.referenceId,
+        message: data.message || 'Your commercial requirement has been received by the SHIVOM GLOBAL trade desk.',
+        record: {
+          ...record,
+          referenceId: data.referenceId, // Authoritative server-side reference ID
+        },
+      };
+    }
+
+    // Server-side controlled error response
+    const errorMessage =
+      data?.error || 'We could not submit your requirement at this time. Please try again.';
+
+    return {
+      success: false,
+      mode: 'LIVE',
+      referenceId: record.referenceId,
+      message: errorMessage,
+      error: errorMessage,
+      details: data?.details,
+    };
+  } catch (err: unknown) {
+    console.error('[SUBMISSION_ADAPTER_NETWORK_ERROR]', err);
+    return {
+      success: false,
+      mode: 'LIVE',
+      referenceId: record.referenceId,
+      message: 'Network error communicating with the commercial submission desk. Please verify your connection and try again.',
+      error: 'Network connection issue. Please try again.',
+    };
+  }
 };

@@ -127,11 +127,14 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
     try {
       const record = buildRequirementRecord(formData);
-      const response = await submitBuyerRequirement(record);
+      const response = await submitBuyerRequirement(record, honeypot);
       if (response.success && response.record) {
         setSubmittedRecord(response.record);
         setFormStatus('SUCCESS');
       } else {
+        if (response.details) {
+          setErrors(response.details);
+        }
         setFormStatus('SUBMISSION_ERROR');
         setSubmissionError(response.error || 'The requirement could not be submitted right now. Your entered parameters have been preserved.');
       }
@@ -199,16 +202,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
               <div style={{ marginBottom: 'var(--space-2)' }}>
                 <span className="spec-badge spec-badge-gold" style={{ fontSize: '0.75rem' }}>
-                  SPECIFICATION VALIDATED (FRONTEND PREVIEW)
+                  SPECIFICATION TRANSMITTED
                 </span>
               </div>
 
               <h3 style={{ fontSize: '1.5rem', marginBottom: 'var(--space-3)' }}>
-                Requirement Parameters Captured
+                Requirement Transmitted to Commercial Desk
               </h3>
               
               <p style={{ maxWidth: '620px', margin: '0 auto var(--space-6)', fontSize: '0.9375rem', lineHeight: 'var(--leading-relaxed)' }}>
-                Thank you, <strong>{submittedRecord.contactPerson}</strong>. Your commercial tea specification has passed frontend validation. Submission integration is currently in preview mode. You can review your structured requirement parameters below.
+                Thank you, <strong>{submittedRecord.contactPerson}</strong>. Your commercial tea specification has been logged with our export desk under reference <strong className="font-spec" style={{ color: 'var(--color-accent-gold)' }}>{submittedRecord.referenceId}</strong>. An export specialist will evaluate current lot availability and respond to <strong>{submittedRecord.businessEmail}</strong> with indicative commercial terms.
               </p>
 
               <div style={{ 
@@ -622,7 +625,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {formStatus === 'SUBMITTING' ? (
                     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
                       <RefreshCw size={18} className="animate-spin" style={{ flexShrink: 0 }} />
-                      <span>Validating Requirement Parameters...</span>
+                      <span>Transmitting Requirement for Evaluation...</span>
                     </span>
                   ) : (
                     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
