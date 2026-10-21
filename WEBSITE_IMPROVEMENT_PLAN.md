@@ -862,8 +862,8 @@ The website improvement work will be considered complete and ready for productio
 | **Section 2: What We Supply** | `TeaCategoriesSection.tsx` | **COMPLETED** | 4-category grid (Assam CTC, Orthodox, Darjeeling, Specialty), B2B tone, bottom requirement CTA. |
 | **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **COMPLETED** | Technical commercial showcase, 6 core grades, 4 applications, authentic cupping photo, buyer-first banner. |
 | **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **COMPLETED** | B2B OEM coordination hub, bulk vs OEM distinction, 4-step workflow, 4 packaging formats, project scoping checklist. |
-| **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **PENDING** | Next planned implementation step. |
-| **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Existing 6-stage roadmap. |
+| **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **COMPLETED** | 5 commercial buyer archetypes, balanced 3+2 grid, specification-led requirements, buyer-first principle banner. |
+| **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Next planned implementation step. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
 | **Section 9: Export Credibility** | `ExportLogistics.tsx` | **PENDING** | Planned shipping/port documentation module. |
@@ -927,17 +927,17 @@ The website improvement work will be considered complete and ready for productio
 ---
 
 ### Detailed Task Log: Section 4 — Private Label & OEM Contract Packing Hub
-- **Status:** `COMPLETED (Local Verification Ready)`
+- **Status:** `COMPLETED`
 - **Files Created / Modified:**
   - `src/components/home/PrivateLabelSection.tsx` (Rebuilt — complete B2B private label coordination hub)
   - `src/components/home/HomePage.tsx` (Modified — positioned Section 4 immediately following Section 3: Assam CTC Spotlight)
   - `src/styles/index.css` (Modified — added showcase split, distinction grid, 4-step workflow, packaging format cards, project scoping checklist, and dark green CTA box)
-  - `public/images/private-label-packaging.jpg` (Created — authentic editorial unbranded prototype packaging on timber cupping table)
+  - `public/images/private-label-packaging.jpg` (Created — authentic editorial unbranded prototype packaging on timber cupping table, updated to feature prominent `PRIVATE LABEL` print on pouch)
 - **Core Positioning & Anti-Fabrication Rule Compliance:**
   - Positioned purely as **tea sourcing + specification + packing coordination** through qualified supply & contract packing partners.
   - Zero claims of owning packaging factories, machinery, warehouses, or processing plants.
   - Zero fabricated client counts (no "500+ brands"), fake capacities, or fabricated certifications.
-  - Prototypes shown are completely neutral/unbranded with no false SHIVOM GLOBAL consumer branding.
+  - Prototypes shown display clean **PRIVATE LABEL** mockup label with no false consumer brand claims.
 - **Section Architecture & Flow:**
   1. **Showcase Pitch:** Eyebrow `PRIVATE LABEL • OEM`, heading `Build Your Tea Brand with Indian Tea Supply`, quote banner *"Your brand. Your specification. Indian tea sourced and coordinated around your requirements."*
   2. **Bulk vs Private Label Distinction Grid:** Clear visual contrast between standard 25kg bulk supply (for blenders/importers) and brand-coordinated OEM packaging (for brand owners/retailers).
@@ -952,4 +952,35 @@ The website improvement work will be considered complete and ready for productio
   - Primary CTA: `Start a Private-Label Requirement` (pre-sets `formRequirementType = 'Private Label Retail Product'`, smooth scrolls to `#requirement-form`).
   - Secondary CTA: `Explore Tea Categories` (smooth scrolls to `#our-teas`).
 - **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 976ms. Zero errors.
-- **Next Recommended Section:** Section 5 — Who We Serve (Buyer Archetypes).
+
+---
+
+### Detailed Task Log: Section 5 — Who We Serve (Commercial Buyer Archetypes)
+- **Status:** `COMPLETED (Local Verification Ready)`
+- **Files Created / Modified:**
+  - `src/components/home/WhoWeServeSection.tsx` (Created — 5-segment commercial buyer archetype grid)
+  - `src/components/home/HomePage.tsx` (Modified — positioned Section 5 directly after Section 4: Private Label & OEM; wired contextual segment preselection)
+  - `src/styles/index.css` (Modified — added 6-column balanced grid with 3+2 layout, hover elevation, typical requirements box, and dark green buyer-first principle banner)
+- **Core Positioning & Anti-Fabrication Rule Compliance (Rule 02):**
+  - Section is strictly a **target buyer segmentation**, not an existing customer portfolio claim.
+  - Zero fabricated customer proof: no "Trusted by 500+ importers", no "Serving 20+ countries", no fake logos, no fake testimonials, no fake case studies.
+  - Zero country flags (avoids premature geography claims; focuses purely on commercial buyer functions).
+- **5 Commercial Buyer Segments Implemented:**
+  1. **Tea Importers & Traders (`01`):** Commercial standard grades (BOP, BOPSM, BP, PF, PD, Dust), 25kg kraft sacks, destination spec matching, export trade documents (BL, Phyto, COO). Preset: `Bulk Tea for Repacking`.
+  2. **Tea Blenders & Manufacturers (`02`):** Specification-led sourcing against counter-samples, organoleptic cup profile, uniform mesh cut distribution, pre-shipment sample verification. Preset: `Custom Specification`.
+  3. **Private-Label & Retail Brands (`03`):** Single-origin selection, finished consumer packaging, tea bag/filter pack formats, bilingual regulatory compliance. Preset: `Private Label Retail Product`.
+  4. **Foodservice & Hospitality (`04`):** High-strength grades for Karak & Chai, high-yield bulk formats, rapid color extraction in milk, scheduled commercial repeat supply. Preset: `Assam CTC`.
+  5. **Distributors & Regional Wholesalers (`05`):** Comprehensive grade portfolio, palletized container freight, destination customs compliance (GCC/GSO), full statutory laboratory COA clearance. Preset: `Bulk Tea for Repacking`.
+- **Buyer-First Principle Banner:**
+  - Headline: *"Different buyers. Different specifications."*
+  - Body: *"We start with the requirement — tea category, grade, application, packing, quantity and destination — then coordinate sourcing around the commercial need."*
+  - Badge: "Buyer-First, Inventory-Last • Sourced Around Your Market's Requirement"
+- **CTA Routing:**
+  - Primary CTA: `Submit Your Commercial Requirement →` (smooth scrolls to `#requirement-form`).
+  - Interactive Card Click: Clicking any of the 5 segment cards pre-selects the corresponding commercial requirement type in the Buyer Requirement Form and smoothly scrolls down.
+- **Responsive Layout:**
+  - Desktop (>1024px): 6-column grid with 3 top cards (span 2 each) and 2 bottom cards (span 3 each), filling the container with 0 awkward gaps.
+  - Tablet (641px–1024px): 2 columns, with 5th card spanning 2 columns.
+  - Mobile (<=640px): 1 column with full-width touch targets.
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.02s. Zero errors.
+- **Next Recommended Section:** Section 6 — How We Work (6-Stage Commercial Sourcing Roadmap).

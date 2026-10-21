@@ -7,6 +7,7 @@ import { GradeMatrix } from '@/components/home/GradeMatrix';
 import { ExportProcessFlow } from '@/components/home/ExportProcessFlow';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
 import { PrivateLabelSection } from '@/components/home/PrivateLabelSection';
+import { WhoWeServeSection } from '@/components/home/WhoWeServeSection';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 
@@ -132,6 +133,15 @@ export const HomePage: React.FC = () => {
         <PrivateLabelSection 
           onStartPrivateLabel={handleStartPrivateLabel}
           onExploreCategories={scrollToCategories}
+        />
+
+        {/* Section 5: Who We Serve — Commercial Buyer Segmentation */}
+        <WhoWeServeSection 
+          onSelectSegment={(preset) => {
+            setFormRequirementType(preset);
+            scrollToForm();
+          }}
+          onSubmitRequirement={scrollToForm}
         />
 
         {/* Section 8: Interactive Grade Matrix */}
