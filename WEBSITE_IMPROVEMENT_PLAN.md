@@ -861,8 +861,8 @@ The website improvement work will be considered complete and ready for productio
 | **Section 1: Hero** | `HeroSection.tsx` | **COMPLETED** | Refined copy, visible tea landscape, full-screen height (`100vh - 76px`), horizontal header logo. |
 | **Section 2: What We Supply** | `TeaCategoriesSection.tsx` | **COMPLETED** | 4-category grid (Assam CTC, Orthodox, Darjeeling, Specialty), B2B tone, bottom requirement CTA. |
 | **Section 3: Assam CTC Spotlight** | `AssamCtcSpotlight.tsx` | **COMPLETED** | Technical commercial showcase, 6 core grades, 4 applications, authentic cupping photo, buyer-first banner. |
-| **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **PENDING** | Next planned implementation step. |
-| **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **PENDING** | Planned 4-archetype buyer grid. |
+| **Section 4: Private Label Hub** | `PrivateLabelSection.tsx` | **COMPLETED** | B2B OEM coordination hub, bulk vs OEM distinction, 4-step workflow, 4 packaging formats, project scoping checklist. |
+| **Section 5: Who We Serve** | `WhoWeServeSection.tsx` | **PENDING** | Next planned implementation step. |
 | **Section 6: How It Works** | `ExportProcessFlow.tsx` | **PENDING** | Existing 6-stage roadmap. |
 | **Section 7: Why SHIVOM GLOBAL** | `WhyShivomGlobal.tsx` | **PENDING** | Existing credibility pillars. |
 | **Section 8: Interactive Grade Matrix** | `GradeMatrix.tsx` | **PENDING** | Existing interactive grade selector. |
@@ -890,7 +890,7 @@ The website improvement work will be considered complete and ready for productio
 ---
 
 ### Detailed Task Log: Section 3 — Assam CTC Spotlight
-- **Status:** `COMPLETED (Local Verification Ready)`
+- **Status:** `COMPLETED`
 - **Files Created / Modified:**
   - `src/components/home/AssamCtcSpotlight.tsx` (Created — technical-commercial showcase component)
   - `src/components/home/HomePage.tsx` (Modified — inserted Section 3 between Section 2 and GradeMatrix; wired category navigation and form pre-selection)
@@ -923,4 +923,33 @@ The website improvement work will be considered complete and ready for productio
   - Interactive Grade Click: Clicking any grade card pre-selects that exact grade in the intake form.
 - **Compliance with Rule 02 (Anti-Fabrication):** Zero fabricated estate ownership, monthly production volume, laboratory certificates, or chemical guarantees. Uses qualified terminology ("Representative commercial use", "Specification confirmed during quotation/sample stage").
 - **Validation:** `npm run build` passes with 0 errors in 1.01s.
-- **Next Recommended Section:** Section 4 — Private Label & Contract Packing Solutions.
+
+---
+
+### Detailed Task Log: Section 4 — Private Label & OEM Contract Packing Hub
+- **Status:** `COMPLETED (Local Verification Ready)`
+- **Files Created / Modified:**
+  - `src/components/home/PrivateLabelSection.tsx` (Rebuilt — complete B2B private label coordination hub)
+  - `src/components/home/HomePage.tsx` (Modified — positioned Section 4 immediately following Section 3: Assam CTC Spotlight)
+  - `src/styles/index.css` (Modified — added showcase split, distinction grid, 4-step workflow, packaging format cards, project scoping checklist, and dark green CTA box)
+  - `public/images/private-label-packaging.jpg` (Created — authentic editorial unbranded prototype packaging on timber cupping table)
+- **Core Positioning & Anti-Fabrication Rule Compliance:**
+  - Positioned purely as **tea sourcing + specification + packing coordination** through qualified supply & contract packing partners.
+  - Zero claims of owning packaging factories, machinery, warehouses, or processing plants.
+  - Zero fabricated client counts (no "500+ brands"), fake capacities, or fabricated certifications.
+  - Prototypes shown are completely neutral/unbranded with no false SHIVOM GLOBAL consumer branding.
+- **Section Architecture & Flow:**
+  1. **Showcase Pitch:** Eyebrow `PRIVATE LABEL • OEM`, heading `Build Your Tea Brand with Indian Tea Supply`, quote banner *"Your brand. Your specification. Indian tea sourced and coordinated around your requirements."*
+  2. **Bulk vs Private Label Distinction Grid:** Clear visual contrast between standard 25kg bulk supply (for blenders/importers) and brand-coordinated OEM packaging (for brand owners/retailers).
+  3. **4-Stage Coordination Workflow:**
+     - `01 — Tea Selection:` Category & grade matching to target market parameters.
+     - `02 — Specification & Sampling:` Counter-sample cupping and regulatory standard checks.
+     - `03 — Packaging Coordination:` Pouches, tins, cartons, tea bags with vetted packing partners.
+     - `04 — Export & Dispatch:` Lab testing, Phytosanitary, Certificate of Origin, and ocean shipping.
+  4. **Representative Packaging Formats:** Bulk sacks (25kg), Retail stand-up pouches (100g–1kg), Tea bags (envelope/tag/pyramid), Foodservice catering & specialty tins.
+  5. **Project Scoping Checklist & CTA Box:** 5-point checklist of what the buyer provides, with direct CTA to initiate requirement.
+- **CTA Routing:**
+  - Primary CTA: `Start a Private-Label Requirement` (pre-sets `formRequirementType = 'Private Label Retail Product'`, smooth scrolls to `#requirement-form`).
+  - Secondary CTA: `Explore Tea Categories` (smooth scrolls to `#our-teas`).
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 976ms. Zero errors.
+- **Next Recommended Section:** Section 5 — Who We Serve (Buyer Archetypes).

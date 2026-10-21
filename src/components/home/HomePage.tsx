@@ -128,6 +128,12 @@ export const HomePage: React.FC = () => {
           }}
         />
 
+        {/* Section 4: Private Label & OEM Contract Packing Hub */}
+        <PrivateLabelSection 
+          onStartPrivateLabel={handleStartPrivateLabel}
+          onExploreCategories={scrollToCategories}
+        />
+
         {/* Section 8: Interactive Grade Matrix */}
         <GradeMatrix 
           onSelectGrade={handleSelectGrade}
@@ -138,11 +144,6 @@ export const HomePage: React.FC = () => {
 
         {/* P3-07: Why Buyers Work With Us */}
         <WhyShivomGlobal />
-
-        {/* P3-08: Private Label & Co-Packing */}
-        <PrivateLabelSection 
-          onStartPrivateLabel={handleStartPrivateLabel}
-        />
 
         {/* P3-09: Buyer Requirement Form */}
         <BuyerRequirementForm 
