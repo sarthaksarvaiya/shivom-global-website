@@ -18,7 +18,7 @@ export const DesignSystemFoundation: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-page)' }}>
       {/* --------------------------------------------------------------------
-          PHASE 2 GOVERNANCE BANNER
+          DESIGN SYSTEM BANNER
           -------------------------------------------------------------------- */}
       <div style={{ 
         backgroundColor: 'var(--color-primary-dark)', 
@@ -45,7 +45,7 @@ export const DesignSystemFoundation: React.FC = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '0.8125rem', color: 'var(--text-inverse-muted)' }}>
             <span>Ref: <strong>SG-WEBSITE-PHASE-02</strong></span>
-            <span>Governance: <strong>Phase 2 Gated / No Homepage Build</strong></span>
+            <span>Visual Specification: <strong>Approved Foundations</strong></span>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ export const DesignSystemFoundation: React.FC = () => {
               <h2 style={{ fontSize: '1.5rem', margin: 0 }}>P2-01 & P2-02: Official Logo & Brand Integration</h2>
             </div>
             <p style={{ maxWidth: '800px' }}>
-              <strong>Phase 2 Specific Rule:</strong> The official vector brandmark (<code className="font-spec">Shivom_Global_Logo.svg</code>) 
+              <strong>Design System Rule:</strong> The official vector brandmark (<code className="font-spec">Shivom_Global_Logo.svg</code>) 
               retains its metallic gold linear gradients (<code className="font-spec">#CA8A04</code> / <code className="font-spec">#FACC15</code> / <code className="font-spec">#EAB308</code>) 
               and deep navy typography (<code className="font-spec">#1E3A8A</code> / <code className="font-spec">#0F172A</code>) completely unchanged. 
               The website UI wraps the mark within the approved Deep Estate Green (<code className="font-spec">#0D3829</code>) and Warm Gold (<code className="font-spec">#C59B27</code>) palette.
@@ -476,7 +476,7 @@ export const DesignSystemFoundation: React.FC = () => {
               <span className="font-spec" style={{ fontSize: '0.8125rem', color: 'var(--color-accent-gold)' }}>ONE RESPONSIVE SYSTEM</span>
             </div>
             <h2 style={{ color: 'var(--text-inverse)', marginBottom: 'var(--space-4)' }}>
-              Phase 2 Foundation Verification Status
+              Design Foundation Verification Status
             </h2>
             <p style={{ color: 'var(--text-inverse-muted)', marginBottom: 'var(--space-8)' }}>
               The visual system is now codified in Vanilla CSS tokens and component primitives. 

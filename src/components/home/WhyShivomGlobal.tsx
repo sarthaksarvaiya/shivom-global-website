@@ -16,7 +16,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({ onSubmitRequir
   const pillars = [
     {
       numeral: '01',
-      title: 'Buyer-First Sourcing',
+      title: 'Requirement-Led Sourcing',
       icon: Compass,
       description: 'We begin with the buyer\'s requirement and identify suitable sourcing options around the requested specification.',
       tag: 'Requirement-Led',

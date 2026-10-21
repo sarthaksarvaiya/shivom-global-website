@@ -236,7 +236,7 @@ export const WhoWeServeSection: React.FC<WhoWeServeSectionProps> = ({
           })}
         </div>
 
-        {/* --- Buyer-First Principle Statement Banner --- */}
+        {/* --- Requirement-Led Statement Banner --- */}
         <div className="who-we-serve-banner">
           <div className="who-we-serve-banner-content">
             <div className="who-we-serve-banner-badge">

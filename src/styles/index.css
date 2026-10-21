@@ -1481,8 +1481,8 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   font-weight: 500;
 }
 
-/* 2. Buyer-First Principle Banner */
-.assam-ctc-buyer-first-banner {
+/* 2. Requirement-Aligned Sourcing Banner */
+.assam-ctc-sourcing-banner {
   background: linear-gradient(135deg, #0D3829 0%, #08241A 100%);
   border-radius: var(--radius-md);
   padding: clamp(1.75rem, 3.5vw, 2.25rem);
@@ -2589,7 +2589,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   transform: translateX(4px);
 }
 
-/* Buyer-First Principle Banner */
+/* Requirement-Led Sourcing Banner */
 .who-we-serve-banner {
   background: linear-gradient(135deg, #0D3829 0%, #072218 100%);
   border-radius: var(--radius-md);
@@ -2680,7 +2680,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 /* ==========================================================================
    SECTION 6: HOW WE WORK (COMMERCIAL SOURCING ROADMAP)
    Final Approved System: Estate Ivory (Warm Light Prestige)
-   Architecture: Cardless Stepper & Stage Inspector (Zero Cards)
+   Workflow: Commercial Stepper & Stage Inspector
    ========================================================================== */
 
 /* --- Base Section Wrapper (Estate Ivory Theme) --- */
@@ -4160,7 +4160,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* --------------------------------------------------------------------------
-   SECTION 10: BUYER REQUIREMENT ENGINE
+   SECTION 10: BUYER REQUIREMENT FORM
    -------------------------------------------------------------------------- */
 .buyer-engine-section {
   position: relative;
@@ -4751,7 +4751,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   margin: 0;
 }
 
-/* Bottom Legal & Governance Sub-Footer */
+/* Bottom Legal & Commercial Row */
 .footer-bottom-row {
   display: flex;
   justify-content: space-between;

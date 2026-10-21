@@ -205,7 +205,7 @@ export const SiteFooter: React.FC = () => {
           </p>
         </div>
 
-        {/* Bottom Legal & Governance Sub-Footer */}
+        {/* Bottom Legal & Commercial Sub-Footer */}
         <div className="footer-bottom-row">
           <div className="footer-copyright">
             © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Indian Registered Commercial Enterprise.

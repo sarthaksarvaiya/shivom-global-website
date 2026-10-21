@@ -88,7 +88,7 @@ export const AssamCtcSpotlight: React.FC<AssamCtcSpotlightProps> = ({
     {
       title: 'Tea Bags & Filter Packs',
       focusGrades: 'PF • PD',
-      description: 'Fine-cut fannings and dust engineered for high extraction rates, rapid color release, and clean percolation through standard filter papers.',
+      description: 'Fine-cut fannings and dust selected for rapid color release, high extraction strength, and clean percolation through standard filter papers.',
       icon: Layers,
     },
     {
@@ -251,11 +251,11 @@ export const AssamCtcSpotlight: React.FC<AssamCtcSpotlightProps> = ({
           </div>
         </div>
 
-        {/* --- 2. Buyer-First Statement Banner --- */}
-        <div className="assam-ctc-buyer-first-banner">
+        {/* --- 2. Requirement-Aligned Sourcing Banner --- */}
+        <div className="assam-ctc-sourcing-banner">
           <div className="assam-ctc-banner-badge">
             <SlidersHorizontal size={16} aria-hidden="true" />
-            <span>BUYER-FIRST SOURCING PRINCIPLE</span>
+            <span>REQUIREMENT-ALIGNED SOURCING</span>
           </div>
           <h3 className="assam-ctc-banner-title">
             The right grade depends on the requirement.

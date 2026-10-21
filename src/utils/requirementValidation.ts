@@ -1,7 +1,6 @@
 /**
- * SHIVOM GLOBAL — Buyer Requirement Validation & Sanitization Engine
- * Phase: SG-WEBSITE-PHASE-04
- */
+ * SHIVOM GLOBAL — Buyer Requirement Validation & Sanitization
+ *  */
 
 import { BuyerRequirementFormData, FieldValidationErrors, BuyerRequirementRecord } from '../types/buyerRequirement';
 

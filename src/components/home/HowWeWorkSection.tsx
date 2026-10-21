@@ -174,7 +174,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
         </div>
 
         {/* =========================================================================
-            CARDLESS STEPPER & STAGE INSPECTOR (FINAL APPROVED ARCHITECTURE)
+            COMMERCIAL STEPPER & STAGE INSPECTOR
            ========================================================================= */}
         <div className="cardless-stepper-view">
           
@@ -288,7 +288,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
 
           </div>
 
-          {/* Buyer-First Principle Strip (Cardless Accent) */}
+          {/* Sourcing Approach Strip */}
           <div className="cardless-principle-strip">
             <div className="principle-strip-badge font-spec">OUR SOURCING APPROACH</div>
             <h3 className="principle-strip-title">Requirement-Led Sourcing</h3>

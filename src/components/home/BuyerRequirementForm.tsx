@@ -246,7 +246,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   className="buyer-success-reset-btn"
                 >
                   <RotateCcw size={15} />
-                  <span>Configure Another Requirement</span>
+                  <span>Submit Another Requirement</span>
                 </button>
               </div>
             </div>
@@ -705,7 +705,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </p>
               </div>
 
-              {/* Error Banner with Graceful Recovery Instructions */}
+              {/* Error Alert Banner */}
               {(formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR' || submissionError) && (
                 <div className="form-banner-error" role="alert">
                   <div className="buyer-error-content">
@@ -729,7 +729,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                           </button>
                           <span className="buyer-error-fallback">
                             <Mail size={13} />
-                            <span>Direct Trade Desk: inquiries@shivomglobal.com</span>
+                            <span>Direct Trade Desk: shivomglobal1010@gmail.com</span>
                           </span>
                         </div>
                       )}

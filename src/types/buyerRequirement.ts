@@ -1,6 +1,5 @@
 /**
- * SHIVOM GLOBAL — Buyer Requirement Engine Types & Taxonomies
- * Phase: SG-WEBSITE-PHASE-04
+ * SHIVOM GLOBAL — Buyer Requirement Types & Taxonomies
  */
 
 export type RequirementCategory =
