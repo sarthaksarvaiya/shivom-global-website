@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, Globe2 } from 'lucide-react';
+import { ArrowRight, Globe2, MessageCircle, Phone, Mail } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 
 export interface HeroSectionProps {
   onExploreCategories?: () => void;
@@ -98,6 +99,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <span>Explore Tea Categories</span>
             </a>
+          </div>
+
+          {/* Direct Buyer Contact Access Strip */}
+          <div className="hero-direct-contact" role="region" aria-label="Direct trade desk contact channels">
+            <span className="hero-contact-lead font-spec">DIRECT CONTACT:</span>
+            <div className="hero-contact-links">
+              <a 
+                href={CONTACT_INFO.whatsapp.getLink()} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hero-contact-wa"
+                aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+              >
+                <MessageCircle size={14} aria-hidden="true" />
+                <span>WhatsApp ({CONTACT_INFO.whatsapp.display})</span>
+              </a>
+              <span className="hero-contact-sep" aria-hidden="true">•</span>
+              <a 
+                href={CONTACT_INFO.phone.telLink} 
+                className="hero-contact-link"
+                aria-label={CONTACT_INFO.phone.ariaLabel}
+              >
+                <Phone size={13} aria-hidden="true" />
+                <span>Call Us</span>
+              </a>
+              <span className="hero-contact-sep" aria-hidden="true">•</span>
+              <a 
+                href={CONTACT_INFO.email.mailtoLink} 
+                className="hero-contact-link"
+                aria-label={CONTACT_INFO.email.ariaLabel}
+              >
+                <Mail size={13} aria-hidden="true" />
+                <span>Email Us</span>
+              </a>
+            </div>
           </div>
 
         </div>

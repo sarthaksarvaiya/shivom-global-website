@@ -1,3 +1,4 @@
+import { CONTACT_INFO } from '@/constants/contact';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Send, 
@@ -727,10 +728,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                             <RefreshCw size={13} />
                             <span>Retry Submission</span>
                           </button>
-                          <span className="buyer-error-fallback">
+                          <a href={CONTACT_INFO.email.mailtoLink} className="buyer-error-fallback" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Mail size={13} />
-                            <span>Direct Trade Desk: shivomglobal1010@gmail.com</span>
-                          </span>
+                            <span>Direct Trade Desk: {CONTACT_INFO.email.address}</span>
+                          </a>
                         </div>
                       )}
                     </div>

@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, MessageCircle, Mail, Phone } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageCircle, Phone, Mail } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 
 export interface SiteHeaderProps {
-  onNavigate?: (sectionId: string) => void;
+  onNavigate?: (targetId: string) => void;
 }
 
 export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -117,46 +123,88 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
           </a>
         </nav>
 
-        {/* Desktop CTA Button */}
+        {/* Desktop Direct Contact & Requirement CTA Group */}
         <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          <a
-            href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-whatsapp-btn"
-            aria-label="Chat with SHIVOM GLOBAL on WhatsApp"
-          >
-            <MessageCircle size={16} />
-            <span>WhatsApp</span>
-          </a>
+          {/* Direct Contact Cluster: WhatsApp | Call | Email */}
+          <div className="header-contact-group" role="region" aria-label="Direct Buyer Contact Channels">
+            <a
+              href={CONTACT_INFO.whatsapp.getLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header-contact-item header-contact-whatsapp"
+              aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+              title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
+            >
+              <MessageCircle size={15} aria-hidden="true" />
+              <span className="header-contact-label">WhatsApp</span>
+            </a>
+
+            <span className="header-contact-divider" aria-hidden="true">|</span>
+
+            <a
+              href={CONTACT_INFO.phone.telLink}
+              className="header-contact-item header-contact-phone"
+              aria-label={CONTACT_INFO.phone.ariaLabel}
+              title={`Call Us: ${CONTACT_INFO.phone.display}`}
+            >
+              <Phone size={14} aria-hidden="true" />
+              <span className="header-contact-label">Call</span>
+            </a>
+
+            <span className="header-contact-divider" aria-hidden="true">|</span>
+
+            <a
+              href={CONTACT_INFO.email.mailtoLink}
+              className="header-contact-item header-contact-email"
+              aria-label={CONTACT_INFO.email.ariaLabel}
+              title={`Email: ${CONTACT_INFO.email.address}`}
+            >
+              <Mail size={14} aria-hidden="true" />
+              <span className="header-contact-label">Email</span>
+            </a>
+          </div>
+
+          {/* Primary Sourcing Requirement CTA */}
           <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
-            className="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm header-submit-btn"
             style={{ fontWeight: 700 }}
           >
             <span>Submit Requirement</span>
-            <ArrowRight size={15} />
+            <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
 
-        {/* Mobile Hamburger Toggle Button */}
-        <button 
-          className="mobile-toggle"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-          aria-expanded={mobileMenuOpen}
-          style={{
-            display: 'none',
-            background: 'transparent',
-            border: 'none',
-            color: 'var(--text-inverse)',
-            cursor: 'pointer',
-            padding: '8px',
-          }}
-        >
-          {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        {/* Mobile Header Direct Contact & Hamburger Actions */}
+        <div className="mobile-header-actions">
+          <a
+            href={CONTACT_INFO.whatsapp.getLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-header-wa-btn"
+            aria-label="Direct WhatsApp Contact with Trade Desk"
+            title="WhatsApp SHIVOM GLOBAL"
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+          </a>
+
+          <button 
+            className="mobile-toggle"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+            aria-expanded={mobileMenuOpen}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-inverse)',
+              cursor: 'pointer',
+              padding: '8px',
+            }}
+          >
+            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Navigation */}
@@ -172,6 +220,56 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             gap: 'var(--space-4)',
           }}
         >
+          {/* Priority Direct Buyer Contact Card */}
+          <div className="mobile-drawer-contact-card">
+            <div className="mobile-drawer-contact-title">
+              Direct Buyer Contact
+            </div>
+            <div className="mobile-drawer-contact-lead">
+              Reach our trade desk directly for sourcing, specifications & export pricing:
+            </div>
+            
+            <div className="mobile-drawer-contact-actions">
+              <a
+                href={CONTACT_INFO.whatsapp.getLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-contact-tile tile-whatsapp"
+                aria-label="Chat with SHIVOM GLOBAL on WhatsApp"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                <div className="mobile-tile-text">
+                  <span className="mobile-tile-label">WhatsApp</span>
+                  <span className="mobile-tile-val">{CONTACT_INFO.whatsapp.display}</span>
+                </div>
+              </a>
+
+              <a
+                href={CONTACT_INFO.phone.telLink}
+                className="mobile-contact-tile tile-phone"
+                aria-label="Call SHIVOM GLOBAL directly"
+              >
+                <Phone size={17} aria-hidden="true" />
+                <div className="mobile-tile-text">
+                  <span className="mobile-tile-label">Phone</span>
+                  <span className="mobile-tile-val">{CONTACT_INFO.phone.display}</span>
+                </div>
+              </a>
+
+              <a
+                href={CONTACT_INFO.email.mailtoLink}
+                className="mobile-contact-tile tile-email"
+                aria-label="Email SHIVOM GLOBAL directly"
+              >
+                <Mail size={17} aria-hidden="true" />
+                <div className="mobile-tile-text">
+                  <span className="mobile-tile-label">Email</span>
+                  <span className="mobile-tile-val">{CONTACT_INFO.email.address}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
           <a 
             href="#what-we-do" 
             onClick={(e) => handleLinkClick(e, 'what-we-do')}
@@ -214,36 +312,6 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
           >
             Why Buyers Work With Us
           </a>
-
-          {/* Mobile Contact Quick Links */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', padding: 'var(--space-4) 0', borderTop: '1px solid var(--border-dark-subtle)' }}>
-            <a
-              href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-contact-link mobile-contact-whatsapp"
-              aria-label="WhatsApp SHIVOM GLOBAL"
-            >
-              <MessageCircle size={18} />
-              <span>+91 97370 30437</span>
-            </a>
-            <a
-              href="mailto:shivomglobal1010@gmail.com"
-              className="mobile-contact-link"
-              aria-label="Email SHIVOM GLOBAL"
-            >
-              <Mail size={16} />
-              <span>shivomglobal1010@gmail.com</span>
-            </a>
-            <a
-              href="tel:+919737030437"
-              className="mobile-contact-link"
-              aria-label="Call SHIVOM GLOBAL"
-            >
-              <Phone size={16} />
-              <span>+91 97370 30437</span>
-            </a>
-          </div>
 
           <div style={{ paddingTop: 'var(--space-2)' }}>
             <a 

@@ -4817,76 +4817,301 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* ==========================================================================
-   CONTACT — Header WhatsApp Button
+   DIRECT BUYER CONTACT CHANNELS (Header, Hero, Footer, Floating WhatsApp, Mobile)
    ========================================================================== */
-.header-whatsapp-btn {
+
+/* 1. Header Contact Cluster (Desktop: WhatsApp | Call | Email) */
+.header-contact-group {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background-color: #25D366;
-  color: #fff;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
   font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.2s ease, transform 0.15s ease;
-  white-space: nowrap;
-}
-.header-whatsapp-btn:hover {
-  background-color: #1ebe5a;
-  transform: translateY(-1px);
-  color: #fff;
+  font-weight: 600;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-/* ==========================================================================
-   CONTACT — Mobile Drawer Contact Links
-   ========================================================================== */
-.mobile-contact-link {
-  display: flex;
+.header-contact-group:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(197, 155, 39, 0.3);
+}
+
+.header-contact-item {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: rgba(255, 255, 255, 0.8);
+  gap: 5px;
+  color: var(--text-inverse);
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  white-space: nowrap;
 }
-.mobile-contact-link:hover {
-  color: #fff;
+
+.header-contact-item:hover {
+  color: var(--color-accent-gold);
+  transform: translateY(-1px);
 }
-.mobile-contact-whatsapp {
+
+.header-contact-item:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
+.header-contact-whatsapp {
   color: #4bdd82;
   font-weight: 700;
 }
-.mobile-contact-whatsapp:hover {
+.header-contact-whatsapp:hover {
   color: #25D366;
 }
 
-/* ==========================================================================
-   CONTACT — Footer Contact Links
-   ========================================================================== */
-.footer-contact-link {
-  color: rgba(255, 255, 255, 0.75);
+.header-contact-divider {
+  color: rgba(255, 255, 255, 0.25);
+  user-select: none;
+  font-size: 0.75rem;
+}
+
+.header-submit-btn {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+/* 2. Mobile Header Quick Contact Actions */
+.mobile-header-actions {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .mobile-header-actions {
+    display: flex !important;
+  }
+}
+
+.mobile-header-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #25D366;
+  color: #ffffff;
+  border-radius: 50%;
   text-decoration: none;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.35);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.mobile-header-wa-btn:hover,
+.mobile-header-wa-btn:focus-visible {
+  background-color: #1ebe5a;
+  transform: scale(1.05);
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* 3. Mobile Drawer Direct Contact Card */
+.mobile-drawer-contact-card {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 155, 39, 0.25);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: var(--space-2);
+}
+
+.mobile-drawer-contact-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-gold);
+}
+
+.mobile-drawer-contact-lead {
+  font-size: 0.8125rem;
+  color: var(--text-inverse-muted);
+  line-height: var(--leading-normal);
+}
+
+.mobile-drawer-contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.mobile-contact-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+  color: var(--text-inverse);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.mobile-contact-tile:hover,
+.mobile-contact-tile:focus-visible {
+  background-color: rgba(255, 255, 255, 0.12);
+  transform: translateX(2px);
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 1px;
+}
+
+.mobile-contact-tile.tile-whatsapp {
+  border-left: 3px solid #25D366;
+}
+.mobile-contact-tile.tile-whatsapp .mobile-tile-label {
+  color: #4bdd82;
+}
+
+.mobile-contact-tile.tile-phone {
+  border-left: 3px solid var(--color-accent-gold);
+}
+.mobile-contact-tile.tile-phone .mobile-tile-label {
+  color: var(--color-accent-gold);
+}
+
+.mobile-contact-tile.tile-email {
+  border-left: 3px solid #60a5fa;
+}
+.mobile-contact-tile.tile-email .mobile-tile-label {
+  color: #93c5fd;
+}
+
+.mobile-tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mobile-tile-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mobile-tile-val {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* 4. Hero Direct Contact Strip */
+.hero-direct-contact {
+  margin-top: var(--space-6);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.8125rem;
+  color: var(--text-inverse-muted);
+}
+
+.hero-contact-lead {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-gold);
+  font-size: 0.75rem;
+}
+
+.hero-contact-links {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero-contact-link,
+.hero-contact-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+}
+
+.hero-contact-link:hover,
+.hero-contact-link:focus-visible {
+  color: var(--color-accent-gold);
+  text-decoration: underline;
+  outline: 2px solid var(--color-accent-gold);
+}
+
+.hero-contact-wa {
+  color: #4bdd82;
+}
+.hero-contact-wa:hover,
+.hero-contact-wa:focus-visible {
+  color: #25D366;
+  text-decoration: underline;
+  outline: 2px solid #25D366;
+}
+
+.hero-contact-sep {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.625rem;
+  user-select: none;
+}
+
+/* 5. Footer Direct Contact Area */
+.footer-contact-lead {
+  font-size: 0.8125rem;
+  color: var(--text-inverse-muted);
+  line-height: var(--leading-normal);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.footer-company-name {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.footer-contact-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 2px 0;
+  border-radius: 2px;
   transition: color 0.2s ease;
 }
 .footer-contact-link:hover {
-  color: #fff;
+  color: var(--color-accent-gold);
   text-decoration: underline;
 }
+.footer-contact-link:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
 .footer-whatsapp-link {
   color: #4bdd82;
   font-weight: 600;
 }
 .footer-whatsapp-link:hover {
   color: #25D366;
+  text-decoration: underline;
 }
 
-/* ==========================================================================
-   FLOATING WHATSAPP BUTTON (FAB)
-   ========================================================================== */
+/* 6. Floating WhatsApp Button (FAB) */
 @keyframes wa-pulse {
   0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55); }
   70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
@@ -4903,37 +5128,47 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   gap: 8px;
   padding: 13px 18px;
   background-color: #25D366;
-  color: #fff;
+  color: #ffffff;
   border-radius: 50px;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 700;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   pointer-events: none;
 }
+
 .whatsapp-float-visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
+
 .whatsapp-float:hover {
   background-color: #1ebe5a;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.3);
-  color: #fff;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  transform: translateY(-2px);
 }
+
+.whatsapp-float:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  background-color: #1ebe5a;
+}
+
 .whatsapp-float-label {
   display: inline;
 }
 
-/* On mobile: icon-only with pulse ring to catch Gulf buyer attention */
+/* On mobile: icon-only with thumb-friendly hit area and pulse ring */
 @media (max-width: 640px) {
   .whatsapp-float {
     bottom: 20px;
     right: 16px;
-    padding: 15px;
+    padding: 14px;
     border-radius: 50%;
     animation: wa-pulse 2.2s ease-out 2.5s infinite;
   }
@@ -4941,4 +5176,3 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
     display: none;
   }
 }
-

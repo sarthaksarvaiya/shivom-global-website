@@ -1,14 +1,16 @@
 import React from 'react';
 import { 
+  ArrowRight, 
   MapPin, 
   ShieldCheck, 
-  ArrowRight, 
+  FileText, 
   Anchor, 
-  Mail, 
-  FileText,
-  Phone,
-  MessageCircle
+  MessageCircle, 
+  Phone, 
+  Mail,
+  Building2
 } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 
 export const SiteFooter: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -27,34 +29,34 @@ export const SiteFooter: React.FC = () => {
   };
 
   return (
-    <footer id="footer" className="site-footer" aria-label="Site Footer and Corporate Disclosures">
+    <footer className="site-footer" role="contentinfo" aria-label="SHIVOM GLOBAL Footer">
       <div className="container">
         
-        {/* Main Footer 4-Column Grid */}
-        <div className="footer-top-grid">
+        {/* Main 4-Column Footer Grid */}
+        <div className="footer-grid">
           
-          {/* Column 1: Brand & Entity Transparency */}
-          <div className="footer-brand-col">
-            <div className="footer-logo-wrap">
+          {/* Column 1: Brand & Entity Registration */}
+          <div className="footer-col footer-col-brand">
+            <div className="footer-logo-plaque">
               <img 
-                src="/Shivom_Global_Header_Logo.svg" 
-                alt="SHIVOM GLOBAL" 
+                src="/Shivom_Global_Logo.svg" 
+                alt="SHIVOM GLOBAL — Official Brand Mark" 
                 className="footer-logo-img"
               />
             </div>
 
             <p className="footer-brand-desc">
-              SHIVOM GLOBAL is an Indian tea sourcing and export coordination firm dedicated to supplying 
-              commercial blenders, packers, and private-label brands across international destinations.
+              SHIVOM GLOBAL is an Indian tea merchant export firm dedicated to supplying 
+              commercial blenders, packers, and private-label brands across international markets.
             </p>
 
-            <div className="footer-entity-card">
+            <div className="footer-entity-badge">
               <div className="footer-entity-heading">
                 Entity Registration & Commercial Base
               </div>
-              <div className="footer-entity-item">Sole Proprietorship (Proprietor: Sarthak Sarvaiya)</div>
+              <div className="footer-entity-item">Sole Proprietorship (Proprietor: {CONTACT_INFO.proprietor})</div>
               <div className="footer-entity-item">Udyam MSME Registered (Govt. of India)</div>
-              <div className="footer-entity-item">Principal Base: Bhavnagar, Gujarat, India</div>
+              <div className="footer-entity-item">Principal Base: {CONTACT_INFO.address.display}</div>
             </div>
           </div>
 
@@ -137,48 +139,77 @@ export const SiteFooter: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 4: Trade Desk & Export Logistics */}
+          {/* Column 4: Dedicated Direct Buyer Contact Area */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Trade Desk & Logistics</h4>
+            <h4 className="footer-col-title">Direct Buyer Contact</h4>
+            <p className="footer-contact-lead">
+              For tea sourcing, specifications, documentation and export requirements, contact SHIVOM GLOBAL directly.
+            </p>
             
             <div className="footer-contact-list">
+              {/* Business Name */}
               <div className="footer-contact-item">
-                <MapPin size={15} className="footer-contact-icon" />
-                <span>Base: Bhavnagar, Gujarat, India</span>
+                <Building2 size={15} className="footer-contact-icon" aria-hidden="true" />
+                <span className="footer-company-name">{CONTACT_INFO.companyName}</span>
               </div>
 
+              {/* WhatsApp (Clickable) */}
               <div className="footer-contact-item">
-                <Anchor size={15} className="footer-contact-icon" />
-                <span>Loading Ports: Kolkata, Haldia, Mundra, Nhava Sheva (JNPT)</span>
-              </div>
-
-              <div className="footer-contact-item">
-                <ShieldCheck size={15} className="footer-contact-icon" />
-                <span>Trade Terms: FOB Indian Ports / CIF Destination Ports</span>
-              </div>
-
-              <div className="footer-contact-item">
-                <Phone size={15} className="footer-contact-icon" />
-                <a href="tel:+919737030437" className="footer-contact-link">+91 97370 30437</a>
-              </div>
-
-              <div className="footer-contact-item">
-                <MessageCircle size={15} className="footer-contact-icon" />
+                <MessageCircle size={15} className="footer-contact-icon" aria-hidden="true" />
                 <a
-                  href="https://wa.me/919737030437?text=Hi%20SHIVOM%20GLOBAL%2C%20I%20would%20like%20to%20discuss%20a%20tea%20requirement."
+                  href={CONTACT_INFO.whatsapp.getLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-contact-link footer-whatsapp-link"
+                  aria-label={CONTACT_INFO.whatsapp.ariaLabel}
                 >
-                  WhatsApp: +91 97370 30437
+                  WhatsApp: {CONTACT_INFO.whatsapp.display}
                 </a>
               </div>
 
+              {/* Phone (Clickable dialer) */}
               <div className="footer-contact-item">
-                <Mail size={15} className="footer-contact-icon" />
-                <a href="mailto:shivomglobal1010@gmail.com" className="footer-contact-link">shivomglobal1010@gmail.com</a>
+                <Phone size={15} className="footer-contact-icon" aria-hidden="true" />
+                <a 
+                  href={CONTACT_INFO.phone.telLink} 
+                  className="footer-contact-link"
+                  aria-label={CONTACT_INFO.phone.ariaLabel}
+                >
+                  Phone: {CONTACT_INFO.phone.display}
+                </a>
               </div>
 
+              {/* Email (Clickable mailto) */}
+              <div className="footer-contact-item">
+                <Mail size={15} className="footer-contact-icon" aria-hidden="true" />
+                <a 
+                  href={CONTACT_INFO.email.mailtoLink} 
+                  className="footer-contact-link"
+                  aria-label={CONTACT_INFO.email.ariaLabel}
+                >
+                  {CONTACT_INFO.email.address}
+                </a>
+              </div>
+
+              {/* Approved Business Address */}
+              <div className="footer-contact-item">
+                <MapPin size={15} className="footer-contact-icon" aria-hidden="true" />
+                <span>Base: {CONTACT_INFO.address.display}</span>
+              </div>
+
+              {/* Shipping Ports */}
+              <div className="footer-contact-item">
+                <Anchor size={15} className="footer-contact-icon" aria-hidden="true" />
+                <span>Loading: {CONTACT_INFO.ports.loading}</span>
+              </div>
+
+              {/* Trade Terms */}
+              <div className="footer-contact-item">
+                <ShieldCheck size={15} className="footer-contact-icon" aria-hidden="true" />
+                <span>Trade Terms: {CONTACT_INFO.tradeTerms}</span>
+              </div>
+
+              {/* Requirement Form Button */}
               <div className="footer-action-wrap">
                 <a 
                   href="#requirement-form" 
@@ -187,7 +218,7 @@ export const SiteFooter: React.FC = () => {
                   aria-label="Submit commercial tea requirement to SHIVOM GLOBAL"
                 >
                   <span>Submit Requirement</span>
-                  <ArrowRight size={14} />
+                  <ArrowRight size={14} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -197,7 +228,7 @@ export const SiteFooter: React.FC = () => {
 
         {/* Middle Statutory Disclosure Note */}
         <div className="footer-disclosure-strip">
-          <FileText size={16} className="footer-disclosure-icon" />
+          <FileText size={16} className="footer-disclosure-icon" aria-hidden="true" />
           <p className="footer-disclosure-text">
             <strong>Commercial Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea merchant sourcing and export coordination firm. 
             Tea specifications, cup profiles, packaging formats, and commercial pricing are confirmed against individual buyer specifications, 
