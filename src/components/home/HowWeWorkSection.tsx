@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   FileText, 
   SlidersHorizontal, 
@@ -7,6 +7,7 @@ import {
   FileCheck, 
   Ship, 
   ArrowRight,
+  ArrowLeft,
   CheckCircle2,
   HelpCircle,
   ArrowUpRight,
@@ -23,6 +24,9 @@ interface ProcessStep {
   title: string;
   tag: string;
   description: string;
+  buyerProvides: string;
+  shivomCoordinates: string;
+  keyDeliverable: string;
   icon: LucideIcon;
 }
 
@@ -30,12 +34,18 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
   onSubmitRequirement,
   onExploreCategories,
 }) => {
+  // Active step index for the Cardless Stepper inspector (0 to 5)
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(0);
+
   const steps: ProcessStep[] = [
     {
       step: '01',
       title: 'Share Your Requirement',
       tag: 'Requirement Intake',
       description: 'Tell us what you need — tea category, grade, application, quantity, packing format and destination.',
+      buyerProvides: 'Tea category (CTC, Orthodox, Darjeeling, Specialty), target grade/cut, end-use application, estimated quantity, packing preference, and target discharge port.',
+      shivomCoordinates: 'Intake through the Commercial Requirement Engine, initial feasibility assessment against harvest availability, and prompt trade desk acknowledgement.',
+      keyDeliverable: 'Logged commercial inquiry profile & parameter scoping',
       icon: FileText,
     },
     {
@@ -43,6 +53,9 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       title: 'Review the Specification',
       tag: 'Specification Review',
       description: 'We review the requested tea type, grade, application and commercial parameters to understand the actual sourcing requirement.',
+      buyerProvides: 'Organoleptic targets (liquor color, body, milk reactivity), particle sizing constraints, and destination statutory food safety compliance criteria.',
+      shivomCoordinates: 'Review of mesh distribution, cup profile feasibility, harvest seasonality, and destination import regulations (e.g., GSO / EU MRL parameters).',
+      keyDeliverable: 'Confirmed technical & organoleptic sourcing specification',
       icon: SlidersHorizontal,
     },
     {
@@ -50,6 +63,9 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       title: 'Source Suitable Lots',
       tag: 'Origin Sourcing',
       description: "We identify suitable Indian tea sourcing options against the buyer's specification and commercial requirement.",
+      buyerProvides: 'Delivery milestones, shipping window requirements, and commercial target pricing parameters.',
+      shivomCoordinates: 'Evaluation of auction catalogues and primary garden lots across Assam and North India to identify matching batches without speculative inventory holding.',
+      keyDeliverable: 'Qualified origin lot options matching commercial parameters',
       icon: Search,
     },
     {
@@ -57,6 +73,9 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       title: 'Sampling & Verification',
       tag: 'Sample Verification',
       description: 'Where applicable, samples and relevant specifications are reviewed before moving toward commercial confirmation.',
+      buyerProvides: 'Sensory cupping evaluation, infusion testing in intended application, and physical parameter sign-off.',
+      shivomCoordinates: 'Coordination of representative counter-samples and technical lot sheets for buyer evaluation where applicable prior to contract commitment.',
+      keyDeliverable: 'Buyer sensory sign-off & technical sample alignment',
       icon: Coffee,
     },
     {
@@ -64,6 +83,9 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       title: 'Confirm the Commercial Specification',
       tag: 'Commercial Confirmation',
       description: 'Tea specification, quantity, packing, pricing and commercial terms are confirmed before execution.',
+      buyerProvides: 'Sign-off on Proforma Invoice terms, agreed payment schedule, and packaging artwork/marking instructions.',
+      shivomCoordinates: 'Formal Proforma Invoice issuance specifying tea grade, net weight, barrier packaging, agreed Incoterms (FOB/CIF), and dispatch timeline.',
+      keyDeliverable: 'Binding Proforma Invoice & locked production schedule',
       icon: FileCheck,
     },
     {
@@ -71,6 +93,9 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
       title: 'Packing & Export Coordination',
       tag: 'Export Coordination',
       description: 'Once confirmed, packing, documentation and dispatch requirements are coordinated for the agreed shipment.',
+      buyerProvides: 'Consignee details, destination customs requirements, and clearing agent handover instructions.',
+      shivomCoordinates: 'Export packaging execution (25kg multi-wall kraft barrier sacks / agreed format), statutory documentation (Phytosanitary, Certificate of Origin, BL), and ocean port dispatch.',
+      keyDeliverable: 'Complete statutory shipping dossier & dispatched cargo tracking',
       icon: Ship,
     },
   ];
@@ -84,6 +109,8 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
     { label: 'Destination', detail: 'Target port, country, and import regulatory standards' },
     { label: 'Commercial Terms', detail: 'Target pricing, delivery milestone, and Incoterms' },
   ];
+
+  const activeStep = steps[activeStepIndex];
 
   const handleCtaClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -128,7 +155,7 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
   return (
     <section 
       id="how-we-work" 
-      className="section how-we-work-section"
+      className="section how-we-work-section theme-ivory"
       aria-labelledby="how-we-work-heading"
     >
       <div className="container">
@@ -146,127 +173,183 @@ export const HowWeWorkSection: React.FC<HowWeWorkSectionProps> = ({
           </p>
         </div>
 
-        {/* 6-Step Commercial Workflow Process */}
-        <div className="how-we-work-process-wrap">
-          <div className="how-we-work-grid">
+        {/* =========================================================================
+            CARDLESS STEPPER & STAGE INSPECTOR (FINAL APPROVED ARCHITECTURE)
+           ========================================================================= */}
+        <div className="cardless-stepper-view">
+          
+          {/* Interactive Milestone Rail (No Cards) */}
+          <div className="cardless-stepper-rail" role="tablist" aria-label="Commercial stages">
             {steps.map((item, idx) => {
-              const IconComp = item.icon;
-              const isLastInRowDesktop = idx === 2 || idx === 5;
+              const isActive = idx === activeStepIndex;
+              const isPassed = idx < activeStepIndex;
               return (
-                <div 
-                  key={item.step} 
-                  className="how-we-work-step-card"
-                  tabIndex={0}
-                  aria-label={`Step ${item.step}: ${item.title}`}
+                <button
+                  key={item.step}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`stepper-node-btn ${isActive ? 'active' : ''} ${isPassed ? 'passed' : ''}`}
+                  onClick={() => setActiveStepIndex(idx)}
+                  id={`btn-stepper-step-${item.step}`}
                 >
-                  {/* Step Header: Icon, Number & Badge */}
-                  <div className="how-we-work-step-top">
-                    <div className="how-we-work-icon-box">
-                      <IconComp size={20} aria-hidden="true" />
-                    </div>
-                    <div className="how-we-work-step-meta">
-                      <span className="how-we-work-step-tag font-spec">
-                        {item.tag}
-                      </span>
-                      <span className="how-we-work-step-number font-spec">
-                        {item.step}
-                      </span>
-                    </div>
+                  <div className="stepper-node-indicator font-spec">
+                    <span>{item.step}</span>
                   </div>
-
-                  {/* Step Body */}
-                  <div className="how-we-work-step-content">
-                    <h3 className="how-we-work-step-title">
-                      {item.title}
-                    </h3>
-                    <p className="how-we-work-step-desc">
-                      {item.description}
-                    </p>
+                  <div className="stepper-node-text">
+                    <span className="stepper-node-tag font-spec">STAGE {item.step}</span>
+                    <span className="stepper-node-title">{item.title}</span>
                   </div>
-
-                  {/* Step Sequence Footprint indicator */}
-                  <div className="how-we-work-step-footer">
-                    <span className="how-we-work-step-indicator font-spec">
-                      STAGE {item.step} OF 06
-                    </span>
-                    {!isLastInRowDesktop && (
-                      <div className="how-we-work-step-next-hint" aria-hidden="true">
-                        <span>Next</span>
-                        <ArrowRight size={12} />
-                      </div>
-                    )}
-                  </div>
-                </div>
+                </button>
               );
             })}
           </div>
-        </div>
 
-        {/* Buyer-First Principle Highlight Statement */}
-        <div className="how-we-work-principle-card">
-          <div className="how-we-work-principle-tag font-spec">
-            COMMERCIAL SOURCING PRINCIPLE
-          </div>
-          <h3 className="how-we-work-principle-title">
-            Buyer-First, Inventory-Last
-          </h3>
-          <p className="how-we-work-principle-text">
-            We begin with the requirement rather than assuming a fixed product or inventory position. Sourcing, sampling, and commercial specifications are coordinated specifically around the buyer’s confirmed target profile and application.
-          </p>
-        </div>
+          {/* Stage Showcase Inspector (Completely Open Typography - ZERO CARDS) */}
+          <div className="cardless-inspector-showcase">
+            
+            {/* Top Watermark & Header */}
+            <div className="inspector-showcase-header">
+              <span className="inspector-watermark font-spec" aria-hidden="true">
+                {activeStep.step}
+              </span>
 
-        {/* What We Need to Start Block */}
-        <div className="how-we-work-checklist-block">
-          <div className="how-we-work-checklist-header">
-            <div className="how-we-work-checklist-badge font-spec">
-              <HelpCircle size={14} aria-hidden="true" />
-              <span>INQUIRY SCOPING</span>
+              <div className="inspector-header-meta">
+                <span className="inspector-stage-tag font-spec">
+                  STAGE {activeStep.step} OF 06 • {activeStep.tag.toUpperCase()}
+                </span>
+                <h3 className="inspector-stage-title">
+                  {activeStep.title}
+                </h3>
+                <p className="inspector-stage-summary">
+                  {activeStep.description}
+                </p>
+              </div>
             </div>
-            <h3 className="how-we-work-checklist-title">
-              What We Need to Start
-            </h3>
-            <p className="how-we-work-checklist-intro">
-              To evaluate availability and coordinate sourcing efficiently, buyers typically share these commercial parameters when submitting an inquiry:
+
+            {/* Typographic Role Alignment (Open text columns, zero card containers) */}
+            <div className="inspector-details-flow">
+              
+              <div className="inspector-flow-col">
+                <div className="inspector-flow-header">
+                  <span className="inspector-flow-icon font-spec">01</span>
+                  <h4 className="inspector-flow-title font-spec">WHAT BUYER SPECIFIES</h4>
+                </div>
+                <p className="inspector-flow-body">
+                  {activeStep.buyerProvides}
+                </p>
+              </div>
+
+              <div className="inspector-flow-col">
+                <div className="inspector-flow-header">
+                  <span className="inspector-flow-icon font-spec">02</span>
+                  <h4 className="inspector-flow-title font-spec">HOW WE COORDINATE SOURCING</h4>
+                </div>
+                <p className="inspector-flow-body">
+                  {activeStep.shivomCoordinates}
+                </p>
+              </div>
+
+            </div>
+
+            {/* Stage Outcome Banner & Navigator */}
+            <div className="inspector-footer-bar">
+              <div className="inspector-deliverable-item font-spec">
+                <CheckCircle2 size={16} className="deliverable-check-icon" aria-hidden="true" />
+                <span><strong>Stage Deliverable:</strong> {activeStep.keyDeliverable}</span>
+              </div>
+
+              <div className="inspector-nav-buttons">
+                <button
+                  type="button"
+                  className="btn inspector-nav-btn prev-btn"
+                  disabled={activeStepIndex === 0}
+                  onClick={() => setActiveStepIndex((prev) => Math.max(0, prev - 1))}
+                  aria-label="Previous commercial stage"
+                  id="btn-inspector-prev"
+                >
+                  <ArrowLeft size={14} aria-hidden="true" />
+                  <span>Previous</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="btn inspector-nav-btn next-btn"
+                  disabled={activeStepIndex === steps.length - 1}
+                  onClick={() => setActiveStepIndex((prev) => Math.min(steps.length - 1, prev + 1))}
+                  aria-label="Next commercial stage"
+                  id="btn-inspector-next"
+                >
+                  <span>Next Stage</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Buyer-First Principle Strip (Cardless Accent) */}
+          <div className="cardless-principle-strip">
+            <div className="principle-strip-badge font-spec">OUR CORE CAPITAL RULE</div>
+            <h3 className="principle-strip-title">Buyer-First, Inventory-Last</h3>
+            <p className="principle-strip-text">
+              We begin with your commercial requirement rather than assuming a fixed product or speculative inventory position. Every lot, sample, and specification is sourced and verified around your target application.
             </p>
           </div>
 
-          <div className="how-we-work-params-grid">
-            {whatWeNeedItems.map((param, pIdx) => (
-              <div key={pIdx} className="how-we-work-param-item">
-                <div className="how-we-work-param-top">
-                  <CheckCircle2 size={15} className="how-we-work-param-check" aria-hidden="true" />
-                  <span className="how-we-work-param-name font-spec">{param.label}</span>
-                </div>
-                <span className="how-we-work-param-detail">{param.detail}</span>
+          {/* What We Need to Start Scoping Block */}
+          <div className="cardless-scoping-section">
+            <div className="scoping-section-header">
+              <div className="scoping-badge font-spec">
+                <HelpCircle size={14} aria-hidden="true" />
+                <span>INQUIRY SCOPING</span>
               </div>
-            ))}
+              <h3 className="scoping-title">What We Need to Start</h3>
+              <p className="scoping-intro">
+                To evaluate availability and coordinate sourcing efficiently, buyers typically share these commercial parameters when submitting an inquiry:
+              </p>
+            </div>
+
+            <div className="cardless-params-row">
+              {whatWeNeedItems.map((param, idx) => (
+                <div key={idx} className="cardless-param-cell">
+                  <div className="param-cell-top">
+                    <CheckCircle2 size={14} className="param-cell-icon" aria-hidden="true" />
+                    <span className="param-cell-label font-spec">{param.label}</span>
+                  </div>
+                  <span className="param-cell-desc">{param.detail}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Conversion CTAs */}
+            <div className="how-we-work-cta-wrap">
+              <a 
+                href="#requirement-form" 
+                className="btn btn-primary btn-gold how-we-work-primary-btn"
+                onClick={handleCtaClick}
+                id="btn-how-we-work-submit"
+              >
+                <span>Submit Your Commercial Requirement</span>
+                <ArrowRight size={16} aria-hidden="true" style={{ marginLeft: '8px' }} />
+              </a>
+
+              <a 
+                href="#our-teas" 
+                className="btn how-we-work-secondary-btn"
+                onClick={handleExploreClick}
+                id="btn-how-we-work-categories"
+              >
+                <span>Explore Tea Categories</span>
+                <ArrowUpRight size={15} aria-hidden="true" style={{ marginLeft: '6px' }} />
+              </a>
+            </div>
+
+            <div className="how-we-work-cta-note">
+              Inquiries feed directly into our commercial requirement engine. No speculative commitments or automated purchase checkout.
+            </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className="how-we-work-cta-wrap">
-            <a 
-              href="#requirement-form" 
-              className="btn btn-primary btn-gold how-we-work-primary-btn"
-              onClick={handleCtaClick}
-              id="btn-how-we-work-submit"
-            >
-              <span>Submit Your Commercial Requirement</span>
-              <ArrowRight size={16} aria-hidden="true" style={{ marginLeft: '8px' }} />
-            </a>
-
-            <a 
-              href="#our-teas" 
-              className="btn how-we-work-secondary-btn"
-              onClick={handleExploreClick}
-              id="btn-how-we-work-categories"
-            >
-              <span>Explore Tea Categories</span>
-              <ArrowUpRight size={15} aria-hidden="true" style={{ marginLeft: '6px' }} />
-            </a>
-          </div>
-          <div className="how-we-work-cta-note">
-            Inquiries feed directly into our commercial requirement engine. No speculative commitments or automated purchase checkout.
-          </div>
         </div>
 
       </div>

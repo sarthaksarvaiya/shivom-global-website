@@ -992,7 +992,7 @@ The website improvement work will be considered complete and ready for productio
   - `src/components/home/HowWeWorkSection.tsx` (Created — 6-step commercial sourcing journey, Buyer-First principle card, inquiry scoping checklist, dual CTAs)
   - `src/components/home/ExportProcessFlow.tsx` (Modified — alias re-export pointing to `HowWeWorkSection` for backwards compatibility)
   - `src/components/home/HomePage.tsx` (Modified — positioned Section 6 immediately after Section 5: Who We Serve; wired requirement & category smooth-scroll navigation)
-  - `src/styles/index.css` (Modified — added Deep Forest dark surface, warm gold trade desk styling, 3-column desktop / 2-column tablet / 1-column mobile grid, hover depth, and focus-visible indicators)
+  - `src/styles/index.css` (Modified — added Estate Ivory warm light prestige palette, cardless stepper milestone rail, watermark typography, open role alignment flow, and responsive mobile adaptations)
 - **Core Message & Anti-Fabrication Rule Compliance (Rule 02):**
   - Section explains the commercial journey: *Buyer Requirement → Specification Review → Sourcing & Lot Selection → Sample / Verification → Commercial Confirmation → Packing & Export Coordination*.
   - Strictly honest: SHIVOM GLOBAL is presented as a commercial sourcing partner that coordinates sourcing around buyer specifications, NOT as a factory/plantation owner.
@@ -1006,9 +1006,14 @@ The website improvement work will be considered complete and ready for productio
   4. `04 — Sampling & Verification:` Where applicable, samples and relevant specifications are reviewed before moving toward commercial confirmation.
   5. `05 — Confirm the Commercial Specification:` Tea specification, quantity, packing, pricing and commercial terms are confirmed before execution.
   6. `06 — Packing & Export Coordination:` Once confirmed, packing, documentation and dispatch requirements are coordinated for the agreed shipment.
+- **Cardless Architecture & Visual Detailing:**
+  - **Estate Ivory Palette:** Radiant warm ivory canvas (`#FAF8F5`), Deep Estate Green headings (`#0D3829`), slate reading copy (`#4B5563`), amber/gold accents (`#92400E`), and soft linen dividers (`#E5E0D5`).
+  - **Cardless Stepper Rail:** 6 numbered node indicators (`01`–`06`) along an open horizontal path with instant stage switching.
+  - **Stage Inspector:** Open typographic canvas (zero cards) featuring giant background watermark numerals, stage tag, narrative lead, and open role alignment columns (`01 WHAT BUYER SPECIFIES` vs `02 HOW WE COORDINATE SOURCING`).
+  - **Stage Deliverable & Navigation:** Checkmark deliverable badge and `← Previous` / `Next Stage →` navigation controls.
 - **Buyer-First Principle Card:**
   - Title: `Buyer-First, Inventory-Last`
-  - Supporting text: *"We begin with the requirement rather than assuming a fixed product or inventory position. Sourcing, sampling, and commercial specifications are coordinated specifically around the buyer’s confirmed target profile and application."*
+  - Supporting text: *"We begin with your commercial requirement rather than assuming a fixed product or speculative inventory position. Every lot, sample, and specification is sourced and verified around your target application."*
 - **What We Need to Start (Inquiry Scoping Block):**
   - Displays 7 commercial parameters buyers typically prepare: `Tea Category`, `Grade / Specification`, `Application`, `Estimated Quantity`, `Packing Format`, `Destination`, `Commercial Terms`.
   - Zero extra form fields or duplicate backend routes; maintains existing single pipeline.
@@ -1016,10 +1021,10 @@ The website improvement work will be considered complete and ready for productio
   - Primary CTA: `Submit Your Commercial Requirement →` (smooth scrolls to `#requirement-form`).
   - Secondary CTA: `Explore Tea Categories →` (smooth scrolls to `#our-teas`).
 - **Responsive Layout & Accessibility:**
-  - Desktop (>1024px): 3 columns with stage indicators and directional Next cues.
-  - Tablet (641px–1024px): 2 columns.
-  - Mobile (<=640px): 1 column clean vertical sequence with zero horizontal scroll overflow.
-  - Accessibility: Semantic `<section>`, `<h2>`, `<h3>`, ARIA step labels, visible focus rings, WCAG AA contrast.
-- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.02s. Zero errors.
+  - Desktop (>1024px): 6-node horizontal rail + 2-column open typographic flow.
+  - Tablet (641px–1024px): 3 or 2-column node rail with stacked role alignment.
+  - Mobile (<=640px): 1-column responsive node rail with full touch targets and zero horizontal scroll overflow.
+  - Accessibility: Semantic `<section>`, `<h2>`, `<h3>`, ARIA step attributes, visible focus rings, WCAG AA contrast.
+- **Validation:** Clean TypeScript check (`tsc`) and Vite build (`npm run build`) in 1.06s. Zero errors.
 - **Next Recommended Section:** Section 7 — Why SHIVOM GLOBAL (Credibility Pillars).
 
