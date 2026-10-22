@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, MessageCircle, Phone, Mail } from 'lucide-react';
+import { Menu, X, ArrowRight, MessageCircle } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 
 export interface SiteHeaderProps {
@@ -69,13 +69,14 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
         transition: 'all var(--transition-normal)',
       }}
     >
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '76px' }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '74px' }}>
         {/* Brand Logo */}
         <a 
           href="#hero" 
           onClick={(e) => handleLinkClick(e, 'hero')}
           className="header-brand-link"
           aria-label="SHIVOM GLOBAL Home"
+          style={{ flexShrink: 0 }}
         >
           <img 
             src="/Shivom_Global_Header_Logo.svg" 
@@ -84,37 +85,38 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
           />
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links — 6 Key Destinations (Never Wrap) */}
         <nav 
           className="desktop-nav"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)' }}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 'clamp(1rem, 1.8vw, 1.75rem)',
+            margin: '0 var(--space-4)'
+          }}
           aria-label="Main Navigation"
         >
           <a 
             href="#our-teas" 
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
-            Tea Range
+            Tea
           </a>
           <a 
             href="#tea-by-grade" 
             onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
-            Grade Table
-          </a>
-          <a 
-            href="#private-label" 
-            onClick={(e) => handleLinkClick(e, 'private-label')}
-            className="nav-link"
-          >
-            Packing
+            Grades
           </a>
           <a 
             href="#how-it-works" 
             onClick={(e) => handleLinkClick(e, 'how-it-works')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
             How It Works
           </a>
@@ -122,6 +124,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             href="#why-us" 
             onClick={(e) => handleLinkClick(e, 'why-us')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
             Why Us
           </a>
@@ -129,67 +132,54 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             href="#about-sarthak" 
             onClick={(e) => handleLinkClick(e, 'about-sarthak')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
-            About Sarthak
+            About
           </a>
           <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
             className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
           >
             Contact
           </a>
         </nav>
 
-        {/* Desktop Direct Contact & Requirement CTA Group */}
-        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          {/* Direct Contact Cluster: WhatsApp | Call */}
-          <div className="header-contact-group" role="region" aria-label="Direct Buyer Contact Channels">
-            <a
-              href={CONTACT_INFO.whatsapp.getLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="header-contact-item header-contact-whatsapp"
-              aria-label={CONTACT_INFO.whatsapp.ariaLabel}
-              title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
-            >
-              <MessageCircle size={15} aria-hidden="true" />
-              <span className="header-contact-label">WhatsApp</span>
-            </a>
-
-            <span className="header-contact-divider" aria-hidden="true">|</span>
-
-            <a
-              href={CONTACT_INFO.phone.telLink}
-              className="header-contact-item header-contact-phone"
-              aria-label={CONTACT_INFO.phone.ariaLabel}
-              title={`Call: ${CONTACT_INFO.phone.display}`}
-            >
-              <Phone size={14} aria-hidden="true" />
-              <span className="header-contact-label">Call</span>
-            </a>
-          </div>
+        {/* Desktop Action Area: WhatsApp + Primary CTA (Request Free Samples) */}
+        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexShrink: 0 }}>
+          <a
+            href={CONTACT_INFO.whatsapp.getLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-whatsapp-pill"
+            aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+            title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
+          >
+            <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+            <span>WhatsApp</span>
+          </a>
 
           {/* Primary CTA: Request Free Samples */}
           <a 
             href="#requirement-form" 
             onClick={handleCtaClick}
             className="btn btn-primary btn-sm header-submit-btn"
-            style={{ fontWeight: 700 }}
+            style={{ fontWeight: 700, whiteSpace: 'nowrap' }}
           >
             <span>Request Free Samples</span>
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
 
-        {/* Mobile Header Direct Contact & Hamburger Actions */}
+        {/* Mobile Header Actions */}
         <div className="mobile-header-actions">
           <a
             href={CONTACT_INFO.whatsapp.getLink()}
             target="_blank"
             rel="noopener noreferrer"
             className="mobile-header-wa-btn"
-            aria-label="Direct WhatsApp Contact with Trade Desk"
+            aria-label="Direct WhatsApp Contact"
             title="WhatsApp SHIVOM GLOBAL"
           >
             <MessageCircle size={18} aria-hidden="true" />
@@ -220,82 +210,25 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
           style={{
             backgroundColor: 'var(--color-primary-dark)',
             borderTop: '1px solid var(--border-dark-subtle)',
-            padding: 'var(--space-6) var(--space-4) var(--space-8)',
+            padding: 'var(--space-5) var(--space-4) var(--space-6)',
             display: 'flex',
             flexDirection: 'column',
             gap: 'var(--space-3)',
           }}
         >
-          {/* Priority Direct Buyer Contact Card */}
-          <div className="mobile-drawer-contact-card">
-            <div className="mobile-drawer-contact-title">
-              Direct Trade Desk Contact
-            </div>
-            <div className="mobile-drawer-contact-lead">
-              Contact Sarthak directly for tea specifications, samples &amp; pricing:
-            </div>
-            
-            <div className="mobile-drawer-contact-actions">
-              <a
-                href={CONTACT_INFO.whatsapp.getLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mobile-contact-tile tile-whatsapp"
-                aria-label="Chat with SHIVOM GLOBAL on WhatsApp"
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                <div className="mobile-tile-text">
-                  <span className="mobile-tile-label">WhatsApp</span>
-                  <span className="mobile-tile-val">{CONTACT_INFO.whatsapp.display}</span>
-                </div>
-              </a>
-
-              <a
-                href={CONTACT_INFO.phone.telLink}
-                className="mobile-contact-tile tile-phone"
-                aria-label="Call SHIVOM GLOBAL directly"
-              >
-                <Phone size={17} aria-hidden="true" />
-                <div className="mobile-tile-text">
-                  <span className="mobile-tile-label">Phone</span>
-                  <span className="mobile-tile-val">{CONTACT_INFO.phone.display}</span>
-                </div>
-              </a>
-
-              <a
-                href={CONTACT_INFO.email.mailtoLink}
-                className="mobile-contact-tile tile-email"
-                aria-label="Email SHIVOM GLOBAL directly"
-              >
-                <Mail size={17} aria-hidden="true" />
-                <div className="mobile-tile-text">
-                  <span className="mobile-tile-label">Email</span>
-                  <span className="mobile-tile-val">{CONTACT_INFO.email.address}</span>
-                </div>
-              </a>
-            </div>
-          </div>
-
           <a 
             href="#our-teas" 
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="mobile-nav-link"
           >
-            Tea Range
+            Tea
           </a>
           <a 
             href="#tea-by-grade" 
             onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
             className="mobile-nav-link"
           >
-            Grade Specification Table
-          </a>
-          <a 
-            href="#private-label" 
-            onClick={(e) => handleLinkClick(e, 'private-label')}
-            className="mobile-nav-link"
-          >
-            Custom Packing &amp; Private Label
+            Grades
           </a>
           <a 
             href="#how-it-works" 
@@ -309,21 +242,21 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             onClick={(e) => handleLinkClick(e, 'why-us')}
             className="mobile-nav-link"
           >
-            Why SHIVOM GLOBAL
+            Why Us
           </a>
           <a 
             href="#about-sarthak" 
             onClick={(e) => handleLinkClick(e, 'about-sarthak')}
             className="mobile-nav-link"
           >
-            About Sarthak
+            About
           </a>
           <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
             className="mobile-nav-link"
           >
-            Contact / Submit Requirement
+            Contact
           </a>
 
           <div style={{ paddingTop: 'var(--space-2)' }}>
@@ -331,10 +264,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
               href="#requirement-form" 
               onClick={handleCtaClick}
               className="btn btn-primary btn-mobile-full"
-              style={{ padding: '14px', fontSize: '1rem' }}
+              style={{ padding: '12px', fontSize: '0.9375rem', justifyContent: 'center' }}
             >
               <span>Request Free Samples</span>
-              <ArrowRight size={16} />
+              <ArrowRight size={15} />
             </a>
           </div>
         </div>

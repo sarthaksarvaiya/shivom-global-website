@@ -124,10 +124,8 @@ export const HomePage: React.FC = () => {
           onSubmitRequirement={handleSubmitRequirement}
         />
 
-        {/* Section 7: About Sarthak (Founder & Direct Trade Desk) */}
-        <AboutSarthakSection 
-          onContactSarthak={handleSubmitRequirement}
-        />
+        {/* Section 7: About Sarthak */}
+        <AboutSarthakSection />
 
         {/* Section 8: Buyer Requirements / Contact (Tell Us What Tea You Need) */}
         <BuyerRequirementForm 

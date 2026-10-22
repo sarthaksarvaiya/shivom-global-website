@@ -1,23 +1,12 @@
-import { CONTACT_INFO } from '@/constants/contact';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Send, 
-  MessageCircle, 
-  Phone, 
-  MapPin, 
   CheckCircle2, 
-  ShieldCheck, 
   RotateCcw, 
   AlertCircle, 
   RefreshCw, 
-  Mail, 
-  FileCheck2, 
-  Lock, 
-  Layers, 
-  Scale, 
-  Building2, 
-  MessageSquare,
-  Sparkles
+  Sparkles,
+  ClipboardList
 } from 'lucide-react';
 import { 
   BuyerRequirementFormData, 
@@ -37,7 +26,16 @@ export interface BuyerRequirementFormProps {
   initialIntent?: 'sample' | 'quote' | 'packing';
 }
 
-const DEFAULT_FORM_DATA: BuyerRequirementFormData = {
+interface QuickFormData {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  country: string;
+  message: string;
+}
+
+const DEFAULT_DETAILED_DATA: BuyerRequirementFormData = {
   requirementType: 'Assam CTC',
   grade: 'BOP',
   volume: 'Trial Batch (250 kg – 500 kg)',
@@ -54,13 +52,30 @@ const DEFAULT_FORM_DATA: BuyerRequirementFormData = {
   additionalMessage: '',
 };
 
+const DEFAULT_QUICK_DATA: QuickFormData = {
+  name: '',
+  company: '',
+  email: '',
+  phone: '',
+  country: '',
+  message: '',
+};
+
 export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   initialRequirementType,
   initialGrade,
   initialIntent = 'sample',
 }) => {
-  const [formData, setFormData] = useState<BuyerRequirementFormData>(DEFAULT_FORM_DATA);
-  const [inquiryIntent, setInquiryIntent] = useState<'sample' | 'quote' | 'packing'>(initialIntent);
+  // Form mode: 'quick' (Form A) or 'detailed' (Form B)
+  const [formMode, setFormMode] = useState<'quick' | 'detailed'>('quick');
+
+  // Quick form state
+  const [quickData, setQuickData] = useState<QuickFormData>(DEFAULT_QUICK_DATA);
+
+  // Detailed form state
+  const [detailedData, setDetailedData] = useState<BuyerRequirementFormData>(DEFAULT_DETAILED_DATA);
+
+  // Error and submission states
   const [errors, setErrors] = useState<FieldValidationErrors>({});
   const [formStatus, setFormStatus] = useState<FormStatus>('IDLE');
   const [submissionError, setSubmissionError] = useState<string>('');
@@ -69,31 +84,33 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Honeypot field for anti-bot protection
   const [honeypot, setHoneypot] = useState<string>('');
 
-  // Refs for accessible focus management upon validation error
-  const portInputRef = useRef<HTMLInputElement>(null);
-  const companyInputRef = useRef<HTMLInputElement>(null);
-  const contactInputRef = useRef<HTMLInputElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
-  const phoneInputRef = useRef<HTMLInputElement>(null);
-  const countryInputRef = useRef<HTMLInputElement>(null);
-
   // Synchronize incoming contextual preselection
   useEffect(() => {
     if (initialRequirementType) {
-      setFormData((prev) => ({ ...prev, requirementType: initialRequirementType }));
-      setErrors((prev) => ({ ...prev, requirementType: undefined }));
+      setDetailedData((prev) => ({ ...prev, requirementType: initialRequirementType }));
     }
     if (initialGrade) {
-      setFormData((prev) => ({ ...prev, grade: initialGrade }));
-      setErrors((prev) => ({ ...prev, grade: undefined }));
+      setDetailedData((prev) => ({ ...prev, grade: initialGrade }));
     }
-    if (initialIntent) {
-      setInquiryIntent(initialIntent);
+    if (initialIntent === 'quote') {
+      setFormMode('detailed');
     }
   }, [initialRequirementType, initialGrade, initialIntent]);
 
-  const handleFieldChange = (field: keyof BuyerRequirementFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  // Quick form change handler
+  const handleQuickChange = (field: keyof QuickFormData, value: string) => {
+    setQuickData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field as keyof FieldValidationErrors]) {
+      setErrors((prev) => ({ ...prev, [field as keyof FieldValidationErrors]: undefined }));
+    }
+    if (formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR') {
+      setSubmissionError('');
+    }
+  };
+
+  // Detailed form change handler
+  const handleDetailedChange = (field: keyof BuyerRequirementFormData, value: string) => {
+    setDetailedData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
@@ -102,40 +119,88 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     }
   };
 
-  const focusFirstError = (validationErrors: FieldValidationErrors) => {
-    if (validationErrors.destinationPort) {
-      portInputRef.current?.focus();
-    } else if (validationErrors.companyName) {
-      companyInputRef.current?.focus();
-    } else if (validationErrors.contactPerson) {
-      contactInputRef.current?.focus();
-    } else if (validationErrors.businessEmail) {
-      emailInputRef.current?.focus();
-    } else if (validationErrors.phoneWhatsApp) {
-      phoneInputRef.current?.focus();
-    } else if (validationErrors.country) {
-      countryInputRef.current?.focus();
+  // Quick form validation
+  const validateQuickForm = (): boolean => {
+    const newErrors: FieldValidationErrors = {};
+    if (!quickData.name.trim() || quickData.name.trim().length < 2) {
+      newErrors.contactPerson = 'Your name is required.';
+    }
+    if (!quickData.company.trim() || quickData.company.trim().length < 2) {
+      newErrors.companyName = 'Company name is required.';
+    }
+    if (!quickData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(quickData.email.trim())) {
+      newErrors.businessEmail = 'A valid business email is required.';
+    }
+    if (!quickData.phone.trim() || quickData.phone.replace(/\D/g, '').length < 7) {
+      newErrors.phoneWhatsApp = 'Phone or WhatsApp number with country code is required.';
+    }
+    if (!quickData.country.trim() || quickData.country.trim().length < 2) {
+      newErrors.country = 'Country is required.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Quick form submit
+  const handleQuickSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+
+    if (!validateQuickForm()) {
+      setFormStatus('VALIDATION_ERROR');
+      return;
+    }
+
+    setFormStatus('SUBMITTING');
+    setSubmissionError('');
+
+    try {
+      // Map quick form into standard record payload for existing backend
+      const normalizedPayload: BuyerRequirementFormData = {
+        contactPerson: quickData.name.trim(),
+        companyName: quickData.company.trim(),
+        businessEmail: quickData.email.trim().toLowerCase(),
+        phoneWhatsApp: quickData.phone.trim(),
+        country: quickData.country.trim(),
+        requirementType: initialRequirementType || 'Assam CTC',
+        grade: initialGrade || 'BOP / Open to Recommendation',
+        volume: 'Trial Batch (Quick Enquiry / Samples)',
+        packaging: 'Standard Export Sacks / Samples',
+        destinationPort: `${quickData.country.trim()} (Port TBD)`,
+        qualitySpecs: quickData.message.trim() 
+          ? `[Form: Quick Enquiry]\n${quickData.message.trim()}`
+          : '[Form: Quick Enquiry / Sample Request]',
+      };
+
+      const record = buildRequirementRecord(normalizedPayload);
+      const response = await submitBuyerRequirement(record, honeypot);
+
+      if (response.success && response.record) {
+        setSubmittedRecord(response.record);
+        setFormStatus('SUCCESS');
+      } else {
+        setFormStatus('SUBMISSION_ERROR');
+        setSubmissionError(response.error || 'The enquiry could not be sent at this time. Please try again.');
+      }
+    } catch {
+      setFormStatus('SUBMISSION_ERROR');
+      setSubmissionError('Network error connecting to the trade desk. Please check your connection and retry.');
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Detailed form submit
+  const handleDetailedSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Silent trap for automated bot spam
-    if (honeypot) {
-      console.warn('Submission discarded via honeypot trap.');
-      return;
-    }
+    if (honeypot) return;
 
     setFormStatus('VALIDATING');
     setSubmissionError('');
 
-    // Comprehensive client-side validation
-    const validationErrors = validateRequirementForm(formData);
+    const validationErrors = validateRequirementForm(detailedData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setFormStatus('VALIDATION_ERROR');
-      focusFirstError(validationErrors);
       return;
     }
 
@@ -143,22 +208,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     setFormStatus('SUBMITTING');
 
     try {
-      // Append inquiry intent to quality specs so it flows safely into database and email notification
-      const intentNote = inquiryIntent === 'sample' 
-        ? '[Primary Action: Request Free Samples for Evaluation]'
-        : inquiryIntent === 'packing'
-        ? '[Primary Action: Discuss Custom Packing & Private Label]'
-        : '[Primary Action: Price Quotation & Order Inquiry]';
-
-      const enrichedFormData: BuyerRequirementFormData = {
-        ...formData,
-        qualitySpecs: formData.qualitySpecs 
-          ? `${intentNote}\n${formData.qualitySpecs}` 
-          : intentNote,
+      const enrichedPayload: BuyerRequirementFormData = {
+        ...detailedData,
+        qualitySpecs: detailedData.qualitySpecs 
+          ? `[Form: Detailed Tea Requirement]\n${detailedData.qualitySpecs}`
+          : '[Form: Detailed Tea Requirement]',
       };
 
-      const record = buildRequirementRecord(enrichedFormData);
+      const record = buildRequirementRecord(enrichedPayload);
       const response = await submitBuyerRequirement(record, honeypot);
+
       if (response.success && response.record) {
         setSubmittedRecord(response.record);
         setFormStatus('SUCCESS');
@@ -167,18 +226,17 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
           setErrors(response.details);
         }
         setFormStatus('SUBMISSION_ERROR');
-        setSubmissionError(
-          response.error || 'The requirement could not be submitted right now. Your entered parameters have been preserved.'
-        );
+        setSubmissionError(response.error || 'The requirement could not be submitted right now.');
       }
     } catch {
       setFormStatus('SUBMISSION_ERROR');
-      setSubmissionError('Network error communicating with the submission desk. Please verify your connection and try again.');
+      setSubmissionError('Network error connecting to the trade desk. Please check your connection and retry.');
     }
   };
 
   const handleReset = () => {
-    setFormData(DEFAULT_FORM_DATA);
+    setQuickData(DEFAULT_QUICK_DATA);
+    setDetailedData(DEFAULT_DETAILED_DATA);
     setErrors({});
     setFormStatus('IDLE');
     setSubmissionError('');
@@ -189,101 +247,57 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     <section id="requirement-form" className="buyer-engine-section" aria-labelledby="buyer-engine-heading">
       <div className="container">
         
-        {/* Section Header */}
-        <div className="buyer-engine-header">
-          <div className="buyer-engine-eyebrow">
-            <span className="spec-badge spec-badge-gold">DIRECT TRADE DESK</span>
-          </div>
+        {/* Section Header — Focused Entirely on the Buyer's Action */}
+        <div className="buyer-engine-header" style={{ maxWidth: '680px', margin: '0 auto clamp(2rem, 4vw, 3rem)' }}>
           <h2 id="buyer-engine-heading" className="buyer-engine-title">
             Tell Us What Tea You Need
           </h2>
           <p className="buyer-engine-lead">
-            Share the tea grade, quantity, packing requirement and destination. We'll review your requirement and respond with the available options.
+            Share your tea requirement with us. Tell us the tea type, grade, quantity and destination, and we'll review the requirement and get back to you.
           </p>
-        </div>
 
-        {/* Direct Contact Channels Strip */}
-        <div className="contact-direct-strip" role="region" aria-label="Direct trade desk contact options">
-          <div className="contact-direct-top">
-            <h3 className="contact-direct-title">Direct Contact Channels</h3>
-            <p className="contact-direct-desc">
-              Reach Sarthak directly via WhatsApp, Phone, or Email for immediate answers regarding grades, samples, or export pricing:
-            </p>
-          </div>
-
-          <div className="contact-direct-grid">
-            <a 
-              href={CONTACT_INFO.whatsapp.getLink()} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="contact-direct-card card-whatsapp"
-              aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+          {/* Form Mode Tabs: Quick Enquiry vs Detailed Tea Requirement */}
+          <div className="buyer-form-mode-switch" role="tablist" aria-label="Select enquiry type">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={formMode === 'quick'}
+              onClick={() => { setFormMode('quick'); setErrors({}); setSubmissionError(''); }}
+              className={`mode-switch-btn ${formMode === 'quick' ? 'mode-switch-btn-active' : ''}`}
             >
-              <div className="contact-direct-icon-wrap wa-icon-wrap" aria-hidden="true">
-                <MessageCircle size={20} />
-              </div>
-              <div className="contact-direct-info">
-                <span className="contact-direct-type">WhatsApp Trade Desk</span>
-                <span className="contact-direct-val">{CONTACT_INFO.whatsapp.display}</span>
-              </div>
-            </a>
+              <Sparkles size={15} aria-hidden="true" />
+              <span>Quick Enquiry / Samples</span>
+            </button>
 
-            <a 
-              href={CONTACT_INFO.phone.telLink} 
-              className="contact-direct-card card-phone"
-              aria-label={CONTACT_INFO.phone.ariaLabel}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={formMode === 'detailed'}
+              onClick={() => { setFormMode('detailed'); setErrors({}); setSubmissionError(''); }}
+              className={`mode-switch-btn ${formMode === 'detailed' ? 'mode-switch-btn-active' : ''}`}
             >
-              <div className="contact-direct-icon-wrap phone-icon-wrap" aria-hidden="true">
-                <Phone size={18} />
-              </div>
-              <div className="contact-direct-info">
-                <span className="contact-direct-type">Call Sarthak</span>
-                <span className="contact-direct-val">{CONTACT_INFO.phone.display}</span>
-              </div>
-            </a>
-
-            <a 
-              href={CONTACT_INFO.email.mailtoLink} 
-              className="contact-direct-card card-email"
-              aria-label={CONTACT_INFO.email.ariaLabel}
-            >
-              <div className="contact-direct-icon-wrap email-icon-wrap" aria-hidden="true">
-                <Mail size={18} />
-              </div>
-              <div className="contact-direct-info">
-                <span className="contact-direct-type">Email Directly</span>
-                <span className="contact-direct-val">{CONTACT_INFO.email.address}</span>
-              </div>
-            </a>
-          </div>
-
-          <div className="contact-direct-footer-note">
-            <MapPin size={14} aria-hidden="true" />
-            <span>Operational Base: <strong>{CONTACT_INFO.address.display}</strong> &bull; {CONTACT_INFO.entityType}</span>
+              <ClipboardList size={15} aria-hidden="true" />
+              <span>Detailed Tea Requirement</span>
+            </button>
           </div>
         </div>
 
         {/* Form Container Card */}
-        <div className="buyer-engine-card">
+        <div className="buyer-engine-card" style={{ maxWidth: '780px', margin: '0 auto' }}>
           
           {formStatus === 'SUCCESS' && submittedRecord ? (
-            /* Authoritative Success State (Actual Backend Reference ID) */
+            /* Confirmation State */
             <div className="buyer-engine-success" role="region" aria-label="Requirement Confirmation">
               <div className="buyer-success-icon-wrap">
-                <CheckCircle2 size={40} className="buyer-success-icon" />
-              </div>
-
-              <div className="buyer-success-badge-wrap">
-                <span className="spec-badge spec-badge-gold">INQUIRY RECEIVED</span>
+                <CheckCircle2 size={36} className="buyer-success-icon" />
               </div>
 
               <h3 className="buyer-success-title">
-                {inquiryIntent === 'sample' ? 'Sample Request Received' : 'Requirement Received'}
+                {formMode === 'quick' ? 'Enquiry Received' : 'Requirement Received'}
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. Your tea requirement has been received by Sarthak at the SHIVOM GLOBAL trade desk. 
-                We will review your specifications against current tea availability and contact you promptly.
+                Thank you. Sarthak at SHIVOM GLOBAL has received your details and will get back to you with pricing, grade availability, and sample options.
               </p>
 
               <div className="buyer-success-ref-box">
@@ -293,36 +307,6 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </strong>
               </div>
 
-              {/* Requirement Summary Snapshot */}
-              <div className="buyer-success-summary">
-                <div className="buyer-summary-header">
-                  <div className="buyer-summary-title">
-                    <FileCheck2 size={16} />
-                    <span>Inquiry Summary</span>
-                  </div>
-                  <span className="font-spec buyer-summary-ref">
-                    {submittedRecord.referenceId}
-                  </span>
-                </div>
-
-                <div className="buyer-summary-grid">
-                  <div><strong>Company:</strong> {submittedRecord.companyName} ({submittedRecord.country})</div>
-                  <div><strong>Contact:</strong> {submittedRecord.contactPerson} &lt;{submittedRecord.businessEmail}&gt;</div>
-                  <div><strong>Phone / WhatsApp:</strong> {submittedRecord.phoneWhatsApp}</div>
-                  <div><strong>Tea Category:</strong> {submittedRecord.requirementType}</div>
-                  <div><strong>Preferred Grade:</strong> <span className="font-spec">{submittedRecord.grade}</span></div>
-                  <div><strong>Quantity Scope:</strong> {submittedRecord.volume}</div>
-                  <div><strong>Packaging Format:</strong> {submittedRecord.packaging}</div>
-                  <div><strong>Destination Port:</strong> {submittedRecord.destinationPort}</div>
-                  {submittedRecord.buyerRole && <div><strong>Business Type:</strong> {submittedRecord.buyerRole}</div>}
-                  {submittedRecord.qualitySpecs && <div><strong>Specifications / Notes:</strong> {submittedRecord.qualitySpecs}</div>}
-                </div>
-
-                <div className="buyer-summary-timestamp">
-                  Captured: {new Date(submittedRecord.submittedAt).toUTCString()} &bull; Direct Trade Desk
-                </div>
-              </div>
-
               <div className="buyer-success-actions">
                 <button 
                   type="button"
@@ -330,569 +314,450 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   className="buyer-success-reset-btn"
                 >
                   <RotateCcw size={15} />
-                  <span>Submit Another Requirement</span>
+                  <span>Send Another Message</span>
                 </button>
               </div>
             </div>
-          ) : (
-            /* Active Form Inputs */
-            <form onSubmit={handleSubmit} noValidate className="buyer-form-root">
-              
-              {/* Anti-Bot Honeypot Field */}
+          ) : formMode === 'quick' ? (
+            /* FORM A — Quick Contact Form (Default) */
+            <form onSubmit={handleQuickSubmit} noValidate className="buyer-form-root">
+              {/* Anti-Bot Honeypot */}
               <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
-                <label htmlFor="website_hp">Leave this field blank</label>
                 <input 
                   type="text" 
-                  id="website_hp" 
-                  name="website_hp" 
                   value={honeypot} 
                   onChange={(e) => setHoneypot(e.target.value)} 
                   tabIndex={-1} 
-                  autoComplete="off"
+                  autoComplete="off" 
                 />
               </div>
 
-              {/* INTENT SELECTOR BAR: Samples vs Quotation vs Custom Packing */}
-              <div className="buyer-intent-selector-wrap" role="group" aria-label="Choose your primary inquiry intent">
-                <span className="buyer-intent-label font-spec">PRIMARY INQUIRY GOAL:</span>
-                <div className="buyer-intent-tabs">
-                  <button
-                    type="button"
-                    onClick={() => setInquiryIntent('sample')}
-                    className={`buyer-intent-tab ${inquiryIntent === 'sample' ? 'buyer-intent-tab-active' : ''}`}
-                    aria-pressed={inquiryIntent === 'sample'}
-                  >
-                    <Sparkles size={14} aria-hidden="true" />
-                    <span>Request Free Samples</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setInquiryIntent('quote')}
-                    className={`buyer-intent-tab ${inquiryIntent === 'quote' ? 'buyer-intent-tab-active' : ''}`}
-                    aria-pressed={inquiryIntent === 'quote'}
-                  >
-                    <Send size={14} aria-hidden="true" />
-                    <span>Get Price Quotation</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setInquiryIntent('packing')}
-                    className={`buyer-intent-tab ${inquiryIntent === 'packing' ? 'buyer-intent-tab-active' : ''}`}
-                    aria-pressed={inquiryIntent === 'packing'}
-                  >
-                    <Layers size={14} aria-hidden="true" />
-                    <span>Custom Packing &amp; Private Label</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* GROUP 1: TEA SPECIFICATION */}
-              <div className="buyer-form-group-section">
-                <div className="buyer-form-section-header">
-                  <div className="buyer-section-icon-box">
-                    <Layers size={16} />
-                  </div>
-                  <div className="buyer-section-title-wrap">
-                    <span className="buyer-section-num">01</span>
-                    <h3 className="buyer-section-title">TEA SPECIFICATION</h3>
-                  </div>
-                </div>
-
-                <div className="buyer-form-grid-2">
-                  {/* Tea Category */}
-                  <div className="form-group">
-                    <label htmlFor="requirementType" className="form-label form-label-required">
-                      Tea Category
-                    </label>
-                    <select 
-                      id="requirementType"
-                      name="requirementType"
-                      className={`form-select ${errors.requirementType ? 'form-input-error' : ''}`}
-                      value={formData.requirementType}
-                      onChange={(e) => handleFieldChange('requirementType', e.target.value)}
-                      aria-invalid={!!errors.requirementType}
-                      aria-describedby={errors.requirementType ? 'requirementType-error' : undefined}
-                    >
-                      <option value="Assam CTC">Assam CTC Black Tea</option>
-                      <option value="Orthodox">Orthodox Black Tea</option>
-                      <option value="Darjeeling">Darjeeling Specialty Black Tea</option>
-                      <option value="Green Tea">Indian Green Tea</option>
-                      <option value="Bulk Tea for Repacking">Bulk Tea for Repacking (25kg Sacks)</option>
-                      <option value="Private Label Retail Product">Private Label &amp; Custom Packing</option>
-                      <option value="Custom Specification">Custom Formulation / Benchmark Match</option>
-                    </select>
-                    {errors.requirementType && (
-                      <span id="requirementType-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.requirementType}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Preferred Grade */}
-                  <div className="form-group">
-                    <label htmlFor="grade" className="form-label form-label-required">
-                      Grade / Cut
-                    </label>
-                    <select 
-                      id="grade"
-                      name="grade"
-                      className={`form-select font-spec ${errors.grade ? 'form-input-error' : ''}`}
-                      value={formData.grade}
-                      onChange={(e) => handleFieldChange('grade', e.target.value)}
-                      aria-invalid={!!errors.grade}
-                      aria-describedby={errors.grade ? 'grade-error' : undefined}
-                    >
-                      <option value="BOP">BOP — Broken Orange Pekoe (Broken leaf, strong liquor)</option>
-                      <option value="BOPSM">BOPSM — BOP Small (Even granular cut)</option>
-                      <option value="BP">BP — Broken Pekoe (Medium broken leaf, strong cup)</option>
-                      <option value="PF">PF — Pekoe Fannings (Fine particles, tea bags)</option>
-                      <option value="PD">PD — Pekoe Dust (Fine grade, strong liquor / chai)</option>
-                      <option value="Dust">Dust / D1 (Finest cut, maximum color)</option>
-                      <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe (Whole leaf tips)</option>
-                      <option value="FBOP">FBOP — Flowery Broken Orange Pekoe (Aromatic broken leaf)</option>
-                      <option value="Open to Recommendation">Open to Recommendation (Based on Application)</option>
-                      <option value="Custom">Custom Sieve / Benchmark Sample</option>
-                    </select>
-                    {errors.grade && (
-                      <span id="grade-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.grade}</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Target Application & Quality Details */}
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label htmlFor="qualitySpecs" className="form-label">
-                    Cup Profile or Application Notes (Optional)
+              <div className="buyer-form-grid-2">
+                {/* Full Name */}
+                <div className="form-group">
+                  <label htmlFor="quick-name" className="form-label form-label-required">
+                    Your Name
                   </label>
-                  <textarea 
-                    id="qualitySpecs"
-                    name="qualitySpecs"
-                    className={`form-textarea ${errors.qualitySpecs ? 'form-input-error' : ''}`}
-                    placeholder="e.g. Target liquor color, strength in milk, leaf particle preference, or sample delivery address..."
-                    value={formData.qualitySpecs}
-                    onChange={(e) => handleFieldChange('qualitySpecs', e.target.value)}
-                    rows={2}
-                    aria-invalid={!!errors.qualitySpecs}
-                    aria-describedby={errors.qualitySpecs ? 'qualitySpecs-error' : 'qualitySpecs-hint'}
+                  <input 
+                    id="quick-name"
+                    type="text" 
+                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. Tariq Mansoor"
+                    value={quickData.name}
+                    onChange={(e) => handleQuickChange('name', e.target.value)}
+                    autoComplete="name"
+                    required
                   />
-                  {errors.qualitySpecs ? (
-                    <span id="qualitySpecs-error" className="form-error-msg" role="alert">
-                      <AlertCircle size={14} />
-                      <span>{errors.qualitySpecs}</span>
+                  {errors.contactPerson && (
+                    <span className="form-error-msg" role="alert">
+                      <AlertCircle size={13} />
+                      <span>{errors.contactPerson}</span>
                     </span>
-                  ) : (
-                    <span id="qualitySpecs-hint" className="form-hint">
-                      Include sample delivery details or target cup requirements here.
+                  )}
+                </div>
+
+                {/* Company Name */}
+                <div className="form-group">
+                  <label htmlFor="quick-company" className="form-label form-label-required">
+                    Company Name
+                  </label>
+                  <input 
+                    id="quick-company"
+                    type="text" 
+                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. Al-Noor Tea Trading LLC"
+                    value={quickData.company}
+                    onChange={(e) => handleQuickChange('company', e.target.value)}
+                    autoComplete="organization"
+                    required
+                  />
+                  {errors.companyName && (
+                    <span className="form-error-msg" role="alert">
+                      <AlertCircle size={13} />
+                      <span>{errors.companyName}</span>
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* GROUP 2: ORDER & SHIPPING SPECIFICATIONS */}
-              <div className="buyer-form-group-section">
-                <div className="buyer-form-section-header">
-                  <div className="buyer-section-icon-box">
-                    <Scale size={16} />
-                  </div>
-                  <div className="buyer-section-title-wrap">
-                    <span className="buyer-section-num">02</span>
-                    <h3 className="buyer-section-title">ORDER &amp; SHIPPING PARAMETERS</h3>
-                  </div>
-                </div>
-
-                <div className="buyer-form-grid-2">
-                  {/* Estimated Volume */}
-                  <div className="form-group">
-                    <label htmlFor="volume" className="form-label form-label-required">
-                      Quantity Scope
-                    </label>
-                    <select 
-                      id="volume"
-                      name="volume"
-                      className={`form-select ${errors.volume ? 'form-input-error' : ''}`}
-                      value={formData.volume}
-                      onChange={(e) => handleFieldChange('volume', e.target.value)}
-                      aria-invalid={!!errors.volume}
-                      aria-describedby={errors.volume ? 'volume-error' : undefined}
-                    >
-                      <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg) — Recommended for initial orders</option>
-                      <option value="LCL (1 – 5 MT)">LCL (1 – 5 MT)</option>
-                      <option value="Full Container Load (1x20ft FCL ~10–12 MT)">Full Container Load (1x20ft FCL ~10–12 MT)</option>
-                      <option value="Multi-Container Contract (2+ FCL)">Multi-Container Contract (2+ FCL)</option>
-                    </select>
-                    {errors.volume && (
-                      <span id="volume-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.volume}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Packaging Format */}
-                  <div className="form-group">
-                    <label htmlFor="packaging" className="form-label form-label-required">
-                      Packing Format
-                    </label>
-                    <select 
-                      id="packaging"
-                      name="packaging"
-                      className={`form-select ${errors.packaging ? 'form-input-error' : ''}`}
-                      value={formData.packaging}
-                      onChange={(e) => handleFieldChange('packaging', e.target.value)}
-                      aria-invalid={!!errors.packaging}
-                      aria-describedby={errors.packaging ? 'packaging-error' : undefined}
-                    >
-                      <option value="25kg Multi-wall Kraft Sack + PE Liner">25kg Multi-wall Kraft Sack + LDPE Liner (Standard Export)</option>
-                      <option value="50kg Woven PP Bag + Liner">50kg Woven PP Bag + Inner Liner</option>
-                      <option value="Retail Stand-up Pouches">Retail Pouches / Tins (OEM)</option>
-                      <option value="Custom Packaging">Custom Packaging Requirement</option>
-                    </select>
-                    {errors.packaging && (
-                      <span id="packaging-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.packaging}</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="buyer-form-grid-2">
-                  {/* Destination Port & Country */}
-                  <div className="form-group">
-                    <label htmlFor="destinationPort" className="form-label form-label-required">
-                      Destination Port &amp; Country
-                    </label>
-                    <input 
-                      ref={portInputRef}
-                      id="destinationPort"
-                      name="destinationPort"
-                      type="text" 
-                      className={`form-input ${errors.destinationPort ? 'form-input-error' : ''}`} 
-                      placeholder="e.g. Jebel Ali, UAE / Dammam, KSA / Felixstowe, UK"
-                      value={formData.destinationPort}
-                      onChange={(e) => handleFieldChange('destinationPort', e.target.value)}
-                      aria-invalid={!!errors.destinationPort}
-                      aria-describedby={errors.destinationPort ? 'destinationPort-error' : 'destinationPort-hint'}
-                      required
-                    />
-                    {errors.destinationPort ? (
-                      <span id="destinationPort-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.destinationPort}</span>
-                      </span>
-                    ) : (
-                      <span id="destinationPort-hint" className="form-hint">
-                        Needed to calculate freight routes and destination quotation.
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Target Price (Optional) */}
-                  <div className="form-group">
-                    <label htmlFor="targetPrice" className="form-label">
-                      Target Price (Optional)
-                    </label>
-                    <input 
-                      id="targetPrice"
-                      name="targetPrice"
-                      type="text" 
-                      className="form-input" 
-                      placeholder="e.g. FOB Indian port or CIF target range"
-                      value={formData.targetPrice || ''}
-                      onChange={(e) => handleFieldChange('targetPrice', e.target.value)}
-                      aria-describedby="targetPrice-hint"
-                    />
-                    <span id="targetPrice-hint" className="form-hint">
-                      Helps us recommend grades within your budget.
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* GROUP 3: BUYER DETAILS */}
-              <div className="buyer-form-group-section">
-                <div className="buyer-form-section-header">
-                  <div className="buyer-section-icon-box">
-                    <Building2 size={16} />
-                  </div>
-                  <div className="buyer-section-title-wrap">
-                    <span className="buyer-section-num">03</span>
-                    <h3 className="buyer-section-title">BUYER CONTACT DETAILS</h3>
-                  </div>
-                </div>
-
-                <div className="buyer-form-grid-2">
-                  {/* Company Name */}
-                  <div className="form-group">
-                    <label htmlFor="companyName" className="form-label form-label-required">
-                      Company Name
-                    </label>
-                    <input 
-                      ref={companyInputRef}
-                      id="companyName"
-                      name="companyName"
-                      type="text" 
-                      className={`form-input ${errors.companyName ? 'form-input-error' : ''}`} 
-                      placeholder="e.g. Al-Noor Tea Trading LLC"
-                      value={formData.companyName}
-                      onChange={(e) => handleFieldChange('companyName', e.target.value)}
-                      autoComplete="organization"
-                      aria-invalid={!!errors.companyName}
-                      aria-describedby={errors.companyName ? 'companyName-error' : undefined}
-                      required
-                    />
-                    {errors.companyName && (
-                      <span id="companyName-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.companyName}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Contact Person */}
-                  <div className="form-group">
-                    <label htmlFor="contactPerson" className="form-label form-label-required">
-                      Contact Person
-                    </label>
-                    <input 
-                      ref={contactInputRef}
-                      id="contactPerson"
-                      name="contactPerson"
-                      type="text" 
-                      className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
-                      placeholder="e.g. Tariq Mansoor"
-                      value={formData.contactPerson}
-                      onChange={(e) => handleFieldChange('contactPerson', e.target.value)}
-                      autoComplete="name"
-                      aria-invalid={!!errors.contactPerson}
-                      aria-describedby={errors.contactPerson ? 'contactPerson-error' : undefined}
-                      required
-                    />
-                    {errors.contactPerson && (
-                      <span id="contactPerson-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.contactPerson}</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="buyer-form-grid-3">
-                  {/* Email */}
-                  <div className="form-group">
-                    <label htmlFor="businessEmail" className="form-label form-label-required">
-                      Email Address
-                    </label>
-                    <input 
-                      ref={emailInputRef}
-                      id="businessEmail"
-                      name="businessEmail"
-                      type="email" 
-                      className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
-                      placeholder="buyer@company.com"
-                      value={formData.businessEmail}
-                      onChange={(e) => handleFieldChange('businessEmail', e.target.value)}
-                      autoComplete="email"
-                      aria-invalid={!!errors.businessEmail}
-                      aria-describedby={errors.businessEmail ? 'businessEmail-error' : undefined}
-                      required
-                    />
-                    {errors.businessEmail && (
-                      <span id="businessEmail-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.businessEmail}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* WhatsApp / Phone */}
-                  <div className="form-group">
-                    <label htmlFor="phoneWhatsApp" className="form-label form-label-required">
-                      WhatsApp / Phone
-                    </label>
-                    <input 
-                      ref={phoneInputRef}
-                      id="phoneWhatsApp"
-                      name="phoneWhatsApp"
-                      type="tel" 
-                      className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`} 
-                      placeholder="+971 50 XXX XXXX"
-                      value={formData.phoneWhatsApp}
-                      onChange={(e) => handleFieldChange('phoneWhatsApp', e.target.value)}
-                      autoComplete="tel"
-                      aria-invalid={!!errors.phoneWhatsApp}
-                      aria-describedby={errors.phoneWhatsApp ? 'phoneWhatsApp-error' : undefined}
-                      required
-                    />
-                    {errors.phoneWhatsApp && (
-                      <span id="phoneWhatsApp-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.phoneWhatsApp}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Buyer Country */}
-                  <div className="form-group">
-                    <label htmlFor="country" className="form-label form-label-required">
-                      Country
-                    </label>
-                    <input 
-                      ref={countryInputRef}
-                      id="country"
-                      name="country"
-                      type="text" 
-                      className={`form-input ${errors.country ? 'form-input-error' : ''}`} 
-                      placeholder="e.g. United Arab Emirates"
-                      value={formData.country}
-                      onChange={(e) => handleFieldChange('country', e.target.value)}
-                      autoComplete="country-name"
-                      aria-invalid={!!errors.country}
-                      aria-describedby={errors.country ? 'country-error' : undefined}
-                      required
-                    />
-                    {errors.country && (
-                      <span id="country-error" className="form-error-msg" role="alert">
-                        <AlertCircle size={14} />
-                        <span>{errors.country}</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Buyer Business Type */}
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label htmlFor="buyerRole" className="form-label">
-                    Business Type (Optional)
+              <div className="buyer-form-grid-3">
+                {/* Email Address */}
+                <div className="form-group">
+                  <label htmlFor="quick-email" className="form-label form-label-required">
+                    Email Address
                   </label>
-                  <select 
-                    id="buyerRole"
-                    name="buyerRole"
-                    className="form-select"
-                    value={formData.buyerRole || 'Tea Importer / Trader'}
-                    onChange={(e) => handleFieldChange('buyerRole', e.target.value)}
-                  >
-                    <option value="Tea Importer / Trader">Tea Importer / Trader</option>
-                    <option value="Tea Blender / Manufacturer">Tea Blender / Packer</option>
-                    <option value="Private Label / Retail Brand">Private Label / Retail Brand</option>
-                    <option value="Foodservice / Hospitality">Foodservice / Hospitality</option>
-                    <option value="Distributor / Wholesaler">Distributor / Wholesaler</option>
-                    <option value="Other">Other Enterprise</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* GROUP 4: ADDITIONAL SOURCING NOTES */}
-              <div className="buyer-form-group-section" style={{ borderBottom: 'none', marginBottom: 'var(--space-4)' }}>
-                <div className="buyer-form-section-header">
-                  <div className="buyer-section-icon-box">
-                    <MessageSquare size={16} />
-                  </div>
-                  <div className="buyer-section-title-wrap">
-                    <span className="buyer-section-num">04</span>
-                    <h3 className="buyer-section-title">ADDITIONAL NOTES</h3>
-                  </div>
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label htmlFor="additionalMessage" className="form-label">
-                    Additional Sourcing or Sample Notes (Optional)
-                  </label>
-                  <textarea 
-                    id="additionalMessage"
-                    name="additionalMessage"
-                    className="form-textarea"
-                    placeholder="Provide any additional details regarding your sample requirements, target timeline, or special instructions..."
-                    value={formData.additionalMessage || ''}
-                    onChange={(e) => handleFieldChange('additionalMessage', e.target.value)}
-                    rows={2}
+                  <input 
+                    id="quick-email"
+                    type="email" 
+                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
+                    placeholder="buyer@company.com"
+                    value={quickData.email}
+                    onChange={(e) => handleQuickChange('email', e.target.value)}
+                    autoComplete="email"
+                    required
                   />
+                  {errors.businessEmail && (
+                    <span className="form-error-msg" role="alert">
+                      <AlertCircle size={13} />
+                      <span>{errors.businessEmail}</span>
+                    </span>
+                  )}
+                </div>
+
+                {/* WhatsApp / Phone */}
+                <div className="form-group">
+                  <label htmlFor="quick-phone" className="form-label form-label-required">
+                    WhatsApp / Phone
+                  </label>
+                  <input 
+                    id="quick-phone"
+                    type="tel" 
+                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`} 
+                    placeholder="+971 50 XXX XXXX"
+                    value={quickData.phone}
+                    onChange={(e) => handleQuickChange('phone', e.target.value)}
+                    autoComplete="tel"
+                    required
+                  />
+                  {errors.phoneWhatsApp && (
+                    <span className="form-error-msg" role="alert">
+                      <AlertCircle size={13} />
+                      <span>{errors.phoneWhatsApp}</span>
+                    </span>
+                  )}
+                </div>
+
+                {/* Country */}
+                <div className="form-group">
+                  <label htmlFor="quick-country" className="form-label form-label-required">
+                    Country
+                  </label>
+                  <input 
+                    id="quick-country"
+                    type="text" 
+                    className={`form-input ${errors.country ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. United Arab Emirates"
+                    value={quickData.country}
+                    onChange={(e) => handleQuickChange('country', e.target.value)}
+                    autoComplete="country-name"
+                    required
+                  />
+                  {errors.country && (
+                    <span className="form-error-msg" role="alert">
+                      <AlertCircle size={13} />
+                      <span>{errors.country}</span>
+                    </span>
+                  )}
                 </div>
               </div>
 
-              {/* Direct Trade Desk Trust Banner */}
-              <div className="buyer-form-trust-banner">
-                <div className="buyer-trust-icon-box">
-                  <Lock size={16} />
-                </div>
-                <p className="buyer-trust-text">
-                  Your requirement is reviewed directly by Sarthak at the SHIVOM GLOBAL trade desk. All details are kept confidential.
-                </p>
+              {/* Message */}
+              <div className="form-group" style={{ marginBottom: 'var(--space-4)' }}>
+                <label htmlFor="quick-message" className="form-label">
+                  What tea or samples are you looking for?
+                </label>
+                <textarea 
+                  id="quick-message"
+                  className="form-textarea"
+                  placeholder="Tell us what tea type, grade or quantity you need, or request sample kits..."
+                  value={quickData.message}
+                  onChange={(e) => handleQuickChange('message', e.target.value)}
+                  rows={3}
+                />
               </div>
 
-              {/* Error Alert Banner */}
+              {/* Error Alert */}
               {(formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR' || submissionError) && (
                 <div className="form-banner-error" role="alert">
-                  <div className="buyer-error-content">
-                    <AlertCircle size={18} className="buyer-error-icon" />
-                    <div style={{ flexGrow: 1 }}>
-                      <div className="buyer-error-title">
-                        {formStatus === 'SUBMISSION_ERROR' ? 'Submission Temporarily Unavailable' : 'Please Review Required Fields'}
-                      </div>
-                      <div className="buyer-error-msg">
-                        {submissionError || 'Some required fields are missing or contain formatting errors. Please correct the highlighted fields above.'}
-                      </div>
-                      {formStatus === 'SUBMISSION_ERROR' && (
-                        <div className="buyer-error-actions">
-                          <button
-                            type="submit"
-                            className="btn btn-secondary btn-sm"
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                          >
-                            <RefreshCw size={13} />
-                            <span>Retry Submission</span>
-                          </button>
-                          <a href={CONTACT_INFO.email.mailtoLink} className="buyer-error-fallback" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <Mail size={13} />
-                            <span>Direct Email: {CONTACT_INFO.email.address}</span>
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <AlertCircle size={16} className="buyer-error-icon" />
+                  <span className="buyer-error-msg">
+                    {submissionError || 'Please complete all required fields highlighted above.'}
+                  </span>
                 </div>
               )}
 
-              {/* Final Submit Action & Micro-Trust Badges */}
+              {/* Submit Button */}
               <div className="buyer-form-action-wrap">
                 <button 
                   type="submit" 
                   className="buyer-submit-btn" 
                   disabled={formStatus === 'SUBMITTING'}
-                  aria-label={inquiryIntent === 'sample' ? 'Request Free Tea Samples' : 'Send Buyer Requirement'}
+                  aria-label="Send Enquiry"
                 >
                   {formStatus === 'SUBMITTING' ? (
                     <span className="buyer-btn-inner">
-                      <RefreshCw size={18} className="animate-spin" />
-                      <span>Sending Requirement...</span>
+                      <RefreshCw size={16} className="animate-spin" />
+                      <span>Sending...</span>
                     </span>
                   ) : (
                     <span className="buyer-btn-inner">
-                      <span>{inquiryIntent === 'sample' ? 'Request Free Samples' : 'Send Buyer Requirement'}</span>
-                      <Send size={18} />
+                      <span>Request Free Samples / Send Enquiry</span>
+                      <Send size={16} />
                     </span>
                   )}
                 </button>
+              </div>
+            </form>
+          ) : (
+            /* FORM B — Detailed Tea Requirement */
+            <form onSubmit={handleDetailedSubmit} noValidate className="buyer-form-root">
+              {/* Anti-Bot Honeypot */}
+              <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
+                <input 
+                  type="text" 
+                  value={honeypot} 
+                  onChange={(e) => setHoneypot(e.target.value)} 
+                  tabIndex={-1} 
+                  autoComplete="off" 
+                />
+              </div>
 
-                <div className="buyer-micro-badges">
-                  <div className="buyer-badge-item">
-                    <FileCheck2 size={13} color="var(--color-primary-green)" />
-                    <span>Direct Trade Desk Intake</span>
-                  </div>
-                  <span className="buyer-badge-dot">•</span>
-                  <div className="buyer-badge-item">
-                    <ShieldCheck size={13} color="var(--color-primary-green)" />
-                    <span>Strict B2B Confidentiality</span>
-                  </div>
+              {/* Section 1: Buyer Information */}
+              <div className="buyer-form-section-title-wrap" style={{ marginBottom: 'var(--space-3)' }}>
+                <span className="buyer-section-title" style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-primary-green)' }}>
+                  BUYER INFORMATION
+                </span>
+              </div>
+
+              <div className="buyer-form-grid-2">
+                <div className="form-group">
+                  <label htmlFor="det-contact" className="form-label form-label-required">
+                    Contact Person
+                  </label>
+                  <input 
+                    id="det-contact"
+                    type="text" 
+                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. Tariq Mansoor"
+                    value={detailedData.contactPerson}
+                    onChange={(e) => handleDetailedChange('contactPerson', e.target.value)}
+                    autoComplete="name"
+                    required
+                  />
+                  {errors.contactPerson && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.contactPerson}</span></span>}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-company" className="form-label form-label-required">
+                    Company Legal Name
+                  </label>
+                  <input 
+                    id="det-company"
+                    type="text" 
+                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. Al-Noor Tea Trading LLC"
+                    value={detailedData.companyName}
+                    onChange={(e) => handleDetailedChange('companyName', e.target.value)}
+                    autoComplete="organization"
+                    required
+                  />
+                  {errors.companyName && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.companyName}</span></span>}
                 </div>
               </div>
 
+              <div className="buyer-form-grid-3">
+                <div className="form-group">
+                  <label htmlFor="det-email" className="form-label form-label-required">
+                    Email Address
+                  </label>
+                  <input 
+                    id="det-email"
+                    type="email" 
+                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
+                    placeholder="buyer@company.com"
+                    value={detailedData.businessEmail}
+                    onChange={(e) => handleDetailedChange('businessEmail', e.target.value)}
+                    autoComplete="email"
+                    required
+                  />
+                  {errors.businessEmail && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.businessEmail}</span></span>}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-phone" className="form-label form-label-required">
+                    WhatsApp / Phone
+                  </label>
+                  <input 
+                    id="det-phone"
+                    type="tel" 
+                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`} 
+                    placeholder="+971 50 XXX XXXX"
+                    value={detailedData.phoneWhatsApp}
+                    onChange={(e) => handleDetailedChange('phoneWhatsApp', e.target.value)}
+                    autoComplete="tel"
+                    required
+                  />
+                  {errors.phoneWhatsApp && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.phoneWhatsApp}</span></span>}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-country" className="form-label form-label-required">
+                    Country
+                  </label>
+                  <input 
+                    id="det-country"
+                    type="text" 
+                    className={`form-input ${errors.country ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. United Arab Emirates"
+                    value={detailedData.country}
+                    onChange={(e) => handleDetailedChange('country', e.target.value)}
+                    autoComplete="country-name"
+                    required
+                  />
+                  {errors.country && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.country}</span></span>}
+                </div>
+              </div>
+
+              {/* Section 2: Tea Requirement */}
+              <div className="buyer-form-section-title-wrap" style={{ margin: 'var(--space-4) 0 var(--space-3)' }}>
+                <span className="buyer-section-title" style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-primary-green)' }}>
+                  TEA &amp; PACKING SPECIFICATION
+                </span>
+              </div>
+
+              <div className="buyer-form-grid-2">
+                <div className="form-group">
+                  <label htmlFor="det-category" className="form-label form-label-required">
+                    Tea Type
+                  </label>
+                  <select 
+                    id="det-category"
+                    className="form-select"
+                    value={detailedData.requirementType}
+                    onChange={(e) => handleDetailedChange('requirementType', e.target.value)}
+                  >
+                    <option value="Assam CTC">Assam CTC Black Tea</option>
+                    <option value="Orthodox">Orthodox Black Tea</option>
+                    <option value="Darjeeling">Darjeeling Specialty Black Tea</option>
+                    <option value="Green Tea">Indian Green Tea</option>
+                    <option value="Bulk Tea for Repacking">Bulk Tea Supply (25kg Kraft Sacks)</option>
+                    <option value="Private Label Retail Product">Private Label &amp; OEM Packing</option>
+                    <option value="Custom Specification">Custom Sieve Cut / Benchmark Match</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-grade" className="form-label form-label-required">
+                    Grade
+                  </label>
+                  <select 
+                    id="det-grade"
+                    className="form-select font-spec"
+                    value={detailedData.grade}
+                    onChange={(e) => handleDetailedChange('grade', e.target.value)}
+                  >
+                    <option value="BOP">BOP — Broken Orange Pekoe</option>
+                    <option value="BOPSM">BOPSM — BOP Small</option>
+                    <option value="BP">BP — Broken Pekoe</option>
+                    <option value="PF">PF — Pekoe Fannings</option>
+                    <option value="PD">PD — Pekoe Dust</option>
+                    <option value="Dust">Dust / D1</option>
+                    <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe</option>
+                    <option value="FBOP">FBOP — Flowery Broken Orange Pekoe</option>
+                    <option value="Open to Recommendation">Open to Recommendation</option>
+                    <option value="Custom">Custom Formulation / Target Sample</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="buyer-form-grid-3">
+                <div className="form-group">
+                  <label htmlFor="det-volume" className="form-label form-label-required">
+                    Quantity Scope
+                  </label>
+                  <select 
+                    id="det-volume"
+                    className="form-select"
+                    value={detailedData.volume}
+                    onChange={(e) => handleDetailedChange('volume', e.target.value)}
+                  >
+                    <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg)</option>
+                    <option value="LCL (1 – 5 MT)">LCL (1 – 5 MT)</option>
+                    <option value="Full Container Load (1x20ft FCL ~10–12 MT)">1x20ft FCL (~10–12 MT)</option>
+                    <option value="Multi-Container Contract (2+ FCL)">Multi-Container (2+ FCL)</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-packaging" className="form-label form-label-required">
+                    Packaging Requirement
+                  </label>
+                  <select 
+                    id="det-packaging"
+                    className="form-select"
+                    value={detailedData.packaging}
+                    onChange={(e) => handleDetailedChange('packaging', e.target.value)}
+                  >
+                    <option value="25kg Multi-wall Kraft Sack + PE Liner">25kg Multi-wall Kraft Sack + Liner</option>
+                    <option value="50kg Woven PP Bag + Liner">50kg Woven PP Bag + Liner</option>
+                    <option value="Retail Stand-up Pouches">Retail Pouches / Tins (OEM)</option>
+                    <option value="Custom Packaging">Custom Packaging Format</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="det-port" className="form-label form-label-required">
+                    Destination Port
+                  </label>
+                  <input 
+                    id="det-port"
+                    type="text" 
+                    className={`form-input ${errors.destinationPort ? 'form-input-error' : ''}`} 
+                    placeholder="e.g. Jebel Ali / Felixstowe"
+                    value={detailedData.destinationPort}
+                    onChange={(e) => handleDetailedChange('destinationPort', e.target.value)}
+                    required
+                  />
+                  {errors.destinationPort && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.destinationPort}</span></span>}
+                </div>
+              </div>
+
+              {/* Section 3: Additional Notes */}
+              <div className="form-group" style={{ marginBottom: 'var(--space-4)' }}>
+                <label htmlFor="det-specs" className="form-label">
+                  Target Specifications, Sieve Cut, or Sample Notes (Optional)
+                </label>
+                <textarea 
+                  id="det-specs"
+                  className="form-textarea"
+                  placeholder="Provide any specific cup parameters, physical benchmark matching details, or preferred shipment timeline..."
+                  value={detailedData.qualitySpecs}
+                  onChange={(e) => handleDetailedChange('qualitySpecs', e.target.value)}
+                  rows={2}
+                />
+              </div>
+
+              {/* Error Alert */}
+              {(formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR' || submissionError) && (
+                <div className="form-banner-error" role="alert">
+                  <AlertCircle size={16} className="buyer-error-icon" />
+                  <span className="buyer-error-msg">
+                    {submissionError || 'Please complete all required fields highlighted above.'}
+                  </span>
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <div className="buyer-form-action-wrap">
+                <button 
+                  type="submit" 
+                  className="buyer-submit-btn" 
+                  disabled={formStatus === 'SUBMITTING'}
+                  aria-label="Submit Tea Requirement"
+                >
+                  {formStatus === 'SUBMITTING' ? (
+                    <span className="buyer-btn-inner">
+                      <RefreshCw size={16} className="animate-spin" />
+                      <span>Submitting Requirement...</span>
+                    </span>
+                  ) : (
+                    <span className="buyer-btn-inner">
+                      <span>Submit Tea Requirement</span>
+                      <Send size={16} />
+                    </span>
+                  )}
+                </button>
+              </div>
             </form>
           )}
 

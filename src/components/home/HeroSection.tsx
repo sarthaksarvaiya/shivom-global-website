@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Globe2, MessageCircle, Phone, Mail, Package, CheckCircle2, DollarSign } from 'lucide-react';
+import { ArrowRight, Globe2, MessageCircle, Mail, Package, CheckCircle2 } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 
 export interface HeroSectionProps {
@@ -70,22 +70,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Plain B2B Trader Message */}
           <p className="hero-narrative">
             We supply Indian tea based on your required grade, quantity, packing and destination. 
-            Evaluate tea samples before placing an order, with trial quantities starting from <strong>250 kg</strong>.
+            Evaluate tea samples before placing an order, with transparent pricing based on your actual specifications.
           </p>
 
-          {/* Hero Buyer Key Highlights Row */}
+          {/* Hero Buyer Key Highlights Row — Single clean 250 kg mention */}
           <div className="hero-highlights-strip" role="region" aria-label="Key trading terms at a glance">
             <div className="hero-highlight-pill">
               <Package size={14} className="hero-highlight-icon" aria-hidden="true" />
-              <span>Trial MOQ from <strong>250 kg</strong></span>
+              <span>Trial orders from <strong>250 kg</strong></span>
             </div>
             <div className="hero-highlight-pill">
               <CheckCircle2 size={14} className="hero-highlight-icon" aria-hidden="true" />
               <span><strong>Free Samples</strong> Available</span>
-            </div>
-            <div className="hero-highlight-pill">
-              <DollarSign size={14} className="hero-highlight-icon" aria-hidden="true" />
-              <span>Pricing Based on Actual Specs</span>
             </div>
           </div>
 
@@ -126,15 +122,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <MessageCircle size={13} aria-hidden="true" style={{ color: '#25D366' }} />
                 <span>WhatsApp: {CONTACT_INFO.whatsapp.display}</span>
-              </a>
-              <span className="hero-contact-sep" aria-hidden="true">•</span>
-              <a 
-                href={CONTACT_INFO.phone.telLink} 
-                className="hero-contact-link"
-                aria-label={CONTACT_INFO.phone.ariaLabel}
-              >
-                <Phone size={13} aria-hidden="true" />
-                <span>Call: {CONTACT_INFO.phone.display}</span>
               </a>
               <span className="hero-contact-sep" aria-hidden="true">•</span>
               <a 

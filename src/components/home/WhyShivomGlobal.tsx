@@ -22,8 +22,8 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
   const points = [
     {
       num: '01',
-      title: 'Low Trial MOQ',
-      description: 'Trial orders can start from 250 kg, subject to tea and packing availability, allowing you to test in your market before scaling.',
+      title: 'Trial Quantities',
+      description: 'Start with manageable trial shipments to test quality and customer response in your market before scaling order volumes.',
       icon: Package,
     },
     {
@@ -117,7 +117,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
               </div>
               <div>
                 <span className="buyer-basic-label font-spec">MINIMUM ORDER (MOQ)</span>
-                <p className="buyer-basic-value"><strong>250 kg</strong> trial order (subject to tea &amp; packing availability)</p>
+                <p className="buyer-basic-value">Trial orders from <strong>250 kg</strong> (subject to tea &amp; packing availability)</p>
               </div>
             </div>
 
