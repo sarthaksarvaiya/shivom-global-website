@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet } from 'lucide-react';
+import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface TeaCategoriesSectionProps {
   onSelectCategory?: (categoryName: string, gradeCode?: string) => void;
@@ -133,6 +133,14 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
   const activeCategory = TEA_CATEGORIES[activeCategoryIndex];
   const ActiveIcon = activeCategory.icon;
 
+  const handlePrevCategory = () => {
+    setActiveCategoryIndex((prev) => (prev > 0 ? prev - 1 : TEA_CATEGORIES.length - 1));
+  };
+
+  const handleNextCategory = () => {
+    setActiveCategoryIndex((prev) => (prev < TEA_CATEGORIES.length - 1 ? prev + 1 : 0));
+  };
+
   const handleCategorySampleRequest = (category: string, defaultGrade?: string) => {
     if (onSelectCategory) {
       onSelectCategory(category, defaultGrade);
@@ -195,11 +203,18 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
           </p>
         </div>
 
-        {/* Dynamic Category Navigation Bar */}
+        {/* Dynamic Category Navigation Bar with Obvious Visual Selector */}
         <div className="tea-explorer-wrap">
+          {/* Explicit Selector Cue */}
+          <div className="tea-explorer-selector-cue" aria-hidden="true">
+            <span className="tea-cue-dot" />
+            <span className="tea-cue-text">CHOOSE TEA ORIGIN / VARIETY TO PREVIEW CUP &amp; GRADES:</span>
+          </div>
+
           <div className="tea-explorer-nav" role="tablist" aria-label="Tea categories selector">
             {TEA_CATEGORIES.map((cat, idx) => {
               const isActive = idx === activeCategoryIndex;
+              const TabIcon = cat.icon;
               return (
                 <button
                   key={cat.id}
@@ -211,14 +226,17 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   onClick={() => setActiveCategoryIndex(idx)}
                   className={`tea-explorer-tab ${isActive ? 'active' : ''}`}
                 >
-                  <span className="tea-explorer-tab-dot" aria-hidden="true" />
-                  <span>{cat.tabLabel}</span>
+                  <span className="tea-tab-icon-wrap" aria-hidden="true">
+                    <TabIcon size={16} />
+                  </span>
+                  <span className="tea-tab-text">{cat.tabLabel}</span>
+                  {isActive && <span className="tea-explorer-tab-dot" aria-hidden="true" />}
                 </button>
               );
             })}
           </div>
 
-          {/* Interactive Single Sourcing Console (Replaces 2 generic cards) */}
+          {/* Interactive Single Sourcing Console */}
           <div 
             id={`tea-panel-${activeCategory.id}`}
             role="tabpanel"
@@ -232,19 +250,51 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
               aria-hidden="true"
             />
 
+            {/* In-Console Quick Variety Stepper Bar */}
+            <div className="tea-console-nav-strip">
+              <div className="tea-explorer-badge-row">
+                <span className="tea-origin-pill">
+                  <Compass size={14} aria-hidden="true" />
+                  <span>{activeCategory.origin}</span>
+                </span>
+                <span className="spec-badge spec-badge-gold font-spec">
+                  SAMPLES AVAILABLE
+                </span>
+              </div>
+
+              {/* Direct Next / Prev Switcher */}
+              <div className="tea-console-stepper" aria-label="Cycle tea varieties">
+                <span className="tea-console-counter font-spec">
+                  VARIETY {activeCategoryIndex + 1} OF {TEA_CATEGORIES.length}
+                </span>
+                <div className="tea-stepper-btn-group">
+                  <button
+                    type="button"
+                    onClick={handlePrevCategory}
+                    className="tea-stepper-btn"
+                    title="Previous tea variety"
+                    aria-label="Previous tea variety"
+                  >
+                    <ChevronLeft size={16} aria-hidden="true" />
+                    <span className="stepper-btn-label">Prev</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextCategory}
+                    className="tea-stepper-btn"
+                    title="Next tea variety"
+                    aria-label="Next tea variety"
+                  >
+                    <span className="stepper-btn-label">Next</span>
+                    <ChevronRight size={16} aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Left Console: Overview & Sensory Radar Meters */}
             <div className="tea-explorer-main">
               <div>
-                <div className="tea-explorer-badge-row">
-                  <span className="tea-origin-pill">
-                    <Compass size={14} aria-hidden="true" />
-                    <span>{activeCategory.origin}</span>
-                  </span>
-                  <span className="spec-badge spec-badge-gold font-spec">
-                    SAMPLES AVAILABLE
-                  </span>
-                </div>
-
                 <h3 className="tea-explorer-name">
                   {activeCategory.name}
                 </h3>

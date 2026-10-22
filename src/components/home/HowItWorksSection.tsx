@@ -92,21 +92,29 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           </p>
         </div>
 
-        {/* Process Pathway (Replaces 4 disconnected cards with connected interactive timeline) */}
+        {/* Process Pathway (Connected interactive timeline with individual spaced milestone cards) */}
         <div className="process-pathway-wrap">
           <div className="process-pathway-track" role="list">
             {steps.map((st) => {
               const Icon = st.icon;
-              const isActive = st.stepNumber <= activeStep;
-              const isSelected = st.stepNumber === activeStep;
+              const isCompleted = st.stepNumber < activeStep;
+              const isCurrent = st.stepNumber === activeStep;
 
               return (
                 <div 
                   key={st.num} 
-                  className={`process-step-node ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''}`}
+                  className={`process-step-node ${isCurrent ? 'selected active' : isCompleted ? 'completed' : ''}`}
                   role="listitem"
                   onClick={() => setActiveStep(st.stepNumber)}
                   onMouseEnter={() => setActiveStep(st.stepNumber)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveStep(st.stepNumber);
+                    }
+                  }}
+                  aria-label={`Step ${st.num}: ${st.title}`}
                 >
                   <div className="process-step-header">
                     <div className="process-step-indicator" aria-hidden="true">
