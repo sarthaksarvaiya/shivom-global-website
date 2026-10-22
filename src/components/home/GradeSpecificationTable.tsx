@@ -220,10 +220,10 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
         {/* Custom Specification Match Strip */}
         <div className="grade-custom-box">
           <div className="grade-custom-left">
-            <div className="grade-custom-title" style={{ fontSize: '1.0625rem', fontWeight: 700, color: 'var(--color-primary-dark)', marginBottom: '4px' }}>
+            <h3 className="grade-custom-title">
               Have a Target Benchmark Sample or Custom Mesh Specification?
-            </div>
-            <p className="grade-custom-copy" style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+            </h3>
+            <p className="grade-custom-copy">
               Send us your target liquor profile, custom sieve requirements, or benchmark details. We evaluate origin availability and provide matching options.
             </p>
           </div>
@@ -231,7 +231,7 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
             <button
               type="button"
               onClick={handleCustomInquiry}
-              className="btn btn-secondary btn-sm"
+              className="grade-custom-btn"
               aria-label="Request custom tea specification"
             >
               <span>Tell Us Your Specification</span>

@@ -129,14 +129,6 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             Why Us
           </a>
           <a 
-            href="#about-sarthak" 
-            onClick={(e) => handleLinkClick(e, 'about-sarthak')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            About
-          </a>
-          <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
             className="nav-link"
@@ -243,13 +235,6 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             className="mobile-nav-link"
           >
             Why Us
-          </a>
-          <a 
-            href="#about-sarthak" 
-            onClick={(e) => handleLinkClick(e, 'about-sarthak')}
-            className="mobile-nav-link"
-          >
-            About
           </a>
           <a 
             href="#requirement-form" 

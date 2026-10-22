@@ -297,7 +297,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. Sarthak at SHIVOM GLOBAL has received your details and will get back to you with pricing, grade availability, and sample options.
+                Thank you. The SHIVOM GLOBAL export desk has received your details and will get back to you with pricing, grade availability, and sample options.
               </p>
 
               <div className="buyer-success-ref-box">

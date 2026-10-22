@@ -6,7 +6,6 @@ import { GradeSpecificationTable } from '@/components/home/GradeSpecificationTab
 import { PrivateLabelSection } from '@/components/home/PrivateLabelSection';
 import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
-import { AboutSarthakSection } from '@/components/home/AboutSarthakSection';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
@@ -124,10 +123,7 @@ export const HomePage: React.FC = () => {
           onSubmitRequirement={handleSubmitRequirement}
         />
 
-        {/* Section 7: About Sarthak */}
-        <AboutSarthakSection />
-
-        {/* Section 8: Buyer Requirements / Contact (Tell Us What Tea You Need) */}
+        {/* Section 7: Buyer Requirements / Contact (Tell Us What Tea You Need) */}
         <BuyerRequirementForm 
           initialRequirementType={formRequirementType}
           initialGrade={formGrade}

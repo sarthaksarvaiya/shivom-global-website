@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Send, FileSearch, CheckCircle2, Ship, ArrowRight } from 'lucide-react';
 
 export interface HowItWorksSectionProps {
@@ -10,34 +10,48 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
   onRequestSamples,
   onSubmitRequirement,
 }) => {
+  const [activeStep, setActiveStep] = useState<number>(1);
+
   const steps = [
     {
       num: '01',
-      title: 'Tell Us Your Requirement',
-      description: 'Share your required tea type, grade, quantity and destination port.',
+      stepNumber: 1,
+      title: 'Submit Your Requirement',
+      timeBadge: 'Step 01 • Day 1',
+      deliverable: 'Requirement Profile',
+      description: 'Share your tea variety, grade, target liquor profile, estimated volume, and destination seaport.',
       icon: Send,
     },
     {
       num: '02',
-      title: 'We Source & Prepare Samples',
-      description: 'We identify suitable tea matching your parameters and arrange samples for your evaluation.',
+      stepNumber: 2,
+      title: 'Source & Dispatch Samples',
+      timeBadge: '48–72 Hours SLA',
+      deliverable: 'Physical Courier Samples',
+      description: 'We identify origin plantation lots and dispatch physical tea samples via air express for your sensory cup evaluation.',
       icon: FileSearch,
     },
     {
       num: '03',
+      stepNumber: 3,
       title: 'Confirm Specification & Price',
-      description: 'After sample approval, we confirm final specifications, pricing, payment terms, and delivery schedule.',
+      timeBadge: 'Post-Approval',
+      deliverable: 'Proforma Invoice & Terms',
+      description: 'Once you approve the sample cup, we lock in specifications, commercial pricing, payment terms, and delivery schedule.',
       icon: CheckCircle2,
     },
     {
       num: '04',
-      title: 'Order & Dispatch',
-      description: 'We coordinate packing, statutory export documentation, and dispatch according to agreed terms.',
+      stepNumber: 4,
+      title: 'Statutory Export & Dispatch',
+      timeBadge: 'Scheduled Ocean Delivery',
+      deliverable: 'Phytosanitary & Bill of Lading',
+      description: 'We coordinate batch packing, Tea Board export documentation, customs clearance, and containerized ocean shipment.',
       icon: Ship,
     },
   ];
 
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleCtaClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault();
     if (onRequestSamples) {
       onRequestSamples();
@@ -66,62 +80,87 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       <div className="container">
         
         {/* Section Header */}
-        <div className="how-it-works-header">
+        <div className="how-it-works-header text-center">
           <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            SOURCING PROCESS
+            STRUCTURED SOURCING FLOW
           </div>
           <h2 id="how-it-works-heading" className="how-it-works-title">
-            How It Works
+            The Sourcing &amp; Export Pathway
           </h2>
-          <p className="how-it-works-lead">
-            A simple 4-step process from your initial inquiry and sample evaluation to final order dispatch.
+          <p className="how-it-works-lead" style={{ maxWidth: '640px', margin: '0 auto' }}>
+            A transparent 4-stage operational pathway designed to eliminate risk for international tea importers before commercial order commitment.
           </p>
         </div>
 
-        {/* 4-Step Process Grid */}
-        <div className="how-it-works-grid" role="list">
-          {steps.map((st, idx) => {
-            const Icon = st.icon;
-            return (
-              <div key={st.num} className="how-it-works-step-card" role="listitem">
-                <div className="step-card-top">
-                  <div className="step-card-icon-wrap" aria-hidden="true">
-                    <Icon size={20} />
+        {/* Process Pathway (Replaces 4 disconnected cards with connected interactive timeline) */}
+        <div className="process-pathway-wrap">
+          <div className="process-pathway-track" role="list">
+            {steps.map((st) => {
+              const Icon = st.icon;
+              const isActive = st.stepNumber <= activeStep;
+              const isSelected = st.stepNumber === activeStep;
+
+              return (
+                <div 
+                  key={st.num} 
+                  className={`process-step-node ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''}`}
+                  role="listitem"
+                  onClick={() => setActiveStep(st.stepNumber)}
+                  onMouseEnter={() => setActiveStep(st.stepNumber)}
+                >
+                  <div className="process-step-header">
+                    <div className="process-step-indicator" aria-hidden="true">
+                      <span>{st.num}</span>
+                    </div>
+                    <span className="process-step-time-badge font-spec">
+                      {st.timeBadge}
+                    </span>
                   </div>
-                  <span className="step-card-num font-spec">{st.num}</span>
+
+                  <div className="process-step-body">
+                    <div className="process-step-icon-row">
+                      <div className="process-step-icon-box" aria-hidden="true">
+                        <Icon size={18} />
+                      </div>
+                      <span className="process-step-deliverable font-spec">
+                        {st.deliverable}
+                      </span>
+                    </div>
+
+                    <h3 className="process-step-title">
+                      {st.title}
+                    </h3>
+
+                    <p className="process-step-desc">
+                      {st.description}
+                    </p>
+                  </div>
                 </div>
-
-                <h3 className="step-card-title">
-                  {st.title}
-                </h3>
-
-                <p className="step-card-desc">
-                  {st.description}
-                </p>
-
-                {idx < steps.length - 1 && (
-                  <div className="step-card-connector" aria-hidden="true" />
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Reassurance Strip & Conversion CTA */}
-        <div className="how-it-works-bottom">
-          <div className="how-it-works-reassurance">
-            We aim to respond quickly with availability and pricing based on your requirement.
+              );
+            })}
           </div>
-          <a 
-            href="#requirement-form" 
-            onClick={handleCtaClick}
-            className="btn btn-primary btn-gold"
-            id="btn-how-it-works-submit"
-            aria-label="Request Free Samples to start the sourcing process"
-          >
-            <span>Request Free Samples</span>
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
+
+          {/* Connected Live Commitment Ribbon */}
+          <div className="process-commitment-ribbon">
+            <div className="process-commitment-left">
+              <span className="process-pulse-dot" aria-hidden="true" />
+              <div>
+                <p className="process-commitment-text">
+                  <strong>Fast Sample Dispatch:</strong> Origin evaluation samples dispatched via DHL / FedEx with active international tracking within 48–72 hours of inquiry review.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCtaClick}
+              className="process-commitment-btn"
+              aria-label="Start Step 01: Request Free Samples"
+            >
+              <span>Start With Step 01: Request Samples</span>
+              <ArrowRight size={14} aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
       </div>

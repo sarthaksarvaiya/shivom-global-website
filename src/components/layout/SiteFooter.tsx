@@ -69,8 +69,8 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#about-sarthak" onClick={(e) => handleScrollTo(e, 'about-sarthak')} className="footer-compact-link">
-                  About
+                <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="footer-compact-link">
+                  Why Us
                 </a>
               </li>
             </ul>
