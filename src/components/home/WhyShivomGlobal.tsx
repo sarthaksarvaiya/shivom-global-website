@@ -116,8 +116,8 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
                 <Package size={18} aria-hidden="true" />
               </div>
               <div>
-                <span className="buyer-basic-label font-spec">MINIMUM ORDER (MOQ)</span>
-                <p className="buyer-basic-value">Trial orders from <strong>250 kg</strong> (subject to tea &amp; packing availability)</p>
+                <span className="buyer-basic-label font-spec">ORDER QUANTITIES</span>
+                <p className="buyer-basic-value">Flexible commercial quantities based on tea, specification, packaging and buyer requirements.</p>
               </div>
             </div>
 
@@ -146,8 +146,8 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
                 <Anchor size={18} aria-hidden="true" />
               </div>
               <div>
-                <span className="buyer-basic-label font-spec">EXPORT LOGISTICS</span>
-                <p className="buyer-basic-value">Coordinated via appropriate Indian ports based on tea origin, destination and buyer terms</p>
+                <span className="buyer-basic-label font-spec">EXPORT COMPLIANCE &amp; LOGISTICS</span>
+                <p className="buyer-basic-value">Full export paperwork (Phytosanitary, Certificate of Origin, Tea Board clearance, BL) with shipping via appropriate Indian ports</p>
               </div>
             </div>
           </div>

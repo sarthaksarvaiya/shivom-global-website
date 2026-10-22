@@ -73,11 +73,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             Evaluate tea samples before placing an order, with transparent pricing based on your actual specifications.
           </p>
 
-          {/* Hero Buyer Key Highlights Row — Single clean 250 kg mention */}
+          {/* Hero Buyer Key Highlights Row */}
           <div className="hero-highlights-strip" role="region" aria-label="Key trading terms at a glance">
             <div className="hero-highlight-pill">
               <Package size={14} className="hero-highlight-icon" aria-hidden="true" />
-              <span>Trial orders from <strong>250 kg</strong></span>
+              <span><strong>Flexible Order Quantities</strong></span>
             </div>
             <div className="hero-highlight-pill">
               <CheckCircle2 size={14} className="hero-highlight-icon" aria-hidden="true" />

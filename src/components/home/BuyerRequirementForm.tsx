@@ -38,7 +38,7 @@ interface QuickFormData {
 const DEFAULT_DETAILED_DATA: BuyerRequirementFormData = {
   requirementType: 'Assam CTC',
   grade: 'BOP',
-  volume: 'Trial Batch (250 kg – 500 kg)',
+  volume: 'Trial Batch / Initial Order',
   packaging: '25kg Multi-wall Kraft Sack + PE Liner',
   destinationPort: '',
   qualitySpecs: '',
@@ -671,7 +671,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     value={detailedData.volume}
                     onChange={(e) => handleDetailedChange('volume', e.target.value)}
                   >
-                    <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg)</option>
+                    <option value="Trial Batch / Initial Order">Trial Batch / Initial Order</option>
                     <option value="LCL (1 – 5 MT)">LCL (1 – 5 MT)</option>
                     <option value="Full Container Load (1x20ft FCL ~10–12 MT)">1x20ft FCL (~10–12 MT)</option>
                     <option value="Multi-Container Contract (2+ FCL)">Multi-Container (2+ FCL)</option>

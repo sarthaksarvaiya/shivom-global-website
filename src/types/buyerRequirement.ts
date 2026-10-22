@@ -22,7 +22,7 @@ export type TeaGradeOption =
   | 'Custom';
 
 export type VolumeTierOption =
-  | 'Trial Batch (250 kg – 500 kg)'
+  | 'Trial Batch / Initial Order'
   | 'Commercial LCL (1 – 5 MT)'
   | 'Full Container Load (1x20ft FCL ~10–12 MT)'
   | 'Multi-Container Contract (2+ FCL)';
