@@ -2,21 +2,22 @@ import { CONTACT_INFO } from '@/constants/contact';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Send, 
-  MessageCircle,
-  Phone,
-  MapPin,
+  MessageCircle, 
+  Phone, 
+  MapPin, 
   CheckCircle2, 
   ShieldCheck, 
   RotateCcw, 
   AlertCircle, 
   RefreshCw, 
   Mail, 
-  FileCheck2,
-  Lock,
-  Layers,
-  Scale,
-  Building2,
-  MessageSquare
+  FileCheck2, 
+  Lock, 
+  Layers, 
+  Scale, 
+  Building2, 
+  MessageSquare,
+  Sparkles
 } from 'lucide-react';
 import { 
   BuyerRequirementFormData, 
@@ -33,14 +34,15 @@ import { submitBuyerRequirement } from '@/services/submissionAdapter';
 export interface BuyerRequirementFormProps {
   initialRequirementType?: string;
   initialGrade?: string;
+  initialIntent?: 'sample' | 'quote' | 'packing';
 }
 
 const DEFAULT_FORM_DATA: BuyerRequirementFormData = {
-  requirementType: 'Bulk Tea for Repacking',
+  requirementType: 'Assam CTC',
   grade: 'BOP',
   volume: 'Trial Batch (250 kg – 500 kg)',
   packaging: '25kg Multi-wall Kraft Sack + PE Liner',
-  destinationPort: 'Jebel Ali, UAE',
+  destinationPort: '',
   qualitySpecs: '',
   companyName: '',
   contactPerson: '',
@@ -55,8 +57,10 @@ const DEFAULT_FORM_DATA: BuyerRequirementFormData = {
 export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   initialRequirementType,
   initialGrade,
+  initialIntent = 'sample',
 }) => {
   const [formData, setFormData] = useState<BuyerRequirementFormData>(DEFAULT_FORM_DATA);
+  const [inquiryIntent, setInquiryIntent] = useState<'sample' | 'quote' | 'packing'>(initialIntent);
   const [errors, setErrors] = useState<FieldValidationErrors>({});
   const [formStatus, setFormStatus] = useState<FormStatus>('IDLE');
   const [submissionError, setSubmissionError] = useState<string>('');
@@ -66,14 +70,14 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   const [honeypot, setHoneypot] = useState<string>('');
 
   // Refs for accessible focus management upon validation error
+  const portInputRef = useRef<HTMLInputElement>(null);
   const companyInputRef = useRef<HTMLInputElement>(null);
   const contactInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const phoneInputRef = useRef<HTMLInputElement>(null);
-  const portInputRef = useRef<HTMLInputElement>(null);
   const countryInputRef = useRef<HTMLInputElement>(null);
 
-  // Synchronize incoming contextual preselection from Hero, Categories, Spotlight, or Grade Matrix
+  // Synchronize incoming contextual preselection
   useEffect(() => {
     if (initialRequirementType) {
       setFormData((prev) => ({ ...prev, requirementType: initialRequirementType }));
@@ -83,7 +87,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
       setFormData((prev) => ({ ...prev, grade: initialGrade }));
       setErrors((prev) => ({ ...prev, grade: undefined }));
     }
-  }, [initialRequirementType, initialGrade]);
+    if (initialIntent) {
+      setInquiryIntent(initialIntent);
+    }
+  }, [initialRequirementType, initialGrade, initialIntent]);
 
   const handleFieldChange = (field: keyof BuyerRequirementFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -136,7 +143,21 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     setFormStatus('SUBMITTING');
 
     try {
-      const record = buildRequirementRecord(formData);
+      // Append inquiry intent to quality specs so it flows safely into database and email notification
+      const intentNote = inquiryIntent === 'sample' 
+        ? '[Primary Action: Request Free Samples for Evaluation]'
+        : inquiryIntent === 'packing'
+        ? '[Primary Action: Discuss Custom Packing & Private Label]'
+        : '[Primary Action: Price Quotation & Order Inquiry]';
+
+      const enrichedFormData: BuyerRequirementFormData = {
+        ...formData,
+        qualitySpecs: formData.qualitySpecs 
+          ? `${intentNote}\n${formData.qualitySpecs}` 
+          : intentNote,
+      };
+
+      const record = buildRequirementRecord(enrichedFormData);
       const response = await submitBuyerRequirement(record, honeypot);
       if (response.success && response.record) {
         setSubmittedRecord(response.record);
@@ -171,22 +192,22 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
         {/* Section Header */}
         <div className="buyer-engine-header">
           <div className="buyer-engine-eyebrow">
-            <span className="spec-badge spec-badge-gold">SUBMIT YOUR REQUIREMENT</span>
+            <span className="spec-badge spec-badge-gold">DIRECT TRADE DESK</span>
           </div>
           <h2 id="buyer-engine-heading" className="buyer-engine-title">
-            Tell Us What You Need
+            Tell Us What Tea You Need
           </h2>
           <p className="buyer-engine-lead">
-            Share your tea specifications and order parameters. Our trade desk will review your requirement and coordinate matching sourcing options.
+            Share the tea grade, quantity, packing requirement and destination. We'll review your requirement and respond with the available options.
           </p>
         </div>
 
         {/* Direct Contact Channels Strip */}
         <div className="contact-direct-strip" role="region" aria-label="Direct trade desk contact options">
           <div className="contact-direct-top">
-            <h3 className="contact-direct-title">Prefer Direct Contact?</h3>
+            <h3 className="contact-direct-title">Direct Contact Channels</h3>
             <p className="contact-direct-desc">
-              Reach our trade desk directly via WhatsApp, Phone, or Email for immediate questions or inquiries:
+              Reach Sarthak directly via WhatsApp, Phone, or Email for immediate answers regarding grades, samples, or export pricing:
             </p>
           </div>
 
@@ -202,7 +223,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <MessageCircle size={20} />
               </div>
               <div className="contact-direct-info">
-                <span className="contact-direct-type">WhatsApp Us</span>
+                <span className="contact-direct-type">WhatsApp Trade Desk</span>
                 <span className="contact-direct-val">{CONTACT_INFO.whatsapp.display}</span>
               </div>
             </a>
@@ -216,7 +237,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <Phone size={18} />
               </div>
               <div className="contact-direct-info">
-                <span className="contact-direct-type">Call Us</span>
+                <span className="contact-direct-type">Call Sarthak</span>
                 <span className="contact-direct-val">{CONTACT_INFO.phone.display}</span>
               </div>
             </a>
@@ -230,7 +251,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <Mail size={18} />
               </div>
               <div className="contact-direct-info">
-                <span className="contact-direct-type">Email Us</span>
+                <span className="contact-direct-type">Email Directly</span>
                 <span className="contact-direct-val">{CONTACT_INFO.email.address}</span>
               </div>
             </a>
@@ -238,7 +259,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
           <div className="contact-direct-footer-note">
             <MapPin size={14} aria-hidden="true" />
-            <span>Principal Commercial Base: <strong>{CONTACT_INFO.address.display}</strong></span>
+            <span>Operational Base: <strong>{CONTACT_INFO.address.display}</strong> &bull; {CONTACT_INFO.entityType}</span>
           </div>
         </div>
 
@@ -253,16 +274,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </div>
 
               <div className="buyer-success-badge-wrap">
-                <span className="spec-badge spec-badge-gold">REQUIREMENT RECEIVED</span>
+                <span className="spec-badge spec-badge-gold">INQUIRY RECEIVED</span>
               </div>
 
               <h3 className="buyer-success-title">
-                Requirement received.
+                {inquiryIntent === 'sample' ? 'Sample Request Received' : 'Requirement Received'}
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. Your tea sourcing parameters have been received by the SHIVOM GLOBAL trade desk. 
-                Our team will review your specification against origin availability and contact you promptly.
+                Thank you. Your tea requirement has been received by Sarthak at the SHIVOM GLOBAL trade desk. 
+                We will review your specifications against current tea availability and contact you promptly.
               </p>
 
               <div className="buyer-success-ref-box">
@@ -277,7 +298,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <div className="buyer-summary-header">
                   <div className="buyer-summary-title">
                     <FileCheck2 size={16} />
-                    <span>Requirement Summary</span>
+                    <span>Inquiry Summary</span>
                   </div>
                   <span className="font-spec buyer-summary-ref">
                     {submittedRecord.referenceId}
@@ -290,16 +311,15 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <div><strong>Phone / WhatsApp:</strong> {submittedRecord.phoneWhatsApp}</div>
                   <div><strong>Tea Category:</strong> {submittedRecord.requirementType}</div>
                   <div><strong>Preferred Grade:</strong> <span className="font-spec">{submittedRecord.grade}</span></div>
-                  <div><strong>Estimated Volume:</strong> {submittedRecord.volume}</div>
+                  <div><strong>Quantity Scope:</strong> {submittedRecord.volume}</div>
                   <div><strong>Packaging Format:</strong> {submittedRecord.packaging}</div>
-                  <div><strong>Discharging Port:</strong> {submittedRecord.destinationPort}</div>
-                  {submittedRecord.buyerRole && <div><strong>Buyer Role:</strong> {submittedRecord.buyerRole}</div>}
-                  {submittedRecord.targetPrice && <div><strong>Target Price:</strong> {submittedRecord.targetPrice}</div>}
+                  <div><strong>Destination Port:</strong> {submittedRecord.destinationPort}</div>
+                  {submittedRecord.buyerRole && <div><strong>Business Type:</strong> {submittedRecord.buyerRole}</div>}
                   {submittedRecord.qualitySpecs && <div><strong>Specifications / Notes:</strong> {submittedRecord.qualitySpecs}</div>}
                 </div>
 
                 <div className="buyer-summary-timestamp">
-                  Captured: {new Date(submittedRecord.submittedAt).toUTCString()} • Secure Submission Desk
+                  Captured: {new Date(submittedRecord.submittedAt).toUTCString()} &bull; Direct Trade Desk
                 </div>
               </div>
 
@@ -332,7 +352,43 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 />
               </div>
 
-              {/* GROUP 1: PRODUCT REQUIREMENT */}
+              {/* INTENT SELECTOR BAR: Samples vs Quotation vs Custom Packing */}
+              <div className="buyer-intent-selector-wrap" role="group" aria-label="Choose your primary inquiry intent">
+                <span className="buyer-intent-label font-spec">PRIMARY INQUIRY GOAL:</span>
+                <div className="buyer-intent-tabs">
+                  <button
+                    type="button"
+                    onClick={() => setInquiryIntent('sample')}
+                    className={`buyer-intent-tab ${inquiryIntent === 'sample' ? 'buyer-intent-tab-active' : ''}`}
+                    aria-pressed={inquiryIntent === 'sample'}
+                  >
+                    <Sparkles size={14} aria-hidden="true" />
+                    <span>Request Free Samples</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setInquiryIntent('quote')}
+                    className={`buyer-intent-tab ${inquiryIntent === 'quote' ? 'buyer-intent-tab-active' : ''}`}
+                    aria-pressed={inquiryIntent === 'quote'}
+                  >
+                    <Send size={14} aria-hidden="true" />
+                    <span>Get Price Quotation</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setInquiryIntent('packing')}
+                    className={`buyer-intent-tab ${inquiryIntent === 'packing' ? 'buyer-intent-tab-active' : ''}`}
+                    aria-pressed={inquiryIntent === 'packing'}
+                  >
+                    <Layers size={14} aria-hidden="true" />
+                    <span>Custom Packing &amp; Private Label</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* GROUP 1: TEA SPECIFICATION */}
               <div className="buyer-form-group-section">
                 <div className="buyer-form-section-header">
                   <div className="buyer-section-icon-box">
@@ -340,7 +396,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                   <div className="buyer-section-title-wrap">
                     <span className="buyer-section-num">01</span>
-                    <h3 className="buyer-section-title">PRODUCT REQUIREMENT</h3>
+                    <h3 className="buyer-section-title">TEA SPECIFICATION</h3>
                   </div>
                 </div>
 
@@ -348,7 +404,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Tea Category */}
                   <div className="form-group">
                     <label htmlFor="requirementType" className="form-label form-label-required">
-                      Tea Category / Scope
+                      Tea Category
                     </label>
                     <select 
                       id="requirementType"
@@ -359,13 +415,13 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-invalid={!!errors.requirementType}
                       aria-describedby={errors.requirementType ? 'requirementType-error' : undefined}
                     >
-                      <option value="Bulk Tea for Repacking">Bulk Tea Supply (25kg Kraft Sacks)</option>
                       <option value="Assam CTC">Assam CTC Black Tea</option>
-                      <option value="Orthodox">Orthodox Black Tea (Whole & Broken Leaf)</option>
-                      <option value="Darjeeling">Darjeeling Specialty Tea (GI Protected)</option>
-                      <option value="Green Tea">Indian Mountain Green Tea</option>
-                      <option value="Private Label Retail Product">Private Label & OEM Contract Packing</option>
-                      <option value="Custom Specification">Custom Specification / Counter-Sample Match</option>
+                      <option value="Orthodox">Orthodox Black Tea</option>
+                      <option value="Darjeeling">Darjeeling Specialty Black Tea</option>
+                      <option value="Green Tea">Indian Green Tea</option>
+                      <option value="Bulk Tea for Repacking">Bulk Tea for Repacking (25kg Sacks)</option>
+                      <option value="Private Label Retail Product">Private Label &amp; Custom Packing</option>
+                      <option value="Custom Specification">Custom Formulation / Benchmark Match</option>
                     </select>
                     {errors.requirementType && (
                       <span id="requirementType-error" className="form-error-msg" role="alert">
@@ -375,10 +431,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     )}
                   </div>
 
-                  {/* Preferred Grade / Cut */}
+                  {/* Preferred Grade */}
                   <div className="form-group">
                     <label htmlFor="grade" className="form-label form-label-required">
-                      Grade / Specification
+                      Grade / Cut
                     </label>
                     <select 
                       id="grade"
@@ -389,14 +445,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-invalid={!!errors.grade}
                       aria-describedby={errors.grade ? 'grade-error' : undefined}
                     >
-                      <option value="BOP">BOP — Broken Orange Pekoe (Full-Bodied Base)</option>
-                      <option value="BOPSM">BOPSM — BOP Small / Mixed (Fast Extraction)</option>
-                      <option value="BP">BP — Broken Pekoe (Blending Backbone)</option>
-                      <option value="PF">PF — Pekoe Fannings (Tea Bags / Quick Brew)</option>
-                      <option value="PD">PD — Pekoe Dust (High-Density / Chai / Karak)</option>
-                      <option value="Dust">Dust / D1 (High Extraction & Color)</option>
+                      <option value="BOP">BOP — Broken Orange Pekoe (Broken leaf, strong liquor)</option>
+                      <option value="BOPSM">BOPSM — BOP Small (Even granular cut)</option>
+                      <option value="BP">BP — Broken Pekoe (Medium broken leaf, strong cup)</option>
+                      <option value="PF">PF — Pekoe Fannings (Fine particles, tea bags)</option>
+                      <option value="PD">PD — Pekoe Dust (Fine grade, strong liquor / chai)</option>
+                      <option value="Dust">Dust / D1 (Finest cut, maximum color)</option>
+                      <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe (Whole leaf tips)</option>
+                      <option value="FBOP">FBOP — Flowery Broken Orange Pekoe (Aromatic broken leaf)</option>
                       <option value="Open to Recommendation">Open to Recommendation (Based on Application)</option>
-                      <option value="Custom">Custom Sieve / Counter-Sample Formulation</option>
+                      <option value="Custom">Custom Sieve / Benchmark Sample</option>
                     </select>
                     {errors.grade && (
                       <span id="grade-error" className="form-error-msg" role="alert">
@@ -408,15 +466,15 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </div>
 
                 {/* Target Application & Quality Details */}
-                <div className="form-group">
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label htmlFor="qualitySpecs" className="form-label">
-                    Target Application & Cup Profile Notes (Optional)
+                    Cup Profile or Application Notes (Optional)
                   </label>
                   <textarea 
                     id="qualitySpecs"
                     name="qualitySpecs"
                     className={`form-textarea ${errors.qualitySpecs ? 'form-input-error' : ''}`}
-                    placeholder="e.g. Target liquor color, leaf appearance, extraction strength, or destination regulatory parameters..."
+                    placeholder="e.g. Target liquor color, strength in milk, leaf particle preference, or sample delivery address..."
                     value={formData.qualitySpecs}
                     onChange={(e) => handleFieldChange('qualitySpecs', e.target.value)}
                     rows={2}
@@ -430,7 +488,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     </span>
                   ) : (
                     <span id="qualitySpecs-hint" className="form-hint">
-                      Helps our trade desk align estate samples to your exact cup and processing expectations.
+                      Include sample delivery details or target cup requirements here.
                     </span>
                   )}
                 </div>
@@ -444,7 +502,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                   <div className="buyer-section-title-wrap">
                     <span className="buyer-section-num">02</span>
-                    <h3 className="buyer-section-title">ORDER & SHIPPING PARAMETERS</h3>
+                    <h3 className="buyer-section-title">ORDER &amp; SHIPPING PARAMETERS</h3>
                   </div>
                 </div>
 
@@ -452,7 +510,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Estimated Volume */}
                   <div className="form-group">
                     <label htmlFor="volume" className="form-label form-label-required">
-                      Estimated Quantity / Order Scope
+                      Quantity Scope
                     </label>
                     <select 
                       id="volume"
@@ -463,7 +521,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       aria-invalid={!!errors.volume}
                       aria-describedby={errors.volume ? 'volume-error' : undefined}
                     >
-                      <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg)</option>
+                      <option value="Trial Batch (250 kg – 500 kg)">Trial Batch (250 kg – 500 kg) — Recommended for initial orders</option>
                       <option value="LCL (1 – 5 MT)">LCL (1 – 5 MT)</option>
                       <option value="Full Container Load (1x20ft FCL ~10–12 MT)">Full Container Load (1x20ft FCL ~10–12 MT)</option>
                       <option value="Multi-Container Contract (2+ FCL)">Multi-Container Contract (2+ FCL)</option>
@@ -492,8 +550,8 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     >
                       <option value="25kg Multi-wall Kraft Sack + PE Liner">25kg Multi-wall Kraft Sack + LDPE Liner (Standard Export)</option>
                       <option value="50kg Woven PP Bag + Liner">50kg Woven PP Bag + Inner Liner</option>
-                      <option value="Retail Stand-up Pouches">Retail Stand-up Pouches (100g – 1kg OEM)</option>
-                      <option value="Custom Packaging">Custom / Buyer-Branded Packaging</option>
+                      <option value="Retail Stand-up Pouches">Retail Pouches / Tins (OEM)</option>
+                      <option value="Custom Packaging">Custom Packaging Requirement</option>
                     </select>
                     {errors.packaging && (
                       <span id="packaging-error" className="form-error-msg" role="alert">
@@ -508,7 +566,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Destination Port & Country */}
                   <div className="form-group">
                     <label htmlFor="destinationPort" className="form-label form-label-required">
-                      Discharging Port & Destination Country
+                      Destination Port &amp; Country
                     </label>
                     <input 
                       ref={portInputRef}
@@ -530,7 +588,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       </span>
                     ) : (
                       <span id="destinationPort-hint" className="form-hint">
-                        Required to calculate freight routing and landed CIF costing.
+                        Needed to calculate freight routes and destination quotation.
                       </span>
                     )}
                   </div>
@@ -538,20 +596,20 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Target Price (Optional) */}
                   <div className="form-group">
                     <label htmlFor="targetPrice" className="form-label">
-                      Target Price Expectation (Optional)
+                      Target Price (Optional)
                     </label>
                     <input 
                       id="targetPrice"
                       name="targetPrice"
                       type="text" 
                       className="form-input" 
-                      placeholder="e.g. FOB Kolkata or CIF Jebel Ali target range"
+                      placeholder="e.g. FOB Indian port or CIF target range"
                       value={formData.targetPrice || ''}
                       onChange={(e) => handleFieldChange('targetPrice', e.target.value)}
                       aria-describedby="targetPrice-hint"
                     />
                     <span id="targetPrice-hint" className="form-hint">
-                      Optional benchmark for price matching.
+                      Helps us recommend grades within your budget.
                     </span>
                   </div>
                 </div>
@@ -565,15 +623,15 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                   <div className="buyer-section-title-wrap">
                     <span className="buyer-section-num">03</span>
-                    <h3 className="buyer-section-title">BUYER CORPORATE PROFILE</h3>
+                    <h3 className="buyer-section-title">BUYER CONTACT DETAILS</h3>
                   </div>
                 </div>
 
                 <div className="buyer-form-grid-2">
-                  {/* Company Legal Name */}
+                  {/* Company Name */}
                   <div className="form-group">
                     <label htmlFor="companyName" className="form-label form-label-required">
-                      Company Legal Name
+                      Company Name
                     </label>
                     <input 
                       ref={companyInputRef}
@@ -597,10 +655,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     )}
                   </div>
 
-                  {/* Contact Person & Title */}
+                  {/* Contact Person */}
                   <div className="form-group">
                     <label htmlFor="contactPerson" className="form-label form-label-required">
-                      Contact Person & Title
+                      Contact Person
                     </label>
                     <input 
                       ref={contactInputRef}
@@ -608,7 +666,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       name="contactPerson"
                       type="text" 
                       className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
-                      placeholder="e.g. Tariq Mansoor, Procurement Director"
+                      placeholder="e.g. Tariq Mansoor"
                       value={formData.contactPerson}
                       onChange={(e) => handleFieldChange('contactPerson', e.target.value)}
                       autoComplete="name"
@@ -626,10 +684,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </div>
 
                 <div className="buyer-form-grid-3">
-                  {/* Corporate Email */}
+                  {/* Email */}
                   <div className="form-group">
                     <label htmlFor="businessEmail" className="form-label form-label-required">
-                      Corporate Business Email
+                      Email Address
                     </label>
                     <input 
                       ref={emailInputRef}
@@ -637,7 +695,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                       name="businessEmail"
                       type="email" 
                       className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
-                      placeholder="procurement@company.com"
+                      placeholder="buyer@company.com"
                       value={formData.businessEmail}
                       onChange={(e) => handleFieldChange('businessEmail', e.target.value)}
                       autoComplete="email"
@@ -653,7 +711,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     )}
                   </div>
 
-                  {/* Phone / WhatsApp */}
+                  {/* WhatsApp / Phone */}
                   <div className="form-group">
                     <label htmlFor="phoneWhatsApp" className="form-label form-label-required">
                       WhatsApp / Phone
@@ -683,7 +741,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   {/* Buyer Country */}
                   <div className="form-group">
                     <label htmlFor="country" className="form-label form-label-required">
-                      Registration Country
+                      Country
                     </label>
                     <input 
                       ref={countryInputRef}
@@ -708,10 +766,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                 </div>
 
-                {/* Buyer Business Type (Optional) */}
+                {/* Buyer Business Type */}
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label htmlFor="buyerRole" className="form-label">
-                    Buyer Role (Optional)
+                    Business Type (Optional)
                   </label>
                   <select 
                     id="buyerRole"
@@ -721,16 +779,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     onChange={(e) => handleFieldChange('buyerRole', e.target.value)}
                   >
                     <option value="Tea Importer / Trader">Tea Importer / Trader</option>
-                    <option value="Tea Blender / Manufacturer">Tea Blender / Manufacturer</option>
+                    <option value="Tea Blender / Manufacturer">Tea Blender / Packer</option>
                     <option value="Private Label / Retail Brand">Private Label / Retail Brand</option>
                     <option value="Foodservice / Hospitality">Foodservice / Hospitality</option>
                     <option value="Distributor / Wholesaler">Distributor / Wholesaler</option>
-                    <option value="Other">Other Business Enterprise</option>
+                    <option value="Other">Other Enterprise</option>
                   </select>
                 </div>
               </div>
 
-              {/* GROUP 4: ADDITIONAL CONTEXT */}
+              {/* GROUP 4: ADDITIONAL SOURCING NOTES */}
               <div className="buyer-form-group-section" style={{ borderBottom: 'none', marginBottom: 'var(--space-4)' }}>
                 <div className="buyer-form-section-header">
                   <div className="buyer-section-icon-box">
@@ -738,33 +796,33 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </div>
                   <div className="buyer-section-title-wrap">
                     <span className="buyer-section-num">04</span>
-                    <h3 className="buyer-section-title">ADDITIONAL CONTEXT</h3>
+                    <h3 className="buyer-section-title">ADDITIONAL NOTES</h3>
                   </div>
                 </div>
 
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label htmlFor="additionalMessage" className="form-label">
-                    Additional Message or Sourcing Notes (Optional)
+                    Additional Sourcing or Sample Notes (Optional)
                   </label>
                   <textarea 
                     id="additionalMessage"
                     name="additionalMessage"
                     className="form-textarea"
-                    placeholder="Provide any additional context regarding sample requirements, project timelines, target delivery dates, or payment terms..."
+                    placeholder="Provide any additional details regarding your sample requirements, target timeline, or special instructions..."
                     value={formData.additionalMessage || ''}
                     onChange={(e) => handleFieldChange('additionalMessage', e.target.value)}
-                    rows={3}
+                    rows={2}
                   />
                 </div>
               </div>
 
-              {/* Reassuring Commercial Sourcing Trust Message */}
+              {/* Direct Trade Desk Trust Banner */}
               <div className="buyer-form-trust-banner">
                 <div className="buyer-trust-icon-box">
                   <Lock size={16} />
                 </div>
                 <p className="buyer-trust-text">
-                  Your requirement is reviewed directly by our trade desk. Final availability, specifications, pricing, and terms are confirmed during the sampling and quotation process.
+                  Your requirement is reviewed directly by Sarthak at the SHIVOM GLOBAL trade desk. All details are kept confidential.
                 </p>
               </div>
 
@@ -792,7 +850,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                           </button>
                           <a href={CONTACT_INFO.email.mailtoLink} className="buyer-error-fallback" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Mail size={13} />
-                            <span>Direct Trade Desk: {CONTACT_INFO.email.address}</span>
+                            <span>Direct Email: {CONTACT_INFO.email.address}</span>
                           </a>
                         </div>
                       )}
@@ -807,16 +865,16 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   type="submit" 
                   className="buyer-submit-btn" 
                   disabled={formStatus === 'SUBMITTING'}
-                  aria-label="Submit Buyer Requirement"
+                  aria-label={inquiryIntent === 'sample' ? 'Request Free Tea Samples' : 'Send Buyer Requirement'}
                 >
                   {formStatus === 'SUBMITTING' ? (
                     <span className="buyer-btn-inner">
                       <RefreshCw size={18} className="animate-spin" />
-                      <span>Transmitting Requirement...</span>
+                      <span>Sending Requirement...</span>
                     </span>
                   ) : (
                     <span className="buyer-btn-inner">
-                      <span>Submit Buyer Requirement</span>
+                      <span>{inquiryIntent === 'sample' ? 'Request Free Samples' : 'Send Buyer Requirement'}</span>
                       <Send size={18} />
                     </span>
                   )}

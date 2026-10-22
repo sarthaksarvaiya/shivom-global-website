@@ -1,43 +1,47 @@
 import React from 'react';
-import { Send, FileSearch, FileCheck2, Ship, ArrowRight } from 'lucide-react';
+import { Send, FileSearch, CheckCircle2, Ship, ArrowRight } from 'lucide-react';
 
 export interface HowItWorksSectionProps {
+  onRequestSamples?: () => void;
   onSubmitRequirement?: () => void;
 }
 
 export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
+  onRequestSamples,
   onSubmitRequirement,
 }) => {
   const steps = [
     {
       num: '01',
-      title: 'Share Your Requirement',
-      description: 'Submit your target tea category, preferred grade, volume, destination port, and packaging format.',
+      title: 'Tell Us Your Requirement',
+      description: 'Share your required tea type, grade, quantity and destination port.',
       icon: Send,
     },
     {
       num: '02',
-      title: 'Requirement Review',
-      description: 'We evaluate your specification against current harvest availability and prepare representative lot samples for cupping sign-off.',
+      title: 'We Source & Prepare Samples',
+      description: 'We identify suitable tea matching your parameters and arrange samples for your evaluation.',
       icon: FileSearch,
     },
     {
       num: '03',
-      title: 'Quotation & Documentation',
-      description: 'Receive formal pricing (FOB or CIF), agreed payment schedule, technical specifications, and destination documentation details.',
-      icon: FileCheck2,
+      title: 'Confirm Specification & Price',
+      description: 'After sample approval, we confirm final specifications, pricing, payment terms, and delivery schedule.',
+      icon: CheckCircle2,
     },
     {
       num: '04',
-      title: 'Order, Packing & Export',
-      description: 'We coordinate lot preparation, export-grade moisture barrier packaging, statutory clearance, and ocean container dispatch.',
+      title: 'Order & Dispatch',
+      description: 'We coordinate packing, statutory export documentation, and dispatch according to agreed terms.',
       icon: Ship,
     },
   ];
 
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (onSubmitRequirement) {
+    if (onRequestSamples) {
+      onRequestSamples();
+    } else if (onSubmitRequirement) {
       onSubmitRequirement();
     } else {
       const formElement = document.getElementById('requirement-form');
@@ -59,9 +63,6 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       className="how-it-works-section theme-ivory" 
       aria-labelledby="how-it-works-heading"
     >
-      {/* Anchor alias to ensure #how-we-work continues functioning */}
-      <span id="how-we-work" style={{ display: 'block', position: 'relative', top: '-90px', visibility: 'hidden' }} aria-hidden="true" />
-
       <div className="container">
         
         {/* Section Header */}
@@ -73,7 +74,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
             How It Works
           </h2>
           <p className="how-it-works-lead">
-            A simple, transparent four-step process from your initial inquiry to final export dispatch.
+            A simple 4-step process from your initial inquiry and sample evaluation to final order dispatch.
           </p>
         </div>
 
@@ -109,16 +110,16 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
         {/* Reassurance Strip & Conversion CTA */}
         <div className="how-it-works-bottom">
           <div className="how-it-works-reassurance">
-            Each inquiry is reviewed directly by our trade desk before issuing formal quotations or terms.
+            We aim to respond quickly with availability and pricing based on your requirement.
           </div>
           <a 
             href="#requirement-form" 
             onClick={handleCtaClick}
             className="btn btn-primary btn-gold"
             id="btn-how-it-works-submit"
-            aria-label="Submit buyer requirement to start sourcing"
+            aria-label="Request Free Samples to start the sourcing process"
           >
-            <span>Submit Buyer Requirement</span>
+            <span>Request Free Samples</span>
             <ArrowRight size={16} aria-hidden="true" />
           </a>
         </div>

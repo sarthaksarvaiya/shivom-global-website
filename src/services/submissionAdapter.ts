@@ -47,7 +47,7 @@ export const submitBuyerRequirement = async (
         success: true,
         mode: 'LIVE',
         referenceId: data.referenceId,
-        message: data.message || 'Your commercial requirement has been received by the SHIVOM GLOBAL trade desk.',
+        message: data.message || 'Your requirement has been received by the SHIVOM GLOBAL trade desk.',
         record: {
           ...record,
           referenceId: data.referenceId, // Authoritative server-side reference ID
@@ -73,7 +73,7 @@ export const submitBuyerRequirement = async (
       success: false,
       mode: 'LIVE',
       referenceId: record.referenceId,
-      message: 'Network error communicating with the commercial submission desk. Please verify your connection and try again.',
+      message: 'Network error communicating with the trade desk. Please verify your connection and try again.',
       error: 'Network connection issue. Please try again.',
     };
   }

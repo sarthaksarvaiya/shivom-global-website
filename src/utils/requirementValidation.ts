@@ -69,7 +69,7 @@ export const validateRequirementForm = (data: BuyerRequirementFormData): FieldVa
   // 7. Company Legal Name
   const cleanCompany = sanitizeInput(data.companyName);
   if (!cleanCompany) {
-    errors.companyName = 'Company legal name is required for commercial qualification.';
+    errors.companyName = 'Company legal name is required for inquiry verification.';
   } else if (cleanCompany.length < 2) {
     errors.companyName = 'Company name must be at least 2 characters.';
   } else if (cleanCompany.length > 120) {
@@ -144,7 +144,7 @@ export const buildRequirementRecord = (data: BuyerRequirementFormData): BuyerReq
     specsParts.push(`Buyer Role: ${data.buyerRole.trim()}`);
   }
   if (data.targetPrice && data.targetPrice.trim()) {
-    specsParts.push(`Target Price / Commercial Term: ${data.targetPrice.trim()}`);
+    specsParts.push(`Target Price / Pricing Term: ${data.targetPrice.trim()}`);
   }
   if (data.qualitySpecs && data.qualitySpecs.trim()) {
     specsParts.push(`Technical Specs: ${data.qualitySpecs.trim()}`);

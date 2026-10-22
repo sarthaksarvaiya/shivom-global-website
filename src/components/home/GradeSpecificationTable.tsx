@@ -1,97 +1,79 @@
 import React from 'react';
-import { ArrowRight, Sliders, Info, Check } from 'lucide-react';
+import { ArrowRight, Info, Check } from 'lucide-react';
 
 export interface GradeSpecificationTableProps {
   onSelectGrade?: (gradeCode: string) => void;
   selectedGrade?: string;
 }
 
-export interface TeaGradeItem {
+export interface TeaGradeRow {
+  type: 'CTC' | 'Orthodox';
   code: string;
   name: string;
-  category: string;
-  particleProfile: string;
-  cupCharacter: string;
-  typicalApplication: string;
-  highlightTag?: string;
+  style: string;
+  typicalUse: string;
 }
 
 export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = ({
   onSelectGrade,
   selectedGrade,
 }) => {
-  const grades: TeaGradeItem[] = [
+  const grades: TeaGradeRow[] = [
     {
+      type: 'CTC',
       code: 'BOP',
       name: 'Broken Orange Pekoe',
-      category: 'Assam CTC',
-      particleProfile: 'Bold, robust granular leaf cut (largest CTC grade)',
-      cupCharacter: 'Rich amber-red liquor, full body, balanced infusion',
-      typicalApplication: 'Bulk blending foundation, traditional loose-leaf retail packets',
-      highlightTag: 'Bold Leaf',
+      style: 'Largest CTC grade, robust granular leaf',
+      typicalUse: 'Bulk blending foundation, packet tea',
     },
     {
+      type: 'CTC',
       code: 'BOPSM',
-      name: 'Broken Orange Pekoe Small',
-      category: 'Assam CTC',
-      particleProfile: 'Medium-to-bold even granular cut',
-      cupCharacter: 'Deep amber cup, brisk strength, excellent milk reactivity',
-      typicalApplication: 'High-selling consumer packet teas, strong family blends',
-      highlightTag: 'Brisk & Balanced',
+      name: 'BOP Small',
+      style: 'Medium-to-bold even granular cut',
+      typicalUse: 'Consumer packet tea, family blends',
     },
     {
+      type: 'CTC',
       code: 'BP',
       name: 'Broken Pekoe',
-      category: 'Assam CTC',
-      particleProfile: 'Medium granular size with consistent density',
-      cupCharacter: 'Bright reddish-amber infusion, sharp briskness, rich aroma',
-      typicalApplication: 'Everyday strong tea blends, milk chai, food service',
-      highlightTag: 'Strong Infusion',
+      style: 'Medium granular size, consistent density',
+      typicalUse: 'Everyday strong tea, milk chai, food service',
     },
     {
+      type: 'CTC',
       code: 'PF',
       name: 'Pekoe Fannings',
-      category: 'Assam CTC',
-      particleProfile: 'Fine, uniform granular sizing (quick percolation)',
-      cupCharacter: 'Rapid deep color release, punchy malt flavor, high liquor yield',
-      typicalApplication: 'Standard tea bags, single-serve filter packs, instant Karak',
-      highlightTag: 'Rapid Extraction',
+      style: 'Fine particles, rapid color and liquor release',
+      typicalUse: 'Tea bags, single-serve packs, quick brew',
     },
     {
+      type: 'CTC',
       code: 'PD',
       name: 'Pekoe Dust',
-      category: 'Assam CTC',
-      particleProfile: 'Fine granular dust with high surface area',
-      cupCharacter: 'Intense dark liquor, instantaneous extraction, rich body in milk',
-      typicalApplication: 'Hotels, restaurants, street chai vendors, vending machines',
-      highlightTag: 'Maximum Yield',
+      style: 'Fine granular dust, instantaneous extraction',
+      typicalUse: 'Chai vendors, Karak, vending machines',
     },
     {
+      type: 'CTC',
       code: 'Dust / D1',
-      name: 'Dust 1 (Finest Cut)',
-      category: 'Assam CTC',
-      particleProfile: 'Micro-cut granular particles for maximum percolation',
-      cupCharacter: 'Maximum color intensity, bold astringency, instant infusion',
-      typicalApplication: 'Commercial foodservice, institutional catering, chai blends',
-      highlightTag: 'Instant Color',
+      name: 'Dust 1',
+      style: 'Micro-cut granular particles, maximum color yield',
+      typicalUse: 'Foodservice, catering, strong commercial chai',
     },
     {
+      type: 'Orthodox',
       code: 'TGFOP',
       name: 'Tippy Golden Flowery Orange Pekoe',
-      category: 'Orthodox',
-      particleProfile: 'Long wiry whole leaf with delicate golden tips',
-      cupCharacter: 'Bright golden liquor, floral aroma, subtle sweet-wood notes',
-      typicalApplication: 'Premium loose-leaf tins, specialty tea boutiques, gift packs',
-      highlightTag: 'Whole Leaf Tip',
+      style: 'Whole wiry leaf with delicate golden tips',
+      typicalUse: 'Specialty loose-leaf tins, premium gift packs',
     },
     {
+      type: 'Orthodox',
       code: 'FBOP',
       name: 'Flowery Broken Orange Pekoe',
-      category: 'Orthodox',
-      particleProfile: 'Neatly broken orthodox leaf with silver/golden tips',
-      cupCharacter: 'Deep golden-amber cup, rich bouquet, pleasant astringency',
-      typicalApplication: 'English breakfast blends, loose tea retail, luxury hospitality',
-      highlightTag: 'Aromatic Broken',
+      style: 'Aromatic broken leaf with tips, balanced cup',
+      typicalUse: 'English breakfast blends, loose tea retail',
     },
   ];
 
@@ -135,32 +117,31 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
         {/* Section Header */}
         <div className="grade-matrix-header">
           <div className="grade-matrix-eyebrow">
-            <span className="spec-badge spec-badge-gold">TEA GRADE REFERENCE</span>
+            <span className="spec-badge spec-badge-gold">SINGLE SOURCE OF TRUTH</span>
           </div>
           <h2 id="grade-table-heading" className="grade-matrix-title">
             Tea Grade &amp; Specification Table
           </h2>
           <p className="grade-matrix-lead">
-            Compare leaf particle size, cup character, and intended applications to identify the right grade for your market.
+            Review available tea grades, leaf appearance, and typical uses. Click any grade to pre-fill your free sample request.
           </p>
         </div>
 
         {/* Mobile Horizontal Scroll Hint */}
         <div className="grade-table-scroll-hint font-spec" aria-hidden="true">
-          <span>&larr; Scroll horizontally to view all specifications &rarr;</span>
+          <span>&larr; Scroll horizontally to view full table &rarr;</span>
         </div>
 
-        {/* Authoritative Grade Table */}
-        <div className="grade-matrix-table-wrap" role="region" aria-label="Authoritative Tea Grades Table" tabIndex={0}>
+        {/* Authoritative Single Grade Table */}
+        <div className="grade-matrix-table-wrap" role="region" aria-label="Tea Grades Specification Table" tabIndex={0}>
           <table className="grade-matrix-table">
             <thead>
               <tr>
-                <th scope="col" className="th-grade">GRADE</th>
-                <th scope="col" className="th-cat">CATEGORY</th>
-                <th scope="col" className="th-desc">FULL NAME &amp; PARTICLE PROFILE</th>
-                <th scope="col" className="th-cup">CUP &amp; LIQUOR CHARACTER</th>
-                <th scope="col" className="th-app">TYPICAL APPLICATIONS</th>
-                <th scope="col" className="th-act">ACTION</th>
+                <th scope="col" style={{ width: '15%' }}>TEA TYPE</th>
+                <th scope="col" style={{ width: '18%' }}>GRADE</th>
+                <th scope="col" style={{ width: '32%' }}>APPEARANCE &amp; STYLE</th>
+                <th scope="col" style={{ width: '23%' }}>TYPICAL USE</th>
+                <th scope="col" style={{ width: '12%', textAlign: 'center' }}>SAMPLE</th>
               </tr>
             </thead>
             <tbody>
@@ -171,54 +152,52 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
                     key={item.code} 
                     className={`grade-row ${isSelected ? 'grade-row-selected' : ''}`}
                   >
-                    {/* Grade Code */}
+                    {/* Tea Type */}
+                    <td className="td-cat font-spec" style={{ fontWeight: 700, color: 'var(--color-primary-green)' }}>
+                      {item.type}
+                    </td>
+
+                    {/* Grade Code & Full Name */}
                     <td className="td-grade">
                       <div className="grade-code-badge">
                         <span className="font-spec grade-code-text">{item.code}</span>
-                        {item.highlightTag && (
-                          <span className="grade-feature-pill">{item.highlightTag}</span>
-                        )}
+                      </div>
+                      <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                        {item.name}
                       </div>
                     </td>
 
-                    {/* Category */}
-                    <td className="td-cat font-spec" style={{ fontSize: '0.8125rem', color: 'var(--color-primary-green)', fontWeight: 600 }}>
-                      {item.category}
-                    </td>
-
-                    {/* Name & Particle Profile */}
+                    {/* Appearance & Style */}
                     <td className="td-desc">
-                      <div className="grade-full-name">{item.name}</div>
-                      <div className="grade-profile-detail">{item.particleProfile}</div>
+                      <div style={{ color: 'var(--text-main)', fontSize: '0.9375rem' }}>
+                        {item.style}
+                      </div>
                     </td>
 
-                    {/* Cup & Liquor Character */}
-                    <td className="td-cup">
-                      <div className="grade-cup-text">{item.cupCharacter}</div>
-                    </td>
-
-                    {/* Application */}
+                    {/* Typical Use */}
                     <td className="td-app">
-                      <div className="grade-app-text">{item.typicalApplication}</div>
+                      <div className="grade-app-text">
+                        {item.typicalUse}
+                      </div>
                     </td>
 
                     {/* Action */}
-                    <td className="td-act">
+                    <td className="td-act" style={{ textAlign: 'center' }}>
                       <button
                         type="button"
                         onClick={() => handleGradeClick(item.code)}
                         className={`grade-inquire-btn ${isSelected ? 'grade-inquire-btn-active' : ''}`}
-                        aria-label={`Select ${item.code} for requirement inquiry`}
+                        aria-label={`Select ${item.code} for sample request`}
                       >
                         {isSelected ? (
                           <>
-                            <Check size={14} aria-hidden="true" />
+                            <Check size={13} aria-hidden="true" />
                             <span>Selected</span>
                           </>
                         ) : (
                           <>
-                            <span>Select Grade</span>
-                            <ArrowRight size={13} aria-hidden="true" />
+                            <span>Request</span>
+                            <ArrowRight size={12} aria-hidden="true" />
                           </>
                         )}
                       </button>
@@ -232,35 +211,31 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
 
         {/* Specification Note */}
         <div className="grade-disclaimer-strip">
-          <Info size={18} className="grade-disclaimer-icon" aria-hidden="true" />
+          <Info size={16} className="grade-disclaimer-icon" aria-hidden="true" />
           <p className="grade-disclaimer-text">
-            <strong>Specification Note:</strong> Grade descriptions represent standard industry baselines. Mesh sizes, moisture content (max 6.5%&ndash;7.0%), liquor density, and packaging formats are confirmed against your requirement and pre-shipment samples.
+            <strong>Sample Evaluation:</strong> Tea samples for the above grades are arranged based on your required volume and target market. Sieve size, moisture parameters, and cup strength are confirmed against physical samples before order commitment.
           </p>
         </div>
 
-        {/* Custom Specification Action */}
+        {/* Custom Specification Match Strip */}
         <div className="grade-custom-box">
           <div className="grade-custom-left">
-            <div className="grade-custom-badge font-spec">
-              <Sliders size={14} aria-hidden="true" />
-              <span>CUSTOM FORMULATIONS</span>
+            <div className="grade-custom-title" style={{ fontSize: '1.0625rem', fontWeight: 700, color: 'var(--color-primary-dark)', marginBottom: '4px' }}>
+              Have a Target Benchmark Sample or Custom Mesh Specification?
             </div>
-            <div className="grade-custom-title">
-              Require a Custom Sieve Cut, Unique Mesh, or Specific Benchmark Sample?
-            </div>
-            <p className="grade-custom-copy">
-              We match physical target samples, custom sieve distributions, and specific liquor strengths across Assam CTC and Orthodox gardens.
+            <p className="grade-custom-copy" style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+              Send us your target liquor profile, custom sieve requirements, or benchmark details. We evaluate origin availability and provide matching options.
             </p>
           </div>
           <div className="grade-custom-action">
             <button
               type="button"
               onClick={handleCustomInquiry}
-              className="btn btn-primary btn-sm"
-              aria-label="Request custom tea blend or sieve specification"
+              className="btn btn-secondary btn-sm"
+              aria-label="Request custom tea specification"
             >
-              <span>Request Custom Specification</span>
-              <ArrowRight size={15} aria-hidden="true" />
+              <span>Tell Us Your Specification</span>
+              <ArrowRight size={14} aria-hidden="true" />
             </button>
           </div>
         </div>

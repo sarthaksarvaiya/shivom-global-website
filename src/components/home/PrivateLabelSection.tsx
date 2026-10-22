@@ -1,9 +1,8 @@
 import React from 'react';
-import { Package, Sparkles, Layers, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Package, Sparkles, Layers, ArrowRight } from 'lucide-react';
 
 export interface PrivateLabelSectionProps {
   onStartPrivateLabel?: () => void;
-  onExploreCategories?: () => void;
 }
 
 export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
@@ -11,33 +10,23 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
 }) => {
   const packagingOptions = [
     {
-      title: 'Bulk Export Supply (25kg)',
-      subtitle: 'For Blenders & Packers',
-      spec: 'Multi-wall kraft paper sacks with food-grade virgin LDPE liner',
-      bestFor: 'Commercial blenders, wholesale re-baggers, and brand owners with local packaging facilities.',
+      title: 'Bulk Tea Supply',
+      spec: '25kg multi-wall kraft paper sacks with food-grade LDPE liner',
+      bestFor: 'Blenders, wholesale packers, and brands with their own repacking facilities.',
       icon: Package,
     },
     {
-      title: 'Retail Packaging & Tins',
-      subtitle: 'Shelf-Ready Finished Goods',
-      spec: 'Resealable stand-up pouches (foil-lined), metal tins, and printed folding cartons',
-      bestFor: 'Supermarket retail brands, specialty tea shops, and corporate gift lines requiring custom branding.',
-      icon: Sparkles,
-    },
-    {
-      title: 'Tea Bags & Single-Serve',
-      subtitle: 'Hospitality & Retail Packs',
-      spec: 'Single-chamber, tagged envelope, or biodegradable pyramid mesh bags',
-      bestFor: 'Foodservice operators, hotels, airlines, and branded retail tea bag lines.',
+      title: 'Custom Packing',
+      spec: '50kg woven PP bags, customized sack weights, or bulk pack sizes',
+      bestFor: 'Institutional buyers, catering operations, and regional tea distributors.',
       icon: Layers,
     },
-  ];
-
-  const capabilities = [
-    'Custom blend formulation matched to your target physical sample or cup profile',
-    'Bilingual regulatory labeling (Arabic/English for GCC markets, ESMA, and international standards)',
-    'Coordinated with qualified and accredited contract packing partners',
-    'Containerized ocean dispatch via Mundra and Kolkata ports with complete export documentation',
+    {
+      title: 'Private Label Requirements',
+      spec: 'Retail pouches, tins, or tea bags coordinated with partner packaging facilities',
+      bestFor: 'Supermarket retail brands, hospitality lines, and specialty private labels.',
+      icon: Sparkles,
+    },
   ];
 
   const handleActionClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
@@ -69,13 +58,13 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
         {/* Section Header */}
         <div className="private-label-header">
           <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            CUSTOM PACKAGING &amp; OEM
+            PACKING &amp; PRIVATE LABEL
           </div>
           <h2 id="private-label-heading" className="private-label-title">
-            Private Label &amp; Packaging Solutions
+            Custom Packing &amp; Private Label
           </h2>
           <p className="private-label-lead">
-            Whether you need 25kg bulk kraft sacks for repacking or shelf-ready branded packaging, we coordinate tea selection, packaging specifications, and export preparation around your brand.
+            Need tea under your own brand? Share your packing and quantity requirements and we can discuss the available options.
           </p>
         </div>
 
@@ -86,24 +75,19 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
             return (
               <div key={opt.title} className="private-label-format-card" role="listitem">
                 <div className="format-card-header">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <div style={{ padding: '6px', borderRadius: '4px', backgroundColor: 'rgba(13, 56, 41, 0.08)', color: 'var(--color-primary-green)' }}>
-                      <Icon size={18} aria-hidden="true" />
-                    </div>
-                    <span className="font-spec" style={{ fontSize: '0.75rem', color: 'var(--color-accent-gold)', fontWeight: 700, textTransform: 'uppercase' }}>
-                      {opt.subtitle}
-                    </span>
+                  <div style={{ padding: '8px', borderRadius: '6px', backgroundColor: 'rgba(13, 56, 41, 0.08)', color: 'var(--color-primary-green)', width: 'fit-content', marginBottom: '12px' }}>
+                    <Icon size={20} aria-hidden="true" />
                   </div>
                   <h3 className="format-card-title">{opt.title}</h3>
                 </div>
 
                 <div className="format-spec-box">
-                  <span className="format-spec-label font-spec">PACKAGING SPECIFICATION</span>
+                  <span className="format-spec-label font-spec">FORMAT</span>
                   <p className="format-spec-val">{opt.spec}</p>
                 </div>
 
                 <div className="format-best-for">
-                  <span className="format-best-label font-spec">TYPICAL APPLICATION</span>
+                  <span className="format-best-label font-spec">TYPICAL USE</span>
                   <p className="format-best-val">{opt.bestFor}</p>
                 </div>
               </div>
@@ -111,20 +95,15 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
           })}
         </div>
 
-        {/* Brand Execution Capabilities Strip */}
-        <div className="private-label-capabilities-box">
+        {/* Short Discussion Action Strip */}
+        <div className="private-label-capabilities-box" style={{ marginTop: 'var(--space-6)' }}>
           <div className="private-label-capabilities-left">
-            <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff', marginBottom: 'var(--space-3)' }}>
-              End-to-End Packaging Coordination
+            <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff', margin: '0 0 6px 0' }}>
+              Discuss Your Packaging Requirements
             </h4>
-            <div className="private-label-caps-list">
-              {capabilities.map((cap, idx) => (
-                <div key={idx} className="private-label-cap-item">
-                  <CheckCircle2 size={16} className="cap-check-icon" aria-hidden="true" />
-                  <span>{cap}</span>
-                </div>
-              ))}
-            </div>
+            <p style={{ margin: 0, fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+              From standard 25kg export sacks to retail-ready formats, we work from your target market and packaging specifications.
+            </p>
           </div>
 
           <div className="private-label-capabilities-right">
@@ -133,14 +112,11 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
               onClick={handleActionClick}
               className="btn btn-primary btn-gold"
               id="btn-start-private-label"
-              aria-label="Inquire about private label tea packaging"
+              aria-label="Discuss private label and custom packing options"
             >
-              <span>Inquire About Private Label</span>
+              <span>Discuss Packaging Options</span>
               <ArrowRight size={16} aria-hidden="true" />
             </button>
-            <div className="font-spec" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)', marginTop: '8px', textAlign: 'center' }}>
-              Subject to order parameters and packaging MOQ
-            </div>
           </div>
         </div>
 

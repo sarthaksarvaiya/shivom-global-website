@@ -6,6 +6,7 @@ import { GradeSpecificationTable } from '@/components/home/GradeSpecificationTab
 import { PrivateLabelSection } from '@/components/home/PrivateLabelSection';
 import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
+import { AboutSarthakSection } from '@/components/home/AboutSarthakSection';
 import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
@@ -13,6 +14,7 @@ import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 export const HomePage: React.FC = () => {
   const [formRequirementType, setFormRequirementType] = useState<string>('Assam CTC');
   const [formGrade, setFormGrade] = useState<string>('BOP');
+  const [formIntent, setFormIntent] = useState<'sample' | 'quote' | 'packing'>('sample');
 
   const scrollToForm = () => {
     const formElement = document.getElementById('requirement-form');
@@ -42,8 +44,22 @@ export const HomePage: React.FC = () => {
     }
   };
 
-  const handleSelectCategory = (categoryName: string) => {
+  const handleRequestSamples = () => {
+    setFormIntent('sample');
+    scrollToForm();
+  };
+
+  const handleSubmitRequirement = () => {
+    setFormIntent('quote');
+    scrollToForm();
+  };
+
+  const handleSelectCategory = (categoryName: string, gradeCode?: string) => {
     setFormRequirementType(categoryName);
+    if (gradeCode) {
+      setFormGrade(gradeCode);
+    }
+    setFormIntent('sample');
     scrollToForm();
   };
 
@@ -56,57 +72,68 @@ export const HomePage: React.FC = () => {
     } else {
       setFormRequirementType('Assam CTC');
     }
+    setFormIntent('sample');
     scrollToForm();
   };
 
   const handleStartPrivateLabel = () => {
     setFormRequirementType('Private Label Retail Product');
+    setFormIntent('packing');
     scrollToForm();
   };
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-page)' }}>
       {/* Site Header */}
-      <SiteHeader />
+      <SiteHeader onRequestSamples={handleRequestSamples} />
 
-      {/* Main 7 Core Sections in Exact Order */}
+      {/* Main 8 Core Sections in Exact Order */}
       <main style={{ flexGrow: 1 }}>
-        {/* Section 1: Top / Hero Section */}
+        {/* Section 1: Hero / Top Section */}
         <HeroSection 
-          onSubmitRequirement={scrollToForm}
+          onRequestSamples={handleRequestSamples}
+          onSubmitRequirement={handleSubmitRequirement}
         />
 
-        {/* Section 2: Teas (Categories) */}
+        {/* Section 2: Tea Range */}
         <TeaCategoriesSection 
           onSelectCategory={handleSelectCategory}
           onExploreGrades={scrollToGrades}
         />
 
-        {/* Section 3: One Authoritative Tea Grade / Specification Table */}
+        {/* Section 3: One Tea Grade / Specification Table */}
         <GradeSpecificationTable 
           onSelectGrade={handleSelectGrade}
           selectedGrade={formGrade}
         />
 
-        {/* Section 4: Private Label & Custom Packaging */}
+        {/* Section 4: Private Label / Custom Packing */}
         <PrivateLabelSection 
           onStartPrivateLabel={handleStartPrivateLabel}
         />
 
-        {/* Section 5: How It Works (Simple 4-Step Process) */}
+        {/* Section 5: How It Works (Simple 4-Step Flow) */}
         <HowItWorksSection 
-          onSubmitRequirement={scrollToForm}
+          onRequestSamples={handleRequestSamples}
+          onSubmitRequirement={handleSubmitRequirement}
         />
 
-        {/* Section 6: Why SHIVOM GLOBAL (6 Focused Buyer Benefits) */}
+        {/* Section 6: Why SHIVOM GLOBAL (Practical Reasons + Buyer Basics) */}
         <WhyShivomGlobal 
-          onSubmitRequirement={scrollToForm}
+          onRequestSamples={handleRequestSamples}
+          onSubmitRequirement={handleSubmitRequirement}
         />
 
-        {/* Section 7: Contact (Direct Channels + Structured Requirement Form) */}
+        {/* Section 7: About Sarthak (Founder & Direct Trade Desk) */}
+        <AboutSarthakSection 
+          onContactSarthak={handleSubmitRequirement}
+        />
+
+        {/* Section 8: Buyer Requirements / Contact (Tell Us What Tea You Need) */}
         <BuyerRequirementForm 
           initialRequirementType={formRequirementType}
           initialGrade={formGrade}
+          initialIntent={formIntent}
         />
       </main>
 
@@ -118,3 +145,5 @@ export const HomePage: React.FC = () => {
     </div>
   );
 };
+
+export default HomePage;

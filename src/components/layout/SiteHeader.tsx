@@ -4,9 +4,10 @@ import { CONTACT_INFO } from '@/constants/contact';
 
 export interface SiteHeaderProps {
   onNavigate?: (targetId: string) => void;
+  onRequestSamples?: () => void;
 }
 
-export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
+export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSamples }) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
@@ -45,6 +46,16 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
     }
   };
 
+  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (onRequestSamples) {
+      onRequestSamples();
+    } else {
+      handleLinkClick(e, 'requirement-form');
+    }
+  };
+
   return (
     <header 
       className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`}
@@ -59,7 +70,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '76px' }}>
-        {/* Brand Logo — Integrated Directly into Dark Green Header */}
+        {/* Brand Logo */}
         <a 
           href="#hero" 
           onClick={(e) => handleLinkClick(e, 'hero')}
@@ -73,10 +84,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
           />
         </a>
 
-        {/* Desktop Navigation Links — 7-Section Architecture */}
+        {/* Desktop Navigation Links */}
         <nav 
           className="desktop-nav"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)' }}
           aria-label="Main Navigation"
         >
           <a 
@@ -84,7 +95,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="nav-link"
           >
-            Teas
+            Tea Range
           </a>
           <a 
             href="#tea-by-grade" 
@@ -98,7 +109,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             onClick={(e) => handleLinkClick(e, 'private-label')}
             className="nav-link"
           >
-            Private Label
+            Packing
           </a>
           <a 
             href="#how-it-works" 
@@ -115,6 +126,13 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             Why Us
           </a>
           <a 
+            href="#about-sarthak" 
+            onClick={(e) => handleLinkClick(e, 'about-sarthak')}
+            className="nav-link"
+          >
+            About Sarthak
+          </a>
+          <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
             className="nav-link"
@@ -125,7 +143,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
 
         {/* Desktop Direct Contact & Requirement CTA Group */}
         <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          {/* Direct Contact Cluster: WhatsApp | Call | Email */}
+          {/* Direct Contact Cluster: WhatsApp | Call */}
           <div className="header-contact-group" role="region" aria-label="Direct Buyer Contact Channels">
             <a
               href={CONTACT_INFO.whatsapp.getLink()}
@@ -145,33 +163,21 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
               href={CONTACT_INFO.phone.telLink}
               className="header-contact-item header-contact-phone"
               aria-label={CONTACT_INFO.phone.ariaLabel}
-              title={`Call Us: ${CONTACT_INFO.phone.display}`}
+              title={`Call: ${CONTACT_INFO.phone.display}`}
             >
               <Phone size={14} aria-hidden="true" />
               <span className="header-contact-label">Call</span>
             </a>
-
-            <span className="header-contact-divider" aria-hidden="true">|</span>
-
-            <a
-              href={CONTACT_INFO.email.mailtoLink}
-              className="header-contact-item header-contact-email"
-              aria-label={CONTACT_INFO.email.ariaLabel}
-              title={`Email: ${CONTACT_INFO.email.address}`}
-            >
-              <Mail size={14} aria-hidden="true" />
-              <span className="header-contact-label">Email</span>
-            </a>
           </div>
 
-          {/* Primary Sourcing Requirement CTA */}
+          {/* Primary CTA: Request Free Samples */}
           <a 
             href="#requirement-form" 
-            onClick={(e) => handleLinkClick(e, 'requirement-form')}
+            onClick={handleCtaClick}
             className="btn btn-primary btn-sm header-submit-btn"
             style={{ fontWeight: 700 }}
           >
-            <span>Submit Requirement</span>
+            <span>Request Free Samples</span>
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
@@ -217,16 +223,16 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             padding: 'var(--space-6) var(--space-4) var(--space-8)',
             display: 'flex',
             flexDirection: 'column',
-            gap: 'var(--space-4)',
+            gap: 'var(--space-3)',
           }}
         >
           {/* Priority Direct Buyer Contact Card */}
           <div className="mobile-drawer-contact-card">
             <div className="mobile-drawer-contact-title">
-              Direct Buyer Contact
+              Direct Trade Desk Contact
             </div>
             <div className="mobile-drawer-contact-lead">
-              Reach our trade desk directly for sourcing, specifications & export pricing:
+              Contact Sarthak directly for tea specifications, samples &amp; pricing:
             </div>
             
             <div className="mobile-drawer-contact-actions">
@@ -275,7 +281,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             onClick={(e) => handleLinkClick(e, 'our-teas')}
             className="mobile-nav-link"
           >
-            Teas We Supply
+            Tea Range
           </a>
           <a 
             href="#tea-by-grade" 
@@ -289,7 +295,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             onClick={(e) => handleLinkClick(e, 'private-label')}
             className="mobile-nav-link"
           >
-            Private Label & Packaging
+            Custom Packing &amp; Private Label
           </a>
           <a 
             href="#how-it-works" 
@@ -306,21 +312,28 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate }) => {
             Why SHIVOM GLOBAL
           </a>
           <a 
+            href="#about-sarthak" 
+            onClick={(e) => handleLinkClick(e, 'about-sarthak')}
+            className="mobile-nav-link"
+          >
+            About Sarthak
+          </a>
+          <a 
             href="#requirement-form" 
             onClick={(e) => handleLinkClick(e, 'requirement-form')}
             className="mobile-nav-link"
           >
-            Contact Trade Desk
+            Contact / Submit Requirement
           </a>
 
           <div style={{ paddingTop: 'var(--space-2)' }}>
             <a 
               href="#requirement-form" 
-              onClick={(e) => handleLinkClick(e, 'requirement-form')}
+              onClick={handleCtaClick}
               className="btn btn-primary btn-mobile-full"
               style={{ padding: '14px', fontSize: '1rem' }}
             >
-              <span>Submit Requirement</span>
+              <span>Request Free Samples</span>
               <ArrowRight size={16} />
             </a>
           </div>

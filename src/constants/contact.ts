@@ -25,7 +25,7 @@ export const CONTACT_INFO = {
   },
   email: {
     address: 'shivomglobal1010@gmail.com',
-    mailtoLink: 'mailto:shivomglobal1010@gmail.com?subject=' + encodeURIComponent('Commercial Tea Sourcing Inquiry — SHIVOM GLOBAL'),
+    mailtoLink: 'mailto:shivomglobal1010@gmail.com?subject=' + encodeURIComponent('Tea Sourcing Inquiry — SHIVOM GLOBAL'),
     ariaLabel: 'Email SHIVOM GLOBAL at shivomglobal1010@gmail.com',
   },
   address: {

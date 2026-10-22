@@ -46,23 +46,23 @@ export const SiteFooter: React.FC = () => {
             </div>
 
             <p className="footer-brand-desc">
-              SHIVOM GLOBAL is an Indian tea merchant export firm dedicated to supplying 
-              commercial blenders, packers, and private-label brands across international markets.
+              SHIVOM GLOBAL is an Indian tea merchant export firm supplying tea to 
+              blenders, packers, and private-label brands across international markets.
             </p>
 
             <div className="footer-entity-badge">
               <div className="footer-entity-heading">
-                Entity Registration & Commercial Base
+                Enterprise Details &amp; Operational Base
               </div>
               <div className="footer-entity-item">Sole Proprietorship (Proprietor: {CONTACT_INFO.proprietor})</div>
               <div className="footer-entity-item">Udyam MSME Registered (Govt. of India)</div>
-              <div className="footer-entity-item">Principal Base: {CONTACT_INFO.address.display}</div>
+              <div className="footer-entity-item">Operational Base: {CONTACT_INFO.address.display}</div>
             </div>
           </div>
 
           {/* Column 2: Tea Portfolio */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Tea Portfolio</h4>
+            <h4 className="footer-col-title">Tea Range</h4>
             <ul className="footer-nav-list">
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
@@ -71,17 +71,17 @@ export const SiteFooter: React.FC = () => {
               </li>
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  Orthodox Black Tea (Whole &amp; Broken)
+                  Orthodox Black Tea
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  Darjeeling GI Specialty Tea
+                  Darjeeling Specialty Tea
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
-                  Indian Green Tea (Mountain Terroirs)
+                  Indian Green Tea
                 </a>
               </li>
               <li className="footer-nav-item">
@@ -91,7 +91,7 @@ export const SiteFooter: React.FC = () => {
               </li>
               <li className="footer-nav-item">
                 <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-nav-link">
-                  Private Label &amp; Custom Packaging
+                  Custom Packing &amp; Private Label
                 </a>
               </li>
             </ul>
@@ -99,7 +99,7 @@ export const SiteFooter: React.FC = () => {
 
           {/* Column 3: Site Navigation */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Site Navigation</h4>
+            <h4 className="footer-col-title">Quick Links</h4>
             <ul className="footer-nav-list">
               <li className="footer-nav-item">
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-nav-link">
@@ -108,12 +108,12 @@ export const SiteFooter: React.FC = () => {
               </li>
               <li className="footer-nav-item">
                 <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-nav-link">
-                  Tea Grade Table
+                  Grade Table
                 </a>
               </li>
               <li className="footer-nav-item">
                 <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-nav-link">
-                  Private Label Solutions
+                  Packaging Options
                 </a>
               </li>
               <li className="footer-nav-item">
@@ -127,8 +127,13 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </li>
               <li className="footer-nav-item">
+                <a href="#about-sarthak" onClick={(e) => handleScrollTo(e, 'about-sarthak')} className="footer-nav-link">
+                  About Sarthak
+                </a>
+              </li>
+              <li className="footer-nav-item">
                 <a href="#requirement-form" onClick={(e) => handleScrollTo(e, 'requirement-form')} className="footer-nav-link footer-nav-highlight">
-                  Submit Buyer Requirement
+                  Request Free Samples
                 </a>
               </li>
             </ul>
@@ -136,9 +141,9 @@ export const SiteFooter: React.FC = () => {
 
           {/* Column 4: Dedicated Direct Buyer Contact Area */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Direct Buyer Contact</h4>
+            <h4 className="footer-col-title">Direct Trade Desk</h4>
             <p className="footer-contact-lead">
-              For tea sourcing, specifications, documentation and export requirements, contact SHIVOM GLOBAL directly.
+              For tea sourcing, sample evaluation, quotations and export requirements, contact Sarthak directly.
             </p>
             
             <div className="footer-contact-list">
@@ -148,7 +153,7 @@ export const SiteFooter: React.FC = () => {
                 <span className="footer-company-name">{CONTACT_INFO.companyName}</span>
               </div>
 
-              {/* WhatsApp (Clickable) */}
+              {/* WhatsApp */}
               <div className="footer-contact-item">
                 <MessageCircle size={15} className="footer-contact-icon" aria-hidden="true" />
                 <a
@@ -162,7 +167,7 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </div>
 
-              {/* Phone (Clickable dialer) */}
+              {/* Phone */}
               <div className="footer-contact-item">
                 <Phone size={15} className="footer-contact-icon" aria-hidden="true" />
                 <a 
@@ -174,7 +179,7 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </div>
 
-              {/* Email (Clickable mailto) */}
+              {/* Email */}
               <div className="footer-contact-item">
                 <Mail size={15} className="footer-contact-icon" aria-hidden="true" />
                 <a 
@@ -186,7 +191,7 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </div>
 
-              {/* Approved Business Address */}
+              {/* Address */}
               <div className="footer-contact-item">
                 <MapPin size={15} className="footer-contact-icon" aria-hidden="true" />
                 <span>Base: {CONTACT_INFO.address.display}</span>
@@ -195,7 +200,7 @@ export const SiteFooter: React.FC = () => {
               {/* Shipping Ports */}
               <div className="footer-contact-item">
                 <Anchor size={15} className="footer-contact-icon" aria-hidden="true" />
-                <span>Loading: {CONTACT_INFO.ports.loading}</span>
+                <span>Export Ports: {CONTACT_INFO.ports.loading}</span>
               </div>
 
               {/* Trade Terms */}
@@ -204,15 +209,15 @@ export const SiteFooter: React.FC = () => {
                 <span>Trade Terms: {CONTACT_INFO.tradeTerms}</span>
               </div>
 
-              {/* Requirement Form Button */}
+              {/* Request Samples Button */}
               <div className="footer-action-wrap">
                 <a 
                   href="#requirement-form" 
                   onClick={(e) => handleScrollTo(e, 'requirement-form')}
                   className="footer-cta-btn"
-                  aria-label="Submit buyer requirement to SHIVOM GLOBAL"
+                  aria-label="Request Free Samples from SHIVOM GLOBAL"
                 >
-                  <span>Submit Buyer Requirement</span>
+                  <span>Request Free Samples</span>
                   <ArrowRight size={14} aria-hidden="true" />
                 </a>
               </div>
@@ -221,26 +226,26 @@ export const SiteFooter: React.FC = () => {
 
         </div>
 
-        {/* Middle Statutory Disclosure Note */}
+        {/* Middle Disclosure Note */}
         <div className="footer-disclosure-strip">
           <FileText size={16} className="footer-disclosure-icon" aria-hidden="true" />
           <p className="footer-disclosure-text">
-            <strong>Statutory & Export Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea export merchant firm. Tea specifications, cup profiles, packaging formats, and pricing are confirmed against confirmed buyer specifications, formal quotations, and contracted export sales agreements.
+            <strong>Export Disclosure:</strong> SHIVOM GLOBAL operates as an Indian tea export merchant firm. Tea specifications, sample evaluations, packaging formats, and pricing are confirmed against confirmed buyer requirements and formal export agreements.
           </p>
         </div>
 
-        {/* Bottom Legal & Commercial Sub-Footer */}
+        {/* Bottom Legal Sub-Footer */}
         <div className="footer-bottom-row">
           <div className="footer-copyright">
-            © 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Registered Indian Enterprise.
+            &copy; 2026 <strong>SHIVOM GLOBAL</strong>. All rights reserved. Registered Indian Enterprise.
           </div>
 
           <div className="footer-badges">
             <span className="spec-badge footer-principle-badge">
-              Requirement-Led Sourcing • Confirmed Specifications &amp; Terms
+              Trial MOQ 250 kg &bull; Samples Available &bull; Direct Trade Desk
             </span>
             <span className="footer-market-scope">
-              B2B International Tea Sourcing
+              B2B Indian Tea Export
             </span>
           </div>
         </div>

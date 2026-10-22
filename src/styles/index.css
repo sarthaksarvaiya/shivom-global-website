@@ -5578,3 +5578,478 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .contact-direct-footer-note strong {
   color: #ffffff;
 }
+
+/* ==========================================================================
+   SIMPLIFIED B2B HOMEPAGE ENHANCEMENTS
+   ========================================================================== */
+
+/* 1. Hero Highlights Strip */
+.hero-highlights-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.hero-highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(4px);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-highlight-pill strong {
+  color: var(--color-accent-gold);
+}
+
+.hero-highlight-icon {
+  color: var(--color-accent-gold);
+  flex-shrink: 0;
+}
+
+/* 2. Consolidated Tea Range Grid */
+.tea-range-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 900px) {
+  .tea-range-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tea-range-card {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: all var(--transition-normal);
+}
+
+.tea-range-card:hover {
+  border-color: rgba(197, 155, 39, 0.4);
+  box-shadow: 0 10px 24px rgba(7, 34, 24, 0.06);
+}
+
+.tea-range-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.tea-range-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(13, 56, 41, 0.08);
+  color: var(--color-primary-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tea-range-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 4px 0 2px 0;
+}
+
+.tea-range-origin {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.tea-range-desc {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #4b5563;
+  margin-bottom: var(--space-5);
+}
+
+.tea-range-group {
+  background: #fbfbf9;
+  border: 1px solid #edece6;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  flex-grow: 1;
+}
+
+.tea-range-group-title {
+  font-size: 0.875rem;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid #edece6;
+  padding-bottom: 6px;
+}
+
+.tea-range-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tea-range-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.45;
+}
+
+.tea-range-check {
+  color: var(--color-primary-green);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.tea-range-card-footer {
+  margin-top: var(--space-5);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 3. Buyer Basics Strip */
+.buyer-basics-strip {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-top: var(--space-8);
+}
+
+.buyer-basics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+  border-bottom: 2px solid #edece6;
+  padding-bottom: var(--space-3);
+}
+
+.buyer-basics-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0;
+}
+
+.buyer-basics-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  letter-spacing: 0.06em;
+}
+
+.buyer-basics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+@media (max-width: 768px) {
+  .buyer-basics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.buyer-basic-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: #fbfbf9;
+  border: 1px solid #edece6;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.buyer-basic-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: rgba(13, 56, 41, 0.08);
+  color: var(--color-primary-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.buyer-basic-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-gold);
+  margin-bottom: 4px;
+}
+
+.buyer-basic-value {
+  font-size: 0.875rem;
+  color: #374151;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* 4. About Sarthak Section */
+.about-sarthak-section {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  background-color: #f7f9f8;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.about-sarthak-card {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: clamp(2rem, 4vw, 3rem);
+  box-shadow: 0 6px 24px rgba(7, 34, 24, 0.04);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .about-sarthak-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+}
+
+.about-sarthak-visual-col {
+  display: flex;
+  justify-content: center;
+}
+
+.founder-photo-frame {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 3px solid #EDECE6;
+  background: #072218;
+}
+
+.founder-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(145deg, #072218 0%, #0D3829 100%);
+  color: #ffffff;
+  text-align: center;
+}
+
+.founder-monogram-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(197, 155, 39, 0.15);
+  border: 2px solid var(--color-accent-gold);
+  color: var(--color-accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.founder-name-tag {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.founder-role-tag {
+  font-size: 0.8125rem;
+  color: var(--color-accent-gold);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.founder-photo-note {
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.04em;
+}
+
+.about-sarthak-title {
+  font-size: clamp(1.75rem, 3vw, 2.375rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--space-3) 0;
+  letter-spacing: -0.02em;
+}
+
+.about-sarthak-lead {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-primary-green);
+  line-height: 1.55;
+  margin-bottom: var(--space-3);
+}
+
+.about-sarthak-body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: var(--space-5);
+}
+
+.about-sarthak-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  background: #FAF8F5;
+  border: 1px solid #EDECE6;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .about-sarthak-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.about-detail-icon {
+  color: var(--color-accent-gold);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.about-detail-label {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.about-detail-val {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.about-detail-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-green);
+  text-decoration: none;
+}
+
+.about-detail-link:hover {
+  text-decoration: underline;
+  color: var(--color-accent-gold);
+}
+
+.about-sarthak-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* 5. Buyer Intent Selector Tabs */
+.buyer-intent-selector-wrap {
+  background: #FAF8F5;
+  border: 1px solid #EDECE6;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.buyer-intent-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  letter-spacing: 0.05em;
+}
+
+.buyer-intent-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .buyer-intent-tabs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.buyer-intent-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid #d4dfd8;
+  color: var(--color-primary-dark);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.buyer-intent-tab:hover {
+  border-color: var(--color-primary-green);
+  background: #f4f7f5;
+}
+
+.buyer-intent-tab-active {
+  background: var(--color-primary-green);
+  color: #ffffff;
+  border-color: var(--color-primary-green);
+  box-shadow: 0 2px 8px rgba(13, 56, 41, 0.2);
+}
+
+.buyer-intent-tab-active:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
