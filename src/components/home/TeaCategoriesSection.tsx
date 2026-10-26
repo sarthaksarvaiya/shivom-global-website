@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 
 export interface TeaCategoriesSectionProps {
   onSelectCategory?: (categoryName: string, gradeCode?: string) => void;
@@ -403,7 +404,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                 </ul>
               </div>
 
-              <div className="tea-specs-cta-wrap">
+              <div className="tea-specs-cta-wrap" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <button
                   type="button"
                   onClick={() => handleCategorySampleRequest(activeCategory.name, activeCategory.defaultGrade)}
@@ -415,6 +416,33 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   <span>Request {activeCategory.tabLabel} Counter-Samples</span>
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
+
+                <a
+                  href={CONTACT_INFO.whatsapp.getLink(
+                    `Hi SHIVOM GLOBAL, I am reviewing your ${activeCategory.tabLabel} specifications and would like to discuss sourcing options.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-dark btn-sm"
+                  style={{ 
+                    width: '100%', 
+                    justifyContent: 'center', 
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    borderColor: 'rgba(13, 56, 41, 0.25)',
+                    color: 'var(--color-primary-dark)',
+                    backgroundColor: '#FFFFFF',
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    fontSize: '0.8125rem',
+                    padding: '8px 12px'
+                  }}
+                  aria-label={`Chat on WhatsApp about ${activeCategory.tabLabel}`}
+                >
+                  <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+                  <span>Chat on WhatsApp about {activeCategory.tabLabel}</span>
+                </a>
               </div>
             </div>
 
