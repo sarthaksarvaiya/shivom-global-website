@@ -3878,18 +3878,21 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 
 @media (max-width: 768px) {
   .grade-matrix-table-wrap {
-    display: none;
-  }
-  .grade-matrix-mobile-cards {
-    display: flex;
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: var(--space-4);
   }
   .grade-custom-box {
     flex-direction: column;
     align-items: flex-start;
+    padding: var(--space-5) var(--space-4);
   }
   .grade-custom-btn {
     width: 100%;
     justify-content: center;
+    margin-top: var(--space-3);
   }
 }
 
@@ -5436,6 +5439,30 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   flex-shrink: 0;
 }
 
+@media (max-width: 768px) {
+  .private-label-capabilities-box {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-5) var(--space-4);
+  }
+  .private-label-capabilities-left {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  .private-label-caps-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .private-label-capabilities-right {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+  .private-label-capabilities-right .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* --- 4. How It Works (4-Step Concise Process) --- */
 .how-it-works-section {
   padding: clamp(4rem, 7vw, 6rem) 0;
@@ -6772,6 +6799,40 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   }
 }
 
+@media (max-width: 680px) {
+  .tea-explorer-nav {
+    border-radius: var(--radius-lg, 12px);
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px;
+    gap: 6px;
+    scrollbar-width: none;
+    width: 100%;
+  }
+  .tea-explorer-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .tea-explorer-tab {
+    padding: 8px 16px;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+  .tea-console-nav-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .tea-console-stepper {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .tea-explorer-console {
+    padding: var(--space-4) !important;
+  }
+}
+
 /* --------------------------------------------------------------------------
    2. PROCESS TIMELINE & HORIZONTAL PATHWAY (Replaces 4-Card Grid)
    -------------------------------------------------------------------------- */
@@ -6781,13 +6842,22 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   position: relative;
 }
 
-/* Horizontal Track (Desktop) */
+/* Horizontal Track (Desktop - 5 Stages) */
 .process-pathway-track {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2.2vw, 24px) !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px) !important;
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .process-pathway-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .process-pathway-track::before {
+    display: none;
+  }
 }
 
 /* Connecting Progress Line Behind Nodes */
@@ -7078,6 +7148,16 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   }
 }
 
+@media (max-width: 600px) {
+  .process-step-body {
+    padding: 18px 16px;
+  }
+  .process-commitment-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* --------------------------------------------------------------------------
    3. ASYMMETRIC COMPLIANCE CONSOLE (Replaces Repetitive Why Us Cards)
    -------------------------------------------------------------------------- */
@@ -7317,6 +7397,20 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   .pillar-card-desc {
     padding-left: 0;
     margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .compliance-terminal-card {
+    padding: var(--space-5) var(--space-4);
+  }
+  .compliance-terminal-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .compliance-check-item {
+    padding: 10px 12px;
+    gap: 10px;
   }
 }
 
