@@ -51,7 +51,7 @@ export const SiteFooter: React.FC = () => {
             }}>
               <div><strong>Proprietorship:</strong> Sarthak Sarvaiya</div>
               <div><strong>Base:</strong> Bhavnagar, Gujarat, India</div>
-              <div><strong>Udyam MSME:</strong> Registered (Govt. of India)</div>
+              <div><strong>Udyam MSME:</strong> <span className="font-spec">UDYAM-GJ-05-0105835</span></div>
               <div><strong>GSTIN:</strong> <span className="font-spec" style={{ color: 'var(--color-accent-gold)' }}>24KWEPS2703C1ZQ</span></div>
             </div>
 

@@ -8,6 +8,7 @@ export const CONTACT_INFO = {
   proprietor: 'Sarthak Sarvaiya',
   entityType: 'Sole Proprietorship (Registered Indian Enterprise, Udyam MSME)',
   gstin: '24KWEPS2703C1ZQ',
+  udyamNumber: 'UDYAM-GJ-05-0105835',
   udyamStatus: 'Registered (Govt. of India MSME)',
   phone: {
     display: '+91 97370 30437',
