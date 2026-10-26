@@ -267,7 +267,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
               className="btn btn-primary btn-mobile-full"
               style={{ padding: '12px', fontSize: '0.9375rem', justifyContent: 'center' }}
             >
-              <span>Request Free Samples</span>
+              <span>Request Requirement / Quote</span>
               <ArrowRight size={15} />
             </a>
           </div>

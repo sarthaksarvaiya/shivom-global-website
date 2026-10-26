@@ -23,7 +23,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
   const pillars = [
     {
       num: '01',
-      tag: 'Risk-Free Onboarding',
+      tag: 'Commercial Flexibility',
       title: 'Flexible Commercial Quantities',
       icon: Package,
       shortDesc: 'Start with manageable trial shipments to test cup acceptance and consumer response in your target market before scaling order volumes.',
@@ -31,27 +31,27 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
     },
     {
       num: '02',
-      tag: 'Origin Traceability',
+      tag: 'Requirement Sourcing',
       title: 'Requirement-Based Sourcing',
       icon: Layers,
-      shortDesc: 'We source strictly from your desired leaf grade, mesh sieve size, and liquor strength via established Indian plantation networks.',
-      expandedDetail: 'Direct access to Brahmaputra Valley estate lots and Kolkata / Guwahati primary auction catalogs for lot consistency.',
+      shortDesc: 'We work with appropriate sourcing channels to match buyer requirements with suitable Indian tea lots across primary production centers.',
+      expandedDetail: 'We identify suitable sourcing options based on your specification, origin preference and current market availability.',
     },
     {
       num: '03',
       tag: 'Quality Pre-Verification',
-      title: 'Physical Pre-Shipment Samples',
+      title: 'Physical Counter-Samples',
       icon: CheckCircle2,
-      shortDesc: 'Buyers evaluate actual physical tea samples for dry leaf appearance, aroma, and cup profile prior to committing to commercial contracts.',
-      expandedDetail: 'Every commercial dispatch is matched against your approved counter-sample to prevent specification mismatch.',
+      shortDesc: 'Representative physical counter-samples can be arranged for dry leaf evaluation, aroma, and cup profile prior to commercial contracts.',
+      expandedDetail: 'Commercial consignments are matched against approved counter-samples to ensure specification adherence.',
     },
     {
       num: '04',
-      tag: 'Zero Intermediaries',
+      tag: 'Direct Desk',
       title: 'Direct Trade Desk Access',
       icon: MessageCircle,
-      shortDesc: 'You communicate directly with our trade desk from your initial inquiry through sampling, proforma invoicing, and ocean vessel dispatch.',
-      expandedDetail: 'Zero agency markups or broker delays. Direct WhatsApp and email coordination on container loading schedules.',
+      shortDesc: 'You communicate directly with our trade desk from your initial inquiry through sampling, proforma discussion, and export coordination.',
+      expandedDetail: 'Direct WhatsApp and email communication on specifications, commercial terms, and export arrangements.',
     },
   ];
 
@@ -147,20 +147,20 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
             <div className="compliance-terminal-footer" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'stretch' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
                 <span style={{ fontSize: '0.8125rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600 }}>
-                  FOB Indian Loading Ports &amp; CIF Destination Ports
+                  FOB Indian Loading Ports &amp; CIF Destination Ports (e.g. Mundra, Nhava Sheva, Kolkata, Jebel Ali)
                 </span>
                 <button
                   type="button"
                   onClick={handleInquire}
                   className="btn btn-primary btn-sm"
-                  aria-label="Request export documentation checklist & samples"
+                  aria-label="Discuss export requirements and trade terms"
                 >
                   <span>Discuss Requirements &amp; Terms</span>
                   <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </div>
-              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.65)', margin: 0, lineHeight: 1.35 }}>
-                *Final commercial terms depend on grade, quantity, packaging, destination port, and prevailing sourcing conditions.
+              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)', margin: 0, lineHeight: 1.4 }}>
+                *Commercial pricing depends on grade, origin, quantity, packaging, destination and prevailing market conditions. Transit time and final freight depend on vessel schedule, booking, origin port, destination and shipment conditions.
               </p>
             </div>
           </div>

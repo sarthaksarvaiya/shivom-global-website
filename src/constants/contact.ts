@@ -28,29 +28,34 @@ export const CONTACT_INFO = {
       category?: string;
       destination?: string;
       quantity?: string;
+      sampleRequired?: boolean;
       intent?: 'sample' | 'quote' | 'general';
     }) => {
       const parts: string[] = ['Hi SHIVOM GLOBAL,'];
+
+      const teaLabel = [params.category, params.grade].filter(Boolean).join(' ');
       
-      if (params.intent === 'sample') {
-        parts.push(`I would like to evaluate samples for ${params.category || 'Indian Tea'}${params.grade ? ` (Grade: ${params.grade})` : ''}.`);
-      } else if (params.grade) {
-        parts.push(`I am interested in sourcing ${params.category ? `${params.category} ` : ''}${params.grade}.`);
-      } else if (params.category) {
-        parts.push(`I am looking to source ${params.category}.`);
+      if (params.intent === 'sample' || params.sampleRequired) {
+        if (teaLabel) {
+          parts.push(`I am interested in evaluating ${teaLabel}.`);
+        } else {
+          parts.push('I am interested in evaluating Indian tea samples.');
+        }
+      } else if (teaLabel) {
+        parts.push(`I am interested in sourcing ${teaLabel}.`);
       } else {
         parts.push('I would like to discuss an Indian tea sourcing requirement.');
       }
 
-      if (params.quantity && params.quantity.trim()) {
-        parts.push(`Estimated Quantity: ${params.quantity.trim()}.`);
+      if (params.quantity && params.quantity.trim() && !params.quantity.includes('undefined')) {
+        parts.push(`Required quantity: ${params.quantity.trim()}.`);
       }
 
-      if (params.destination && params.destination.trim()) {
-        parts.push(`Target Destination: ${params.destination.trim()}.`);
+      if (params.destination && params.destination.trim() && !params.destination.includes('undefined')) {
+        parts.push(`Destination: ${params.destination.trim()}.`);
       }
 
-      parts.push('Please share available specifications, sample options, and commercial details.');
+      parts.push('Please share the available specification, counter-sample options and commercial details.');
       
       const fullMessage = parts.join(' ');
       return 'https://wa.me/919737030437?text=' + encodeURIComponent(fullMessage);

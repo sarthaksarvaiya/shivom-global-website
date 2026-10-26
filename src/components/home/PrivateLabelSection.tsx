@@ -11,32 +11,32 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
   const packagingOptions = [
     {
       id: 'bulk-sacks',
-      badge: 'PRIMARY EXPORT STANDARD',
-      title: 'Bulk Tea Supply',
-      subtitle: 'Standard Multi-Wall Paper Sacks',
-      spec: '20kg – 25kg multi-wall kraft paper sacks with food-grade LDPE inner liner',
+      badge: 'BULK SOURCING FORMAT',
+      title: 'Bulk Export Packaging',
+      subtitle: 'Standard Bulk Sacks',
+      spec: 'Bulk packaging formats can be discussed based on quantity, destination and buyer specification',
       features: [
-        'Hermetically sealed liner protecting freshness & aroma',
-        'Standard export palletization for 20ft & 40ft ocean FCLs',
-        'Official Tea Board & garden markings with batch tracking'
+        'Export packaging can be coordinated according to buyer requirements and the selected tea lot',
+        'Standard export palletization and container loading coordinated for ocean freight',
+        'Standard export stenciling and lot traceability markings'
       ],
-      moq: 'From 1x 20ft FCL (~10–12 MT)',
-      bestFor: 'Blenders, wholesale packers, and regional tea packagers.',
+      moq: 'Quantities discussed on requirement',
+      bestFor: 'Blenders, commercial repackers, and wholesale distributors.',
       icon: Package,
     },
     {
       id: 'custom-packing',
-      badge: 'VOLUME & FLEXIBLE BULK',
-      title: 'Custom Packing',
-      subtitle: 'High-Capacity Woven PP Sacks',
-      spec: '35kg – 50kg heavy-duty woven polypropylene bags or custom container sacks',
+      badge: 'CUSTOM BULK OPTIONS',
+      title: 'Custom Bulk Packing',
+      subtitle: 'Flexible Container Packaging',
+      spec: 'Heavy-duty woven or multi-ply sacks coordinated according to buyer order',
       features: [
-        'High-tensile tear & puncture-resistant outer woven mesh',
-        'Custom tare weights calibrated to destination handling lines',
-        'Multi-grade consolidation & bilingual export stencils'
+        'Packaging construction matched to destination handling and storage requirements',
+        'Tare weights and bag sizing structured around buyer handling facilities',
+        'Multi-grade consolidation and destination shipping marks'
       ],
       moq: 'Flexible bulk consolidations',
-      bestFor: 'Institutional buyers, catering operations, and commercial distributors.',
+      bestFor: 'Commercial buyers, catering operations, and institutional importers.',
       icon: Layers,
     },
     {
@@ -44,13 +44,13 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
       badge: 'RETAIL & BRAND READY',
       title: 'Private Label Support',
       subtitle: 'Retail Pouches, Tins & Tea Bags',
-      spec: 'Stand-up zipper pouches, airtight tin caddies, or pyramid tea bags',
+      spec: 'Stand-up pouches, tin canisters, or envelope/pyramid tea bags',
       features: [
-        'Custom printed barrier foil pouches (100g, 250g, 500g, 1kg) & tin canisters',
-        'Biodegradable pyramid or double-chamber envelope tea bags',
-        'Coordinated through vetted, food-grade processing facilities on buyer order',
+        'Retail packaging coordinated through suitable commercial packaging partners',
+        'Custom branding, labeling, and barcoding coordinated according to market regulations',
+        'Trial packaging batches discussed subject to product and run requirements',
       ],
-      moq: 'Trial packaging batches discussed on requirement',
+      moq: 'Trial batches discussed on requirement',
       bestFor: 'Supermarket retail brands, hospitality private labels, and brand creators.',
       icon: Sparkles,
     },
@@ -90,7 +90,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
             Private Label &amp; Contract Packaging Support
           </h2>
           <p className="private-label-lead" style={{ margin: '0 auto', fontSize: '1rem', color: 'var(--text-muted)' }}>
-            We coordinate origin sourcing and contract packaging through vetted, food-grade processing facilities according to your brand specifications, destination port regulations, and retail packaging format.
+            We can coordinate tea sourcing and packaging requirements for private-label programs through suitable commercial partners, subject to product, packaging and quantity requirements.
           </p>
         </div>
 
@@ -167,7 +167,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
               </h4>
             </div>
             <p style={{ margin: 0, fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: 1.5 }}>
-              Whether you need food-grade export liners for containerized shipping or full turnkey private label packing with barcode compliance, our tea export desk assists with specifications and samples.
+              Whether you require standard bulk export packaging or custom private-label retail packing, our trade desk can coordinate packaging specifications, counter-samples, and trade terms based on your requirement.
             </p>
           </div>
 

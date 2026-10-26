@@ -124,7 +124,7 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
             Tea Grades &amp; Specification Reference
           </h2>
           <p className="grade-matrix-lead">
-            Review standard Indian auction cuts and typical commercial applications. Select a grade to pre-fill your requirement or connect directly with our trade desk on WhatsApp.
+            Review standard Indian auction cuts and typical commercial applications. Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
           </p>
         </div>
 
@@ -246,7 +246,7 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
         <div className="grade-disclaimer-strip">
           <Info size={16} className="grade-disclaimer-icon" aria-hidden="true" />
           <p className="grade-disclaimer-text">
-            <strong>Indicative Organoleptic Profile:</strong> Grade characteristics and liquor profiles shown above are indicative standard references. Exact sieve mesh distribution, moisture parameters, and cup strength are verified against physical counter-samples before commercial contract confirmation.
+            <strong>Indicative Organoleptic Profile:</strong> Indicative cup profile. Final characteristics vary by origin, lot, season and processing. Physical counter-samples can be arranged for buyer organoleptic evaluation prior to commercial contract confirmation.
           </p>
         </div>
 

@@ -33,7 +33,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     name: 'Assam CTC (Crush, Tear, Curl)',
     origin: 'Brahmaputra Valley, Assam',
     tagline: 'Bold, Malty Amber Cup for High-Strength Blends & Packet Teas',
-    description: 'Sourced across primary Assam estates and auction catalogues based on your required cut, briskness, and liquor depth. Revered for rich body, strong infusion, and exceptional milk reactivity for commercial blends, tea bags, and Karak chai.',
+    description: 'We identify suitable sourcing options based on your required particle cut, briskness and liquor depth. Revered for rich body, strong infusion, and exceptional milk reactivity for commercial blends, tea bags, and Karak chai.',
     glowColor: 'rgba(212, 175, 55, 0.25)',
     meters: {
       strength: 95,
@@ -46,7 +46,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
       'Broken Grades (BOP, BP): Full body for packet teas and commercial brand blending',
       'Fannings (PF): Rapid liquor release engineered for high-speed tea-bag packaging lines',
       'Dust Grades (PD, D1): High cup yield and heavy color for foodservice, catering, and Karak chai',
-      'Standard Export Packaging: 25kg / 30kg multi-wall kraft paper sacks with food-grade LDPE liner',
+      'Export Packaging: Bulk packaging formats coordinated according to buyer requirements and selected tea lots',
     ],
     defaultGrade: 'BOP',
     icon: Flame,
@@ -55,9 +55,9 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     id: 'assam-orthodox',
     tabLabel: 'Assam Orthodox',
     name: 'Assam Orthodox Whole Leaf',
-    origin: 'Upper Assam Estate Sourcing',
+    origin: 'Upper Assam Terroirs',
     tagline: 'Traditional Rolled Leaf with Golden Tips & Caramel Malt Notes',
-    description: 'Sourced from selected Upper Assam estates based on leaf style, tip content, and liquor aroma. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup for premium loose-leaf packaging.',
+    description: 'We identify suitable Orthodox sourcing options based on leaf style, tip content and target liquor aroma. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup for premium loose-leaf packaging.',
     glowColor: 'rgba(197, 155, 39, 0.28)',
     meters: {
       strength: 75,
@@ -70,7 +70,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
       'Tippy Whole Leaf (FTGFOP1, TGFOP): Intact golden tips for specialty loose-leaf retail',
       'Aromatic Brokens (FBOP): Balanced aroma and cup strength for traditional breakfast blends',
       'Commercial Suitability: Popular in Middle East, European, and specialty boutique markets',
-      'Packaging Options: Standard export bulk sacks or customized repack formats on request',
+      'Packaging Options: Bulk export packaging or retail repack formats coordinated upon discussion',
     ],
     defaultGrade: 'TGFOP',
     icon: Award,
@@ -94,7 +94,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
       'High-Elevation Himalayan Terroirs: Sourced against buyer order during seasonal plucking cycles',
       'Distinct Muscatel Flavor: Delicate floral top-notes with a lingering sweet finish',
       'Best Application: Luxury loose-leaf gift tins, gourmet hospitality, and single-origin menus',
-      'Barrier Protection Packaging: Foil-sealed vacuum packaging inside rigid export master cartons',
+      'Export Packaging: Moisture-protective bulk or vacuum packaging coordinated based on lot and buyer order',
     ],
     defaultGrade: 'TGFOP',
     icon: Sparkles,
@@ -117,7 +117,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     specs: [
       'Clean & Clear: Light jade liquor without bitter astringency when brewed correctly',
       'Blending Foundation: Excellent neutral base for jasmine, mint, citrus, and herbal blends',
-      'Packaging Formats: Suitable for pyramid nylon mesh bags, loose canisters, or bulk sacks',
+      'Packaging Formats: Coordinated for pyramid mesh bags, loose canisters, or bulk export sacks',
       'High Polyphenol Content: Preserves natural antioxidants and active catechins',
     ],
     defaultGrade: 'Whole Leaf Green',
@@ -198,9 +198,13 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
             Tea Categories Sourced to Your Requirement
           </h2>
           
-          <p className="tea-categories-lead" style={{ maxWidth: '720px', margin: '0 auto' }}>
-            We do not push fixed warehouse stock. We identify and source suitable Indian tea lots across primary production regions and auction centers according to your requested grade, target cup profile, and destination compliance.
+          <p className="tea-categories-lead" style={{ maxWidth: '760px', margin: '0 auto' }}>
+            We work with appropriate sourcing channels to match buyer requirements with suitable Indian tea lots across primary production regions based on your requested grade, target cup profile, and destination compliance.
           </p>
+
+          <div style={{ marginTop: 'var(--space-2)', fontSize: '0.8125rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
+            Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
+          </div>
         </div>
 
         {/* Dynamic Category Navigation Bar with Obvious Visual Selector */}
@@ -258,7 +262,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   <span>{activeCategory.origin}</span>
                 </span>
                 <span className="spec-badge spec-badge-gold font-spec">
-                  SAMPLES AVAILABLE
+                  COUNTER-SAMPLES ON REQUEST
                 </span>
               </div>
 
@@ -316,7 +320,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                     <Droplet size={14} style={{ color: 'var(--color-accent-gold)' }} aria-hidden="true" />
                   </div>
                   <span style={{ fontSize: '0.6875rem', color: 'var(--text-dim)', fontWeight: 400, lineHeight: 1.3 }}>
-                    *Indicative baseline — final cup characteristics depend on origin garden, harvest lot, and processing specification.
+                    *Indicative cup profile. Final characteristics vary by origin, lot, season and processing.
                   </span>
                 </div>
 
@@ -368,8 +372,8 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
             <div className="tea-explorer-specs">
               <div>
                 <div className="tea-specs-section-title">
-                  <span>Available Export Grades</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-accent-gold)', fontWeight: 600 }}>Click grade to request</span>
+                  <span>Export Sourcing Grades</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--color-accent-gold)', fontWeight: 600 }}>Click grade to request specification</span>
                 </div>
 
                 <div className="tea-grades-pill-wrap">
@@ -379,7 +383,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                       type="button"
                       onClick={() => handleGradeBadgeClick(grd)}
                       className="tea-grade-badge-interactive"
-                      title={`Request sample for ${grd}`}
+                      title={`Request specification for ${grd}`}
                     >
                       <span>{grd}</span>
                       <ArrowRight size={12} aria-hidden="true" />
@@ -407,10 +411,10 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   onClick={() => handleCategorySampleRequest(activeCategory.name, activeCategory.defaultGrade)}
                   className="btn btn-primary btn-md"
                   style={{ width: '100%', justifyContent: 'center' }}
-                  aria-label={`Request ${activeCategory.name} Samples`}
+                  aria-label={`Request ${activeCategory.name} Counter-Samples`}
                 >
                   <ActiveIcon size={16} aria-hidden="true" />
-                  <span>Request {activeCategory.tabLabel} Samples</span>
+                  <span>Request {activeCategory.tabLabel} Counter-Samples</span>
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
               </div>

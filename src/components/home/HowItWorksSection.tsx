@@ -27,8 +27,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       stepNumber: 2,
       title: 'We Match the Requirement',
       timeBadge: 'Step 02',
-      deliverable: 'Origin Sourcing Search',
-      description: 'We identify matching Indian tea lots across primary production centers and auction catalogues based on your exact commercial parameters.',
+      deliverable: 'Sourcing Identification',
+      description: 'We identify suitable sourcing options based on your specification, origin preference and current market availability.',
       icon: FileSearch,
     },
     {
@@ -36,8 +36,8 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
       stepNumber: 3,
       title: 'Counter-Sample Arranged',
       timeBadge: 'Step 03',
-      deliverable: 'Physical Dry Leaf Sample',
-      description: 'Representative physical samples (250g–500g) are prepared for buyer evaluation, subject to lot availability and courier logistics.',
+      deliverable: 'Physical Counter-Sample',
+      description: 'Representative counter-samples can be arranged subject to sourcing and courier logistics for buyer evaluation.',
       icon: Package,
     },
     {
@@ -97,7 +97,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
             The Sourcing &amp; Export Pathway
           </h2>
           <p className="how-it-works-lead" style={{ maxWidth: '640px', margin: '0 auto' }}>
-            A transparent 4-stage operational pathway designed to eliminate risk for international tea importers before commercial order commitment.
+            A transparent 5-stage operational pathway designed to evaluate leaf quality and align commercial terms before order commitment.
           </p>
         </div>
 
@@ -163,7 +163,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               <span className="process-pulse-dot" aria-hidden="true" />
               <div>
                 <p className="process-commitment-text">
-                  <strong>Sample Evaluation Policy:</strong> Representative dry leaf samples are prepared to match your grade and cup profile. International air courier dispatch is coordinated following requirement qualification.
+                  <strong>Sample Evaluation Policy:</strong> Representative counter-samples can be arranged subject to sourcing and courier logistics to verify dry leaf appearance and cup profile before commercial commitment.
                 </p>
               </div>
             </div>

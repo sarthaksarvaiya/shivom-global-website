@@ -39,7 +39,7 @@ const DEFAULT_DETAILED_DATA: BuyerRequirementFormData = {
   requirementType: 'Assam CTC',
   grade: 'BOP',
   volume: 'Trial Batch / Initial Order',
-  packaging: '25kg Multi-wall Kraft Sack + PE Liner',
+  packaging: 'Standard Bulk Export Sacks',
   destinationPort: '',
   qualitySpecs: '',
   companyName: '',
@@ -166,7 +166,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
         requirementType: initialRequirementType || 'Assam CTC',
         grade: initialGrade || 'BOP / Open to Recommendation',
         volume: 'Trial Batch (Quick Enquiry / Samples)',
-        packaging: 'Standard Export Sacks / Samples',
+        packaging: 'Standard Bulk Export Sacks',
         destinationPort: `${quickData.country.trim()} (Port TBD)`,
         qualitySpecs: quickData.message.trim() 
           ? `[Form: Quick Enquiry]\n${quickData.message.trim()}`
@@ -297,9 +297,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. Your commercial requirement has been received by the SHIVOM GLOBAL trade desk.
-                <br />
-                Our trade desk will review your requirement and contact you using the details provided.
+                Our trade desk will review the requirement and follow up using the contact details provided.
               </p>
 
               <div className="buyer-success-ref-box">
@@ -493,7 +491,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     </span>
                   ) : (
                     <span className="buyer-btn-inner">
-                      <span>Request Free Samples / Send Enquiry</span>
+                      <span>Submit Sourcing Requirement</span>
                       <Send size={16} />
                     </span>
                   )}
@@ -632,7 +630,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     <option value="Orthodox">Orthodox Black Tea</option>
                     <option value="Darjeeling">Darjeeling Specialty Black Tea</option>
                     <option value="Green Tea">Indian Green Tea</option>
-                    <option value="Bulk Tea for Repacking">Bulk Tea Supply (25kg Kraft Sacks)</option>
+                    <option value="Bulk Tea Supply">Bulk Tea Supply (Export Sacks)</option>
                     <option value="Private Label Retail Product">Private Label &amp; OEM Packing</option>
                     <option value="Custom Specification">Custom Sieve Cut / Benchmark Match</option>
                   </select>
@@ -690,10 +688,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     value={detailedData.packaging}
                     onChange={(e) => handleDetailedChange('packaging', e.target.value)}
                   >
-                    <option value="25kg Multi-wall Kraft Sack + PE Liner">25kg Multi-wall Kraft Sack + Liner</option>
-                    <option value="50kg Woven PP Bag + Liner">50kg Woven PP Bag + Liner</option>
+                    <option value="Standard Bulk Export Sacks">Standard Bulk Export Sacks</option>
+                    <option value="Heavy-duty Woven Sacks">Heavy-duty Woven Sacks</option>
                     <option value="Retail Stand-up Pouches">Retail Pouches / Tins (OEM)</option>
-                    <option value="Custom Packaging">Custom Packaging Format</option>
+                    <option value="Custom Packaging">Custom Packaging to Specification</option>
                   </select>
                 </div>
 
