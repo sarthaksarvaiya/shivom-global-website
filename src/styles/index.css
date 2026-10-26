@@ -6673,36 +6673,80 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .tea-sensory-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px 20px;
+  gap: 10px 14px;
 }
 
-.tea-meter-item {
+.tea-organoleptic-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-.tea-meter-label-row {
-  display: flex;
-  justify-content: space-between;
+.tea-organoleptic-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tea-organoleptic-val {
   font-size: 0.8125rem;
-  color: #374151;
   font-weight: 600;
+  color: #1F2937;
+  line-height: 1.35;
 }
 
-.tea-meter-track {
-  height: 6px;
-  background: #E5E7EB;
+/* Sourcing Specification Matching Sequence Bar */
+.tea-matching-sequence-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0 auto var(--space-6);
+  padding: 8px 20px;
+  background: #FFFFFF;
+  border: 1px solid #E2DDD5;
   border-radius: 9999px;
-  overflow: hidden;
-  position: relative;
+  max-width: 980px;
+  box-shadow: 0 1px 4px rgba(13, 56, 41, 0.04);
 }
 
-.tea-meter-fill {
-  height: 100%;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #D4AF37, #0D3829);
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+.tea-sequence-lead {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+}
+
+.tea-sequence-steps {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.tea-seq-step {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.tea-seq-arrow {
+  color: #9CA3AF;
+  font-size: 0.75rem;
+}
+
+.tea-seq-step-final {
+  color: var(--color-primary-green);
+  font-weight: 700;
 }
 
 /* Right Specification Panel */
@@ -6830,6 +6874,15 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   }
   .tea-explorer-console {
     padding: var(--space-4) !important;
+  }
+  .tea-sensory-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .tea-matching-sequence-bar {
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    justify-content: flex-start;
   }
 }
 

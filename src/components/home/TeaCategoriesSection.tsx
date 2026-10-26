@@ -14,11 +14,11 @@ interface TeaCategoryData {
   tagline: string;
   description: string;
   glowColor: string;
-  meters: {
-    strength: number;
-    body: number;
-    aroma: number;
-    milk: number;
+  organoleptic: {
+    liquor: string;
+    body: string;
+    aroma: string;
+    milk: string;
   };
   grades: string[];
   specs: string[];
@@ -35,11 +35,11 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tagline: 'Bold, Malty Amber Cup for High-Strength Blends & Packet Teas',
     description: 'We identify suitable sourcing options based on your required particle cut, briskness and liquor depth. Revered for rich body, strong infusion, and exceptional milk reactivity for commercial blends, tea bags, and Karak chai.',
     glowColor: 'rgba(212, 175, 55, 0.25)',
-    meters: {
-      strength: 95,
-      body: 90,
-      aroma: 85,
-      milk: 100,
+    organoleptic: {
+      liquor: 'Heavy & High-Briskness',
+      body: 'Full-Bodied Granular Cup',
+      aroma: 'Rich Malty Assam Amber',
+      milk: 'Exceptional (Ideal for Karak & Chai)',
     },
     grades: ['BOP', 'BOPSM', 'BP', 'PF', 'PD', 'Dust / D1'],
     specs: [
@@ -59,11 +59,11 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tagline: 'Traditional Rolled Leaf with Golden Tips & Caramel Malt Notes',
     description: 'We identify suitable Orthodox sourcing options based on leaf style, tip content and target liquor aroma. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup for premium loose-leaf packaging.',
     glowColor: 'rgba(197, 155, 39, 0.28)',
-    meters: {
-      strength: 75,
-      body: 80,
-      aroma: 92,
-      milk: 70,
+    organoleptic: {
+      liquor: 'Medium-Brisk, Golden Cup',
+      body: 'Smooth, Rolled Leaf Density',
+      aroma: 'Caramel Malt & Floral Notes',
+      milk: 'Moderate (Best Black or Light Milk)',
     },
     grades: ['FTGFOP1', 'TGFOP', 'FBOP', 'BOPF'],
     specs: [
@@ -83,11 +83,11 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tagline: 'Renowned Muscatel Flavor & Delicate Floral Bouquet',
     description: 'High-elevation mountain terroirs producing world-celebrated seasonal harvests. First Flush brings crisp floral vibrancy; Second Flush yields the signature ripe muscatel grape profile.',
     glowColor: 'rgba(245, 158, 11, 0.25)',
-    meters: {
-      strength: 60,
-      body: 65,
-      aroma: 100,
-      milk: 25,
+    organoleptic: {
+      liquor: 'Delicate, Pale Amber',
+      body: 'Light, Crisp Himalayan Terroir',
+      aroma: 'Muscatel Grape & Floral Bouquet',
+      milk: 'Self-Drank (Consumed Without Milk)',
     },
     grades: ['First Flush FTGFOP1', 'Second Flush TGFOP', 'Autumnal Harvest'],
     specs: [
@@ -107,11 +107,11 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tagline: 'Gently Processed Unoxidized Leaf with Jade Cup Clarity',
     description: 'Fresh tea leaves steam-heated or pan-fired shortly after harvest to halt oxidation. Preserves natural green polyphenols, catechins, and clean herbaceous sweetness for health and wellness lines.',
     glowColor: 'rgba(16, 185, 129, 0.25)',
-    meters: {
-      strength: 50,
-      body: 55,
-      aroma: 90,
-      milk: 0,
+    organoleptic: {
+      liquor: 'Gentle, Unoxidized Clarity',
+      body: 'Clean Herbaceous Infusion',
+      aroma: 'Fresh Vegetal & Jade Top-Notes',
+      milk: 'Not Applicable (Green Infusion)',
     },
     grades: ['Whole Leaf Green', 'Green Tea Fannings', 'Herbal Cut'],
     specs: [
@@ -204,6 +204,24 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
 
           <div style={{ marginTop: 'var(--space-2)', fontSize: '0.8125rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
             Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
+          </div>
+        </div>
+
+        {/* Sourcing Specification Matching Sequence Bar */}
+        <div className="tea-matching-sequence-bar" role="region" aria-label="Specification matching methodology">
+          <span className="tea-sequence-lead font-spec">SPECIFICATION MATCHING:</span>
+          <div className="tea-sequence-steps">
+            <span className="tea-seq-step">Grade Selection</span>
+            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
+            <span className="tea-seq-step">Particle Cut</span>
+            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
+            <span className="tea-seq-step">Cup Profile</span>
+            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
+            <span className="tea-seq-step">Application</span>
+            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
+            <span className="tea-seq-step">Counter-Sample Sign-Off</span>
+            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
+            <span className="tea-seq-step tea-seq-step-final">Commercial Quote</span>
           </div>
         </div>
 
@@ -325,44 +343,24 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                 </div>
 
                 <div className="tea-sensory-grid">
-                  <div className="tea-meter-item">
-                    <div className="tea-meter-label-row">
-                      <span>Liquor Strength</span>
-                      <span className="font-spec">{activeCategory.meters.strength}%</span>
-                    </div>
-                    <div className="tea-meter-track" aria-hidden="true">
-                      <div className="tea-meter-fill" style={{ width: `${activeCategory.meters.strength}%` }} />
-                    </div>
+                  <div className="tea-organoleptic-item">
+                    <span className="tea-organoleptic-label font-spec">LIQUOR STRENGTH</span>
+                    <span className="tea-organoleptic-val">{activeCategory.organoleptic.liquor}</span>
                   </div>
 
-                  <div className="tea-meter-item">
-                    <div className="tea-meter-label-row">
-                      <span>Body &amp; Briskness</span>
-                      <span className="font-spec">{activeCategory.meters.body}%</span>
-                    </div>
-                    <div className="tea-meter-track" aria-hidden="true">
-                      <div className="tea-meter-fill" style={{ width: `${activeCategory.meters.body}%` }} />
-                    </div>
+                  <div className="tea-organoleptic-item">
+                    <span className="tea-organoleptic-label font-spec">BODY &amp; TEXTURE</span>
+                    <span className="tea-organoleptic-val">{activeCategory.organoleptic.body}</span>
                   </div>
 
-                  <div className="tea-meter-item">
-                    <div className="tea-meter-label-row">
-                      <span>Aroma Complexity</span>
-                      <span className="font-spec">{activeCategory.meters.aroma}%</span>
-                    </div>
-                    <div className="tea-meter-track" aria-hidden="true">
-                      <div className="tea-meter-fill" style={{ width: `${activeCategory.meters.aroma}%` }} />
-                    </div>
+                  <div className="tea-organoleptic-item">
+                    <span className="tea-organoleptic-label font-spec">AROMA &amp; FLAVOR</span>
+                    <span className="tea-organoleptic-val">{activeCategory.organoleptic.aroma}</span>
                   </div>
 
-                  <div className="tea-meter-item">
-                    <div className="tea-meter-label-row">
-                      <span>Milk Affinity</span>
-                      <span className="font-spec">{activeCategory.meters.milk}%</span>
-                    </div>
-                    <div className="tea-meter-track" aria-hidden="true">
-                      <div className="tea-meter-fill" style={{ width: `${activeCategory.meters.milk}%` }} />
-                    </div>
+                  <div className="tea-organoleptic-item">
+                    <span className="tea-organoleptic-label font-spec">MILK AFFINITY</span>
+                    <span className="tea-organoleptic-val">{activeCategory.organoleptic.milk}</span>
                   </div>
                 </div>
               </div>
