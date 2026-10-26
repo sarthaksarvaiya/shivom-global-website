@@ -23,11 +23,11 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
   const pillars = [
     {
       num: '01',
-      tag: 'Commercial Flexibility',
-      title: 'Flexible Commercial Quantities',
+      tag: 'Commercial Scope',
+      title: 'Flexible Quantities',
       icon: Package,
-      shortDesc: 'Start with manageable trial shipments to test cup acceptance and consumer response in your target market before scaling order volumes.',
-      expandedDetail: 'No arbitrary MOQ constraints. We calibrate order sizing to your container, packaging format, and trial requirements.',
+      shortDesc: 'Trial and commercial quantities can be discussed based on tea grade, sourcing availability, packaging and destination.',
+      expandedDetail: 'For larger commercial shipments, container-load quantities can be arranged according to buyer requirements. Smaller trial quantities can also be discussed for evaluation before scaling.',
     },
     {
       num: '02',
