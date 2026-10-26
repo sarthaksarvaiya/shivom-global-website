@@ -293,15 +293,17 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </div>
 
               <h3 className="buyer-success-title">
-                {formMode === 'quick' ? 'Enquiry Received' : 'Requirement Received'}
+                Requirement Received
               </h3>
               
               <p className="buyer-success-lead">
-                Thank you. The SHIVOM GLOBAL export desk has received your details and will get back to you with pricing, grade availability, and sample options.
+                Thank you. Your commercial requirement has been received by the SHIVOM GLOBAL trade desk.
+                <br />
+                Our trade desk will review your requirement and contact you using the details provided.
               </p>
 
               <div className="buyer-success-ref-box">
-                <span className="buyer-success-ref-label">Reference ID:</span>
+                <span className="buyer-success-ref-label">Reference Number:</span>
                 <strong className="font-spec buyer-success-ref-val">
                   {submittedRecord.referenceId}
                 </strong>
@@ -314,7 +316,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   className="buyer-success-reset-btn"
                 >
                   <RotateCcw size={15} />
-                  <span>Send Another Message</span>
+                  <span>Submit Another Requirement</span>
                 </button>
               </div>
             </div>
@@ -709,6 +711,40 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     required
                   />
                   {errors.destinationPort && <span className="form-error-msg"><AlertCircle size={13} /><span>{errors.destinationPort}</span></span>}
+                </div>
+              </div>
+
+              <div className="buyer-form-grid-2" style={{ marginTop: 'var(--space-3)' }}>
+                {/* Target Price (Optional) */}
+                <div className="form-group">
+                  <label htmlFor="det-target-price" className="form-label">
+                    Target Price Bracket (Optional)
+                  </label>
+                  <input 
+                    id="det-target-price"
+                    type="text" 
+                    className="form-input" 
+                    placeholder="e.g. USD 2.80–3.20/kg CIF Jebel Ali"
+                    value={detailedData.targetPrice || ''}
+                    onChange={(e) => handleDetailedChange('targetPrice', e.target.value)}
+                  />
+                </div>
+
+                {/* Sample Requirement */}
+                <div className="form-group">
+                  <label htmlFor="det-sample-req" className="form-label">
+                    Sample Evaluation Required?
+                  </label>
+                  <select 
+                    id="det-sample-req"
+                    className="form-select"
+                    value={detailedData.buyerRole || 'Sample Evaluation Required'}
+                    onChange={(e) => handleDetailedChange('buyerRole', e.target.value)}
+                  >
+                    <option value="Physical Counter-Samples Required">Yes — Arrange physical counter-samples for cupping</option>
+                    <option value="Proforma Quotation First">No — Provide indicative proforma quote first</option>
+                    <option value="Specification Match Discussion">Open to discuss sourcing options</option>
+                  </select>
                 </div>
               </div>
 

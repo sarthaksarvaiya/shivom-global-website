@@ -7,6 +7,8 @@ export const CONTACT_INFO = {
   companyName: 'SHIVOM GLOBAL',
   proprietor: 'Sarthak Sarvaiya',
   entityType: 'Sole Proprietorship (Registered Indian Enterprise, Udyam MSME)',
+  gstin: '24KWEPS2703C1ZQ',
+  udyamStatus: 'Registered (Govt. of India MSME)',
   phone: {
     display: '+91 97370 30437',
     raw: '+919737030437',
@@ -20,6 +22,38 @@ export const CONTACT_INFO = {
     getLink: (customMessage?: string) => {
       const msg = customMessage || 'Hi SHIVOM GLOBAL, I would like to discuss a tea sourcing requirement.';
       return 'https://wa.me/919737030437?text=' + encodeURIComponent(msg);
+    },
+    getContextualLink: (params: {
+      grade?: string;
+      category?: string;
+      destination?: string;
+      quantity?: string;
+      intent?: 'sample' | 'quote' | 'general';
+    }) => {
+      const parts: string[] = ['Hi SHIVOM GLOBAL,'];
+      
+      if (params.intent === 'sample') {
+        parts.push(`I would like to evaluate samples for ${params.category || 'Indian Tea'}${params.grade ? ` (Grade: ${params.grade})` : ''}.`);
+      } else if (params.grade) {
+        parts.push(`I am interested in sourcing ${params.category ? `${params.category} ` : ''}${params.grade}.`);
+      } else if (params.category) {
+        parts.push(`I am looking to source ${params.category}.`);
+      } else {
+        parts.push('I would like to discuss an Indian tea sourcing requirement.');
+      }
+
+      if (params.quantity && params.quantity.trim()) {
+        parts.push(`Estimated Quantity: ${params.quantity.trim()}.`);
+      }
+
+      if (params.destination && params.destination.trim()) {
+        parts.push(`Target Destination: ${params.destination.trim()}.`);
+      }
+
+      parts.push('Please share available specifications, sample options, and commercial details.');
+      
+      const fullMessage = parts.join(' ');
+      return 'https://wa.me/919737030437?text=' + encodeURIComponent(fullMessage);
     },
     ariaLabel: 'Chat with SHIVOM GLOBAL Trade Desk on WhatsApp',
   },
@@ -35,9 +69,10 @@ export const CONTACT_INFO = {
     country: 'India',
   },
   ports: {
-    loading: 'Kolkata, Haldia, Mundra, Nhava Sheva (JNPT)',
+    loading: 'Mundra, Kandla, Kolkata, Haldia, Nhava Sheva (JNPT)',
+    destinationGateway: 'Port Jebel Ali, UAE / GCC Ports / Global Discharge Ports',
   },
-  tradeTerms: 'FOB Indian Ports / CIF Destination Ports',
+  tradeTerms: 'FOB Indian Loading Ports / CIF Destination Ports',
   hours: 'Mon – Sat (Trade Desk Direct Intake)',
 } as const;
 

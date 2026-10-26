@@ -25,60 +25,83 @@ export const SiteFooter: React.FC = () => {
         {/* Compact 3-Column Footer Grid */}
         <div className="footer-compact-grid">
           
-          {/* Column 1: Brand & Sample CTA */}
-          <div className="footer-compact-col footer-col-brand">
+          {/* Column 1: Brand & Verified Entity Transparency */}
+          <div className="footer-compact-col footer-col-brand" style={{ maxWidth: '340px' }}>
             <a href="#hero" onClick={(e) => handleScrollTo(e, 'hero')} className="footer-logo-link">
               <img 
                 src="/Shivom_Global_Header_Logo.svg" 
-                alt="SHIVOM GLOBAL" 
+                alt="SHIVOM GLOBAL — Indian Tea Sourcing & Export" 
                 className="footer-compact-logo"
               />
             </a>
-            <p className="footer-compact-desc">
-              Indian tea supply for international buyers.
+            <p className="footer-compact-desc" style={{ marginTop: '8px', lineHeight: 1.45 }}>
+              Indian tea sourcing &amp; export business coordinating bulk supply and private-label packaging to international specifications.
             </p>
+
+            {/* Factual Statutory Disclosure Block */}
+            <div style={{
+              marginTop: 'var(--space-3)',
+              padding: '10px 12px',
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '0.75rem',
+              color: 'var(--text-inverse-muted)',
+              lineHeight: 1.5,
+            }}>
+              <div><strong>Proprietorship:</strong> Sarthak Sarvaiya</div>
+              <div><strong>Base:</strong> Bhavnagar, Gujarat, India</div>
+              <div><strong>Udyam MSME:</strong> Registered (Govt. of India)</div>
+              <div><strong>GSTIN:</strong> <span className="font-spec" style={{ color: 'var(--color-accent-gold)' }}>24KWEPS2703C1ZQ</span></div>
+            </div>
+
             <div style={{ marginTop: 'var(--space-3)' }}>
               <a 
                 href="#requirement-form" 
                 onClick={(e) => handleScrollTo(e, 'requirement-form')}
                 className="btn btn-primary btn-sm footer-compact-cta"
               >
-                <span>Request Free Samples</span>
+                <span>Tell Us What Tea You Need</span>
                 <ArrowRight size={13} aria-hidden="true" />
               </a>
             </div>
           </div>
 
-          {/* Column 2: Explore (4 Key Links Only) */}
+          {/* Column 2: Navigation (Sourcing & Export) */}
           <div className="footer-compact-col">
-            <h4 className="footer-compact-title">Explore</h4>
+            <h4 className="footer-compact-title">Sourcing &amp; Export</h4>
             <ul className="footer-compact-list">
               <li>
                 <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-compact-link">
-                  Tea Range
+                  Tea Sourcing Portfolio
                 </a>
               </li>
               <li>
                 <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-compact-link">
-                  Grades
+                  Grades &amp; Specifications
+                </a>
+              </li>
+              <li>
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-compact-link">
+                  Private Label Packaging
                 </a>
               </li>
               <li>
                 <a href="#how-it-works" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="footer-compact-link">
-                  How It Works
+                  5-Step Sourcing Flow
                 </a>
               </li>
               <li>
                 <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="footer-compact-link">
-                  Why Us
+                  Export Compliance &amp; Docs
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Contact */}
+          {/* Column 3: Contact & Trade Desk */}
           <div className="footer-compact-col">
-            <h4 className="footer-compact-title">Contact</h4>
+            <h4 className="footer-compact-title">Direct Trade Desk</h4>
             <ul className="footer-compact-list">
               <li>
                 <a
@@ -103,24 +126,28 @@ export const SiteFooter: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="#requirement-form" 
-                  onClick={(e) => handleScrollTo(e, 'requirement-form')}
-                  className="footer-compact-link"
-                >
-                  Contact Form
-                </a>
+                <span className="footer-compact-link" style={{ color: 'var(--text-inverse-muted)', cursor: 'default' }}>
+                  Ports: Mundra, Kandla, Kolkata, JNPT
+                </span>
+              </li>
+              <li>
+                <span className="footer-compact-link" style={{ color: 'var(--text-inverse-muted)', cursor: 'default' }}>
+                  Terms: FOB Indian Ports / CIF Destination
+                </span>
               </li>
             </ul>
           </div>
 
         </div>
 
-        {/* Bottom Minimal Copyright Bar */}
-        <div className="footer-compact-bottom">
-          <p className="footer-copyright-text">
-            &copy; {new Date().getFullYear()} <strong>SHIVOM GLOBAL</strong>. All rights reserved.
+        {/* Bottom Minimal Copyright Bar with Buyer-First Governance Note */}
+        <div className="footer-compact-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <p className="footer-copyright-text" style={{ margin: 0 }}>
+            &copy; {new Date().getFullYear()} <strong>SHIVOM GLOBAL</strong> (Proprietor: Sarthak Sarvaiya). All rights reserved.
           </p>
+          <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+            Buyer-First Sourcing Desk &bull; Bhavnagar, Gujarat, India
+          </span>
         </div>
 
       </div>

@@ -33,7 +33,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     name: 'Assam CTC (Crush, Tear, Curl)',
     origin: 'Brahmaputra Valley, Assam',
     tagline: 'Bold, Malty Amber Cup for High-Strength Blends & Packet Teas',
-    description: 'Sourced directly from established Assam plantations and primary auctions. Revered for rich body, deep briskness, and a robust amber-copper infusion that takes milk exceptionally well.',
+    description: 'Sourced across primary Assam estates and auction catalogues based on your required cut, briskness, and liquor depth. Revered for rich body, strong infusion, and exceptional milk reactivity for commercial blends, tea bags, and Karak chai.',
     glowColor: 'rgba(212, 175, 55, 0.25)',
     meters: {
       strength: 95,
@@ -43,10 +43,10 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     },
     grades: ['BOP', 'BOPSM', 'BP', 'PF', 'PD', 'Dust / D1'],
     specs: [
-      'Broken Grades (BOP, BP): Full body for strong packet teas and commercial blends',
-      'Fannings (PF): Rapid liquor extraction engineered for high-speed tea-bag production',
-      'Dust Grades (PD, D1): High cup yield and intense color for catering and traditional chai',
-      'Standard Packing: 25kg / 30kg multi-wall kraft paper sacks with food-grade LDPE liner',
+      'Broken Grades (BOP, BP): Full body for packet teas and commercial brand blending',
+      'Fannings (PF): Rapid liquor release engineered for high-speed tea-bag packaging lines',
+      'Dust Grades (PD, D1): High cup yield and heavy color for foodservice, catering, and Karak chai',
+      'Standard Export Packaging: 25kg / 30kg multi-wall kraft paper sacks with food-grade LDPE liner',
     ],
     defaultGrade: 'BOP',
     icon: Flame,
@@ -55,9 +55,9 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     id: 'assam-orthodox',
     tabLabel: 'Assam Orthodox',
     name: 'Assam Orthodox Whole Leaf',
-    origin: 'Upper Assam Estate Selections',
+    origin: 'Upper Assam Estate Sourcing',
     tagline: 'Traditional Rolled Leaf with Golden Tips & Caramel Malt Notes',
-    description: 'Selectively harvested and traditionally rolled to keep leaf structure intact. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup.',
+    description: 'Sourced from selected Upper Assam estates based on leaf style, tip content, and liquor aroma. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup for premium loose-leaf packaging.',
     glowColor: 'rgba(197, 155, 39, 0.28)',
     meters: {
       strength: 75,
@@ -67,10 +67,10 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     },
     grades: ['FTGFOP1', 'TGFOP', 'FBOP', 'BOPF'],
     specs: [
-      'Tippy Whole Leaf (FTGFOP1, TGFOP): Rich golden tips for specialty loose-leaf retail',
-      'Aromatic Brokens (FBOP): Exceptional aroma and liquor strength for premium blends',
-      'Export Destinations: Widely demanded in Europe, Middle East, and specialty boutique brands',
-      'Flexible Supply: Standard bulk sacks or customized repack quantities available',
+      'Tippy Whole Leaf (FTGFOP1, TGFOP): Intact golden tips for specialty loose-leaf retail',
+      'Aromatic Brokens (FBOP): Balanced aroma and cup strength for traditional breakfast blends',
+      'Commercial Suitability: Popular in Middle East, European, and specialty boutique markets',
+      'Packaging Options: Standard export bulk sacks or customized repack formats on request',
     ],
     defaultGrade: 'TGFOP',
     icon: Award,
@@ -80,7 +80,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tabLabel: 'Darjeeling Single Origin',
     name: 'Darjeeling Black Tea',
     origin: 'Darjeeling Himalayan Foothills',
-    tagline: 'The Champagne of Teas — Renowned Muscatel & Floral Bouquet',
+    tagline: 'Renowned Muscatel Flavor & Delicate Floral Bouquet',
     description: 'High-elevation mountain terroirs producing world-celebrated seasonal harvests. First Flush brings crisp floral vibrancy; Second Flush yields the signature ripe muscatel grape profile.',
     glowColor: 'rgba(245, 158, 11, 0.25)',
     meters: {
@@ -91,10 +91,10 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     },
     grades: ['First Flush FTGFOP1', 'Second Flush TGFOP', 'Autumnal Harvest'],
     specs: [
-      'Single-Estate Provenance: 100% pure Himalayan terroirs with certified origin tracking',
+      'High-Elevation Himalayan Terroirs: Sourced against buyer order during seasonal plucking cycles',
       'Distinct Muscatel Flavor: Delicate floral top-notes with a lingering sweet finish',
       'Best Application: Luxury loose-leaf gift tins, gourmet hospitality, and single-origin menus',
-      'Preservation Packing: Foil-sealed vacuum bags inside rigid protective cartons',
+      'Barrier Protection Packaging: Foil-sealed vacuum packaging inside rigid export master cartons',
     ],
     defaultGrade: 'TGFOP',
     icon: Sparkles,
@@ -105,7 +105,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     name: 'Indian Green & Wellness Teas',
     origin: 'High-Elevation Terroirs, India',
     tagline: 'Gently Processed Unoxidized Leaf with Jade Cup Clarity',
-    description: 'Fresh tea leaves steam-heated or pan-fired shortly after plucking to halt oxidation. Preserves natural green polyphenols, catechins, and clean herbaceous sweetness.',
+    description: 'Fresh tea leaves steam-heated or pan-fired shortly after harvest to halt oxidation. Preserves natural green polyphenols, catechins, and clean herbaceous sweetness for health and wellness lines.',
     glowColor: 'rgba(16, 185, 129, 0.25)',
     meters: {
       strength: 50,
@@ -116,9 +116,9 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     grades: ['Whole Leaf Green', 'Green Tea Fannings', 'Herbal Cut'],
     specs: [
       'Clean & Clear: Light jade liquor without bitter astringency when brewed correctly',
-      'Blending Foundation: Excellent neutral base for jasmine, mint, citrus, and wellness blends',
-      'Packaging Formats: Suitable for pyramid nylon mesh bags, loose canisters, or bulk supply',
-      'High Polyphenol Content: Preserves maximum natural antioxidants and active catechins',
+      'Blending Foundation: Excellent neutral base for jasmine, mint, citrus, and herbal blends',
+      'Packaging Formats: Suitable for pyramid nylon mesh bags, loose canisters, or bulk sacks',
+      'High Polyphenol Content: Preserves natural antioxidants and active catechins',
     ],
     defaultGrade: 'Whole Leaf Green',
     icon: Leaf,
@@ -191,15 +191,15 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
         {/* Section Header */}
         <div className="tea-categories-header text-center">
           <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            INDIAN TEA SPECTRUM
+            INDIAN TEA SOURCING SPECTRUM
           </div>
           
           <h2 id="categories-heading" className="tea-categories-headline">
-            Explore Origin Teas &amp; Cup Profiles
+            Tea Categories Sourced to Your Requirement
           </h2>
           
-          <p className="tea-categories-lead" style={{ maxWidth: '680px', margin: '0 auto' }}>
-            Direct origin sourcing calibrated to your market requirements. Switch between tea categories to inspect cup characteristics, available export grades, and sample options.
+          <p className="tea-categories-lead" style={{ maxWidth: '720px', margin: '0 auto' }}>
+            We do not push fixed warehouse stock. We identify and source suitable Indian tea lots across primary production regions and auction centers according to your requested grade, target cup profile, and destination compliance.
           </p>
         </div>
 
@@ -310,9 +310,14 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
 
               {/* Sensory Character Meters */}
               <div className="tea-sensory-panel">
-                <div className="tea-sensory-title">
-                  <span>Cup Character &amp; Sensory Metrics</span>
-                  <Droplet size={14} style={{ color: 'var(--color-accent-gold)' }} aria-hidden="true" />
+                <div className="tea-sensory-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <span>Indicative Organoleptic Profile</span>
+                    <Droplet size={14} style={{ color: 'var(--color-accent-gold)' }} aria-hidden="true" />
+                  </div>
+                  <span style={{ fontSize: '0.6875rem', color: 'var(--text-dim)', fontWeight: 400, lineHeight: 1.3 }}>
+                    *Indicative baseline — final cup characteristics depend on origin garden, harvest lot, and processing specification.
+                  </span>
                 </div>
 
                 <div className="tea-sensory-grid">

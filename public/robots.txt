@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow internal API endpoints from crawling
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://shivom-global-website.vercel.app/sitemap.xml

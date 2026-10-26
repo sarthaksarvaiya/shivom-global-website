@@ -70,22 +70,37 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '74px' }}>
-        {/* Brand Logo */}
-        <a 
-          href="#hero" 
-          onClick={(e) => handleLinkClick(e, 'hero')}
-          className="header-brand-link"
-          aria-label="SHIVOM GLOBAL Home"
-          style={{ flexShrink: 0 }}
-        >
-          <img 
-            src="/Shivom_Global_Header_Logo.svg" 
-            alt="SHIVOM GLOBAL — Indian Tea Exporter" 
-            className="header-brand-img"
-          />
-        </a>
+        {/* Brand Logo & Positioning */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexShrink: 0 }}>
+          <a 
+            href="#hero" 
+            onClick={(e) => handleLinkClick(e, 'hero')}
+            className="header-brand-link"
+            aria-label="SHIVOM GLOBAL — Indian Tea Sourcing & Export"
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+          >
+            <img 
+              src="/Shivom_Global_Header_Logo.svg" 
+              alt="SHIVOM GLOBAL — Indian Tea Sourcing & Export" 
+              className="header-brand-img"
+            />
+            <span className="header-subtitle-tag font-spec" style={{
+              fontSize: '0.6875rem',
+              color: 'var(--color-accent-gold)',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              borderLeft: '1px solid rgba(197, 155, 39, 0.4)',
+              paddingLeft: '10px',
+              lineHeight: 1.2,
+              display: 'none', // Shown on desktop via CSS or media queries
+            }}>
+              Indian Tea Sourcing &amp; Export
+            </span>
+          </a>
+        </div>
 
-        {/* Desktop Navigation Links — 6 Key Destinations (Never Wrap) */}
+        {/* Desktop Navigation Links — 5 Focused Sourcing Links */}
         <nav 
           className="desktop-nav"
           style={{ 
@@ -102,7 +117,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             className="nav-link"
             style={{ whiteSpace: 'nowrap' }}
           >
-            Tea
+            Tea Sourcing
           </a>
           <a 
             href="#tea-by-grade" 
@@ -110,7 +125,15 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             className="nav-link"
             style={{ whiteSpace: 'nowrap' }}
           >
-            Grades
+            Grades &amp; Specs
+          </a>
+          <a 
+            href="#private-label" 
+            onClick={(e) => handleLinkClick(e, 'private-label')}
+            className="nav-link"
+            style={{ whiteSpace: 'nowrap' }}
+          >
+            Private Label
           </a>
           <a 
             href="#how-it-works" 
@@ -118,7 +141,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             className="nav-link"
             style={{ whiteSpace: 'nowrap' }}
           >
-            How It Works
+            Sourcing Flow
           </a>
           <a 
             href="#why-us" 
@@ -126,20 +149,12 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             className="nav-link"
             style={{ whiteSpace: 'nowrap' }}
           >
-            Why Us
-          </a>
-          <a 
-            href="#requirement-form" 
-            onClick={(e) => handleLinkClick(e, 'requirement-form')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Contact
+            Export Compliance
           </a>
         </nav>
 
-        {/* Desktop Action Area: WhatsApp + Primary CTA (Request Free Samples) */}
-        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexShrink: 0 }}>
+        {/* Desktop Action Area: WhatsApp + Primary CTA (Request Requirement / Quote) */}
+        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexShrink: 0 }}>
           <a
             href={CONTACT_INFO.whatsapp.getLink()}
             target="_blank"
@@ -152,14 +167,15 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             <span>WhatsApp</span>
           </a>
 
-          {/* Primary CTA: Request Free Samples */}
+          {/* Primary CTA: Request Requirement / Quote */}
           <a 
             href="#requirement-form" 
             onClick={handleCtaClick}
             className="btn btn-primary btn-sm header-submit-btn"
             style={{ fontWeight: 700, whiteSpace: 'nowrap' }}
+            title="Submit tea specifications and request proforma quotation"
           >
-            <span>Request Free Samples</span>
+            <span>Request Requirement / Quote</span>
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>

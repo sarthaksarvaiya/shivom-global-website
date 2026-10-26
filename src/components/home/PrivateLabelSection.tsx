@@ -42,16 +42,16 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
     {
       id: 'private-label',
       badge: 'RETAIL & BRAND READY',
-      title: 'Private Label & OEM',
+      title: 'Private Label Support',
       subtitle: 'Retail Pouches, Tins & Tea Bags',
       spec: 'Stand-up zipper pouches, airtight tin caddies, or pyramid tea bags',
       features: [
-        'Custom printed foil pouches (100g, 250g, 500g, 1kg) & tin canisters',
+        'Custom printed barrier foil pouches (100g, 250g, 500g, 1kg) & tin canisters',
         'Biodegradable pyramid or double-chamber envelope tea bags',
-        'Coordinated with FSSC 22000 & ISO-certified blending partners'
+        'Coordinated through vetted, food-grade processing facilities on buyer order',
       ],
-      moq: 'Low MOQ trial runs available',
-      bestFor: 'Supermarket retail brands, luxury hospitality lines, and specialty private labels.',
+      moq: 'Trial packaging batches discussed on requirement',
+      bestFor: 'Supermarket retail brands, hospitality private labels, and brand creators.',
       icon: Sparkles,
     },
   ];
@@ -84,13 +84,13 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
         {/* Section Header - Centered & Premium */}
         <div className="private-label-header text-center" style={{ maxWidth: '740px', margin: '0 auto clamp(2rem, 4vw, 3rem)' }}>
           <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            PACKING &amp; PRIVATE LABEL
+            PACKING &amp; PRIVATE LABEL SUPPORT
           </div>
           <h2 id="private-label-heading" className="private-label-title">
-            Custom Packing &amp; Private Label
+            Private Label &amp; Contract Packaging Support
           </h2>
           <p className="private-label-lead" style={{ margin: '0 auto', fontSize: '1rem', color: 'var(--text-muted)' }}>
-            From auction-standard bulk export sacks to consumer-ready private labeling. Tailored to your destination port regulations, shelf specifications, and branding requirements.
+            We coordinate origin sourcing and contract packaging through vetted, food-grade processing facilities according to your brand specifications, destination port regulations, and retail packaging format.
           </p>
         </div>
 

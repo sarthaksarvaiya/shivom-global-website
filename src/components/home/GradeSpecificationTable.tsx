@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, Info, Check } from 'lucide-react';
+import { ArrowRight, Info, Check, MessageCircle } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 
 export interface GradeSpecificationTableProps {
   onSelectGrade?: (gradeCode: string) => void;
@@ -117,13 +118,13 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
         {/* Section Header */}
         <div className="grade-matrix-header">
           <div className="grade-matrix-eyebrow">
-            <span className="spec-badge spec-badge-gold">SINGLE SOURCE OF TRUTH</span>
+            <span className="spec-badge spec-badge-gold">COMMERCIAL GRADE REFERENCE</span>
           </div>
           <h2 id="grade-table-heading" className="grade-matrix-title">
-            Tea Grade &amp; Specification Table
+            Tea Grades &amp; Specification Reference
           </h2>
           <p className="grade-matrix-lead">
-            Review available tea grades, leaf appearance, and typical uses. Click any grade to pre-fill your free sample request.
+            Review standard Indian auction cuts and typical commercial applications. Select a grade to pre-fill your requirement or connect directly with our trade desk on WhatsApp.
           </p>
         </div>
 
@@ -137,16 +138,22 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
           <table className="grade-matrix-table">
             <thead>
               <tr>
-                <th scope="col" style={{ width: '15%' }}>TEA TYPE</th>
-                <th scope="col" style={{ width: '18%' }}>GRADE</th>
-                <th scope="col" style={{ width: '32%' }}>APPEARANCE &amp; STYLE</th>
-                <th scope="col" style={{ width: '23%' }}>TYPICAL USE</th>
-                <th scope="col" style={{ width: '12%', textAlign: 'center' }}>SAMPLE</th>
+                <th scope="col" style={{ width: '13%' }}>TEA TYPE</th>
+                <th scope="col" style={{ width: '17%' }}>GRADE</th>
+                <th scope="col" style={{ width: '30%' }}>APPEARANCE &amp; STYLE</th>
+                <th scope="col" style={{ width: '22%' }}>TYPICAL USE</th>
+                <th scope="col" style={{ width: '18%', textAlign: 'center' }}>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {grades.map((item) => {
                 const isSelected = selectedGrade === item.code;
+                const waLink = CONTACT_INFO.whatsapp.getContextualLink({
+                  grade: item.code,
+                  category: item.type === 'CTC' ? 'Assam CTC' : 'Orthodox Black Tea',
+                  intent: 'sample',
+                });
+
                 return (
                   <tr 
                     key={item.code} 
@@ -181,26 +188,52 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
                       </div>
                     </td>
 
-                    {/* Action */}
+                    {/* Action: Select for Form + Quick WhatsApp Link */}
                     <td className="td-act" style={{ textAlign: 'center' }}>
-                      <button
-                        type="button"
-                        onClick={() => handleGradeClick(item.code)}
-                        className={`grade-inquire-btn ${isSelected ? 'grade-inquire-btn-active' : ''}`}
-                        aria-label={`Select ${item.code} for sample request`}
-                      >
-                        {isSelected ? (
-                          <>
-                            <Check size={13} aria-hidden="true" />
-                            <span>Selected</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>Request</span>
-                            <ArrowRight size={12} aria-hidden="true" />
-                          </>
-                        )}
-                      </button>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                        <button
+                          type="button"
+                          onClick={() => handleGradeClick(item.code)}
+                          className={`grade-inquire-btn ${isSelected ? 'grade-inquire-btn-active' : ''}`}
+                          aria-label={`Select ${item.code} in requirement form`}
+                          title={`Select ${item.code} in requirement form`}
+                        >
+                          {isSelected ? (
+                            <>
+                              <Check size={13} aria-hidden="true" />
+                              <span>Selected</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Specify</span>
+                              <ArrowRight size={12} aria-hidden="true" />
+                            </>
+                          )}
+                        </button>
+
+                        <a
+                          href={waLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="grade-wa-btn"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '32px',
+                            height: '32px',
+                            borderRadius: 'var(--radius-sm)',
+                            backgroundColor: 'rgba(37, 211, 102, 0.12)',
+                            color: '#15803D',
+                            border: '1px solid rgba(37, 211, 102, 0.3)',
+                            textDecoration: 'none',
+                          }}
+                          aria-label={`Inquire about ${item.code} on WhatsApp`}
+                          title={`Quick WhatsApp inquiry for ${item.code}`}
+                        >
+                          <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -209,11 +242,11 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
           </table>
         </div>
 
-        {/* Specification Note */}
+        {/* Specification Note with Truthful Organoleptic & Sample Evaluation Disclosure */}
         <div className="grade-disclaimer-strip">
           <Info size={16} className="grade-disclaimer-icon" aria-hidden="true" />
           <p className="grade-disclaimer-text">
-            <strong>Sample Evaluation:</strong> Tea samples for the above grades are arranged based on your required volume and target market. Sieve size, moisture parameters, and cup strength are confirmed against physical samples before order commitment.
+            <strong>Indicative Organoleptic Profile:</strong> Grade characteristics and liquor profiles shown above are indicative standard references. Exact sieve mesh distribution, moisture parameters, and cup strength are verified against physical counter-samples before commercial contract confirmation.
           </p>
         </div>
 

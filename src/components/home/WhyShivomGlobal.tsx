@@ -65,12 +65,12 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
       desc: 'Issued by Chamber of Commerce / authorized statutory bodies certifying authentic 100% Indian tea origin.',
     },
     {
-      name: 'Tea Board of India Clearance',
-      desc: 'Official registered exporter batch verification and export license documentation.',
+      name: 'Export Clearance & Shipping Documentation',
+      desc: 'Applicable Indian customs shipping bills, statutory export filings, and port gate pass paperwork coordinated for contracted consignments.',
     },
     {
       name: 'Ocean Bill of Lading (B/L) & Commercial Set',
-      desc: 'Clean on-board ocean B/L, packing list with tare/gross weights, and commercial proforma invoice.',
+      desc: 'Clean on-board ocean B/L, packing list with tare/gross weights, and formal commercial invoice.',
     },
   ];
 
@@ -118,13 +118,13 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
               <div className="compliance-terminal-top">
                 <div className="compliance-status-pill">
                   <ShieldCheck size={14} aria-hidden="true" />
-                  <span>Verified Export Clearance</span>
+                  <span>Export Coordination &amp; Documentation</span>
                 </div>
                 <h3 className="compliance-terminal-title">
                   Statutory Export Compliance &amp; Documentation
                 </h3>
                 <p className="compliance-terminal-subtitle">
-                  Every international consignment from SHIVOM GLOBAL is processed with complete statutory trade documentation for frictionless customs clearance at your port.
+                  Export consignments are coordinated with applicable statutory trade documentation for frictionless customs clearance at your destination port.
                 </p>
               </div>
 
@@ -144,19 +144,24 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
               </ul>
             </div>
 
-            <div className="compliance-terminal-footer">
-              <span style={{ fontSize: '0.8125rem', color: 'rgba(255, 255, 255, 0.75)' }}>
-                FOB &amp; CIF Terms Available
-              </span>
-              <button
-                type="button"
-                onClick={handleInquire}
-                className="btn btn-primary btn-sm"
-                aria-label="Request export documentation checklist & samples"
-              >
-                <span>Request Sample &amp; Specs</span>
-                <ArrowRight size={14} aria-hidden="true" />
-              </button>
+            <div className="compliance-terminal-footer" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'stretch' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                <span style={{ fontSize: '0.8125rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600 }}>
+                  FOB Indian Loading Ports &amp; CIF Destination Ports
+                </span>
+                <button
+                  type="button"
+                  onClick={handleInquire}
+                  className="btn btn-primary btn-sm"
+                  aria-label="Request export documentation checklist & samples"
+                >
+                  <span>Discuss Requirements &amp; Terms</span>
+                  <ArrowRight size={14} aria-hidden="true" />
+                </button>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.65)', margin: 0, lineHeight: 1.35 }}>
+                *Final commercial terms depend on grade, quantity, packaging, destination port, and prevailing sourcing conditions.
+              </p>
             </div>
           </div>
 

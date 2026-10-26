@@ -8,20 +8,8 @@ export interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  onRequestSamples,
   onSubmitRequirement,
 }) => {
-  const handleSampleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    if (onRequestSamples) {
-      onRequestSamples();
-    } else if (onSubmitRequirement) {
-      onSubmitRequirement();
-    } else {
-      scrollToForm();
-    }
-  };
-
   const handleRequirementClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (onSubmitRequirement) {
@@ -64,48 +52,54 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Primary Main H1 Headline */}
           <h1 className="hero-headline">
-            Indian Tea Sourcing<br className="hero-headline-br" /> for Global Buyers
+            Source the Indian Tea<br className="hero-headline-br" /> You Need
           </h1>
 
           {/* Plain B2B Trader Message */}
           <p className="hero-narrative">
-            We supply Indian tea based on your required grade, quantity, packing and destination. 
-            Evaluate tea samples before placing an order, with transparent pricing based on your actual specifications.
+            Assam CTC, Orthodox, Darjeeling, Green Tea and specialty commercial grades — sourced to your exact specification, verified through counter-samples, and coordinated for international export.
           </p>
 
           {/* Hero Buyer Key Highlights Row */}
           <div className="hero-highlights-strip" role="region" aria-label="Key trading terms at a glance">
             <div className="hero-highlight-pill">
               <Package size={14} className="hero-highlight-icon" aria-hidden="true" />
-              <span><strong>Flexible Order Quantities</strong></span>
+              <span><strong>Buyer-First Sourcing</strong> (Zero Inventory Push)</span>
             </div>
             <div className="hero-highlight-pill">
               <CheckCircle2 size={14} className="hero-highlight-icon" aria-hidden="true" />
-              <span><strong>Free Samples</strong> Available</span>
+              <span><strong>Counter-Samples</strong> for Cup Evaluation</span>
+            </div>
+            <div className="hero-highlight-pill">
+              <Globe2 size={14} className="hero-highlight-icon" aria-hidden="true" />
+              <span><strong>Bulk &amp; Private Label</strong> Export</span>
             </div>
           </div>
 
-          {/* Dual Action CTAs: Request Free Samples (Primary) & Tell Us Your Requirement (Secondary) */}
+          {/* Dual Action CTAs: Tell Us What Tea You Need (Primary) & WhatsApp Trade Desk (Secondary) */}
           <div className="hero-cta-group">
             <a 
               href="#requirement-form" 
-              onClick={handleSampleClick}
+              onClick={handleRequirementClick}
               className="btn btn-primary btn-lg hero-primary-btn"
               id="hero-primary-cta"
-              aria-label="Request Free Tea Samples"
+              aria-label="Tell Us What Tea You Need"
             >
-              <span>Request Free Samples</span>
+              <span>Tell Us What Tea You Need</span>
               <ArrowRight size={18} aria-hidden="true" />
             </a>
 
             <a 
-              href="#requirement-form" 
-              onClick={handleRequirementClick}
+              href={CONTACT_INFO.whatsapp.getLink('Hi SHIVOM GLOBAL, I would like to discuss an Indian tea sourcing requirement.')}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-secondary-dark btn-lg hero-secondary-btn"
               id="hero-secondary-cta"
-              aria-label="Tell Us Your Requirement"
+              aria-label="WhatsApp Trade Desk"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             >
-              <span>Tell Us Your Requirement</span>
+              <MessageCircle size={18} style={{ color: '#25D366' }} aria-hidden="true" />
+              <span>WhatsApp Trade Desk</span>
             </a>
           </div>
 
