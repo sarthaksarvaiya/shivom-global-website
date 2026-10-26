@@ -6,8 +6,10 @@ import {
   AlertCircle, 
   RefreshCw, 
   Sparkles,
-  ClipboardList
+  ClipboardList,
+  MessageCircle
 } from 'lucide-react';
+import { CONTACT_INFO } from '@/constants/contact';
 import { 
   BuyerRequirementFormData, 
   BuyerRequirementRecord, 
@@ -307,7 +309,33 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </strong>
               </div>
 
-              <div className="buyer-success-actions">
+              <div className="buyer-success-actions" style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+                <a
+                  href={CONTACT_INFO.whatsapp.getLink(
+                    `Hi SHIVOM GLOBAL, I have submitted my requirement. My reference number is ${submittedRecord.referenceId}. Please review and advise.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{
+                    backgroundColor: '#25D366',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontWeight: 700,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '10px 20px',
+                    borderRadius: '6px',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 8px rgba(37, 211, 102, 0.3)',
+                  }}
+                  aria-label={`Follow up on WhatsApp with reference ${submittedRecord.referenceId}`}
+                >
+                  <MessageCircle size={18} aria-hidden="true" />
+                  <span>Message Trade Desk on WhatsApp</span>
+                </a>
+
                 <button 
                   type="button"
                   onClick={handleReset} 
