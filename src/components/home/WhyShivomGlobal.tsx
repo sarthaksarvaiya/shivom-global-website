@@ -124,7 +124,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
                   Statutory Export Compliance &amp; Documentation
                 </h3>
                 <p className="compliance-terminal-subtitle">
-                  Export consignments are coordinated with applicable statutory trade documentation for frictionless customs clearance at your destination port.
+                  Export consignments are coordinated with applicable statutory trade documentation per shipment. Buyer-specific documentation and legalization requirements can be discussed during quotation and order preparation.
                 </p>
               </div>
 
