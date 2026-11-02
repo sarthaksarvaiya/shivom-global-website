@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ArrowRight, Info, Check, MessageCircle } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 
@@ -78,6 +79,14 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
     },
   ];
 
+  type GradeFilterType = 'ALL' | 'CTC' | 'Orthodox';
+  const [activeFilter, setActiveFilter] = useState<GradeFilterType>('ALL');
+  const shouldReduceMotion = useReducedMotion();
+
+  const filteredGrades = activeFilter === 'ALL'
+    ? grades
+    : grades.filter((g) => g.type === activeFilter);
+
   const handleGradeClick = (gradeCode: string) => {
     if (onSelectGrade) {
       onSelectGrade(gradeCode);
@@ -114,7 +123,7 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
   return (
     <section id="tea-by-grade" className="grade-matrix-section" aria-labelledby="grade-table-heading">
       <div className="container">
-        
+
         {/* Section Header */}
         <div className="grade-matrix-header">
           <div className="grade-matrix-eyebrow">
@@ -126,6 +135,41 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
           <p className="grade-matrix-lead">
             Review standard Indian auction cuts and typical commercial applications. Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
           </p>
+        </div>
+
+        {/* Sourcing Category Filter Bar */}
+        <div className="grade-filter-bar-wrap">
+          <div className="grade-filter-bar" role="tablist" aria-label="Filter tea grades by manufacturing type">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeFilter === 'ALL'}
+              onClick={() => setActiveFilter('ALL')}
+              className={`grade-filter-btn ${activeFilter === 'ALL' ? 'grade-filter-btn-active' : ''}`}
+            >
+              <span>All Sourcing Grades ({grades.length})</span>
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeFilter === 'CTC'}
+              onClick={() => setActiveFilter('CTC')}
+              className={`grade-filter-btn ${activeFilter === 'CTC' ? 'grade-filter-btn-active' : ''}`}
+            >
+              <span>Assam CTC Granular ({grades.filter((g) => g.type === 'CTC').length})</span>
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeFilter === 'Orthodox'}
+              onClick={() => setActiveFilter('Orthodox')}
+              className={`grade-filter-btn ${activeFilter === 'Orthodox' ? 'grade-filter-btn-active' : ''}`}
+            >
+              <span>Orthodox Whole Leaf ({grades.filter((g) => g.type === 'Orthodox').length})</span>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Horizontal Scroll Hint */}
@@ -146,98 +190,105 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
               </tr>
             </thead>
             <tbody>
-              {grades.map((item) => {
-                const isSelected = selectedGrade === item.code;
-                const waLink = CONTACT_INFO.whatsapp.getContextualLink({
-                  grade: item.code,
-                  category: item.type === 'CTC' ? 'Assam CTC' : 'Orthodox Black Tea',
-                  intent: 'sample',
-                });
+              <AnimatePresence mode="popLayout">
+                {filteredGrades.map((item) => {
+                  const isSelected = selectedGrade === item.code;
+                  const waLink = CONTACT_INFO.whatsapp.getContextualLink({
+                    grade: item.code,
+                    category: item.type === 'CTC' ? 'Assam CTC' : 'Orthodox Black Tea',
+                    intent: 'sample',
+                  });
 
-                return (
-                  <tr 
-                    key={item.code} 
-                    className={`grade-row ${isSelected ? 'grade-row-selected' : ''}`}
-                  >
-                    {/* Tea Type */}
-                    <td className="td-cat font-spec" style={{ fontWeight: 700, color: 'var(--color-primary-green)' }}>
-                      {item.type}
-                    </td>
+                  return (
+                    <motion.tr
+                      layout
+                      key={item.code}
+                      className={`grade-row ${isSelected ? 'grade-row-selected' : ''}`}
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      {/* Tea Type */}
+                      <td className="td-cat font-spec" style={{ fontWeight: 700, color: 'var(--color-primary-green)' }}>
+                        {item.type}
+                      </td>
 
-                    {/* Grade Code & Full Name */}
-                    <td className="td-grade">
-                      <div className="grade-code-badge">
-                        <span className="font-spec grade-code-text">{item.code}</span>
-                      </div>
-                      <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                        {item.name}
-                      </div>
-                    </td>
+                      {/* Grade Code & Full Name */}
+                      <td className="td-grade">
+                        <div className="grade-code-badge">
+                          <span className="font-spec grade-code-text">{item.code}</span>
+                        </div>
+                        <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          {item.name}
+                        </div>
+                      </td>
 
-                    {/* Appearance & Style */}
-                    <td className="td-desc">
-                      <div style={{ color: 'var(--text-main)', fontSize: '0.9375rem' }}>
-                        {item.style}
-                      </div>
-                    </td>
+                      {/* Appearance & Style */}
+                      <td className="td-desc">
+                        <div style={{ color: 'var(--text-main)', fontSize: '0.9375rem' }}>
+                          {item.style}
+                        </div>
+                      </td>
 
-                    {/* Typical Use */}
-                    <td className="td-app">
-                      <div className="grade-app-text">
-                        {item.typicalUse}
-                      </div>
-                    </td>
+                      {/* Typical Use */}
+                      <td className="td-app">
+                        <div className="grade-app-text">
+                          {item.typicalUse}
+                        </div>
+                      </td>
 
-                    {/* Action: Select for Form + Quick WhatsApp Link */}
-                    <td className="td-act" style={{ textAlign: 'center' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                        <button
-                          type="button"
-                          onClick={() => handleGradeClick(item.code)}
-                          className={`grade-inquire-btn ${isSelected ? 'grade-inquire-btn-active' : ''}`}
-                          aria-label={`Select ${item.code} in requirement form`}
-                          title={`Select ${item.code} in requirement form`}
-                        >
-                          {isSelected ? (
-                            <>
-                              <Check size={13} aria-hidden="true" />
-                              <span>Selected</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>Specify</span>
-                              <ArrowRight size={12} aria-hidden="true" />
-                            </>
-                          )}
-                        </button>
+                      {/* Action: Select for Form + Quick WhatsApp Link */}
+                      <td className="td-act" style={{ textAlign: 'center' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                          <button
+                            type="button"
+                            onClick={() => handleGradeClick(item.code)}
+                            className={`grade-inquire-btn ${isSelected ? 'grade-inquire-btn-active' : ''}`}
+                            aria-label={`Select ${item.code} in requirement form`}
+                            title={`Select ${item.code} in requirement form`}
+                          >
+                            {isSelected ? (
+                              <>
+                                <Check size={13} aria-hidden="true" />
+                                <span>Selected</span>
+                              </>
+                            ) : (
+                              <>
+                                <span>Specify</span>
+                                <ArrowRight size={12} aria-hidden="true" />
+                              </>
+                            )}
+                          </button>
 
-                        <a
-                          href={waLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="grade-wa-btn"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: 'var(--radius-sm)',
-                            backgroundColor: 'rgba(37, 211, 102, 0.12)',
-                            color: '#15803D',
-                            border: '1px solid rgba(37, 211, 102, 0.3)',
-                            textDecoration: 'none',
-                          }}
-                          aria-label={`Inquire about ${item.code} on WhatsApp`}
-                          title={`Quick WhatsApp inquiry for ${item.code}`}
-                        >
-                          <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                          <a
+                            href={waLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="grade-wa-btn"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: '32px',
+                              height: '32px',
+                              borderRadius: 'var(--radius-sm)',
+                              backgroundColor: 'rgba(37, 211, 102, 0.12)',
+                              color: '#15803D',
+                              border: '1px solid rgba(37, 211, 102, 0.3)',
+                              textDecoration: 'none',
+                            }}
+                            aria-label={`Inquire about ${item.code} on WhatsApp`}
+                            title={`Quick WhatsApp inquiry for ${item.code}`}
+                          >
+                            <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+                          </a>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </AnimatePresence>
             </tbody>
           </table>
         </div>

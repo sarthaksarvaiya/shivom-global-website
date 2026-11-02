@@ -71,7 +71,7 @@ export const HomePage: React.FC = () => {
     } else {
       setFormRequirementType('Assam CTC');
     }
-    setFormIntent('sample');
+    setFormIntent('quote');
     scrollToForm();
   };
 

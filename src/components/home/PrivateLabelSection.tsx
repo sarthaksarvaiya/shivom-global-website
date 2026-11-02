@@ -161,8 +161,8 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
         <div className="private-label-capabilities-box">
           <div className="private-label-capabilities-left">
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <ShieldCheck size={18} style={{ color: '#D4AF37' }} aria-hidden="true" />
-              <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+              <ShieldCheck size={18} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+              <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-inverse)', margin: 0 }}>
                 Discuss Your Destination Packaging &amp; Labeling Needs
               </h4>
             </div>

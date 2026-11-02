@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Send, 
-  CheckCircle2, 
-  RotateCcw, 
-  AlertCircle, 
-  RefreshCw, 
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import {
+  Send,
+  CheckCircle2,
+  RotateCcw,
+  AlertCircle,
+  RefreshCw,
   Sparkles,
   ClipboardList,
   MessageCircle
 } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
-import { 
-  BuyerRequirementFormData, 
-  BuyerRequirementRecord, 
-  FormStatus, 
-  FieldValidationErrors 
+import {
+  BuyerRequirementFormData,
+  BuyerRequirementRecord,
+  FormStatus,
+  FieldValidationErrors
 } from '@/types/buyerRequirement';
-import { 
-  validateRequirementForm, 
-  buildRequirementRecord 
+import {
+  validateRequirementForm,
+  buildRequirementRecord
 } from '@/utils/requirementValidation';
 import { submitBuyerRequirement } from '@/services/submissionAdapter';
 
@@ -63,6 +64,15 @@ const DEFAULT_QUICK_DATA: QuickFormData = {
   message: '',
 };
 
+const QUICK_FIELD_ERROR_MAP: Record<keyof QuickFormData, keyof FieldValidationErrors> = {
+  name: 'contactPerson',
+  company: 'companyName',
+  email: 'businessEmail',
+  phone: 'phoneWhatsApp',
+  country: 'country',
+  message: 'qualitySpecs',
+};
+
 export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   initialRequirementType,
   initialGrade,
@@ -86,6 +96,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Honeypot field for anti-bot protection
   const [honeypot, setHoneypot] = useState<string>('');
 
+  // Accessibility: detect reduced motion preference
+  const shouldReduceMotion = useReducedMotion();
+
   // Synchronize incoming contextual preselection
   useEffect(() => {
     if (initialRequirementType) {
@@ -102,8 +115,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Quick form change handler
   const handleQuickChange = (field: keyof QuickFormData, value: string) => {
     setQuickData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field as keyof FieldValidationErrors]) {
-      setErrors((prev) => ({ ...prev, [field as keyof FieldValidationErrors]: undefined }));
+    const errorKey = QUICK_FIELD_ERROR_MAP[field];
+    if (errorKey && errors[errorKey]) {
+      setErrors((prev) => ({ ...prev, [errorKey]: undefined }));
     }
     if (formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR') {
       setSubmissionError('');
@@ -170,7 +184,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
         volume: 'Trial Batch (Quick Enquiry / Samples)',
         packaging: 'Standard Bulk Export Sacks',
         destinationPort: `${quickData.country.trim()} (Port TBD)`,
-        qualitySpecs: quickData.message.trim() 
+        qualitySpecs: quickData.message.trim()
           ? `[Form: Quick Enquiry]\n${quickData.message.trim()}`
           : '[Form: Quick Enquiry / Sample Request]',
       };
@@ -212,7 +226,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     try {
       const enrichedPayload: BuyerRequirementFormData = {
         ...detailedData,
-        qualitySpecs: detailedData.qualitySpecs 
+        qualitySpecs: detailedData.qualitySpecs
           ? `[Form: Detailed Tea Requirement]\n${detailedData.qualitySpecs}`
           : '[Form: Detailed Tea Requirement]',
       };
@@ -248,7 +262,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   return (
     <section id="requirement-form" className="buyer-engine-section" aria-labelledby="buyer-engine-heading">
       <div className="container">
-        
+
         {/* Section Header — Focused Entirely on the Buyer's Action */}
         <div className="buyer-engine-header" style={{ maxWidth: '680px', margin: '0 auto clamp(2rem, 4vw, 3rem)' }}>
           <h2 id="buyer-engine-heading" className="buyer-engine-title">
@@ -286,18 +300,27 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
         {/* Form Container Card */}
         <div className="buyer-engine-card" style={{ maxWidth: '780px', margin: '0 auto' }}>
-          
-          {formStatus === 'SUCCESS' && submittedRecord ? (
-            /* Confirmation State */
-            <div className="buyer-engine-success" role="region" aria-label="Requirement Confirmation">
-              <div className="buyer-success-icon-wrap">
-                <CheckCircle2 size={36} className="buyer-success-icon" />
-              </div>
+          <AnimatePresence mode="wait">
+            {formStatus === 'SUCCESS' && submittedRecord ? (
+              /* Confirmation State */
+              <motion.div
+                key="success-confirmation"
+                className="buyer-engine-success"
+                role="region"
+                aria-label="Requirement Confirmation"
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="buyer-success-icon-wrap">
+                  <CheckCircle2 size={36} className="buyer-success-icon" />
+                </div>
 
               <h3 className="buyer-success-title">
                 Requirement Received
               </h3>
-              
+
               <p className="buyer-success-lead">
                 Our trade desk will review the requirement and follow up using the contact details provided.
               </p>
@@ -336,27 +359,36 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <span>Message Trade Desk on WhatsApp</span>
                 </a>
 
-                <button 
+                <button
                   type="button"
-                  onClick={handleReset} 
+                  onClick={handleReset}
                   className="buyer-success-reset-btn"
                 >
                   <RotateCcw size={15} />
                   <span>Submit Another Requirement</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
           ) : formMode === 'quick' ? (
             /* FORM A — Quick Contact Form (Default) */
-            <form onSubmit={handleQuickSubmit} noValidate className="buyer-form-root">
+            <motion.form
+              key="form-quick"
+              onSubmit={handleQuickSubmit}
+              noValidate
+              className="buyer-form-root"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
               {/* Anti-Bot Honeypot */}
               <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
-                <input 
-                  type="text" 
-                  value={honeypot} 
-                  onChange={(e) => setHoneypot(e.target.value)} 
-                  tabIndex={-1} 
-                  autoComplete="off" 
+                <input
+                  type="text"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
                 />
               </div>
 
@@ -366,10 +398,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="quick-name" className="form-label form-label-required">
                     Your Name
                   </label>
-                  <input 
+                  <input
                     id="quick-name"
-                    type="text" 
-                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`}
                     placeholder="e.g. Tariq Mansoor"
                     value={quickData.name}
                     onChange={(e) => handleQuickChange('name', e.target.value)}
@@ -389,10 +421,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="quick-company" className="form-label form-label-required">
                     Company Name
                   </label>
-                  <input 
+                  <input
                     id="quick-company"
-                    type="text" 
-                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`}
                     placeholder="e.g. Al-Noor Tea Trading LLC"
                     value={quickData.company}
                     onChange={(e) => handleQuickChange('company', e.target.value)}
@@ -414,10 +446,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="quick-email" className="form-label form-label-required">
                     Email Address
                   </label>
-                  <input 
+                  <input
                     id="quick-email"
-                    type="email" 
-                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
+                    type="email"
+                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`}
                     placeholder="buyer@company.com"
                     value={quickData.email}
                     onChange={(e) => handleQuickChange('email', e.target.value)}
@@ -437,10 +469,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="quick-phone" className="form-label form-label-required">
                     WhatsApp / Phone
                   </label>
-                  <input 
+                  <input
                     id="quick-phone"
-                    type="tel" 
-                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`} 
+                    type="tel"
+                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`}
                     placeholder="+971 50 XXX XXXX"
                     value={quickData.phone}
                     onChange={(e) => handleQuickChange('phone', e.target.value)}
@@ -460,10 +492,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="quick-country" className="form-label form-label-required">
                     Country
                   </label>
-                  <input 
+                  <input
                     id="quick-country"
-                    type="text" 
-                    className={`form-input ${errors.country ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.country ? 'form-input-error' : ''}`}
                     placeholder="e.g. United Arab Emirates"
                     value={quickData.country}
                     onChange={(e) => handleQuickChange('country', e.target.value)}
@@ -484,7 +516,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <label htmlFor="quick-message" className="form-label">
                   What tea or samples are you looking for?
                 </label>
-                <textarea 
+                <textarea
                   id="quick-message"
                   className="form-textarea"
                   placeholder="Tell us what tea type, grade or quantity you need, or request sample kits..."
@@ -506,9 +538,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
               {/* Submit Button */}
               <div className="buyer-form-action-wrap">
-                <button 
-                  type="submit" 
-                  className="buyer-submit-btn" 
+                <button
+                  type="submit"
+                  className="buyer-submit-btn"
                   disabled={formStatus === 'SUBMITTING'}
                   aria-label="Send Enquiry"
                 >
@@ -525,18 +557,27 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   )}
                 </button>
               </div>
-            </form>
+            </motion.form>
           ) : (
             /* FORM B — Detailed Tea Requirement */
-            <form onSubmit={handleDetailedSubmit} noValidate className="buyer-form-root">
+            <motion.form
+              key="form-detailed"
+              onSubmit={handleDetailedSubmit}
+              noValidate
+              className="buyer-form-root"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
               {/* Anti-Bot Honeypot */}
               <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
-                <input 
-                  type="text" 
-                  value={honeypot} 
-                  onChange={(e) => setHoneypot(e.target.value)} 
-                  tabIndex={-1} 
-                  autoComplete="off" 
+                <input
+                  type="text"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
                 />
               </div>
 
@@ -552,10 +593,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-contact" className="form-label form-label-required">
                     Contact Person
                   </label>
-                  <input 
+                  <input
                     id="det-contact"
-                    type="text" 
-                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.contactPerson ? 'form-input-error' : ''}`}
                     placeholder="e.g. Tariq Mansoor"
                     value={detailedData.contactPerson}
                     onChange={(e) => handleDetailedChange('contactPerson', e.target.value)}
@@ -569,10 +610,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-company" className="form-label form-label-required">
                     Company Legal Name
                   </label>
-                  <input 
+                  <input
                     id="det-company"
-                    type="text" 
-                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.companyName ? 'form-input-error' : ''}`}
                     placeholder="e.g. Al-Noor Tea Trading LLC"
                     value={detailedData.companyName}
                     onChange={(e) => handleDetailedChange('companyName', e.target.value)}
@@ -588,10 +629,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-email" className="form-label form-label-required">
                     Email Address
                   </label>
-                  <input 
+                  <input
                     id="det-email"
-                    type="email" 
-                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`} 
+                    type="email"
+                    className={`form-input ${errors.businessEmail ? 'form-input-error' : ''}`}
                     placeholder="buyer@company.com"
                     value={detailedData.businessEmail}
                     onChange={(e) => handleDetailedChange('businessEmail', e.target.value)}
@@ -605,10 +646,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-phone" className="form-label form-label-required">
                     WhatsApp / Phone
                   </label>
-                  <input 
+                  <input
                     id="det-phone"
-                    type="tel" 
-                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`} 
+                    type="tel"
+                    className={`form-input ${errors.phoneWhatsApp ? 'form-input-error' : ''}`}
                     placeholder="+971 50 XXX XXXX"
                     value={detailedData.phoneWhatsApp}
                     onChange={(e) => handleDetailedChange('phoneWhatsApp', e.target.value)}
@@ -622,10 +663,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-country" className="form-label form-label-required">
                     Country
                   </label>
-                  <input 
+                  <input
                     id="det-country"
-                    type="text" 
-                    className={`form-input ${errors.country ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.country ? 'form-input-error' : ''}`}
                     placeholder="e.g. United Arab Emirates"
                     value={detailedData.country}
                     onChange={(e) => handleDetailedChange('country', e.target.value)}
@@ -648,7 +689,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-category" className="form-label form-label-required">
                     Tea Type
                   </label>
-                  <select 
+                  <select
                     id="det-category"
                     className="form-select"
                     value={detailedData.requirementType}
@@ -668,7 +709,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-grade" className="form-label form-label-required">
                     Grade
                   </label>
-                  <select 
+                  <select
                     id="det-grade"
                     className="form-select font-spec"
                     value={detailedData.grade}
@@ -693,7 +734,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-volume" className="form-label form-label-required">
                     Quantity Scope
                   </label>
-                  <select 
+                  <select
                     id="det-volume"
                     className="form-select"
                     value={detailedData.volume}
@@ -710,7 +751,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-packaging" className="form-label form-label-required">
                     Packaging Requirement
                   </label>
-                  <select 
+                  <select
                     id="det-packaging"
                     className="form-select"
                     value={detailedData.packaging}
@@ -727,10 +768,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-port" className="form-label form-label-required">
                     Destination Port
                   </label>
-                  <input 
+                  <input
                     id="det-port"
-                    type="text" 
-                    className={`form-input ${errors.destinationPort ? 'form-input-error' : ''}`} 
+                    type="text"
+                    className={`form-input ${errors.destinationPort ? 'form-input-error' : ''}`}
                     placeholder="e.g. Jebel Ali / Felixstowe"
                     value={detailedData.destinationPort}
                     onChange={(e) => handleDetailedChange('destinationPort', e.target.value)}
@@ -746,10 +787,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-target-price" className="form-label">
                     Target Price Bracket (Optional)
                   </label>
-                  <input 
+                  <input
                     id="det-target-price"
-                    type="text" 
-                    className="form-input" 
+                    type="text"
+                    className="form-input"
                     placeholder="e.g. USD 2.80–3.20/kg CIF Jebel Ali"
                     value={detailedData.targetPrice || ''}
                     onChange={(e) => handleDetailedChange('targetPrice', e.target.value)}
@@ -761,7 +802,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <label htmlFor="det-sample-req" className="form-label">
                     Sample Evaluation Required?
                   </label>
-                  <select 
+                  <select
                     id="det-sample-req"
                     className="form-select"
                     value={detailedData.buyerRole || 'Sample Evaluation Required'}
@@ -779,7 +820,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 <label htmlFor="det-specs" className="form-label">
                   Target Specifications, Sieve Cut, or Sample Notes (Optional)
                 </label>
-                <textarea 
+                <textarea
                   id="det-specs"
                   className="form-textarea"
                   placeholder="Provide any specific cup parameters, physical benchmark matching details, or preferred shipment timeline..."
@@ -801,9 +842,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
 
               {/* Submit Button */}
               <div className="buyer-form-action-wrap">
-                <button 
-                  type="submit" 
-                  className="buyer-submit-btn" 
+                <button
+                  type="submit"
+                  className="buyer-submit-btn"
                   disabled={formStatus === 'SUBMITTING'}
                   aria-label="Submit Tea Requirement"
                 >
@@ -820,8 +861,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   )}
                 </button>
               </div>
-            </form>
+            </motion.form>
           )}
+        </AnimatePresence>
 
         </div>
 

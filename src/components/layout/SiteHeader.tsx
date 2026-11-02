@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, MessageCircle } from 'lucide-react';
-import { CONTACT_INFO } from '@/constants/contact';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export interface SiteHeaderProps {
   onNavigate?: (targetId: string) => void;
   onRequestSamples?: () => void;
 }
 
+interface NavLinkItem {
+  id: string;
+  label: string;
+}
+
+const NAV_LINKS: NavLinkItem[] = [
+  { id: 'our-teas', label: 'Tea Sourcing' },
+  { id: 'tea-by-grade', label: 'Grades & Specs' },
+  { id: 'private-label', label: 'Private Label' },
+  { id: 'how-it-works', label: 'Sourcing Flow' },
+  { id: 'why-us', label: 'Export Compliance' },
+];
+
 export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSamples }) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string>('');
 
+  // Handle sticky header scroll state
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -21,13 +35,51 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Active section scroll-spy with smooth detection
+  useEffect(() => {
+    const handleScrollSpy = () => {
+      const scrollPosition = window.scrollY + 140; // Detection threshold below 74px header
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const el = document.getElementById(NAV_LINKS[i].id);
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveSection(NAV_LINKS[i].id);
+            return;
+          }
+        }
+      }
+      setActiveSection('');
+    };
+
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, []);
+
+  // Keyboard accessibility: ESC key closes mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  // Smooth scroll navigation
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    
+
     if (onNavigate) {
       onNavigate(targetId);
       return;
@@ -35,7 +87,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
 
     const element = document.getElementById(targetId);
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 74;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -46,6 +98,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
     }
   };
 
+  // Primary conversion CTA click handler
   const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -57,218 +110,96 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
   };
 
   return (
-    <header 
-      className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`}
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        backgroundColor: isScrolled ? 'rgba(7, 34, 24, 0.98)' : 'var(--color-primary-dark)',
-        backdropFilter: 'blur(8px)',
-        borderBottom: `1px solid ${isScrolled ? 'rgba(197, 155, 39, 0.25)' : 'var(--border-dark-subtle)'}`,
-        transition: 'all var(--transition-normal)',
-      }}
-    >
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '74px' }}>
-        {/* Brand Logo & Positioning */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexShrink: 0 }}>
-          <a 
-            href="#hero" 
+    <header className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`}>
+      <div className="header-container">
+        {/* Brand Logo */}
+        <div className="header-brand-cluster">
+          <a
+            href="#hero"
             onClick={(e) => handleLinkClick(e, 'hero')}
             className="header-brand-link"
             aria-label="SHIVOM GLOBAL — Indian Tea Sourcing & Export"
-            style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
           >
-            <img 
-              src="/Shivom_Global_Header_Logo.svg" 
-              alt="SHIVOM GLOBAL — Indian Tea Sourcing & Export" 
+            <img
+              src="/Shivom_Global_Header_Logo.svg"
+              alt="SHIVOM GLOBAL"
               className="header-brand-img"
             />
-            <span className="header-subtitle-tag font-spec" style={{
-              fontSize: '0.6875rem',
-              color: 'var(--color-accent-gold)',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              fontWeight: 600,
-              borderLeft: '1px solid rgba(197, 155, 39, 0.4)',
-              paddingLeft: '10px',
-              lineHeight: 1.2,
-              display: 'none', // Shown on desktop via CSS or media queries
-            }}>
-              Indian Tea Sourcing &amp; Export
-            </span>
           </a>
         </div>
 
-        {/* Desktop Navigation Links — 5 Focused Sourcing Links */}
-        <nav 
-          className="desktop-nav"
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 'clamp(1rem, 1.8vw, 1.75rem)',
-            margin: '0 var(--space-4)'
-          }}
-          aria-label="Main Navigation"
-        >
-          <a 
-            href="#our-teas" 
-            onClick={(e) => handleLinkClick(e, 'our-teas')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Tea Sourcing
-          </a>
-          <a 
-            href="#tea-by-grade" 
-            onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Grades &amp; Specs
-          </a>
-          <a 
-            href="#private-label" 
-            onClick={(e) => handleLinkClick(e, 'private-label')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Private Label
-          </a>
-          <a 
-            href="#how-it-works" 
-            onClick={(e) => handleLinkClick(e, 'how-it-works')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Sourcing Flow
-          </a>
-          <a 
-            href="#why-us" 
-            onClick={(e) => handleLinkClick(e, 'why-us')}
-            className="nav-link"
-            style={{ whiteSpace: 'nowrap' }}
-          >
-            Export Compliance
-          </a>
+        {/* Desktop Navigation Links — 5 Focused Sourcing Links with Scroll-Spy */}
+        <nav className="desktop-nav" aria-label="Main Navigation">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => handleLinkClick(e, link.id)}
+              className={`nav-link ${activeSection === link.id ? 'active' : ''}`}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
 
-        {/* Desktop Action Area: WhatsApp + Primary CTA (Request Requirement / Quote) */}
-        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexShrink: 0 }}>
+        {/* Desktop Action Area: Primary Conversion CTA (WhatsApp removed) */}
+        <div className="desktop-cta">
           <a
-            href={CONTACT_INFO.whatsapp.getLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-whatsapp-pill"
-            aria-label={CONTACT_INFO.whatsapp.ariaLabel}
-            title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
-          >
-            <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
-            <span>WhatsApp</span>
-          </a>
-
-          {/* Primary CTA: Request Requirement / Quote */}
-          <a 
-            href="#requirement-form" 
+            href="#requirement-form"
             onClick={handleCtaClick}
-            className="btn btn-primary btn-sm header-submit-btn"
-            style={{ fontWeight: 700, whiteSpace: 'nowrap' }}
+            className="btn btn-primary header-submit-btn"
             title="Submit tea specifications and request proforma quotation"
           >
-            <span>Request Requirement / Quote</span>
+            <span>Request a Quote</span>
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
 
-        {/* Mobile Header Actions */}
+        {/* Mobile Header Actions (Clean Hamburger Toggle Only) */}
         <div className="mobile-header-actions">
-          <a
-            href={CONTACT_INFO.whatsapp.getLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mobile-header-wa-btn"
-            aria-label="Direct WhatsApp Contact"
-            title="WhatsApp SHIVOM GLOBAL"
-          >
-            <MessageCircle size={18} aria-hidden="true" />
-          </a>
-
-          <button 
+          <button
             className="mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
             aria-expanded={mobileMenuOpen}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--text-inverse)',
-              cursor: 'pointer',
-              padding: '8px',
-            }}
+            aria-controls="mobile-nav-drawer"
           >
-            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div 
+        <div
+          id="mobile-nav-drawer"
           className="mobile-drawer"
-          style={{
-            backgroundColor: 'var(--color-primary-dark)',
-            borderTop: '1px solid var(--border-dark-subtle)',
-            padding: 'var(--space-5) var(--space-4) var(--space-6)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--space-3)',
-          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site Navigation"
         >
-          <a 
-            href="#our-teas" 
-            onClick={(e) => handleLinkClick(e, 'our-teas')}
-            className="mobile-nav-link"
-          >
-            Tea
-          </a>
-          <a 
-            href="#tea-by-grade" 
-            onClick={(e) => handleLinkClick(e, 'tea-by-grade')}
-            className="mobile-nav-link"
-          >
-            Grades
-          </a>
-          <a 
-            href="#how-it-works" 
-            onClick={(e) => handleLinkClick(e, 'how-it-works')}
-            className="mobile-nav-link"
-          >
-            How It Works
-          </a>
-          <a 
-            href="#why-us" 
-            onClick={(e) => handleLinkClick(e, 'why-us')}
-            className="mobile-nav-link"
-          >
-            Why Us
-          </a>
-          <a 
-            href="#requirement-form" 
-            onClick={(e) => handleLinkClick(e, 'requirement-form')}
-            className="mobile-nav-link"
-          >
-            Contact
-          </a>
+          <div className="mobile-drawer-links">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => handleLinkClick(e, link.id)}
+                className={`mobile-nav-link ${activeSection === link.id ? 'active' : ''}`}
+              >
+                <span>{link.label}</span>
+                <ArrowRight size={14} className="mobile-nav-arrow" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
 
-          <div style={{ paddingTop: 'var(--space-2)' }}>
-            <a 
-              href="#requirement-form" 
+          <div className="mobile-drawer-cta">
+            <a
+              href="#requirement-form"
               onClick={handleCtaClick}
               className="btn btn-primary btn-mobile-full"
-              style={{ padding: '12px', fontSize: '0.9375rem', justifyContent: 'center' }}
             >
-              <span>Request Requirement / Quote</span>
-              <ArrowRight size={15} />
+              <span>Request a Quote</span>
+              <ArrowRight size={15} aria-hidden="true" />
             </a>
           </div>
         </div>

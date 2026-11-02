@@ -31,7 +31,10 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+.gemini/
 
 # Temporary / Scratch artifacts
 .tempmediaStorage
 scratch/
+public/assets/ezgif-44c01c3f4777df02-jpg/
+/reference-assets/hero/

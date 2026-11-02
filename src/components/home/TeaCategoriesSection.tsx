@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { Flame, Sparkles, Leaf, Award, ArrowRight, Check, Compass, Droplet, MessageCircle, ChevronDown } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 
 export interface TeaCategoriesSectionProps {
@@ -7,21 +8,30 @@ export interface TeaCategoriesSectionProps {
   onExploreGrades?: () => void;
 }
 
-interface TeaCategoryData {
+export interface TeaGradeDetail {
+  code: string;
+  name: string;
+  application: string;
+}
+
+export interface TeaCategoryData {
   id: string;
   tabLabel: string;
   name: string;
   origin: string;
+  image: string;
+  imageAlt: string;
+  liquorColor: string;
+  liquorName: string;
   tagline: string;
   description: string;
-  glowColor: string;
   organoleptic: {
     liquor: string;
     body: string;
     aroma: string;
     milk: string;
   };
-  grades: string[];
+  grades: TeaGradeDetail[];
   specs: string[];
   defaultGrade: string;
   icon: React.ElementType;
@@ -33,21 +43,31 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tabLabel: 'Assam CTC',
     name: 'Assam CTC (Crush, Tear, Curl)',
     origin: 'Brahmaputra Valley, Assam',
+    image: '/images/assam-ctc-spotlight.jpg',
+    imageAlt: 'Authentic Assam CTC granular black tea with rich amber liquor cupping',
+    liquorColor: '#8B2500',
+    liquorName: 'Deep Amber to Bright Red',
     tagline: 'Bold, Malty Amber Cup for High-Strength Blends & Packet Teas',
-    description: 'We identify suitable sourcing options based on your required particle cut, briskness and liquor depth. Revered for rich body, strong infusion, and exceptional milk reactivity for commercial blends, tea bags, and Karak chai.',
-    glowColor: 'rgba(212, 175, 55, 0.25)',
+    description: 'Sourced to match your target particle cut, briskness, and extraction depth. Renowned worldwide for heavy body, rich infusion, and immediate milk reactivity for commercial packet blends, quick-brew tea bags, and Karak chai.',
     organoleptic: {
-      liquor: 'Heavy & High-Briskness',
-      body: 'Full-Bodied Granular Cup',
-      aroma: 'Rich Malty Assam Amber',
-      milk: 'Exceptional (Ideal for Karak & Chai)',
+      liquor: 'Heavy, Vibrant Amber & High Briskness',
+      body: 'Full-Bodied Granular Density',
+      aroma: 'Rich Malty Assam Notes',
+      milk: 'Exceptional (Immediate Color & Depth)',
     },
-    grades: ['BOP', 'BOPSM', 'BP', 'PF', 'PD', 'Dust / D1'],
+    grades: [
+      { code: 'BOP', name: 'Broken Orange Pekoe', application: 'Largest CTC cut with bold granular leaf. Foundation for supermarket packet teas and commercial base blending.' },
+      { code: 'BOPSM', name: 'BOP Small', application: 'Medium-to-bold even granular cut. Suitable for consumer packet tea brands and family breakfast blends.' },
+      { code: 'BP', name: 'Broken Pekoe', application: 'Medium granular size with consistent density. Popular for strong everyday tea, food service, and chai.' },
+      { code: 'PF', name: 'Pekoe Fannings', application: 'Fine granular cut offering rapid color and liquor release. Engineered for high-speed tea-bag packaging.' },
+      { code: 'PD', name: 'Pekoe Dust', application: 'Fine granular dust providing instantaneous liquor extraction. Ideal for Karak chai vendors and vending.' },
+      { code: 'Dust / D1', name: 'Dust 1', application: 'Micro-cut granular particles with maximum cup yield. Preferred for foodservice catering and commercial chai.' },
+    ],
     specs: [
-      'Broken Grades (BOP, BP): Full body for packet teas and commercial brand blending',
-      'Fannings (PF): Rapid liquor release engineered for high-speed tea-bag packaging lines',
-      'Dust Grades (PD, D1): High cup yield and heavy color for foodservice, catering, and Karak chai',
-      'Export Packaging: Bulk packaging formats coordinated according to buyer requirements and selected tea lots',
+      'Lot-matched sourcing across accredited Brahmaputra Valley gardens',
+      'Standard bulk packaging: 40–55 kg multi-wall craft paper sacks with food-grade poly-liner',
+      'Palletized container load (20ft / 40ft FCL) and LCL sample consignments coordinated',
+      'Full export documentation: Certificate of Origin, Phytosanitary, and lab testing compliance',
     ],
     defaultGrade: 'BOP',
     icon: Flame,
@@ -57,21 +77,29 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tabLabel: 'Assam Orthodox',
     name: 'Assam Orthodox Whole Leaf',
     origin: 'Upper Assam Terroirs',
+    image: '/images/assam-orthodox.jpg',
+    imageAlt: 'Upper Assam Orthodox whole black tea leaves with golden tips and golden liquor cupping',
+    liquorColor: '#C27803',
+    liquorName: 'Golden Amber with Bright Rim',
     tagline: 'Traditional Rolled Leaf with Golden Tips & Caramel Malt Notes',
-    description: 'We identify suitable Orthodox sourcing options based on leaf style, tip content and target liquor aroma. Offers refined caramel malt sweetness, rich complexity, and an aromatic golden-amber cup for premium loose-leaf packaging.',
-    glowColor: 'rgba(197, 155, 39, 0.28)',
+    description: 'Rolled using traditional orthodox methods to preserve leaf geometry, delicate tips, and essential oils. Delivers complex caramel malt sweetness and an aromatic golden-amber cup sought after by specialty blenders and premium loose-leaf brands.',
     organoleptic: {
-      liquor: 'Medium-Brisk, Golden Cup',
-      body: 'Smooth, Rolled Leaf Density',
-      aroma: 'Caramel Malt & Floral Notes',
-      milk: 'Moderate (Best Black or Light Milk)',
+      liquor: 'Medium-Brisk, Golden-Amber Cup',
+      body: 'Smooth, Refined Rolled Leaf Body',
+      aroma: 'Caramelized Malt, Honey & Sweet Floral',
+      milk: 'Moderate (Best Black or with a Splash of Milk)',
     },
-    grades: ['FTGFOP1', 'TGFOP', 'FBOP', 'BOPF'],
+    grades: [
+      { code: 'FTGFOP1', name: 'Finest Tippy Golden Flowery Orange Pekoe 1', application: 'Intact wiry whole leaf with abundant golden tips. Prime choice for boutique loose-leaf gift tins.' },
+      { code: 'TGFOP', name: 'Tippy Golden Flowery Orange Pekoe', application: 'High tip content and elegant rolled leaf. Foundation grade for specialty loose-leaf retail packaging.' },
+      { code: 'FBOP', name: 'Flowery Broken Orange Pekoe', application: 'Aromatic broken leaf with golden tips. Balanced cup strength and aroma for English & Irish Breakfast blends.' },
+      { code: 'BOPF', name: 'Broken Orange Pekoe Fannings', application: 'Fine orthodox cut with rapid liquor release. Perfect for specialty whole-flavor pyramid tea bags.' },
+    ],
     specs: [
-      'Tippy Whole Leaf (FTGFOP1, TGFOP): Intact golden tips for specialty loose-leaf retail',
-      'Aromatic Brokens (FBOP): Balanced aroma and cup strength for traditional breakfast blends',
-      'Commercial Suitability: Popular in Middle East, European, and specialty boutique markets',
-      'Packaging Options: Bulk export packaging or retail repack formats coordinated upon discussion',
+      'Hand-selected from select Upper Assam estate lots during peak quality periods',
+      'Moisture-protective bulk packaging in foil-lined cartons or multi-wall lined paper sacks',
+      'Counter-sample dispatch with lot-specific moisture, particle, and cupping parameters',
+      'Suitable for gourmet retail tins, European loose-leaf blends, and specialty tea boutiques',
     ],
     defaultGrade: 'TGFOP',
     icon: Award,
@@ -81,23 +109,30 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tabLabel: 'Darjeeling Single Origin',
     name: 'Darjeeling Black Tea',
     origin: 'Darjeeling Himalayan Foothills',
+    image: '/images/darjeeling-single-origin.jpg',
+    imageAlt: 'Darjeeling single origin black tea leaves with pale golden-amber muscatel liquor cup',
+    liquorColor: '#D99B26',
+    liquorName: 'Pale Golden to Ripe Amber',
     tagline: 'Renowned Muscatel Flavor & Delicate Floral Bouquet',
-    description: 'High-elevation mountain terroirs producing world-celebrated seasonal harvests. First Flush brings crisp floral vibrancy; Second Flush yields the signature ripe muscatel grape profile.',
-    glowColor: 'rgba(245, 158, 11, 0.25)',
+    description: 'Cultivated at elevations up to 2,000 meters in the Himalayan foothills. Renowned globally as the "Champagne of Teas" for its rare muscatel grape sweetness, crisp mountain vibrancy, and delicate floral bouquet.',
     organoleptic: {
-      liquor: 'Delicate, Pale Amber',
-      body: 'Light, Crisp Himalayan Terroir',
-      aroma: 'Muscatel Grape & Floral Bouquet',
-      milk: 'Self-Drank (Consumed Without Milk)',
+      liquor: 'Delicate, Luminous Golden-Amber',
+      body: 'Crisp, Light-to-Medium Himalayan Terroir',
+      aroma: 'Distinct Muscatel Grape & Mountain Floral',
+      milk: 'Self-Drank (Enjoyed Strictly Without Milk)',
     },
-    grades: ['First Flush FTGFOP1', 'Second Flush TGFOP', 'Autumnal Harvest'],
-    specs: [
-      'High-Elevation Himalayan Terroirs: Sourced against buyer order during seasonal plucking cycles',
-      'Distinct Muscatel Flavor: Delicate floral top-notes with a lingering sweet finish',
-      'Best Application: Luxury loose-leaf gift tins, gourmet hospitality, and single-origin menus',
-      'Export Packaging: Moisture-protective bulk or vacuum packaging coordinated based on lot and buyer order',
+    grades: [
+      { code: 'First Flush FTGFOP1', name: 'First Flush Whole Leaf', application: 'Early spring harvest whole leaf with silver tips. Yields crisp floral vibrancy and a delicate light cup.' },
+      { code: 'Second Flush TGFOP', name: 'Second Flush Muscatel', application: 'Peak summer harvest with iconic muscatel grape note and rich amber cup. The world-renowned benchmark.' },
+      { code: 'Autumnal Harvest', name: 'Autumnal Whole Leaf', application: 'Post-monsoon harvest delivering a rounded copper-amber liquor with smooth caramel notes.' },
     ],
-    defaultGrade: 'TGFOP',
+    specs: [
+      'Seasonal harvest sourcing aligned with plucking flushes (March through November)',
+      'Specialized moisture-barrier export foil packaging to protect delicate volatile top-notes',
+      'Ideal for luxury tea gift tins, gourmet hospitality, and single-origin estate menus',
+      'Certificate of Origin and complete traceability documentation provided per shipment',
+    ],
+    defaultGrade: 'Second Flush TGFOP',
     icon: Sparkles,
   },
   {
@@ -105,21 +140,28 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     tabLabel: 'Green & Specialty',
     name: 'Indian Green & Wellness Teas',
     origin: 'High-Elevation Terroirs, India',
+    image: '/images/indian-green-tea.jpg',
+    imageAlt: 'Authentic Indian whole green tea leaves with clear jade green tea infusion',
+    liquorColor: '#4E8A3C',
+    liquorName: 'Clear Pale Green to Light Jade',
     tagline: 'Gently Processed Unoxidized Leaf with Jade Cup Clarity',
-    description: 'Fresh tea leaves steam-heated or pan-fired shortly after harvest to halt oxidation. Preserves natural green polyphenols, catechins, and clean herbaceous sweetness for health and wellness lines.',
-    glowColor: 'rgba(16, 185, 129, 0.25)',
+    description: 'Carefully pan-fired or steamed immediately after plucking to halt enzymatic oxidation. Preserves natural green chlorophyll, active catechins, and clean herbaceous sweetness for modern health, wellness, and botanical blending lines.',
     organoleptic: {
-      liquor: 'Gentle, Unoxidized Clarity',
-      body: 'Clean Herbaceous Infusion',
-      aroma: 'Fresh Vegetal & Jade Top-Notes',
-      milk: 'Not Applicable (Green Infusion)',
+      liquor: 'Clean, Pale Jade Cup Clarity',
+      body: 'Smooth, Herbaceous & Refreshing',
+      aroma: 'Fresh Vegetal, Grassy & Sweet Botanical',
+      milk: 'Not Applicable (Pure Green Infusion)',
     },
-    grades: ['Whole Leaf Green', 'Green Tea Fannings', 'Herbal Cut'],
+    grades: [
+      { code: 'Whole Leaf Green', name: 'High-Elevation Whole Leaf', application: 'Gently rolled whole leaf preserving antioxidant catechins. Clear jade liquor for premium loose tea.' },
+      { code: 'Green Tea Fannings', name: 'Green Pekoe Fannings', application: 'Fine particle cut engineered for rapid extraction in single-serve standard and pyramid green tea bags.' },
+      { code: 'Herbal Cut', name: 'Botanical Blending Cut', application: 'Balanced cut designed to blend uniformly with dried herbs, mint, lemon peel, jasmine, and chamomile.' },
+    ],
     specs: [
-      'Clean & Clear: Light jade liquor without bitter astringency when brewed correctly',
-      'Blending Foundation: Excellent neutral base for jasmine, mint, citrus, and herbal blends',
-      'Packaging Formats: Coordinated for pyramid mesh bags, loose canisters, or bulk export sacks',
-      'High Polyphenol Content: Preserves natural antioxidants and active catechins',
+      'Low bitterness profile achieved through controlled thermal fixation at source',
+      'Neutral, high-clarity blending foundation for citrus, mint, and functional wellness formulations',
+      'Export packing in vacuum barrier bulk bags or moisture-proof barrier multi-wall sacks',
+      'Lab tested for pesticide residue compliance to meet international destination standards',
     ],
     defaultGrade: 'Whole Leaf Green',
     icon: Leaf,
@@ -132,19 +174,26 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
 }) => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
   const activeCategory = TEA_CATEGORIES[activeCategoryIndex];
-  const ActiveIcon = activeCategory.icon;
 
-  const handlePrevCategory = () => {
-    setActiveCategoryIndex((prev) => (prev > 0 ? prev - 1 : TEA_CATEGORIES.length - 1));
+  // Track selected grade within active category
+  const [selectedGradeCode, setSelectedGradeCode] = useState<string>(activeCategory.defaultGrade);
+
+  // Accessibility: detect reduced motion preference
+  const shouldReduceMotion = useReducedMotion();
+
+  // Sync selected grade code when changing categories
+  const handleSelectCategoryTab = (index: number) => {
+    setActiveCategoryIndex(index);
+    setSelectedGradeCode(TEA_CATEGORIES[index].defaultGrade);
   };
 
-  const handleNextCategory = () => {
-    setActiveCategoryIndex((prev) => (prev < TEA_CATEGORIES.length - 1 ? prev + 1 : 0));
-  };
+  const currentGradeDetail =
+    activeCategory.grades.find((g) => g.code === selectedGradeCode) || activeCategory.grades[0];
 
-  const handleCategorySampleRequest = (category: string, defaultGrade?: string) => {
+  const handleCategorySampleRequest = (category: string, gradeCode?: string) => {
+    const targetGrade = gradeCode || selectedGradeCode || activeCategory.defaultGrade;
     if (onSelectCategory) {
-      onSelectCategory(category, defaultGrade);
+      onSelectCategory(category, targetGrade);
     } else {
       const formElement = document.getElementById('requirement-form');
       if (formElement) {
@@ -160,7 +209,21 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
   };
 
   const handleGradeBadgeClick = (gradeCode: string) => {
-    handleCategorySampleRequest(activeCategory.name, gradeCode);
+    setSelectedGradeCode(gradeCode);
+  };
+
+  const handleScrollToConsole = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const consoleEl = document.getElementById('tea-catalog-console');
+    if (consoleEl) {
+      const headerOffset = 70;
+      const elementPosition = consoleEl.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const handleGradeTableClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -182,59 +245,84 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
   };
 
   return (
-    <section 
-      id="our-teas" 
+    <section
+      id="our-teas"
       className="tea-categories-section"
       aria-labelledby="categories-heading"
     >
       <div className="container">
-        
-        {/* Section Header */}
-        <div className="tea-categories-header text-center">
-          <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
-            INDIAN TEA SOURCING SPECTRUM
-          </div>
-          
-          <h2 id="categories-heading" className="tea-categories-headline">
-            Tea Categories Sourced to Your Requirement
-          </h2>
-          
-          <p className="tea-categories-lead" style={{ maxWidth: '760px', margin: '0 auto' }}>
-            We work with appropriate sourcing channels to match buyer requirements with suitable Indian tea lots across primary production regions based on your requested grade, target cup profile, and destination compliance.
-          </p>
 
-          <div style={{ marginTop: 'var(--space-2)', fontSize: '0.8125rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
-            Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
+        {/* =========================================================================
+            PART 1: THE SOURCING SPECTRUM & PROTOCOL SCREEN
+            ========================================================================= */}
+        <div className="tea-sourcing-intro-screen">
+          {/* Section Header */}
+          <div className="tea-categories-header text-center">
+            <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-3)' }}>
+              INDIAN TEA SOURCING SPECTRUM
+            </div>
+
+            <h2 id="categories-heading" className="tea-categories-headline">
+              Tea Categories Sourced to Your Requirement
+            </h2>
+
+            <p className="tea-categories-lead">
+              We work with appropriate sourcing channels to match buyer requirements with suitable Indian tea lots across primary production regions based on your requested grade, target cup profile, and destination compliance.
+            </p>
+
+            <p className="tea-categories-disclaimer">
+              Grades shown represent sourcing categories, not standing inventory. Availability depends on current origin, lot, season and buyer specification.
+            </p>
+          </div>
+
+          {/* 3-Step Sourcing Protocol Cards */}
+          <div className="tea-protocol-banner" role="region" aria-label="Export sourcing workflow">
+            <div className="tea-protocol-item">
+              <span className="tea-protocol-num font-spec">01</span>
+              <div className="tea-protocol-info">
+                <span className="tea-protocol-title">Specification Matching</span>
+                <span className="tea-protocol-desc">Target grade cut, mesh particle size &amp; liquor profile</span>
+              </div>
+            </div>
+            <div className="tea-protocol-divider" aria-hidden="true" />
+            <div className="tea-protocol-item">
+              <span className="tea-protocol-num font-spec">02</span>
+              <div className="tea-protocol-info">
+                <span className="tea-protocol-title">Pre-Shipment Cupping</span>
+                <span className="tea-protocol-desc">Physical counter-samples dispatched for buyer sign-off</span>
+              </div>
+            </div>
+            <div className="tea-protocol-divider" aria-hidden="true" />
+            <div className="tea-protocol-item">
+              <span className="tea-protocol-num font-spec">03</span>
+              <div className="tea-protocol-info">
+                <span className="tea-protocol-title">Container Export Dispatch</span>
+                <span className="tea-protocol-desc">Lot allocation, phytosanitary checks &amp; maritime export</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Smooth Scroll Cue to Part 2 */}
+          <div className="tea-intro-scroll-wrap text-center">
+            <a
+              href="#tea-catalog-console"
+              onClick={handleScrollToConsole}
+              className="tea-scroll-cue-btn font-spec"
+              aria-label="Scroll down to tea variety explorer"
+            >
+              <span>EXPLORE TEA ORIGINS &amp; GRADES</span>
+              <ChevronDown size={14} className="tea-bounce-icon" aria-hidden="true" />
+            </a>
           </div>
         </div>
 
-        {/* Sourcing Specification Matching Sequence Bar */}
-        <div className="tea-matching-sequence-bar" role="region" aria-label="Specification matching methodology">
-          <span className="tea-sequence-lead font-spec">SPECIFICATION MATCHING:</span>
-          <div className="tea-sequence-steps">
-            <span className="tea-seq-step">Grade Selection</span>
-            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
-            <span className="tea-seq-step">Particle Cut</span>
-            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
-            <span className="tea-seq-step">Cup Profile</span>
-            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
-            <span className="tea-seq-step">Application</span>
-            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
-            <span className="tea-seq-step">Counter-Sample Sign-Off</span>
-            <span className="tea-seq-arrow" aria-hidden="true">&rarr;</span>
-            <span className="tea-seq-step tea-seq-step-final">Commercial Quote</span>
-          </div>
-        </div>
+        {/* =========================================================================
+            PART 2: THE INTERACTIVE SOURCING CONSOLE SCREEN
+            ========================================================================= */}
+        <div id="tea-catalog-console" className="tea-sourcing-console-screen">
 
-        {/* Dynamic Category Navigation Bar with Obvious Visual Selector */}
-        <div className="tea-explorer-wrap">
-          {/* Explicit Selector Cue */}
-          <div className="tea-explorer-selector-cue" aria-hidden="true">
-            <span className="tea-cue-dot" />
-            <span className="tea-cue-text">CHOOSE TEA ORIGIN / VARIETY TO PREVIEW CUP &amp; GRADES:</span>
-          </div>
-
-          <div className="tea-explorer-nav" role="tablist" aria-label="Tea categories selector">
+          {/* Category Navigation Tabs */}
+          <div className="tea-category-nav-bar" role="tablist" aria-label="Tea categories selector">
             {TEA_CATEGORIES.map((cat, idx) => {
               const isActive = idx === activeCategoryIndex;
               const TabIcon = cat.icon;
@@ -246,106 +334,77 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   aria-controls={`tea-panel-${cat.id}`}
                   id={`tea-tab-${cat.id}`}
                   type="button"
-                  onClick={() => setActiveCategoryIndex(idx)}
-                  className={`tea-explorer-tab ${isActive ? 'active' : ''}`}
+                  onClick={() => handleSelectCategoryTab(idx)}
+                  className={`tea-category-tab ${isActive ? 'active' : ''}`}
                 >
                   <span className="tea-tab-icon-wrap" aria-hidden="true">
                     <TabIcon size={16} />
                   </span>
                   <span className="tea-tab-text">{cat.tabLabel}</span>
-                  {isActive && <span className="tea-explorer-tab-dot" aria-hidden="true" />}
+                  {isActive && <span className="tea-tab-active-indicator" aria-hidden="true" />}
                 </button>
               );
             })}
           </div>
 
-          {/* Interactive Single Sourcing Console */}
-          <div 
-            id={`tea-panel-${activeCategory.id}`}
-            role="tabpanel"
-            aria-labelledby={`tea-tab-${activeCategory.id}`}
-            className="tea-explorer-console"
-          >
-            {/* Dynamic Ambient Liquor Glow Effect */}
-            <div 
-              className="tea-explorer-glow" 
-              style={{ background: activeCategory.glowColor }} 
-              aria-hidden="true"
-            />
+          {/* Full-Featured Split B2B Sourcing Console with Dynamic Terroir Ambient Theme */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory.id}
+              id={`tea-panel-${activeCategory.id}`}
+              role="tabpanel"
+              aria-labelledby={`tea-tab-${activeCategory.id}`}
+              className={`tea-sourcing-console tea-console-theme-${activeCategory.id}`}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            >
+            {/* Left Column: Visual Leaf & Terroir Sensory Profile */}
+            <div className="tea-console-visual">
+              {/* Authentic Leaf Photography Frame */}
+              <div className="tea-visual-frame">
+                <img
+                  src={activeCategory.image}
+                  alt={activeCategory.imageAlt}
+                  className="tea-visual-img"
+                  width={640}
+                  height={420}
+                  loading="lazy"
+                />
 
-            {/* In-Console Quick Variety Stepper Bar */}
-            <div className="tea-console-nav-strip">
-              <div className="tea-explorer-badge-row">
-                <span className="tea-origin-pill">
-                  <Compass size={14} aria-hidden="true" />
-                  <span>{activeCategory.origin}</span>
-                </span>
-                <span className="spec-badge spec-badge-gold font-spec">
-                  COUNTER-SAMPLES ON REQUEST
-                </span>
-              </div>
-
-              {/* Direct Next / Prev Switcher */}
-              <div className="tea-console-stepper" aria-label="Cycle tea varieties">
-                <span className="tea-console-counter font-spec">
-                  VARIETY {activeCategoryIndex + 1} OF {TEA_CATEGORIES.length}
-                </span>
-                <div className="tea-stepper-btn-group">
-                  <button
-                    type="button"
-                    onClick={handlePrevCategory}
-                    className="tea-stepper-btn"
-                    title="Previous tea variety"
-                    aria-label="Previous tea variety"
-                  >
-                    <ChevronLeft size={16} aria-hidden="true" />
-                    <span className="stepper-btn-label">Prev</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNextCategory}
-                    className="tea-stepper-btn"
-                    title="Next tea variety"
-                    aria-label="Next tea variety"
-                  >
-                    <span className="stepper-btn-label">Next</span>
-                    <ChevronRight size={16} aria-hidden="true" />
-                  </button>
+                {/* Visual Badges Overlay */}
+                <div className="tea-visual-overlay-strip">
+                  <span className="tea-visual-origin-tag">
+                    <Compass size={13} aria-hidden="true" />
+                    <span>{activeCategory.origin}</span>
+                  </span>
+                  <span className="tea-liquor-indicator">
+                    <span
+                      className="tea-liquor-swatch"
+                      style={{ backgroundColor: activeCategory.liquorColor }}
+                      aria-hidden="true"
+                    />
+                    <span>{activeCategory.liquorName}</span>
+                  </span>
                 </div>
               </div>
-            </div>
 
-            {/* Left Console: Overview & Sensory Radar Meters */}
-            <div className="tea-explorer-main">
-              <div>
-                <h3 className="tea-explorer-name">
-                  {activeCategory.name}
-                </h3>
-
-                <div className="tea-explorer-tagline">
-                  {activeCategory.tagline}
-                </div>
-
-                <p className="tea-explorer-desc">
-                  {activeCategory.description}
-                </p>
-              </div>
-
-              {/* Sensory Character Meters */}
+              {/* Indicative Organoleptic Profile Sensory Matrix */}
               <div className="tea-sensory-panel">
-                <div className="tea-sensory-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                    <span>Indicative Organoleptic Profile</span>
+                <div className="tea-sensory-header">
+                  <div className="tea-sensory-title-row">
+                    <span className="tea-sensory-title">Indicative Organoleptic Profile</span>
                     <Droplet size={14} style={{ color: 'var(--color-accent-gold)' }} aria-hidden="true" />
                   </div>
-                  <span style={{ fontSize: '0.6875rem', color: 'var(--text-dim)', fontWeight: 400, lineHeight: 1.3 }}>
-                    *Indicative cup profile. Final characteristics vary by origin, lot, season and processing.
+                  <span className="tea-sensory-disclaimer">
+                    *Indicative cup profile. Final characteristics vary by origin estate, lot, season and processing.
                   </span>
                 </div>
 
                 <div className="tea-sensory-grid">
                   <div className="tea-organoleptic-item">
-                    <span className="tea-organoleptic-label font-spec">LIQUOR STRENGTH</span>
+                    <span className="tea-organoleptic-label font-spec">LIQUOR DEPTH</span>
                     <span className="tea-organoleptic-val">{activeCategory.organoleptic.liquor}</span>
                   </div>
 
@@ -355,7 +414,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   </div>
 
                   <div className="tea-organoleptic-item">
-                    <span className="tea-organoleptic-label font-spec">AROMA &amp; FLAVOR</span>
+                    <span className="tea-organoleptic-label font-spec">AROMA PROFILE</span>
                     <span className="tea-organoleptic-val">{activeCategory.organoleptic.aroma}</span>
                   </div>
 
@@ -367,33 +426,73 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
               </div>
             </div>
 
-            {/* Right Console: Grades & Direct Sample Action */}
-            <div className="tea-explorer-specs">
-              <div>
-                <div className="tea-specs-section-title">
-                  <span>Export Sourcing Grades</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-accent-gold)', fontWeight: 600 }}>Click grade to request specification</span>
+            {/* Right Column: Technical Sourcing Specifications & Conversion */}
+            <div className="tea-console-specs">
+              {/* Category Header */}
+              <div className="tea-spec-header-block">
+                <div className="tea-spec-meta-row">
+                  <span className="spec-badge spec-badge-gold font-spec">
+                    COUNTER-SAMPLES ON REQUEST
+                  </span>
+                </div>
+                <h3 className="tea-console-heading">{activeCategory.name}</h3>
+                <div className="tea-console-tagline">{activeCategory.tagline}</div>
+                <p className="tea-console-desc">{activeCategory.description}</p>
+              </div>
+
+              {/* Grade Selection with Live In-Context Technical Spec */}
+              <div className="tea-grade-selection-block">
+                <div className="tea-grade-selection-header">
+                  <span className="tea-section-subtitle">Export Sourcing Grades</span>
+                  <span className="tea-selection-hint">Select grade to inspect application</span>
                 </div>
 
-                <div className="tea-grades-pill-wrap">
-                  {activeCategory.grades.map((grd) => (
-                    <button
-                      key={grd}
-                      type="button"
-                      onClick={() => handleGradeBadgeClick(grd)}
-                      className="tea-grade-badge-interactive"
-                      title={`Request specification for ${grd}`}
+                <div className="tea-grades-pill-wrap" role="group" aria-label="Available tea grades">
+                  {activeCategory.grades.map((grd) => {
+                    const isSelected = grd.code === selectedGradeCode;
+                    return (
+                      <motion.button
+                        key={grd.code}
+                        type="button"
+                        onClick={() => handleGradeBadgeClick(grd.code)}
+                        className={`tea-grade-badge-interactive ${isSelected ? 'active' : ''}`}
+                        aria-pressed={isSelected}
+                        title={`Select ${grd.name} (${grd.code})`}
+                        whileHover={shouldReduceMotion ? {} : { y: -2 }}
+                        whileTap={shouldReduceMotion ? {} : { scale: 0.96 }}
+                      >
+                        <span className="tea-grade-code">{grd.code}</span>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+
+                {/* Selected Grade In-Context Technical Callout with Animated Cross-Fade */}
+                <AnimatePresence mode="wait">
+                  {currentGradeDetail && (
+                    <motion.div
+                      key={selectedGradeCode}
+                      className="tea-active-grade-callout"
+                      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -4 }}
+                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     >
-                      <span>{grd}</span>
-                      <ArrowRight size={12} aria-hidden="true" />
-                    </button>
-                  ))}
-                </div>
+                      <div className="tea-active-grade-top">
+                        <span className="tea-active-grade-badge font-spec">{currentGradeDetail.code}</span>
+                        <span className="tea-active-grade-name">{currentGradeDetail.name}</span>
+                      </div>
+                      <p className="tea-active-grade-app">
+                        <strong>Target Application:</strong> {currentGradeDetail.application}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
-                <div className="tea-specs-section-title" style={{ marginTop: 'var(--space-4)' }}>
-                  <span>Sourcing &amp; Packing Specifications</span>
-                </div>
-
+              {/* Sourcing & Packaging Specifications */}
+              <div className="tea-specs-features-block">
+                <div className="tea-section-subtitle">Sourcing &amp; Packing Specifications</div>
                 <ul className="tea-specs-list">
                   {activeCategory.specs.map((spc, idx) => (
                     <li key={idx} className="tea-specs-list-item">
@@ -404,65 +503,51 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                 </ul>
               </div>
 
-              <div className="tea-specs-cta-wrap" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {/* Sourcing Desk Actions */}
+              <div className="tea-console-actions-block">
                 <button
                   type="button"
-                  onClick={() => handleCategorySampleRequest(activeCategory.name, activeCategory.defaultGrade)}
-                  className="btn btn-primary btn-md"
-                  style={{ width: '100%', justifyContent: 'center' }}
-                  aria-label={`Request ${activeCategory.name} Counter-Samples`}
+                  onClick={() => handleCategorySampleRequest(activeCategory.name, selectedGradeCode)}
+                  className="btn btn-primary btn-md tea-sample-cta-btn"
+                  aria-label={`Request ${activeCategory.name} (${selectedGradeCode}) Counter-Samples`}
                 >
-                  <ActiveIcon size={16} aria-hidden="true" />
-                  <span>Request {activeCategory.tabLabel} Counter-Samples</span>
+                  <span>Request {selectedGradeCode} Counter-Samples</span>
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
 
                 <a
                   href={CONTACT_INFO.whatsapp.getLink(
-                    `Hi SHIVOM GLOBAL, I am reviewing your ${activeCategory.tabLabel} specifications and would like to discuss sourcing options.`
+                    `Hi SHIVOM GLOBAL, I am reviewing your ${activeCategory.name} (${selectedGradeCode}) specifications and would like to discuss sourcing options.`
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-dark btn-sm"
-                  style={{ 
-                    width: '100%', 
-                    justifyContent: 'center', 
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    borderColor: 'rgba(13, 56, 41, 0.25)',
-                    color: 'var(--color-primary-dark)',
-                    backgroundColor: '#FFFFFF',
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: '0.8125rem',
-                    padding: '8px 12px'
-                  }}
-                  aria-label={`Chat on WhatsApp about ${activeCategory.tabLabel}`}
+                  className="btn btn-outline-dark btn-sm tea-whatsapp-btn"
+                  aria-label={`Chat on WhatsApp about ${activeCategory.name} ${selectedGradeCode}`}
                 >
                   <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
-                  <span>Chat on WhatsApp about {activeCategory.tabLabel}</span>
+                  <span>Discuss on WhatsApp ({selectedGradeCode})</span>
                 </a>
               </div>
             </div>
 
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Section Bottom Quick Link to Grade Specification Table */}
         <div className="tea-categories-bottom-cta">
           <div className="tea-categories-cta-text">
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-primary-dark)', margin: '0 0 4px 0' }}>
+            <h4 className="tea-bottom-cta-heading">
               Looking for exact particle sizes and technical mesh sieve data?
             </h4>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>
+            <p className="tea-bottom-cta-subtext">
               Compare particle sizing, cup strength, and blend applications in our single Grade Specification Table below.
             </p>
           </div>
 
           <div className="tea-categories-cta-actions">
-            <a 
-              href="#tea-by-grade" 
+            <a
+              href="#tea-by-grade"
               onClick={handleGradeTableClick}
               className="btn btn-secondary btn-sm"
               id="btn-view-grades-table"
