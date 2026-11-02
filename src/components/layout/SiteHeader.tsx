@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 export interface SiteHeaderProps {
@@ -24,48 +24,89 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  // Handle sticky header scroll state
+  const isScrolledRef = useRef(false);
+  const activeSectionRef = useRef('');
+  const rafIdRef = useRef<number | null>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  // Unified scroll listener with requestAnimationFrame throttling to eliminate layout thrashing
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+    const checkScrollState = () => {
+      rafIdRef.current = null;
+      const currentScrollY = window.scrollY;
+
+      // 1. Scrolled backdrop state (20px threshold)
+      const scrolled = currentScrollY > 20;
+      if (scrolled !== isScrolledRef.current) {
+        isScrolledRef.current = scrolled;
+        setIsScrolled(scrolled);
       }
-    };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      // 2. Active section detection (140px threshold below 74px header)
+      const scrollPosition = currentScrollY + 140;
+      let detectedSection = '';
 
-  // Active section scroll-spy with smooth detection
-  useEffect(() => {
-    const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 140; // Detection threshold below 74px header
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const el = document.getElementById(NAV_LINKS[i].id);
         if (el) {
           const top = el.offsetTop;
           if (scrollPosition >= top) {
-            setActiveSection(NAV_LINKS[i].id);
-            return;
+            detectedSection = NAV_LINKS[i].id;
+            break;
           }
         }
       }
-      setActiveSection('');
+
+      if (detectedSection !== activeSectionRef.current) {
+        activeSectionRef.current = detectedSection;
+        setActiveSection(detectedSection);
+      }
     };
 
-    window.addEventListener('scroll', handleScrollSpy, { passive: true });
-    handleScrollSpy();
-    return () => window.removeEventListener('scroll', handleScrollSpy);
+    const handleScroll = () => {
+      if (rafIdRef.current === null) {
+        rafIdRef.current = requestAnimationFrame(checkScrollState);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial evaluation on mount
+    checkScrollState();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
   }, []);
 
-  // Keyboard accessibility: ESC key closes mobile menu
+  // Background scroll locking when mobile menu is open (with scrollbar compensation)
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+
+    // Compensate for scrollbar shift on desktop/tablet emulators
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, [mobileMenuOpen]);
+
+  // Keyboard accessibility: ESC key closes mobile menu and restores focus to hamburger toggle
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && mobileMenuOpen) {
         setMobileMenuOpen(false);
+        toggleButtonRef.current?.focus();
       }
     };
 
@@ -75,8 +116,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
-  // Smooth scroll navigation
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  // Smooth scroll navigation with accurate 74px header offset
+  const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
@@ -96,10 +137,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
         behavior: 'smooth',
       });
     }
-  };
+  }, [onNavigate]);
 
   // Primary conversion CTA click handler
-  const handleCtaClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleCtaClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     if (onRequestSamples) {
@@ -107,10 +148,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
     } else {
       handleLinkClick(e, 'requirement-form');
     }
-  };
+  }, [onRequestSamples, handleLinkClick]);
 
   return (
-    <header className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`}>
+    <header className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`} role="banner">
       <div className="header-container">
         {/* Brand Logo */}
         <div className="header-brand-cluster">
@@ -118,31 +159,37 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             href="#hero"
             onClick={(e) => handleLinkClick(e, 'hero')}
             className="header-brand-link"
-            aria-label="SHIVOM GLOBAL — Indian Tea Sourcing & Export"
+            aria-label="SHIVOM GLOBAL — Indian Tea Sourcing & Export (Return to top)"
           >
             <img
               src="/Shivom_Global_Header_Logo.svg"
               alt="SHIVOM GLOBAL"
+              width="192"
+              height="48"
               className="header-brand-img"
             />
           </a>
         </div>
 
-        {/* Desktop Navigation Links — 5 Focused Sourcing Links with Scroll-Spy */}
+        {/* Desktop Navigation Links — 5 Focused Sourcing Links with Live Scroll-Spy */}
         <nav className="desktop-nav" aria-label="Main Navigation">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={(e) => handleLinkClick(e, link.id)}
-              className={`nav-link ${activeSection === link.id ? 'active' : ''}`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => handleLinkClick(e, link.id)}
+                className={`nav-link ${isActive ? 'active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
-        {/* Desktop Action Area: Primary Conversion CTA (WhatsApp removed) */}
+        {/* Desktop Action Area: Primary Conversion CTA */}
         <div className="desktop-cta">
           <a
             href="#requirement-form"
@@ -151,23 +198,33 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
             title="Submit tea specifications and request proforma quotation"
           >
             <span>Request a Quote</span>
-            <ArrowRight size={14} aria-hidden="true" />
+            <ArrowRight size={14} className="header-cta-icon" aria-hidden="true" />
           </a>
         </div>
 
-        {/* Mobile Header Actions (Clean Hamburger Toggle Only) */}
+        {/* Mobile Header Actions (Clean Hamburger Toggle) */}
         <div className="mobile-header-actions">
           <button
+            ref={toggleButtonRef}
             className="mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav-drawer"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Drawer Backdrop Scrim for Focus & Click-Outside to Close */}
+      {mobileMenuOpen && (
+        <div
+          className="mobile-drawer-backdrop"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
@@ -179,17 +236,21 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
           aria-label="Site Navigation"
         >
           <div className="mobile-drawer-links">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => handleLinkClick(e, link.id)}
-                className={`mobile-nav-link ${activeSection === link.id ? 'active' : ''}`}
-              >
-                <span>{link.label}</span>
-                <ArrowRight size={14} className="mobile-nav-arrow" aria-hidden="true" />
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => handleLinkClick(e, link.id)}
+                  className={`mobile-nav-link ${isActive ? 'active' : ''}`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span>{link.label}</span>
+                  <ArrowRight size={14} className="mobile-nav-arrow" aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
 
           <div className="mobile-drawer-cta">

@@ -185,18 +185,19 @@ graph TD
 
 ## 6. Consolidated Improvement Backlog
 
-| Backlog ID | Section | Category | Description | Priority |
-|---|---|---|---|---|
-| `SEC01-01` | Header | Performance | Throttle scroll-spy with `requestAnimationFrame` for high-Hz displays | Low |
-| `SEC01-02` | Header | UX | Lock `document.body` scroll when mobile navigation drawer is open | Medium |
-| `SEC02-01` | Hero | Performance | Implement progressive idle-loading for non-critical hero canvas frames (frames 5–40) | Medium |
-| `SEC03-01` | Categories | Accessibility | Implement complete WAI-ARIA Left/Right keyboard tab switching pattern | Medium |
-| `SEC04-01` | Grades | Feature | Add Darjeeling and Green Tea rows to the main grade matrix table | Medium |
-| `SEC05-01` | Private Label | Visual | Integrate visual editorial photography (`private-label-packaging.jpg`) into card layout | Medium |
-| `SEC07-02` | Why Shivom | Accessibility | Explicitly handle Enter/Space keydown events on interactive pillar cards | Medium |
-| `SEC08-01` | Form | Feature | Add optional specification document / lab report file upload (< 5MB) | Medium |
-| `SEC08-02` | Form | UX | Implement country autocomplete dropdown with ISO-3166 standards | Low |
-| `SEC10-01` | WhatsApp Float | Mobile UX | Auto-reposition or hide floating button when user is actively filling Form fields | Medium |
+| Backlog ID | Section | Category | Description | Priority | Status |
+|---|---|---|---|---|---|
+| `SEC01-01` | Header | Performance | Throttle scroll-spy with `requestAnimationFrame` for high-Hz displays | Low | **Resolved** (2026-11-02) |
+| `SEC01-02` | Header | UX | Lock `document.body` scroll when mobile navigation drawer is open | Medium | **Resolved** (2026-11-02) |
+| `SEC01-03` | Header | Layout | Align header container with `var(--container-max-width, 1240px)` site grid | Medium | **Resolved** (2026-11-02) |
+| `SEC02-01` | Hero | Performance | Implement progressive idle-loading for non-critical hero canvas frames (frames 5–40) | Medium | Open |
+| `SEC03-01` | Categories | Accessibility | Implement complete WAI-ARIA Left/Right keyboard tab switching pattern | Medium | Open |
+| `SEC04-01` | Grades | Feature | Add Darjeeling and Green Tea rows to the main grade matrix table | Medium | Open |
+| `SEC05-01` | Private Label | Visual | Integrate visual editorial photography (`private-label-packaging.jpg`) into card layout | Medium | Open |
+| `SEC07-02` | Why Shivom | Accessibility | Explicitly handle Enter/Space keydown events on interactive pillar cards | Medium | Open |
+| `SEC08-01` | Form | Feature | Add optional specification document / lab report file upload (< 5MB) | Medium | Open |
+| `SEC08-02` | Form | UX | Implement country autocomplete dropdown with ISO-3166 standards | Low | Open |
+| `SEC10-01` | WhatsApp Float | Mobile UX | Auto-reposition or hide floating button when user is actively filling Form fields | Medium | Open |
 
 ---
 
