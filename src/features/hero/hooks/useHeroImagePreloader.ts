@@ -6,8 +6,8 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import { HERO_FRAME_URLS } from './heroAnimationTypes.ts';
-import type { HeroPreloaderState } from './heroAnimationTypes.ts';
+import { HERO_FRAME_URLS } from '../types/heroAnimationTypes.ts';
+import type { HeroPreloaderState } from '../types/heroAnimationTypes.ts';
 
 export function useHeroImagePreloader(
   urls: readonly string[] = HERO_FRAME_URLS

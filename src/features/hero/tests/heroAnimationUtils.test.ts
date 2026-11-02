@@ -5,7 +5,7 @@ import {
   calculateFrameInterpolation,
   calculateCoverDimensions,
   getEffectiveDpr,
-} from './heroAnimationUtils.ts';
+} from '../utils/heroAnimationUtils.ts';
 
 describe('heroAnimationUtils', () => {
   describe('clamp', () => {

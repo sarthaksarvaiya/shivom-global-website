@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { SiteHeader } from '@/components/layout/SiteHeader';
-import { HeroSection } from '@/components/home/HeroSection';
-import { TeaCategoriesSection } from '@/components/home/TeaCategoriesSection';
-import { GradeSpecificationTable } from '@/components/home/GradeSpecificationTable';
-import { PrivateLabelSection } from '@/components/home/PrivateLabelSection';
-import { HowItWorksSection } from '@/components/home/HowItWorksSection';
-import { WhyShivomGlobal } from '@/components/home/WhyShivomGlobal';
-import { BuyerRequirementForm } from '@/components/home/BuyerRequirementForm';
+import { HeroSection } from '@/features/hero/components/HeroSection';
+import { TeaCategoriesSection } from '@/features/tea-catalog/components/TeaCategoriesSection';
+import { GradeSpecificationTable } from '@/features/tea-catalog/components/GradeSpecificationTable';
+import { PrivateLabelSection } from '@/features/private-label/components/PrivateLabelSection';
+import { HowItWorksSection } from '@/features/export-process/components/HowItWorksSection';
+import { WhyShivomGlobal } from '@/features/company/components/WhyShivomGlobal';
+import { BuyerRequirementForm } from '@/features/buyer-requirement/components/BuyerRequirementForm';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 

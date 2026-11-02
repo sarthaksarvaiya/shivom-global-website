@@ -3,8 +3,8 @@
  * Pure mathematical, layout, and device helper functions with zero side effects
  */
 
-import { HERO_FRAME_COUNT } from './heroAnimationTypes.ts';
-import type { CoverDimensions, FrameInterpolation } from './heroAnimationTypes.ts';
+import { HERO_FRAME_COUNT } from '../types/heroAnimationTypes.ts';
+import type { CoverDimensions, FrameInterpolation } from '../types/heroAnimationTypes.ts';
 
 /**
  * Constrains a numeric value between a minimum and maximum boundary.

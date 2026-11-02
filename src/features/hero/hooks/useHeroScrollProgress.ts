@@ -5,9 +5,9 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { HERO_FRAME_COUNT } from './heroAnimationTypes.ts';
-import type { HeroScrollProgressState } from './heroAnimationTypes.ts';
-import { calculateFrameInterpolation, checkPrefersReducedMotion, clamp } from './heroAnimationUtils.ts';
+import { HERO_FRAME_COUNT } from '../types/heroAnimationTypes.ts';
+import type { HeroScrollProgressState } from '../types/heroAnimationTypes.ts';
+import { calculateFrameInterpolation, checkPrefersReducedMotion, clamp } from '../utils/heroAnimationUtils.ts';
 
 export function useHeroScrollProgress(
   containerRef: React.RefObject<HTMLElement | null>,

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { ArrowRight, Globe2, MessageCircle, Mail, Package, CheckCircle2 } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
-import { HeroScrollCanvas } from './hero/HeroScrollCanvas.tsx';
-import { useHeroScrollProgress } from './hero/useHeroScrollProgress.ts';
-import { HERO_FRAME_COUNT } from './hero/heroAnimationTypes.ts';
+import { HeroScrollCanvas } from './HeroScrollCanvas.tsx';
+import { useHeroScrollProgress } from '../hooks/useHeroScrollProgress.ts';
+import { HERO_FRAME_COUNT } from '../types/heroAnimationTypes.ts';
 
 export interface HeroSectionProps {
   onRequestSamples?: () => void;

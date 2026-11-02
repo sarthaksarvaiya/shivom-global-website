@@ -16,12 +16,12 @@ import {
   BuyerRequirementRecord,
   FormStatus,
   FieldValidationErrors
-} from '@/types/buyerRequirement';
+} from '../types/buyerRequirement.ts';
 import {
   validateRequirementForm,
   buildRequirementRecord
-} from '@/utils/requirementValidation';
-import { submitBuyerRequirement } from '@/services/submissionAdapter';
+} from '../utils/requirementValidation.ts';
+import { submitBuyerRequirement } from '../services/submissionAdapter.ts';
 
 export interface BuyerRequirementFormProps {
   initialRequirementType?: string;

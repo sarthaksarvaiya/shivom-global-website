@@ -5,8 +5,8 @@ import {
   calculateCoverDimensions,
   getEffectiveDpr,
   clamp,
-} from './heroAnimationUtils.ts';
-import { HERO_FRAME_COUNT } from './heroAnimationTypes.ts';
+} from '../utils/heroAnimationUtils.ts';
+import { HERO_FRAME_COUNT } from '../types/heroAnimationTypes.ts';
 
 // Mock minimal HTMLImageElement structure
 interface MockImage {

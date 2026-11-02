@@ -5,15 +5,15 @@
  */
 
 import React, { useEffect, useRef, useCallback } from 'react';
-import { HERO_FRAME_COUNT, CoverDimensions } from './heroAnimationTypes.ts';
+import { HERO_FRAME_COUNT, CoverDimensions } from '../types/heroAnimationTypes.ts';
 import {
   calculateFrameInterpolation,
   calculateCoverDimensions,
   getEffectiveDpr,
   checkPrefersReducedMotion,
   clamp,
-} from './heroAnimationUtils.ts';
-import { useHeroImagePreloader } from './useHeroImagePreloader.ts';
+} from '../utils/heroAnimationUtils.ts';
+import { useHeroImagePreloader } from '../hooks/useHeroImagePreloader.ts';
 
 export interface HeroScrollCanvasProps {
   /**
