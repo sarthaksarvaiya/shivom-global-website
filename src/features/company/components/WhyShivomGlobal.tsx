@@ -146,7 +146,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
 
             <div className="compliance-terminal-footer" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'stretch' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
-                <span style={{ fontSize: '0.8125rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600 }}>
+                <span style={{ fontSize: '0.8125rem', color: 'rgba(var(--primitive-white-rgb), var(--alpha-85))', fontWeight: 600 }}>
                   FOB Indian Loading Ports &amp; CIF Destination Ports (e.g. Mundra, Nhava Sheva, Kolkata, Jebel Ali)
                 </span>
                 <button
@@ -159,7 +159,7 @@ export const WhyShivomGlobal: React.FC<WhyShivomGlobalProps> = ({
                   <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </div>
-              <p style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)', margin: 0, lineHeight: 1.4 }}>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(var(--primitive-white-rgb), var(--alpha-70))', margin: 0, lineHeight: 1.4 }}>
                 *Commercial pricing depends on grade, origin, quantity, packaging, destination and prevailing market conditions. Transit time and final freight depend on vessel schedule, booking, origin port, destination and shipment conditions.
               </p>
             </div>

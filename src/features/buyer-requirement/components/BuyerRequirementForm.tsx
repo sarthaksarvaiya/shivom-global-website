@@ -341,8 +341,8 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   rel="noopener noreferrer"
                   className="btn btn-primary"
                   style={{
-                    backgroundColor: '#25D366',
-                    color: '#ffffff',
+                    backgroundColor: 'var(--color-whatsapp)',
+                    color: 'var(--text-inverse)',
                     border: 'none',
                     fontWeight: 700,
                     display: 'inline-flex',
@@ -351,7 +351,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     padding: '10px 20px',
                     borderRadius: '6px',
                     textDecoration: 'none',
-                    boxShadow: '0 2px 8px rgba(37, 211, 102, 0.3)',
+                    boxShadow: '0 2px 8px rgba(var(--primitive-whatsapp-rgb), 0.3)',
                   }}
                   aria-label={`Follow up on WhatsApp with reference ${submittedRecord.referenceId}`}
                 >

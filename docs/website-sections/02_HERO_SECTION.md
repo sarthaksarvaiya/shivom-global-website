@@ -16,20 +16,17 @@
     - **Layer 0**: Baseline static background image (`.hero-bg-layer`, z-index 0) using `/images/indian_tea_landscape_hero.jpg` ensuring zero blank flashes during network loading.
     - **Layer 1**: 2D Canvas sequence (`.hero-canvas-layer`, z-index 1) rendering 40 WebP animation frames with sub-frame alpha crossfading.
     - **Layer 2**: Gradient vignette overlay (`.hero-gradient-overlay`, z-index 2) blending horizontal (90deg) and vertical (180deg) Deep Forest overlays for typography legibility.
-    - **Layer 3**: Semantic foreground content (`.hero-container`, z-index 3) constrained to `1240px`.
+    - **Layer 3**: Semantic foreground content (`.hero-container`, z-index 3) constrained to `1240px` with a responsive two-column grid:
+      - Left Column (`.hero-content`):
+        - Eyebrow Badge: Amber badge with globe icon + "INDIAN TEA SOURCING • BULK & PRIVATE LABEL EXPORT".
+        - Large Elegant Serif Heading: "Source the Indian Tea You Need" rendered in `var(--font-serif)` (Playfair Display).
+        - Narrative Copy: Plain B2B trader message for international buyers.
+        - Dual CTAs: Primary Amber CTA ("Tell Us What Tea You Need") + Secondary Outlined Enquiry CTA ("WhatsApp Trade Desk").
+        - Three Trust Indicators: Buyer-First Sourcing, Counter-Sample Cupping, Global Port Logistics.
+        - Direct Contact Strip: Direct links to WhatsApp and trade email.
+      - Right Column (`.hero-visual-column`):
+        - `HeroPackagingComposition`: Layered 3D composition with natural slate stone pedestal, stand-up foil pouch, luxury tin caddy, kraft bulk sack, and loose whole tea leaves.
     - **Layer 4**: Bottom scroll progress indicator (`.hero-progress-track`, z-index 4) rendering a gold progress line.
-- **Content Structure**:
-  - **Eyebrow Badge**: Globe icon + "INDIAN TEA SOURCING • BULK EXPORT" in Warm Gold.
-  - **H1 Headline**: "Source the Indian Tea You Need" (split across two lines via `.hero-headline-br`).
-  - **Narrative Copy**: Highlighting Assam CTC, Orthodox, Darjeeling, Green Tea, counter-sample verification, and international export coordination.
-  - **Buyer Highlight Strip**: 3 structured pills:
-    1. "Buyer-First Sourcing (Zero Inventory Push)"
-    2. "Counter-Samples for Cup Evaluation"
-    3. "Bulk & Private Label Export"
-  - **Dual Action CTAs**:
-    1. Primary: "Tell Us What Tea You Need" (Gold button linking to `#requirement-form`).
-    2. Secondary: "WhatsApp Trade Desk" (Dark button with green WhatsApp icon).
-  - **Direct Contact Strip**: Quick text links to WhatsApp (+91 97370 30437) and Email (`shivomglobal1010@gmail.com`).
 - **Visual Elements**:
   - 40 sequential WebP frames (`hero-frame-001.webp` to `hero-frame-040.webp`).
   - Warm Gold accents (`#C59B27`) on badges and progress indicators.
@@ -45,6 +42,7 @@
 - **Exact Source File Path**: `src/features/hero/components/HeroSection.tsx`
 - **Related Subcomponents & Modules**:
   - `src/features/hero/components/HeroScrollCanvas.tsx` (Canvas renderer)
+  - `src/features/hero/components/HeroPackagingComposition.tsx` (Realistic 3D packaging composition on slate stone platform)
   - `src/features/hero/hooks/useHeroScrollProgress.ts` (Scroll progress tracker)
   - `src/features/hero/hooks/useHeroImagePreloader.ts` (Progressive image loader)
   - `src/features/hero/utils/heroAnimationUtils.ts` (Interpolation & canvas math)

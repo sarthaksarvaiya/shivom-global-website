@@ -45,7 +45,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     origin: 'Brahmaputra Valley, Assam',
     image: '/images/assam-ctc-spotlight.jpg',
     imageAlt: 'Authentic Assam CTC granular black tea with rich amber liquor cupping',
-    liquorColor: '#8B2500',
+    liquorColor: 'var(--color-liquor-ctc, #8B2500)',
     liquorName: 'Deep Amber to Bright Red',
     tagline: 'Bold, Malty Amber Cup for High-Strength Blends & Packet Teas',
     description: 'Sourced to match your target particle cut, briskness, and extraction depth. Renowned worldwide for heavy body, rich infusion, and immediate milk reactivity for commercial packet blends, quick-brew tea bags, and Karak chai.',
@@ -79,7 +79,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     origin: 'Upper Assam Terroirs',
     image: '/images/assam-orthodox.jpg',
     imageAlt: 'Upper Assam Orthodox whole black tea leaves with golden tips and golden liquor cupping',
-    liquorColor: '#C27803',
+    liquorColor: 'var(--color-liquor-orthodox, #C27803)',
     liquorName: 'Golden Amber with Bright Rim',
     tagline: 'Traditional Rolled Leaf with Golden Tips & Caramel Malt Notes',
     description: 'Rolled using traditional orthodox methods to preserve leaf geometry, delicate tips, and essential oils. Delivers complex caramel malt sweetness and an aromatic golden-amber cup sought after by specialty blenders and premium loose-leaf brands.',
@@ -111,7 +111,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     origin: 'Darjeeling Himalayan Foothills',
     image: '/images/darjeeling-single-origin.jpg',
     imageAlt: 'Darjeeling single origin black tea leaves with pale golden-amber muscatel liquor cup',
-    liquorColor: '#D99B26',
+    liquorColor: 'var(--color-liquor-darjeeling, #D99B26)',
     liquorName: 'Pale Golden to Ripe Amber',
     tagline: 'Renowned Muscatel Flavor & Delicate Floral Bouquet',
     description: 'Cultivated at elevations up to 2,000 meters in the Himalayan foothills. Renowned globally as the "Champagne of Teas" for its rare muscatel grape sweetness, crisp mountain vibrancy, and delicate floral bouquet.',
@@ -142,7 +142,7 @@ const TEA_CATEGORIES: TeaCategoryData[] = [
     origin: 'High-Elevation Terroirs, India',
     image: '/images/indian-green-tea.jpg',
     imageAlt: 'Authentic Indian whole green tea leaves with clear jade green tea infusion',
-    liquorColor: '#4E8A3C',
+    liquorColor: 'var(--color-liquor-green, #4E8A3C)',
     liquorName: 'Clear Pale Green to Light Jade',
     tagline: 'Gently Processed Unoxidized Leaf with Jade Cup Clarity',
     description: 'Carefully pan-fired or steamed immediately after plucking to halt enzymatic oxidation. Preserves natural green chlorophyll, active catechins, and clean herbaceous sweetness for modern health, wellness, and botanical blending lines.',
@@ -524,7 +524,7 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
                   className="btn btn-outline-dark btn-sm tea-whatsapp-btn"
                   aria-label={`Chat on WhatsApp about ${activeCategory.name} ${selectedGradeCode}`}
                 >
-                  <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+                  <MessageCircle size={15} style={{ color: 'var(--color-whatsapp)' }} aria-hidden="true" />
                   <span>Discuss on WhatsApp ({selectedGradeCode})</span>
                 </a>
               </div>

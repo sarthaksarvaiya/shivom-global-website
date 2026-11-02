@@ -273,15 +273,15 @@ export const GradeSpecificationTable: React.FC<GradeSpecificationTableProps> = (
                               width: '32px',
                               height: '32px',
                               borderRadius: 'var(--radius-sm)',
-                              backgroundColor: 'rgba(37, 211, 102, 0.12)',
-                              color: '#15803D',
-                              border: '1px solid rgba(37, 211, 102, 0.3)',
+                              backgroundColor: 'rgba(var(--primitive-whatsapp-rgb), 0.12)',
+                              color: 'var(--color-success-text)',
+                              border: '1px solid rgba(var(--primitive-whatsapp-rgb), 0.3)',
                               textDecoration: 'none',
                             }}
                             aria-label={`Inquire about ${item.code} on WhatsApp`}
                             title={`Quick WhatsApp inquiry for ${item.code}`}
                           >
-                            <MessageCircle size={15} style={{ color: '#25D366' }} aria-hidden="true" />
+                            <MessageCircle size={15} style={{ color: 'var(--color-whatsapp)' }} aria-hidden="true" />
                           </a>
                         </div>
                       </td>

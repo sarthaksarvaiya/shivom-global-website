@@ -1,103 +1,286 @@
 /* ==========================================================================
    SHIVOM GLOBAL — Centralized Design System Tokens
-   Phase: Phase 2 Design System Implementation
+   Architecture: Three-Tier CSS Colour Token Architecture
    Single Source of Truth
-   Reference: docs/DESIGN_SYSTEM.md
+   Reference: docs/design-system/COLOR_SYSTEM.md
    ========================================================================== */
 
 :root {
-  /* --------------------------------------------------------------------------
-     1. COLOUR PALETTE: BRAND FOUNDATION (65–25–10 RULE)
-     -------------------------------------------------------------------------- */
-  
-  /* Primary Identity & Structure (Deep Estate Green & Deep Forest) */
-  --color-primary: #0D3829;               /* Deep Estate Green — Primary brand identity */
-  --color-primary-green: #0D3829;         /* Backwards-compatible alias for --color-primary */
-  --color-primary-dark: #072218;          /* Deep Forest — Header, hero, dark sections */
-  --color-primary-hover: #08281D;         /* Hover state on primary green elements */
-  --color-primary-active: #051A12;        /* Active/pressed state on primary green elements */
+  /* ==========================================================================
+     TIER 1: PRIMITIVE TOKENS (Raw values, RGB channels, and Alpha scales)
+     ========================================================================== */
 
-  /* Botanical & Terroir Accent (Sage Green Ramp) */
-  --color-sage: #9CAF88;                  /* Sage Green — Botanical brand accent */
-  --color-sage-light: #E8EFE3;            /* Soft sage tint surface for badges and cards */
-  --color-sage-border: #7D9269;           /* Sage component boundary */
+  /* Primary Estate Greens (Brahmaputra Valley) */
+  --primitive-green-950: #072218;
+  --primitive-green-950-rgb: 7, 34, 24;
+  --primitive-green-900: #0D3829;
+  --primitive-green-900-rgb: 13, 56, 41;
+  --primitive-green-850: #0A281D;
+  --primitive-green-800: #08281D;
+  --primitive-green-700: #051A12;
+  --primitive-green-600: #154734;
 
-  /* Action, Accent & Tea Liquor Tokens (Burnt Amber & Warm Gold) */
-  --color-accent: #CC5500;                /* Burnt Amber — Primary interactive conversion accent */
-  --color-accent-amber: #BA4E00;          /* Calibrated Amber — High-contrast text & links (WCAG AA 4.8:1) */
-  --color-accent-hover: #994000;          /* Amber hover state */
-  --color-gold: #C59B27;                  /* Warm Gold — Commercial grade & badges */
-  --color-accent-gold: #C59B27;           /* Backwards-compatible alias for --color-gold */
-  --color-gold-hover: #B0871D;            /* Gold hover state */
-  --color-accent-gold-hover: #B0871D;     /* Backwards-compatible alias for --color-gold-hover */
-  --color-gold-sheen: #FEF08A;            /* Gold Sheen — Micro highlight only */
+  /* Botanical Sage Greens */
+  --primitive-sage-500: #9CAF88;
+  --primitive-sage-500-rgb: 156, 175, 136;
+  --primitive-sage-600: #7D9269;
+  --primitive-sage-100: #E8EFE3;
+
+  /* Warm Harvest Gold & Ambers */
+  --primitive-gold-500: #C59B27;
+  --primitive-gold-500-rgb: 197, 155, 39;
+  --primitive-gold-600: #B0871D;
+  --primitive-gold-400: #E2BF4A;
+  --primitive-gold-200: #FDE68A;
+  --primitive-gold-100: #FEF08A;
+  --primitive-gold-50: #FEF3C7;
+  --primitive-amber-600: #CC5500;
+  --primitive-amber-600-rgb: 204, 85, 0;
+  --primitive-amber-700: #BA4E00;
+  --primitive-amber-800: #994000;
+  --primitive-amber-900: #92400E;
+
+  /* Neutrals, Surfaces & Canvases */
+  --primitive-white: #FFFFFF;
+  --primitive-white-rgb: 255, 255, 255;
+  --primitive-off-white: #FBFBFA;
+  --primitive-off-white-rgb: 251, 251, 250;
+  --primitive-cream: #F5F1E8;
+  --primitive-cream-rgb: 245, 241, 232;
+  --primitive-ivory: #FFFDF9;
+
+  /* Neutral Warm Greys (Paper & Packaging) */
+  --primitive-grey-warm-100: #ECE7DE;
+  --primitive-grey-warm-200: #EBE6DE;
+  --primitive-grey-warm-300: #E5E0D5;
+  --primitive-grey-warm-400: #D1C7B7;
+
+  /* Neutral Cool Slates & Greys */
+  --primitive-grey-cool-50: #F9FAFB;
+  --primitive-grey-cool-100: #F3F4F6;
+  --primitive-grey-cool-200: #E5E7EB;
+  --primitive-grey-cool-300: #D1D5DB;
+  --primitive-grey-cool-400: #9CA3AF;
+  --primitive-grey-cool-500: #6B7280;
+  --primitive-grey-cool-600: #4B5563;
+  --primitive-grey-cool-700: #374151;
+  --primitive-grey-cool-800: #1F2937;
+  --primitive-grey-cool-900: #111827;
+  --primitive-charcoal-800: #1A2E26;
+  --primitive-concrete: #A7A7A7;
+
+  /* Third-Party & Communication Channels */
+  --primitive-whatsapp: #25D366;
+  --primitive-whatsapp-rgb: 37, 211, 102;
+  --primitive-whatsapp-hover: #1EB754;
+
+  /* Product Liquor Identification Primitives */
+  --primitive-liquor-ctc: #8B2500;
+  --primitive-liquor-orthodox: #C27803;
+  --primitive-liquor-darjeeling: #D99B26;
+  --primitive-liquor-green: #4E8A3C;
+
+  /* Functional Feedback Primitives */
+  --primitive-success-50: #F0FDF4;
+  --primitive-success-300: #86EFAC;
+  --primitive-success-700: #15803D;
+
+  --primitive-warning-50: #FFFBEB;
+  --primitive-warning-300: #FCD34D;
+  --primitive-warning-700: #B45309;
+
+  --primitive-error-50: #FEF2F2;
+  --primitive-error-500: #EF4444;
+  --primitive-error-600: #DC2626;
+  --primitive-error-700: #B91C1C;
+
+  --primitive-info-50: #EFF6FF;
+  --primitive-info-300: #93C5FD;
+  --primitive-info-700: #1D4ED8;
+
+  /* Alpha Scale Tokens (Uniform Opacity Ramps) */
+  --alpha-02: 0.02;
+  --alpha-04: 0.04;
+  --alpha-06: 0.06;
+  --alpha-08: 0.08;
+  --alpha-10: 0.10;
+  --alpha-12: 0.12;
+  --alpha-15: 0.15;
+  --alpha-16: 0.16;
+  --alpha-20: 0.20;
+  --alpha-25: 0.25;
+  --alpha-30: 0.30;
+  --alpha-35: 0.35;
+  --alpha-40: 0.40;
+  --alpha-50: 0.50;
+  --alpha-60: 0.60;
+  --alpha-70: 0.70;
+  --alpha-75: 0.75;
+  --alpha-80: 0.80;
+  --alpha-85: 0.85;
+  --alpha-90: 0.90;
+  --alpha-95: 0.95;
+
+  /* ==========================================================================
+     TIER 2: SEMANTIC TOKENS (Functional role and intent mappings)
+     ========================================================================== */
+
+  /* Primary Brand Foundation (65–25–10 Rule) */
+  --color-primary: var(--primitive-green-900);
+  --color-primary-green: var(--primitive-green-900);
+  --color-primary-dark: var(--primitive-green-950);
+  --color-primary-forest: var(--primitive-green-950);
+  --color-primary-hover: var(--primitive-green-800);
+  --color-primary-active: var(--primitive-green-700);
+
+  /* Botanical & Terroir Accents */
+  --color-sage: var(--primitive-sage-500);
+  --color-sage-light: var(--primitive-sage-100);
+  --color-sage-border: var(--primitive-sage-600);
+
+  /* Conversion, Accent & Tea Liquor Tokens */
+  --color-accent: var(--primitive-amber-600);
+  --color-accent-amber: var(--primitive-amber-700);
+  --color-accent-hover: var(--primitive-amber-800);
+  --color-amber-deep: var(--primitive-amber-900);
+  --color-gold: var(--primitive-gold-500);
+  --color-accent-gold: var(--primitive-gold-500);
+  --color-gold-hover: var(--primitive-gold-600);
+  --color-accent-gold-hover: var(--primitive-gold-600);
+  --color-gold-sheen: var(--primitive-gold-100);
 
   /* Surfaces & Canvas */
-  --bg-page: #FBFBFA;                     /* Warm Off-White — Main anti-glare page background */
-  --bg-surface: #FFFFFF;                  /* Pure White — Cards & content modules */
-  --bg-surface-subtle: #F4F5F3;           /* Subtle Green-Grey — Alternating sections */
-  --bg-card: #FFFFFF;                     /* Card container background */
-  --bg-dark-section: #0A1F17;             /* Dark Section — Hero / CTA container backgrounds */
-  --color-dark-section: #0A1F17;          /* Backwards-compatible alias for --bg-dark-section */
-  --color-bg-alt: #F4F5F3;                /* Legacy alias compatibility */
+  --bg-page: var(--primitive-off-white);
+  --bg-surface: var(--primitive-white);
+  --bg-surface-subtle: var(--primitive-cream);
+  --bg-card: var(--primitive-white);
+  --bg-dark-section: var(--primitive-green-950);
+  --color-dark-section: var(--primitive-green-950);
+  --color-bg-alt: var(--primitive-cream);
+  --color-tea-cream: var(--primitive-cream);
+  --color-tea-green: var(--primitive-sage-500);
 
   /* Neutral Spectrum */
-  --color-concrete: #A7A7A7;              /* Concrete Grey — Secondary neutral for framing */
-  --color-concrete-subtle: #E5E7EB;       /* Hairline divider */
+  --color-concrete: var(--primitive-concrete);
+  --color-concrete-subtle: var(--primitive-grey-cool-200);
 
   /* Typography Colours */
-  --text-heading: #072218;                /* Near Black Deep Forest for high-authority headings */
-  --text-main: #111827;                   /* Near Black — Maximum legibility */
-  --text-muted: #4B5563;                  /* Balanced Slate — Body text & descriptions */
-  --text-dim: #9CA3AF;                    /* Soft Grey — Metadata, hints & labels */
-  --text-inverse: #FFFFFF;                /* White text for dark sections */
-  --text-inverse-muted: #D1D5DB;          /* Muted text for dark sections */
+  --text-heading: var(--primitive-green-950);
+  --text-main: var(--primitive-grey-cool-900);
+  --text-muted: var(--primitive-grey-cool-600);
+  --text-dim: var(--primitive-grey-cool-400);
+  --text-inverse: var(--primitive-white);
+  --text-inverse-muted: var(--primitive-grey-cool-300);
+  --text-gold: var(--primitive-gold-500);
 
   /* Borders & Dividers */
-  --border-subtle: #E5E7EB;               /* Subtle grey border */
-  --border-medium: #D1D5DB;               /* Form element border */
-  --border-strong: #9CA3AF;               /* Select dropdown focus boundary */
-  --border-accent: rgba(197, 155, 39, 0.40); /* Gold accent border framing */
-  --border-accent-gold: rgba(197, 155, 39, 0.40); /* Explicit gold border alias */
-  --border-accent-amber: rgba(204, 85, 0, 0.40);  /* Burnt amber accent border */
-  --border-dark-subtle: rgba(255, 255, 255, 0.12); /* Subtle divider for dark areas */
-  --divider: #E5E7EB;                     /* Section / list divider line */
+  --border-subtle: var(--primitive-grey-cool-200);
+  --border-subtle-warm: var(--primitive-grey-warm-300);
+  --border-medium: var(--primitive-grey-cool-300);
+  --border-strong: var(--primitive-grey-cool-400);
+  --border-accent: rgba(var(--primitive-gold-500-rgb), 0.40);
+  --border-accent-gold: rgba(var(--primitive-gold-500-rgb), 0.40);
+  --border-accent-amber: rgba(var(--primitive-amber-600-rgb), 0.40);
+  --border-dark-subtle: rgba(var(--primitive-white-rgb), 0.12);
+  --divider: var(--primitive-grey-cool-200);
+
+  /* Product Liquor Identification Tokens */
+  --color-liquor-ctc: var(--primitive-liquor-ctc);
+  --color-liquor-orthodox: var(--primitive-liquor-orthodox);
+  --color-liquor-darjeeling: var(--primitive-liquor-darjeeling);
+  --color-liquor-green: var(--primitive-liquor-green);
+
+  /* Third-Party & Communication Channels */
+  --color-whatsapp: var(--primitive-whatsapp);
+  --color-whatsapp-rgb: var(--primitive-whatsapp-rgb);
+  --color-whatsapp-hover: var(--primitive-whatsapp-hover);
 
   /* Functional & Semantic Feedback */
-  --color-success-bg: #F0FDF4;
-  --color-success-border: #86EFAC;
-  --color-success-text: #15803D;
-  --color-warning-bg: #FFFBEB;
-  --color-warning-border: #FCD34D;
-  --color-warning-text: #B45309;
-  --color-error-bg: #FEF2F2;
-  --color-error-border: #EF4444;
-  --color-error-text: #DC2626;
-  --color-info-bg: #EFF6FF;
-  --color-info-border: #93C5FD;
-  --color-info-text: #1D4ED8;
-  --color-whatsapp: #25D366;
+  --color-success-bg: var(--primitive-success-50);
+  --color-success-border: var(--primitive-success-300);
+  --color-success-text: var(--primitive-success-700);
+
+  --color-warning-bg: var(--primitive-warning-50);
+  --color-warning-border: var(--primitive-warning-300);
+  --color-warning-text: var(--primitive-warning-700);
+
+  --color-error-bg: var(--primitive-error-50);
+  --color-error-border: var(--primitive-error-500);
+  --color-error-text: var(--primitive-error-600);
+
+  --color-info-bg: var(--primitive-info-50);
+  --color-info-border: var(--primitive-info-300);
+  --color-info-text: var(--primitive-info-700);
 
   /* Focus & Interactive States */
-  --focus-ring: 0 0 0 3px rgba(13, 56, 41, 0.20);
-  --focus-ring-gold: 0 0 0 3px rgba(197, 155, 39, 0.35);
+  --focus-ring: 0 0 0 3px rgba(var(--primitive-green-900-rgb), 0.20);
+  --focus-ring-gold: 0 0 0 3px rgba(var(--primitive-gold-500-rgb), 0.35);
   --focus-ring-error: 0 0 0 3px rgba(220, 38, 38, 0.20);
-  --color-disabled-bg: #F3F4F6;
-  --color-disabled-text: #9CA3AF;
-  --color-disabled-border: #E5E7EB;
+  --color-disabled-bg: var(--primitive-grey-cool-100);
+  --color-disabled-text: var(--primitive-grey-cool-400);
+  --color-disabled-border: var(--primitive-grey-cool-200);
 
   /* Shadows (Controlled, Commercial) */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 4px 6px -1px rgba(13, 56, 41, 0.08), 0 2px 4px -2px rgba(13, 56, 41, 0.04);
+  --shadow-hover: 0 4px 6px -1px rgba(var(--primitive-green-900-rgb), 0.08), 0 2px 4px -2px rgba(var(--primitive-green-900-rgb), 0.04);
   --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
 
-  /* --------------------------------------------------------------------------
-     2. TYPOGRAPHY SYSTEM
-     -------------------------------------------------------------------------- */
+  /* ==========================================================================
+     TIER 3: COMPONENT TOKENS (Scoped controls for specific UI patterns)
+     ========================================================================== */
+
+  /* Header Component */
+  --header-bg-initial: rgba(var(--primitive-green-950-rgb), 0.65);
+  --header-bg-scrolled: rgba(var(--primitive-green-950-rgb), 0.95);
+  --header-border-initial: rgba(var(--primitive-white-rgb), 0.12);
+  --header-border-scrolled: rgba(var(--primitive-gold-500-rgb), 0.25);
+  --header-text: var(--text-inverse);
+  --header-link-hover: var(--color-accent-gold);
+
+  /* Button Components */
+  --button-primary-bg: var(--color-accent-gold);
+  --button-primary-text: var(--color-primary-dark);
+  --button-primary-hover-bg: var(--color-accent);
+  --button-primary-hover-text: var(--text-inverse);
+  --button-secondary-bg: var(--color-primary);
+  --button-secondary-text: var(--text-inverse);
+  --button-secondary-hover-bg: var(--color-primary-dark);
+
+  /* Card Components */
+  --card-bg: var(--bg-surface);
+  --card-border: var(--border-subtle);
+  --card-border-warm: var(--border-subtle-warm);
+  --card-dark-bg: var(--color-primary-dark);
+  --card-dark-border: rgba(var(--primitive-gold-500-rgb), 0.35);
+
+  /* Table Components */
+  --table-header-bg: var(--color-primary);
+  --table-header-text: var(--text-inverse);
+  --table-row-even: var(--bg-surface);
+  --table-row-odd: var(--bg-surface-subtle);
+  --table-row-hover: rgba(var(--primitive-gold-500-rgb), 0.08);
+
+  /* Form Components */
+  --form-input-bg: var(--bg-surface);
+  --form-input-border: var(--border-medium);
+  --form-input-focus-border: var(--color-primary);
+  --form-label-text: var(--text-heading);
+
+  /* Footer Component */
+  --footer-bg: var(--color-primary-dark);
+  --footer-text: var(--text-inverse);
+  --footer-text-muted: rgba(var(--primitive-white-rgb), 0.75);
+  --footer-border: rgba(var(--primitive-white-rgb), 0.10);
+
+  /* ==========================================================================
+     SHARED TYPOGRAPHY, SPACING, AND MOTION
+     ========================================================================== */
   --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-heading-hero: var(--font-serif);
   --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Font Weights */
@@ -113,9 +296,7 @@
   --leading-normal: 1.50;
   --leading-relaxed: 1.65;
 
-  /* --------------------------------------------------------------------------
-     3. SPACING SCALE (8px Base Grid)
-     -------------------------------------------------------------------------- */
+  /* Spacing Scale (8px Base Grid) */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -123,16 +304,14 @@
   --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-10: 40px;                       /* Missing alias fix */
+  --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
   --space-30: 120px;
 
-  /* --------------------------------------------------------------------------
-     4. CONTAINER & LAYOUT DIMENSIONS
-     -------------------------------------------------------------------------- */
+  /* Container & Layout Dimensions */
   --container-max-width: 1240px;
   --container-padding-desktop: var(--space-8);
   --container-padding-tablet: var(--space-6);
@@ -142,13 +321,10 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --radius-xl: 16px;                      /* Missing alias fix */
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* --------------------------------------------------------------------------
-     5. MOTION & TRANSITIONS
-     Restrained, purposeful, non-distracting
-     -------------------------------------------------------------------------- */
+  /* Motion & Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);

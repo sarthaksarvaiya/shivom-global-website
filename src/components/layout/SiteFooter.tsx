@@ -42,8 +42,8 @@ export const SiteFooter: React.FC = () => {
             <div style={{
               marginTop: 'var(--space-3)',
               padding: '10px 12px',
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              backgroundColor: 'rgba(var(--primitive-white-rgb), var(--alpha-04))',
+              border: '1px solid rgba(var(--primitive-white-rgb), var(--alpha-10))',
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.75rem',
               color: 'var(--text-inverse-muted)',
@@ -111,7 +111,7 @@ export const SiteFooter: React.FC = () => {
                   className="footer-compact-link footer-compact-wa"
                   aria-label={CONTACT_INFO.whatsapp.ariaLabel}
                 >
-                  <MessageCircle size={14} style={{ color: '#25D366' }} aria-hidden="true" />
+                  <MessageCircle size={14} style={{ color: 'var(--color-whatsapp)' }} aria-hidden="true" />
                   <span>WhatsApp: {CONTACT_INFO.whatsapp.display}</span>
                 </a>
               </li>
@@ -145,7 +145,7 @@ export const SiteFooter: React.FC = () => {
           <p className="footer-copyright-text" style={{ margin: 0 }}>
             &copy; {new Date().getFullYear()} <strong>SHIVOM GLOBAL</strong> (Proprietor: Sarthak Sarvaiya). All rights reserved.
           </p>
-          <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+          <span style={{ fontSize: '0.75rem', color: 'rgba(var(--primitive-white-rgb), var(--alpha-50))' }}>
             Buyer-First Sourcing Desk &bull; Bhavnagar, Gujarat, India
           </span>
         </div>

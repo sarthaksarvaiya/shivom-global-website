@@ -133,3 +133,17 @@ To ensure this documentation system remains a permanent, reliable engineering as
 4. **Preserve Section Numbering**: Do not arbitrarily renumber existing sections; maintain stability across cross-document links.
 5. **One Change at a Time**: Complete and verify documentation updates concurrently with code commits.
 
+---
+
+## 8. Integration with Design System & Colour Management
+
+All visual styling, background colours, typography, borders, and accents documented across sections are strictly governed by the **Centralised Colour Management System**:
+
+- **System Index & Governance**: [`docs/design-system/README.md`](../design-system/README.md)
+- **Technical Colour Audit & Inventory**: [`docs/design-system/COLOR_SYSTEM.md`](../design-system/COLOR_SYSTEM.md)
+- **Colour Palette Evaluation & Directions**: [`docs/design-system/COLOR_PALETTE_OPTIONS.md`](../design-system/COLOR_PALETTE_OPTIONS.md)
+- **Section & Primitive Usage Guidelines**: [`docs/design-system/COLOR_USAGE_GUIDELINES.md`](../design-system/COLOR_USAGE_GUIDELINES.md)
+- **Colour Changelog & History**: [`docs/design-system/COLOR_CHANGELOG.md`](../design-system/COLOR_CHANGELOG.md)
+
+When refactoring or styling any section, consult `COLOR_USAGE_GUIDELINES.md` to ensure compliance with the 65-25-10 distribution rule, zero-hardcoding policy, and WCAG 2.1 AA contrast standards.
+

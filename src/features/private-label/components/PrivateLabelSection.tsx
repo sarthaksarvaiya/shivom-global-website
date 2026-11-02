@@ -166,7 +166,7 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
                 Discuss Your Destination Packaging &amp; Labeling Needs
               </h4>
             </div>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: 1.5 }}>
+            <p style={{ margin: 0, fontSize: '0.875rem', color: 'rgba(var(--primitive-white-rgb), var(--alpha-85))', lineHeight: 1.5 }}>
               Whether you require standard bulk export packaging or custom private-label retail packing, our trade desk can coordinate packaging specifications, counter-samples, and trade terms based on your requirement.
             </p>
           </div>
