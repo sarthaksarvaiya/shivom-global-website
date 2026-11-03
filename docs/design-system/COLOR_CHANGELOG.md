@@ -6,6 +6,59 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [1.3.0] — 2026-11-03
+
+### Changed
+- **Applied Option B — "Modern Obsidian & Champagne Gold" as Active `:root` Palette in `src/styles/tokens.css`**:
+  - **Primary Base Green**: Updated to Dark Emerald Velvet `#0A281E` (RGB: `10, 40, 30`).
+  - **Deep Forest Shadow**: Updated to Obsidian Pine `#061811` (RGB: `6, 24, 17`).
+  - **Accent Primary Gold**: Updated to Metallic Champagne Gold `#D4AF37` (RGB: `212, 175, 55`).
+  - **Accent Secondary Foil**: Updated to Pale Gold Foil `#E5C158` and Warm Brass `#C48228`.
+  - **Botanical Sage**: Updated to Muted Jade `#869D80` (RGB: `134, 157, 128`).
+  - **Canvas Light**: Updated to Minimalist Pure Ivory `#FDFCFA` (RGB: `253, 252, 250`).
+  - **Neutral Cream / Substrate**: Updated to Cool Mist `#F7F8F6` (RGB: `247, 248, 246`).
+  - **Text Ink**: Updated to Obsidian Black `#0F1412` and Midnight Slate `#121C18`.
+
+### Added
+- **Preserved Approved Option A in Dedicated Selectors**:
+  - `[data-palette="heritage"]`, `[data-palette="option-a"]`: Preserves all approved Highland Estate & Darjeeling Amber values (`#1D3A2F`, `#13241D`, `#C88A35`, `#FAF7F2`, `#F3EEE5`).
+- **Added Selectors for Option B**:
+  - `[data-palette="modern-luxury"]`, `[data-palette="obsidian"]`, `[data-palette="option-b"]`.
+
+### Verified
+- **TypeScript**: `npx tsc --noEmit` exits with 0 errors.
+- **Production Build**: `npm run build` succeeds in 1.56s with 0 errors.
+- **Vite Dev Server**: Running on `http://localhost:5174/`.
+
+---
+
+## [1.2.0] — 2026-11-03
+
+### Changed
+- **Applied Option A — "Highland Estate & Darjeeling Amber" as Active Palette in `src/styles/tokens.css`**:
+  - **Primary Base Green**: Updated to Highland Moss `#1D3A2F` (RGB: `29, 58, 47`).
+  - **Deep Forest Shadow**: Updated to Shadow Pine `#13241D` (RGB: `19, 36, 29`).
+  - **Accent Primary Gold**: Updated to Vintage Amber Gold `#C88A35` (RGB: `200, 138, 53`).
+  - **Accent Deep Amber / Terroir**: Updated to Roasted Darjeeling Amber `#9C4A1A` (RGB: `156, 74, 26`) and Darjeeling Bronze `#3B2219`.
+  - **Botanical Sage**: Updated to Highland Lichen `#8FA87B` (RGB: `143, 168, 123`).
+  - **Canvas Light**: Updated to Antique Ivory `#FAF7F2` (RGB: `250, 247, 242`).
+  - **Neutral Cream / Card Substrate**: Updated to Milled Parchment `#F3EEE5` (RGB: `243, 238, 229`).
+  - **Text Ink**: Updated to Deep Ironwood `#1F2421` (RGB: `31, 36, 33`).
+
+### Added
+- **Non-Destructive Dual-Theme Selectors in `src/styles/tokens.css`**:
+  - `[data-palette="baseline"]`: Preserves complete original baseline values (`#0D3829`, `#072218`, `#C59B27`, etc.) for side-by-side comparison.
+  - `[data-palette="heritage"]` / `[data-palette="highland"]`: Explicit selector for Option A tokens.
+- **Dynamic URL Query Parameter Switching in `src/app/App.tsx`**:
+  - Added clean query-parameter detection (`?palette=baseline` or `?palette=heritage`) to set `data-palette` on `document.documentElement` dynamically without code changes.
+
+### Verified
+- **TypeScript**: `npx tsc --noEmit` verified with 0 errors.
+- **Production Build**: `npm run build` compiled in 1.66s with 0 errors.
+- **Vite Dev Server**: Live on port `http://localhost:5174/`.
+
+---
+
 ## [1.1.0] — 2026-11-02
 
 ### Added

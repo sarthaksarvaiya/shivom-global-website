@@ -3,8 +3,8 @@
 ## 1. Executive Notice & Purpose
 
 > [!IMPORTANT]
-> **Status**: Evaluation Framework Only.
-> **Current Decision**: The website continues to operate on the **Baseline Production Palette**. No new palette has been selected or deployed. This document establishes the formal evaluation rubric and presents five distinct prospective design directions for future stakeholder review and controlled A/B testing.
+> **Status**: Production Standard Deployed (Option B).
+> **Current Decision**: **Option B — Modern Obsidian & Champagne Gold** has been approved and deployed as the active production palette on `:root`. **Option A — Highland Estate & Darjeeling Amber** is fully preserved in the token hierarchy via `[data-palette="heritage"]` (`?palette=heritage`), and the original baseline benchmark remains preserved via `[data-palette="baseline"]` (`?palette=baseline`).
 
 The purpose of this framework is to provide a structured, objective methodology for evaluating potential colour updates for the SHIVOM GLOBAL digital platform. 
 

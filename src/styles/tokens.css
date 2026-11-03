@@ -8,54 +8,57 @@
 :root {
   /* ==========================================================================
      TIER 1: PRIMITIVE TOKENS (Raw values, RGB channels, and Alpha scales)
+     Active Palette: Option B — Modern Obsidian & Champagne Gold
+     (Obsidian Pine, Champagne Gold, Minimalist Pure Ivory, Midnight Slate)
+     Reference: docs/design-system/COLOR_PALETTE_OPTIONS.md
      ========================================================================== */
 
-  /* Primary Estate Greens (Brahmaputra Valley) */
-  --primitive-green-950: #072218;
-  --primitive-green-950-rgb: 7, 34, 24;
-  --primitive-green-900: #0D3829;
-  --primitive-green-900-rgb: 13, 56, 41;
-  --primitive-green-850: #0A281D;
-  --primitive-green-800: #08281D;
-  --primitive-green-700: #051A12;
-  --primitive-green-600: #154734;
+  /* Primary Estate Greens (Obsidian Pine & Midnight Slate) */
+  --primitive-green-950: #061811;
+  --primitive-green-950-rgb: 6, 24, 17;
+  --primitive-green-900: #0A281E;
+  --primitive-green-900-rgb: 10, 40, 30;
+  --primitive-green-850: #082119;
+  --primitive-green-800: #071C15;
+  --primitive-green-700: #051510;
+  --primitive-green-600: #14382B;
 
-  /* Botanical Sage Greens */
-  --primitive-sage-500: #9CAF88;
-  --primitive-sage-500-rgb: 156, 175, 136;
-  --primitive-sage-600: #7D9269;
-  --primitive-sage-100: #E8EFE3;
+  /* Botanical Sage Greens (Muted Jade) */
+  --primitive-sage-500: #869D80;
+  --primitive-sage-500-rgb: 134, 157, 128;
+  --primitive-sage-600: #6E8569;
+  --primitive-sage-100: #E6EDE5;
 
-  /* Warm Harvest Gold & Ambers */
-  --primitive-gold-500: #C59B27;
-  --primitive-gold-500-rgb: 197, 155, 39;
-  --primitive-gold-600: #B0871D;
-  --primitive-gold-400: #E2BF4A;
-  --primitive-gold-200: #FDE68A;
-  --primitive-gold-100: #FEF08A;
-  --primitive-gold-50: #FEF3C7;
-  --primitive-amber-600: #CC5500;
-  --primitive-amber-600-rgb: 204, 85, 0;
-  --primitive-amber-700: #BA4E00;
-  --primitive-amber-800: #994000;
-  --primitive-amber-900: #92400E;
+  /* Warm Harvest Gold & Ambers (Metallic Champagne Gold & Brass) */
+  --primitive-gold-500: #D4AF37;
+  --primitive-gold-500-rgb: 212, 175, 55;
+  --primitive-gold-600: #BE9B2C;
+  --primitive-gold-400: #E5C158;
+  --primitive-gold-200: #F4E2A6;
+  --primitive-gold-100: #FAF0D2;
+  --primitive-gold-50: #FDF8EB;
+  --primitive-amber-600: #C48228;
+  --primitive-amber-600-rgb: 196, 130, 40;
+  --primitive-amber-700: #AC701E;
+  --primitive-amber-800: #905C15;
+  --primitive-amber-900: #6E440C;
 
-  /* Neutrals, Surfaces & Canvases */
+  /* Neutrals, Surfaces & Canvases (Minimalist Pure Ivory & Cool Mist) */
   --primitive-white: #FFFFFF;
   --primitive-white-rgb: 255, 255, 255;
-  --primitive-off-white: #FBFBFA;
-  --primitive-off-white-rgb: 251, 251, 250;
-  --primitive-cream: #F5F1E8;
-  --primitive-cream-rgb: 245, 241, 232;
-  --primitive-ivory: #FFFDF9;
+  --primitive-off-white: #FDFCFA;
+  --primitive-off-white-rgb: 253, 252, 250;
+  --primitive-cream: #F7F8F6;
+  --primitive-cream-rgb: 247, 248, 246;
+  --primitive-ivory: #FFFFFF;
 
   /* Neutral Warm Greys (Paper & Packaging) */
-  --primitive-grey-warm-100: #ECE7DE;
-  --primitive-grey-warm-200: #EBE6DE;
-  --primitive-grey-warm-300: #E5E0D5;
-  --primitive-grey-warm-400: #D1C7B7;
+  --primitive-grey-warm-100: #EDEFEA;
+  --primitive-grey-warm-200: #E5E7E2;
+  --primitive-grey-warm-300: #D9DCD6;
+  --primitive-grey-warm-400: #C2C6BD;
 
-  /* Neutral Cool Slates & Greys */
+  /* Neutral Cool Slates & Greys (Obsidian Black Text) */
   --primitive-grey-cool-50: #F9FAFB;
   --primitive-grey-cool-100: #F3F4F6;
   --primitive-grey-cool-200: #E5E7EB;
@@ -64,9 +67,9 @@
   --primitive-grey-cool-500: #6B7280;
   --primitive-grey-cool-600: #4B5563;
   --primitive-grey-cool-700: #374151;
-  --primitive-grey-cool-800: #1F2937;
-  --primitive-grey-cool-900: #111827;
-  --primitive-charcoal-800: #1A2E26;
+  --primitive-grey-cool-800: #1A2320;
+  --primitive-grey-cool-900: #0F1412;
+  --primitive-charcoal-800: #121C18;
   --primitive-concrete: #A7A7A7;
 
   /* Third-Party & Communication Channels */
@@ -328,4 +331,154 @@
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   PALETTE SWITCHER OVERRIDES (Theme Sandbox & Live A/B Evaluation)
+   Supports <html data-palette="..."> or <body data-palette="...">
+   ========================================================================== */
+
+/* Baseline Production Palette (Original Benchmark) */
+[data-palette="baseline"] {
+  --primitive-green-950: #072218;
+  --primitive-green-950-rgb: 7, 34, 24;
+  --primitive-green-900: #0D3829;
+  --primitive-green-900-rgb: 13, 56, 41;
+  --primitive-green-850: #0A281D;
+  --primitive-green-800: #08281D;
+  --primitive-green-700: #051A12;
+  --primitive-green-600: #154734;
+
+  --primitive-sage-500: #9CAF88;
+  --primitive-sage-500-rgb: 156, 175, 136;
+  --primitive-sage-600: #7D9269;
+  --primitive-sage-100: #E8EFE3;
+
+  --primitive-gold-500: #C59B27;
+  --primitive-gold-500-rgb: 197, 155, 39;
+  --primitive-gold-600: #B0871D;
+  --primitive-gold-400: #E2BF4A;
+  --primitive-gold-200: #FDE68A;
+  --primitive-gold-100: #FEF08A;
+  --primitive-gold-50: #FEF3C7;
+  --primitive-amber-600: #CC5500;
+  --primitive-amber-600-rgb: 204, 85, 0;
+  --primitive-amber-700: #BA4E00;
+  --primitive-amber-800: #994000;
+  --primitive-amber-900: #92400E;
+
+  --primitive-off-white: #FBFBFA;
+  --primitive-off-white-rgb: 251, 251, 250;
+  --primitive-cream: #F5F1E8;
+  --primitive-cream-rgb: 245, 241, 232;
+  --primitive-ivory: #FFFDF9;
+
+  --primitive-grey-warm-100: #ECE7DE;
+  --primitive-grey-warm-200: #EBE6DE;
+  --primitive-grey-warm-300: #E5E0D5;
+  --primitive-grey-warm-400: #D1C7B7;
+
+  --primitive-grey-cool-600: #4B5563;
+  --primitive-grey-cool-700: #374151;
+  --primitive-grey-cool-800: #1F2937;
+  --primitive-grey-cool-900: #111827;
+  --primitive-charcoal-800: #1A2E26;
+}
+
+/* Option A: Highland Estate & Darjeeling Amber (Explicit Selector) */
+[data-palette="heritage"],
+[data-palette="highland"],
+[data-palette="option-a"] {
+  --primitive-green-950: #13241D;
+  --primitive-green-950-rgb: 19, 36, 29;
+  --primitive-green-900: #1D3A2F;
+  --primitive-green-900-rgb: 29, 58, 47;
+  --primitive-green-850: #183329;
+  --primitive-green-800: #152C23;
+  --primitive-green-700: #10221B;
+  --primitive-green-600: #25483B;
+
+  --primitive-sage-500: #8FA87B;
+  --primitive-sage-500-rgb: 143, 168, 123;
+  --primitive-sage-600: #748D61;
+  --primitive-sage-100: #E8EFE3;
+
+  --primitive-gold-500: #C88A35;
+  --primitive-gold-500-rgb: 200, 138, 53;
+  --primitive-gold-600: #B27626;
+  --primitive-gold-400: #D99D4D;
+  --primitive-gold-200: #F2D8AB;
+  --primitive-gold-100: #FAEED9;
+  --primitive-gold-50: #FDF7EC;
+  --primitive-amber-600: #9C4A1A;
+  --primitive-amber-600-rgb: 156, 74, 26;
+  --primitive-amber-700: #873E14;
+  --primitive-amber-800: #6E300E;
+  --primitive-amber-900: #3B2219;
+
+  --primitive-off-white: #FAF7F2;
+  --primitive-off-white-rgb: 250, 247, 242;
+  --primitive-cream: #F3EEE5;
+  --primitive-cream-rgb: 243, 238, 229;
+  --primitive-ivory: #FCFAF6;
+
+  --primitive-grey-warm-100: #EAE4D9;
+  --primitive-grey-warm-200: #E2DBD0;
+  --primitive-grey-warm-300: #D8D0C3;
+  --primitive-grey-warm-400: #C4BAAA;
+
+  --primitive-grey-cool-600: #505B55;
+  --primitive-grey-cool-700: #3C4540;
+  --primitive-grey-cool-800: #28302C;
+  --primitive-grey-cool-900: #1F2421;
+  --primitive-charcoal-800: #18221D;
+}
+
+/* Option B: Modern Obsidian & Champagne Gold (Explicit Selector) */
+[data-palette="modern-luxury"],
+[data-palette="obsidian"],
+[data-palette="option-b"] {
+  --primitive-green-950: #061811;
+  --primitive-green-950-rgb: 6, 24, 17;
+  --primitive-green-900: #0A281E;
+  --primitive-green-900-rgb: 10, 40, 30;
+  --primitive-green-850: #082119;
+  --primitive-green-800: #071C15;
+  --primitive-green-700: #051510;
+  --primitive-green-600: #14382B;
+
+  --primitive-sage-500: #869D80;
+  --primitive-sage-500-rgb: 134, 157, 128;
+  --primitive-sage-600: #6E8569;
+  --primitive-sage-100: #E6EDE5;
+
+  --primitive-gold-500: #D4AF37;
+  --primitive-gold-500-rgb: 212, 175, 55;
+  --primitive-gold-600: #BE9B2C;
+  --primitive-gold-400: #E5C158;
+  --primitive-gold-200: #F4E2A6;
+  --primitive-gold-100: #FAF0D2;
+  --primitive-gold-50: #FDF8EB;
+  --primitive-amber-600: #C48228;
+  --primitive-amber-600-rgb: 196, 130, 40;
+  --primitive-amber-700: #AC701E;
+  --primitive-amber-800: #905C15;
+  --primitive-amber-900: #6E440C;
+
+  --primitive-off-white: #FDFCFA;
+  --primitive-off-white-rgb: 253, 252, 250;
+  --primitive-cream: #F7F8F6;
+  --primitive-cream-rgb: 247, 248, 246;
+  --primitive-ivory: #FFFFFF;
+
+  --primitive-grey-warm-100: #EDEFEA;
+  --primitive-grey-warm-200: #E5E7E2;
+  --primitive-grey-warm-300: #D9DCD6;
+  --primitive-grey-warm-400: #C2C6BD;
+
+  --primitive-grey-cool-600: #4B5563;
+  --primitive-grey-cool-700: #374151;
+  --primitive-grey-cool-800: #1A2320;
+  --primitive-grey-cool-900: #0F1412;
+  --primitive-charcoal-800: #121C18;
 }
