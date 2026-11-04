@@ -3,150 +3,96 @@
 ## 1. Section Overview
 - **Section ID**: `sec-05` / `<section id="private-label" className="private-label-section">`
 - **Section Name**: Private Label & Contract Packaging Support
-- **Position on Website**: Section 4 of the main content flow, rendered directly below `GradeSpecificationTable`.
-- **Main Purpose**: Detail SHIVOM GLOBAL's packaging coordination capabilities spanning standard export bulk multi-wall paper sacks, flexible custom container packing, and retail brand packaging (pouches, tins, pyramid tea bags) through qualified packing partners.
-- **Target Audience**: Consumer packaged goods (CPG) brand creators, supermarket retail buyers, institutional catering operations, and private-label tea distributors needing turnkey packaging and barcoded shelf-ready products.
-- **Business Objective**: Broaden commercial engagement beyond raw bulk leaf trading into high-margin private label programs, clarifying minimum batch flexibility and routing inquiries into the requirement engine.
+- **Position on Website**: Section 4 of the main content flow, rendered directly below `GradeSpecificationTable` and above `HowItWorksSection`.
+- **Main Purpose**: Detail SHIVOM GLOBAL's packaging coordination capabilities spanning standard export bulk multi-wall paper sacks, flexible custom container packing, and retail brand packaging (pouches, tins, pyramid tea bags) through vetted third-party packing partners.
+- **Target Audience**: Consumer packaged goods (CPG) brand creators, supermarket retail buyers, institutional catering operations, and private-label tea distributors needing turnkey packaging, destination compliance, and shelf-ready products.
+- **Business Objective**: Broaden commercial engagement beyond raw bulk leaf trading into high-margin private label programs, clarifying minimum batch flexibility and routing preselected packaging inquiries directly into the buyer requirement engine.
 
-## 2. Current Implementation
-- **Existing Design Description**: Prestige packaging layout structured around a 3-column card grid with warm gold tier badges, monospace specification callouts, checkmarked export advantage lists, and an integrated bottom discussion banner.
-- **Existing Layout**:
-  - **Section Header**: Centered gold badge ("PACKING & PRIVATE LABEL SUPPORT"), H2 title, and balanced explanatory lead text.
-  - **Packaging Formats Grid**: 3-column responsive card grid (`.private-label-formats-grid`):
-    1. Bulk Export Packaging (Standard Bulk Sacks)
-    2. Custom Bulk Packing (Flexible Container Packaging)
-    3. Private Label Support (Retail Pouches, Tins & Tea Bags)
-  - **Capabilities Callout Box**: Dark-themed bottom container with `ShieldCheck` icon, copy explaining destination compliance coordination, and a gold action button.
-- **Content Structure**:
-  - Each packaging format card contains:
-    - Tier badge (`font-spec`) + Icon pill
-    - Card Title & Subtitle
-    - Container Specification Callout Box
-    - Key Export Advantages (3 checkmarked bullet items)
-    - Target Buyer Persona ("Suitable For")
-    - Volume Scale ("MOQ / Scale")
-    - Dedicated Inquire Button (`.format-inquire-btn`)
-  - Bottom Callout: "Discuss Your Destination Packaging & Labeling Needs" + "Discuss Packaging Options" button.
+## 2. Modernized Implementation
+- **Design Structure**: Premium B2B Private Label & Packaging Showcase structured across 4 coherent vertical tiers:
+  1. **Editorial Showcase**: Split 2-column introduction pairing authoritative positioning copy, commercial governance callout box, and authentic packaging photography (`/images/private-label-packaging.jpg`).
+  2. **Supported Packaging Formats**: 3-column responsive card grid (`.private-label-formats-grid`):
+     - Bulk Export Packaging (Standard Bulk Sacks) → routes to `'Standard Bulk Export Sacks'`
+     - Custom Bulk Packing (Flexible Container Packaging) → routes to `'Heavy-duty Woven Sacks'`
+     - Private Label Support (Retail Pouches, Tins & Tea Bags) → routes to `'Retail Stand-up Pouches'`
+  3. **4-Stage Coordination Workflow**: 4-card sequence detailing the transparent operational journey from garden sourcing to destination port arrival:
+     - 01: Tea Sourcing & Cupping (Direct Estate Capability)
+     - 02: Packaging Specification (Partner Sourcing)
+     - 03: Counter-Sample Evaluation (Buyer Verification)
+     - 04: Contract Packing & Export (Coordinated Dispatch)
+  4. **Commercial Inquiry CTA Banner**: Deep forest green banner with `ShieldCheck` icon, compliance copy, and primary gold CTA button.
 - **Visual Elements**:
-  - Warm Gold accents (`--color-gold: #C59B27`) on badges and buttons.
-  - Crisp border boundaries with subtle card box-shadow.
-  - Editorial asset `public/images/private-label-packaging.jpg` available in project asset library.
-- **Current Functionality**:
-  - Clicking any "Inquire [Format Title]" button passes the format title to `onStartPrivateLabel(formatTitle)` in parent `HomePage.tsx`.
-  - Sets parent form state to `formRequirementType = 'Private Label Retail Product'`, sets `formIntent = 'packing'`, and smoothly scrolls to `#requirement-form`.
-  - Bottom "Discuss Packaging Options" button initiates the same flow.
+  - Warm Ivory & Champagne Gold accents (`--color-gold: #C59B27` / `#D4AF37`) on badges, icons, and borders.
+  - Refined gold-outline buttons (`.btn-outline-gold`) on service cards with smooth gold hover fill.
+  - Editorial photograph `public/images/private-label-packaging.jpg` displayed inside `.private-label-visual-card` with an anchored caption pill.
+- **Functional Form Integration**:
+  - Clicking any *"Inquire [Format Title]"* button invokes `onStartPrivateLabel(opt.title, opt.packagingFormat)`.
+  - `HomePage.tsx` updates `formPackaging` state, sets `formIntent = 'packing'`, and smoothly scrolls to `#requirement-form`.
+  - `BuyerRequirementForm.tsx` receives `initialPackaging={formPackaging}`, switches to Detailed Mode, and preselects the corresponding format in `#det-packaging`.
 
 ## 3. Component Mapping
 - **React Component Name**: `PrivateLabelSection`
 - **Exact Source File Path**: `src/features/private-label/components/PrivateLabelSection.tsx`
-- **Related Subcomponents**: None (fully self-contained).
+- **Parent Page Component**: `src/pages/HomePage.tsx`
+- **Inquiry Form Target**: `src/features/buyer-requirement/components/BuyerRequirementForm.tsx`
 - **Shared Components & Utilities**:
-  - Icons from `lucide-react`: `Package`, `Sparkles`, `Layers`, `ArrowRight`, `Check`, `ShieldCheck`.
+  - Icons from `lucide-react`: `Package`, `Sparkles`, `Layers`, `ArrowRight`, `Check`, `ShieldCheck`, `Search`, `Sliders`, `CheckCircle2`, `Truck`.
 
 ## 4. Styling Mapping
 - **CSS File Paths**:
-  - `src/styles/index.css` (Lines 1620–2290: Base card styles, format grid, feature lists, capabilities banner, and media queries).
-  - `src/styles/tokens.css` (Design tokens).
+  - `src/styles/index.css` (Lines 2893–3580: Section styles, split showcase, workflow grid, format cards, `.btn-outline-gold`, and responsive breakpoints).
+  - `src/styles/tokens.css` (Three-tier design tokens).
 - **Design Tokens**:
-  - Colors: `var(--bg-card)` (#FFFFFF), `var(--border-subtle)` (#E5E7EB), `var(--color-primary-green)` (#0D3829), `var(--color-gold)` (#C59B27).
-  - Spacing: `var(--space-3)` (12px), `var(--space-4)` (16px), `var(--space-6)` (24px), `var(--space-8)` (32px).
-  - Radii: `var(--radius-md)` (8px), `var(--radius-lg)` (12px).
-- **Typography**:
-  - Header: H2 `var(--font-primary)` with tight leading.
-  - Subheaders and spec labels: `var(--font-mono)` (Space Grotesk, `.font-spec`).
-- **Layout Behaviour**:
-  - Format grid: `display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);`.
-  - Stacks into single column below 1100px / 768px.
-- **Animation Styles**:
-  - Card hover: `transform: translateY(-2px)`, `box-shadow: var(--shadow-hover)`.
+  - Colors: `var(--bg-surface)` (#FFFFFF), `var(--border-subtle)` (#E5E7EB), `var(--color-primary-green)` (#0A281E), `var(--color-gold)` (#D4AF37), `var(--color-primary-dark)` (#061811).
+  - Spacing: 8px grid system (`var(--space-2)` to `var(--space-8)`).
+  - Radii: `var(--radius-sm)` (4px/6px), `var(--radius-md)` (8px), `var(--radius-lg)` (14px).
+- **Responsive Breakpoints**:
+  - **Desktop (>= 1101px)**: 3-column format grid and 4-column workflow grid.
+  - **Tablet (768px – 1100px)**: 2-column format grid with Card 3 spanning both columns (`grid-column: 1 / -1`), eliminating empty grid voids; 2x2 workflow grid.
+  - **Mobile (<= 540px)**: Single-column clean vertical stack.
+  - **Reduced Motion**: Full `@media (prefers-reduced-motion: reduce)` support disabling transitions and transforms.
 
 ## 5. Asset Mapping
 - **Image Paths**:
-  - `public/images/private-label-packaging.jpg` (Referenced in project documentation and improvement plans as the editorial reference photograph of unbranded kraft pouches and tins on timber table).
+  - `public/images/private-label-packaging.jpg` (High-resolution authentic photograph of matte green private label pouch, tin canister, pyramid tea bags, and cupped liquor on timber tasting table).
 - **SVG Paths**: None (inline Lucide SVGs).
-- **Video Paths**: None.
-- **Icon References**: `Package`, `Sparkles`, `Layers`, `ArrowRight`, `Check`, `ShieldCheck`.
 - **Fonts**: Plus Jakarta Sans and Space Grotesk.
-- **Other Assets**: None.
 
-## 6. Functional Behaviour
-- **Buttons and CTAs**:
-  - "Inquire Bulk Export Packaging" Button: Triggers `handleActionClick("Bulk Export Packaging")`.
-  - "Inquire Custom Bulk Packing" Button: Triggers `handleActionClick("Custom Bulk Packing")`.
-  - "Inquire Private Label Support" Button: Triggers `handleActionClick("Private Label Support")`.
-  - "Discuss Packaging Options" (Bottom Banner CTA): Triggers `handleActionClick()`.
-- **Navigation**:
-  - Section anchor `#private-label`.
-  - Navigates down to `#requirement-form`.
-- **Form Behaviour**: Updates parent form state in `HomePage.tsx` (`setFormRequirementType('Private Label Retail Product')` and `setFormIntent('packing')`).
-- **Interactions**: Interactive hover states on cards and buttons.
-- **Animations**: CSS transitions (`var(--transition-normal)`).
-- **API Integrations**: None.
-- **External Integrations**: None directly in this component.
+## 6. Functional Behaviour & Preselection Flow
+- **Bulk Export Packaging Button**:
+  - Passes title: `"Bulk Export Packaging"`, format: `'Standard Bulk Export Sacks'`.
+  - Form state: `formPackaging = 'Standard Bulk Export Sacks'`, `formIntent = 'packing'`.
+  - Result: Selects *"Standard Bulk Export Sacks"* in Detailed Form.
+- **Custom Bulk Packing Button**:
+  - Passes title: `"Custom Bulk Packing"`, format: `'Heavy-duty Woven Sacks'`.
+  - Form state: `formPackaging = 'Heavy-duty Woven Sacks'`, `formIntent = 'packing'`.
+  - Result: Selects *"Heavy-duty Woven Sacks"* in Detailed Form.
+- **Private Label Support Button**:
+  - Passes title: `"Private Label Support"`, format: `'Retail Stand-up Pouches'`.
+  - Form state: `formPackaging = 'Retail Stand-up Pouches'`, `formIntent = 'packing'`.
+  - Result: Selects *"Retail Pouches / Tins (OEM)"* in Detailed Form.
+- **Discuss Packaging Options (Bottom CTA)**:
+  - Passes `undefined` packaging, switches form to Detailed Mode for open inquiry.
 
-## 7. Responsive Behaviour
-- **Desktop (>= 1025px)**: Balanced 3-column grid showing all three formats side-by-side with equal height cards (`display: flex; flex-direction: column`).
-- **Tablet (769px – 1024px)**: Grid shifts to 2 columns with the third card spanning full width, or scrolls cleanly.
-- **Mobile (<= 768px & <= 480px)**:
-  - Grid collapses into a single-column stack.
-  - Capabilities box stacks vertically (Text on top, button on bottom).
-  - Card padding adjusts from `var(--space-8)` to `var(--space-5)`.
-- **Existing Responsive Issues**: None observed; cards flex cleanly to uniform content heights.
+## 7. Commercial Governance & Capability Accuracy
+- **Direct Sourcing & Coordination**: Clearly stated as direct origin leaf procurement across Assam and Darjeeling auctions/estates, organoleptic cupping, counter-sample dispatch, and export documentation.
+- **Supplier-Dependent Packaging Procurement**: Food-grade multi-wall paper sacks, woven sacks, and barrier pouches procured to buyer specification.
+- **Third-Party Contract Packing**: Explicitly disclosed that pouch filling, canister seaming, and pyramid tea bag packing are coordinated through vetted commercial packing partners.
+- **Zero Fabricated Claims**: No false in-house factory claims, fake machine certifications, or artificial MOQ guarantees.
 
-## 8. SEO & Accessibility
-- **Heading Hierarchy**:
-  - `<h2>`: "Private Label & Contract Packaging Support" (`id="private-label-heading"`)
-  - `<h3>`: Card titles ("Bulk Export Packaging", "Custom Bulk Packing", "Private Label Support")
-  - `<h4>`: Bottom capabilities heading ("Discuss Your Destination Packaging & Labeling Needs")
-- **Semantic HTML**: `<section id="private-label" aria-labelledby="private-label-heading">`, `<div role="list">`, `<div role="listitem">`, `<ul>`, `<li>`.
-- **Image Alt Attributes**: N/A (Card layout uses icons and vector elements).
-- **ARIA Attributes**:
-  - `role="list"`, `role="listitem"`.
-  - Action buttons have descriptive `aria-label` including the option name.
-  - Decorative icons have `aria-hidden="true"`.
-- **Keyboard Accessibility**: All buttons are keyboard accessible via Tab, with visible outline focus rings.
-- **Relevant SEO Considerations**: Captures high-intent searches for "private label tea India", "custom tea packaging export", and "bulk tea paper sacks".
+## 8. Resolved Backlog Issues
 
-## 9. Dependencies & Integration
-- **Dependencies on Other Website Sections**:
-  - Feeds preselection into `BuyerRequirementForm` (Section 08).
-- **Shared Components**: None.
-- **Global CSS Dependencies**:
-  - `src/styles/tokens.css`
-  - `.container`, `.spec-badge`, `.btn`, `.btn-primary`, `.btn-gold`, `.font-spec`
-- **API Dependencies**: None.
-- **Navigation Dependencies**: Anchor `#private-label` and `#requirement-form`.
+| ID | Issue | Solution Implemented | Status |
+|---|---|---|---|
+| `SEC05-BUG-01` | Format inquiry buttons did not pass packaging format to form | Added `formPackaging` state to `HomePage.tsx`, passed `initialPackaging` prop to `BuyerRequirementForm`, and wired all 3 card handlers. | **RESOLVED** |
+| `SEC05-STY-01` | Card inquiry buttons rendered as unstyled browser-default buttons | Implemented refined `.btn-outline-gold` with champagne gold border, dark text, and gold hover state. | **RESOLVED** |
+| `SEC05-VIS-01` | `private-label-packaging.jpg` was unrendered | Introduced split editorial showcase pairing positioning copy with visual packaging photography. | **RESOLVED** |
+| `SEC05-RSP-01` | Tablet 2-column layout left empty 50% void | Added `grid-column: 1 / -1` for the 3rd card on viewports between 541px and 1100px. | **RESOLVED** |
+| `SEC05-TYP-01` | `VOLUME SCALE` label wrapped to two lines on Card 3 | Added `white-space: nowrap; flex-shrink: 0;` to `.format-moq-label`. | **RESOLVED** |
 
-## 10. Current Issues & Improvement Backlog
-
-| ID | Issue | Proposed Improvement | Priority | Status |
-|---|---|---|---|---|
-| `SEC05-01` | Packaging image asset (`private-label-packaging.jpg`) is not rendered visually in the section | Add visual editorial photography thumbnail or gallery modal displaying actual pouch, tin, and sack mockups | Medium | Open |
-| `SEC05-02` | Card buttons have outline style which can have lower visual prominence than primary buttons | Test converting Private Label card CTA to a solid gold accent button for higher conversion | Low | Open |
-| `SEC05-03` | Specific packaging material certifications (FDA food contact, FSC paper) are described in text only | Add visual compliance iconography (food-grade symbol, recyclable symbol) | Low | Open |
-
-## 11. Testing & Acceptance Criteria
-- **Visual Verification**:
-  - 3 cards render with equal heights and uniform alignment.
-  - Gold badges and icons render sharply.
-  - Bottom capabilities banner contrast is verified.
-- **Functional Verification**:
-  - Clicking "Inquire Private Label Support" sets parent form state to "Private Label Retail Product" and scrolls to `#requirement-form`.
-  - Clicking "Discuss Packaging Options" scrolls cleanly to the form.
-- **Desktop Verification**:
-  - 3-column layout displays with consistent gap at 1440px and 1280px.
-- **Tablet Verification**:
-  - Layout wraps cleanly at 1024px / 768px.
-- **Mobile Verification**:
-  - Stacked cards are easy to read and buttons span comfortably across 375px–414px viewports.
-- **Regression Testing**:
-  - Verify that clicking format buttons preserves other previously entered form data.
-- **Performance Checks**:
-  - Zero performance overhead (pure CSS and standard HTML primitives).
-
-## 12. Change History
+## 9. Change History
 
 | Date | Change Description | Files Modified | Verification |
 |---|---|---|---|
-| 2026-11-02 | Initial technical documentation created from codebase audit | `docs/website-sections/05_PRIVATE_LABEL.md` | Verified against `PrivateLabelSection.tsx` & `src/styles/index.css` |
-
+| 2026-11-02 | Initial technical documentation created from codebase audit | `docs/website-sections/05_PRIVATE_LABEL.md` | Codebase inspection |
+| 2026-11-04 | Section 05 Modernization: Editorial showcase with photography, 4-stage workflow, gold outline buttons, tablet layout fix, and end-to-end form preselection routing | `PrivateLabelSection.tsx`, `HomePage.tsx`, `index.css`, `05_PRIVATE_LABEL.md` | Chrome DevTools CDP browser testing, unit tests, and production build |

@@ -148,6 +148,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     if (initialIntent === 'quote' || initialIntent === 'packing') {
       setDetailedData((prev) => syncQuickToDetailed(quickData, prev));
       setFormMode('detailed');
+    } else if (initialIntent === 'sample') {
+      setQuickData((prev) => syncDetailedToQuick(detailedData, prev));
+      setFormMode('quick');
     }
   }, [initialRequirementType, initialGrade, initialIntent, initialPackaging]);
 

@@ -2,148 +2,101 @@
 
 ## 1. Section Overview
 - **Section ID**: `sec-06` / `<section id="how-it-works" className="how-it-works-section theme-ivory">`
-- **Section Name**: The Sourcing & Export Pathway (5-Step How It Works Flow)
-- **Position on Website**: Section 5 of the main content flow, rendered directly below `PrivateLabelSection`.
-- **Main Purpose**: Demystify the international Indian tea procurement cycle into a clear, transparent 5-step operational milestone roadmap that removes buyer hesitation by formalizing physical counter-sample cupping before commercial commitment.
-- **Target Audience**: International tea buyers, risk-conscious procurement officers, new market entrants, and blenders who need assurance that contracts are executed only after sensory cupping sign-off.
-- **Business Objective**: Eliminate perceived friction and risk in cross-border tea trade, build buyer confidence, and guide users directly into Step 01 (submitting their requirements via `#requirement-form`).
+- **Section Name**: The Sourcing & Export Pathway (Two-Phase Editorial Export Journey)
+- **Position on Website**: Section 5 of the main content flow, rendered directly below `PrivateLabelSection` and directly above `WhyShivomGlobal`.
+- **Main Purpose**: Demystify the cross-border Indian tea procurement cycle for international B2B buyers into a structured two-phase operational framework that removes commercial risk by requiring physical counter-sample cupping approval prior to proforma invoicing and ocean dispatch.
+- **Target Audience**: International tea buyers, commercial blenders, private-label distributors, and institutional importers who require organoleptic proof of dry leaf appearance, liquor infusion, and cup briskness before making financial commitments.
+- **Business Objective**: Reassure international buyers of zero financial risk prior to sample sign-off, build institutional credibility through authentic sensory cupping aesthetics, and route users accurately to either Detailed Specification Intake (`'quote'`) or Quick Sample Enquiry (`'sample'`).
 
-## 2. Current Implementation
-- **Existing Design Description**: Estate Ivory prestige theme (`linear-gradient(180deg, var(--bg-surface-subtle) 0%, #F5F1E8 100%)`) featuring a horizontally connected interactive milestone pathway with numbered circular step indicators, time badges, deliverable tags, and a live commitment ribbon with an animated green pulse dot.
-- **Existing Layout**:
-  - **Section Header**: Centered gold badge ("STRUCTURED SOURCING FLOW"), H2 title ("The Sourcing & Export Pathway"), and explanatory lead copy.
-  - **Connected Milestone Pathway**: Responsive timeline track containing 5 milestone nodes (`.process-step-node`):
-    - Node 01: Share Requirement
-    - Node 02: We Match the Requirement
-    - Node 03: Counter-Sample Arranged
-    - Node 04: Buyer Evaluation
-    - Node 05: Commercial Discussion & Export
-  - **Live Commitment Ribbon**: Full-width connected card at the base of the track featuring an organoleptic sample evaluation policy with an active green pulse indicator and a gold CTA button ("Start With Step 01: Share Requirement").
-- **Content Structure**:
-  - Each milestone card displays:
-    - Step numeric indicator (`01` through `05`)
-    - Time badge (`font-spec`: "Step 01", "Step 02", etc.)
-    - Deliverable tag (e.g. "Specification Intake", "Physical Counter-Sample", "Proforma Invoice & Dispatch")
-    - Step Title & Description
-    - Associated vector icon
-- **Visual Elements**:
-  - Ivory background gradient with warm cream tones.
-  - Green pulsing beacon (`.process-pulse-dot`) communicating active trade desk readiness.
-  - Interactive selection and completion borders on step nodes.
-- **Current Functionality**:
-  - Hovering or clicking any step updates `activeStep` (1 through 5), updating active and completed styling across the timeline.
-  - Keyboard accessible: Users can navigate and activate steps with Tab, Space, and Enter.
-  - Action button triggers smooth scrolling to `#requirement-form`.
+## 2. Modernized Architecture (Hybrid: Concept A + Concept C)
+- **Architectural Paradigm**: Two-Phase Operational Journey with Editorial Cupping Showcase
+  1. **Editorial Sensory Cupping Showcase**:
+     - **Header**: Gold specification badge (`STRUCTURED SOURCING FLOW`), H2 title (`The Sourcing & Export Pathway`), and authoritative lead copy.
+     - **Sensory Verification Manifesto**: Shield-checked callout box detailing the buyer-first sourcing protocol with three core pillars:
+       - *Pre-Commitment Samples*: Representative lots dispatched for physical laboratory evaluation.
+       - *Invoice-Matched Dispatch*: Export container dispatches match approved counter-sample specifications.
+       - *Transparent Incoterms*: Clear FOB Indian Ports (Mundra / Kolkata) or CIF Destination Port pricing.
+     - **Authentic Cupping Photography**: High-resolution image (`/images/darjeeling-single-origin.webp`) showing dry whole leaf tea on black slate tasting trays alongside porcelain cupping bowls steeped with golden liquor, with an authentic `SENSORY EVALUATION LAB` caption.
+  2. **Phase 1: Pre-Commitment Verification (Steps 01 to 04)**:
+     - Header: `PHASE 01 — PRE-COMMITMENT VERIFICATION · ZERO FINANCIAL RISK`
+     - Step 01: **Share Requirement** (Deliverable: `SPECIFICATION INTAKE`) -> Action: `Submit Requirement` (routes to Detailed Specification Intake / `'quote'`).
+     - Step 02: **Sourcing Identification** (Deliverable: `LOT SOURCING`) -> Action: `Review Grade Specs` (smooth-scrolls to `#tea-by-grade`).
+     - Step 03: **Physical Counter-Sample** (Deliverable: `AIR SAMPLE DISPATCH`) -> Action: `Request Counter-Samples` (routes to Quick Sample Request / `'sample'`).
+     - Step 04: **Buyer Cupping Approval** (Deliverable: `CUPPING APPROVAL`) -> Milestone: `Sign-Off Milestone · Unlocks Phase 2`.
+  3. **Phase 2: Commercial Execution Console (Step 05)**:
+     - Header: `PHASE 02 — COMMERCIAL EXECUTION · POST-APPROVAL DISPATCH`
+     - Console Container: Deep Forest luxury gradient (`#061811` to `#0A281E`) with warm gold border and elevated shadow.
+     - Step 05: **Commercial Formalization, Export Clearance & Ocean Freight**
+     - Four Operational Deliverable Blocks:
+       1. *Commercial Terms & Invoicing*: Volume confirmation, milestone payment terms, FOB/CIF pricing.
+       2. *Packaging & Contract Packing*: Multi-wall paper sacks, woven bulk bags, or customized retail pouches/tins.
+       3. *Statutory Export Paperwork*: Tea Board of India export clearance, Phytosanitary Certificate, Certificate of Origin, COA.
+       4. *Container Stuffing & Port Freight*: Container inspection, secure stuffing, fumigation, customs clearance, and Bill of Lading dispatch.
+     - Reassurance Bar: Active green pulse indicator (`.export-pulse-dot`) + Commercial Governance disclosure.
+     - Primary Action: `Submit Export Requirement` button (warm gold primary, routes to Detailed Specification Intake / `'quote'`).
 
 ## 3. Component Mapping
 - **React Component Name**: `HowItWorksSection`
 - **Exact Source File Path**: `src/features/export-process/components/HowItWorksSection.tsx`
-- **Related Subcomponents**: None (self-contained).
-- **Shared Components & Utilities**:
-  - Icons from `lucide-react`: `Send`, `FileSearch`, `Package`, `CheckCircle2`, `Ship`, `ArrowRight`.
+- **Parent Page**: `src/pages/HomePage.tsx` (Lines 144–148)
+- **Props Interface**:
+  ```typescript
+  export interface HowItWorksSectionProps {
+    onRequestSamples?: () => void;
+    onSubmitRequirement?: () => void;
+    onExploreGrades?: () => void;
+  }
+  ```
+- **Dependencies**:
+  - `lucide-react`: `Send`, `FileSearch`, `Package`, `CheckCircle2`, `Ship`, `ArrowRight`, `ShieldCheck`, `Check`, `FileText`, `Layers`, `Anchor`.
 
 ## 4. Styling Mapping
-- **CSS File Paths**:
-  - `src/styles/index.css` (Lines 5269–5520 & Lines 2582–3060: Base stepper, Ivory theme, milestone track, pulse animation, and responsive media queries).
-  - `src/styles/tokens.css` (Design tokens).
+- **CSS File**: `src/styles/index.css` (Lines 9556–9885)
 - **Design Tokens**:
-  - Colors: `--bg-surface-subtle` (#F4F5F3), `#F5F1E8` (Estate Ivory), `var(--color-primary-green)` (#0D3829), `var(--color-gold)` (#C59B27), `var(--color-whatsapp)` (#25D366).
-  - Spacing: `var(--space-3)` (12px), `var(--space-4)` (16px), `var(--space-6)` (24px), `var(--space-8)` (32px).
-  - Radii: `var(--radius-md)` (8px), `var(--radius-lg)` (12px), `var(--radius-full)` (9999px).
-- **Typography**:
-  - Headings: `var(--font-primary)` (Plus Jakarta Sans).
-  - Deliverable and step badges: `var(--font-mono)` (Space Grotesk, `.font-spec`).
-- **Layout Behaviour**:
-  - Desktop: 5 horizontal flex or grid columns connected via subtle horizontal lines.
-  - Mobile: Vertical milestone stack with connected vertical progress spine.
-- **Animation Styles**:
-  - Pulse dot: CSS `@keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }`.
-  - Node hover elevation: `transform: translateY(-2px)`, `transition: var(--transition-normal)`.
+  - Colors: `--color-primary-dark` (`#061811`), `--color-primary-green` (`#0A281E`), `--color-gold` (`#D4AF37`), `--primitive-white` (`#FFFFFF`), `--border-subtle`, `--bg-surface-subtle`.
+  - Spacing: 8px spacing grid (`--space-2`, `--space-3`, `--space-4`, `--space-5`, `--space-6`).
+  - Radii: `--radius-sm` (4px), `--radius-md` (8px), `--radius-lg` (14px).
+  - Shadows: `0 4px 16px -2px rgba(10, 40, 30, 0.05)`, `0 12px 36px -6px rgba(10, 40, 30, 0.35)`.
+- **Dormant CSS Purged**:
+  - Legacy `.how-it-works-grid`, `.how-it-works-step-card`, `.step-card-*`, and `.how-it-works-bottom` (94 lines) purged from lines 7526–7620.
 
 ## 5. Asset Mapping
-- **Image Paths**: None.
-- **SVG Paths**: None (inline Lucide SVGs).
-- **Video Paths**: None.
-- **Icon References**: `Send` (Step 1), `FileSearch` (Step 2), `Package` (Step 3), `CheckCircle2` (Step 4), `Ship` (Step 5), `ArrowRight` (CTA).
-- **Fonts**: Plus Jakarta Sans and Space Grotesk.
-- **Other Assets**: None.
+- **Images**:
+  - WebP (Modern): `/images/darjeeling-single-origin.webp` (1200w) & `/images/darjeeling-single-origin-640w.webp` (640w).
+  - JPEG Fallback: `/images/darjeeling-single-origin.jpg`.
+- **Depiction**: Authentic whole leaf Darjeeling specialty tea on slate tasting tray with steeped porcelain cupping bowls.
+- **Attributes**: `loading="eager"`, responsive `<picture>` with `srcset` and `sizes`.
 
-## 6. Functional Behaviour
-- **Buttons and CTAs**:
-  - "Start With Step 01: Share Requirement" Button: Calls `onRequestSamples` or `onSubmitRequirement` callback, falling back to smooth scroll to `#requirement-form`.
-  - 5 Step Node Elements: Click or Enter key selects the active step in local state.
-- **Navigation**:
-  - Section anchor `#how-it-works`.
+## 6. Functional & Intent Routing
+- **Step 01 Button ("Submit Requirement")**:
+  - Invokes `onSubmitRequirement()`.
+  - Sets `formIntent = 'quote'` in `HomePage.tsx`.
+  - Selects Form B (`Detailed Tea Requirement`) tab in `BuyerRequirementForm.tsx`.
   - Smooth-scrolls to `#requirement-form`.
-- **Form Behaviour**: Directs user intent to Form A (Quick) or Form B (Detailed) via props.
-- **Interactions**:
-  - Hovering over a node marks it as `active` and all prior nodes as `completed`.
-  - Accessible keyboard interaction (`onKeyDown` handles Enter and Space).
-- **Animations**: CSS transitions on hover and active states.
-- **API Integrations**: None.
-- **External Integrations**: None.
+- **Step 02 Button ("Review Grade Specs")**:
+  - Invokes `onExploreGrades()`.
+  - Smooth-scrolls to `#tea-by-grade` (The Tea Origin & Grade Explorer).
+- **Step 03 Button ("Request Counter-Samples")**:
+  - Invokes `onRequestSamples()`.
+  - Sets `formIntent = 'sample'` in `HomePage.tsx`.
+  - Selects Form A (`Quick Enquiry / Samples`) tab in `BuyerRequirementForm.tsx`.
+  - Smooth-scrolls to `#requirement-form`.
+- **Step 05 Console CTA ("Submit Export Requirement")**:
+  - Invokes `onSubmitRequirement()`.
+  - Sets `formIntent = 'quote'` in `HomePage.tsx`.
+  - Selects Form B (`Detailed Tea Requirement`) tab in `BuyerRequirementForm.tsx`.
+  - Smooth-scrolls to `#requirement-form`.
 
-## 7. Responsive Behaviour
-- **Desktop (>= 1025px)**: All 5 steps laid out horizontally side-by-side with continuous connecting line.
-- **Tablet (769px – 1024px)**: Steps condense padding; deliverable font size scales to 11px.
-- **Mobile (<= 768px & <= 480px)**:
-  - Timeline transforms into a vertical stacked process flow.
-  - Step indicators align to the left with a connecting vertical line.
-  - Commitment ribbon stacks vertically (Pulse and text on top, CTA button full width below).
-- **Existing Responsive Issues**: None; the vertical transition below 768px provides excellent readability on touch devices.
+## 7. Responsive Matrix
 
-## 8. SEO & Accessibility
-- **Heading Hierarchy**:
-  - `<h2>`: "The Sourcing & Export Pathway" (`id="how-it-works-heading"`)
-  - `<h3>`: Step titles ("Share Requirement", "We Match the Requirement", "Counter-Sample Arranged", "Buyer Evaluation", "Commercial Discussion & Export")
-- **Semantic HTML**: `<section id="how-it-works" aria-labelledby="how-it-works-heading">`, `<div role="list">`, `<div role="listitem">`, `<button>`.
-- **Image Alt Attributes**: N/A.
-- **ARIA Attributes**:
-  - `role="list"`, `role="listitem"`.
-  - Step nodes have `aria-label="Step 01: Share Requirement"`.
-  - Decorative icons have `aria-hidden="true"`.
-- **Keyboard Accessibility**: Each node has `tabIndex={0}` and keyboard event handlers (`onKeyDown`).
-- **Relevant SEO Considerations**: Directly explains commercial export terms ("FOB", "CIF", "Counter-Samples", "Proforma Invoice", "Phytosanitary").
-
-## 9. Dependencies & Integration
-- **Dependencies on Other Website Sections**:
-  - Links to `BuyerRequirementForm` (Section 08).
-- **Shared Components**: None.
-- **Global CSS Dependencies**:
-  - `src/styles/tokens.css`
-  - `.container`, `.spec-badge`, `.font-spec`
-- **API Dependencies**: None.
-- **Navigation Dependencies**: Anchor `#how-it-works` and `#requirement-form`.
-
-## 10. Current Issues & Improvement Backlog
-
-| ID | Issue | Proposed Improvement | Priority | Status |
+| Breakpoint / Device | Viewport | Phase 1 Grid | Phase 2 Console Grid | Visual Layout |
 |---|---|---|---|---|
-| `SEC06-01` | Step 05 icon is `Ship` (Ocean freight), but air courier samples are handled in Step 03 | Standardize iconography: add airplane or express courier sub-badge to Step 03 | Low | Open |
-| `SEC06-02` | Milestone connector lines on tablet viewports (769px–900px) can overlap tight cards | Add fluid gap spacing using `clamp()` on tablet views | Low | Open |
+| **Desktop** | 1440 × 900 | 4 columns (`repeat(4, 1fr)`) | 4 columns (`repeat(4, 1fr)`) | Editorial split (1.15fr / 0.85fr); button fully enclosed with zero overflow |
+| **Tablet** | 768 × 1024 | 2 columns (`repeat(2, 1fr)`) | 2 columns (`repeat(2, 1fr)`) | Stacked editorial hero; balanced 2x2 grids eliminating stretched 700px horizontal cards |
+| **Mobile** | 390 × 844 | 1 column (`1fr`) | 1 column (`1fr`) | Vertical connected card track; generous bottom padding preventing floating WhatsApp button overlap |
 
-## 11. Testing & Acceptance Criteria
-- **Visual Verification**:
-  - 5 steps display numbers `01` to `05` with clean typography.
-  - Estate Ivory background gradient renders smoothly.
-  - Green pulse dot animates continuously without CPU spike.
-- **Functional Verification**:
-  - Clicking any step node marks it as active.
-  - Clicking "Start With Step 01: Share Requirement" scrolls down to `#requirement-form`.
-- **Desktop Verification**:
-  - 5 steps fit horizontally without wrapping at 1440px and 1280px.
-- **Tablet Verification**:
-  - Steps adapt down to 768px.
-- **Mobile Verification**:
-  - Steps stack vertically with vertical connecting line on 375px and 414px viewports.
-- **Regression Testing**:
-  - Ensure theme-ivory styles do not bleed into adjacent sections.
-- **Performance Checks**:
-  - Animation uses CSS `transform` and `opacity` exclusively for 60fps performance.
-
-## 12. Change History
-
-| Date | Change Description | Files Modified | Verification |
-|---|---|---|---|
-| 2026-11-02 | Initial technical documentation created from codebase audit | `docs/website-sections/06_EXPORT_PROCESS.md` | Verified against `HowItWorksSection.tsx` & `src/styles/index.css` |
-
+## 8. Accessibility & Performance
+- **Reduced Motion**: Full `@media (prefers-reduced-motion: reduce)` support with disabled animations and zero transitions.
+- **Touch Targets**: All interactive buttons meet or exceed the 44px minimum touch target height.
+- **Semantic HTML**: `<section>`, `<picture>`, `<h2>`, `<h3>`, `<h4>`, `<button>`, `role="list"`, `role="listitem"`.
+- **Contrast**: Tested and compliant with WCAG 2.1 AA standards.

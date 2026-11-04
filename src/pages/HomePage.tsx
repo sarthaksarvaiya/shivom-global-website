@@ -14,6 +14,7 @@ export const HomePage: React.FC = () => {
   const [formRequirementType, setFormRequirementType] = useState<string>('');
   const [formGrade, setFormGrade] = useState<string>('');
   const [formIntent, setFormIntent] = useState<'sample' | 'quote' | 'packing'>('sample');
+  const [formPackaging, setFormPackaging] = useState<string>('');
 
   const scrollToForm = () => {
     const formElement = document.getElementById('requirement-form');
@@ -92,8 +93,19 @@ export const HomePage: React.FC = () => {
     scrollToForm();
   };
 
-  const handleStartPrivateLabel = () => {
+  const handleStartPrivateLabel = (formatTitle?: string, packagingFormat?: string) => {
     // Retain existing tea category if already selected; do not invent a tea category from packaging intent
+    if (packagingFormat) {
+      setFormPackaging(packagingFormat);
+    } else if (formatTitle) {
+      if (formatTitle.includes('Bulk Export')) {
+        setFormPackaging('Standard Bulk Export Sacks');
+      } else if (formatTitle.includes('Custom Bulk')) {
+        setFormPackaging('Heavy-duty Woven Sacks');
+      } else if (formatTitle.includes('Private Label')) {
+        setFormPackaging('Retail Stand-up Pouches');
+      }
+    }
     setFormIntent('packing');
     scrollToForm();
   };
@@ -128,10 +140,11 @@ export const HomePage: React.FC = () => {
           onStartPrivateLabel={handleStartPrivateLabel}
         />
 
-        {/* Section 5: How It Works (Simple 4-Step Flow) */}
+        {/* Section 5: How It Works (Two-Phase Export Flow) */}
         <HowItWorksSection 
           onRequestSamples={handleRequestSamples}
           onSubmitRequirement={handleSubmitRequirement}
+          onExploreGrades={scrollToGrades}
         />
 
         {/* Section 6: Why SHIVOM GLOBAL (Practical Reasons + Buyer Basics) */}
@@ -145,6 +158,7 @@ export const HomePage: React.FC = () => {
           initialRequirementType={formRequirementType}
           initialGrade={formGrade}
           initialIntent={formIntent}
+          initialPackaging={formPackaging}
         />
       </main>
 
