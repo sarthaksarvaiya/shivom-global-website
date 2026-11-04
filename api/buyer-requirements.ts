@@ -20,6 +20,7 @@ interface RawBuyerPayload {
   packaging?: unknown;
   destinationPort?: unknown;
   qualitySpecs?: unknown;
+  idempotencyKey?: unknown;
   website_hp?: unknown; // Anti-bot honeypot field
   [key: string]: unknown;
 }
@@ -36,6 +37,7 @@ interface SanitizedBuyerRequirement {
   packaging: string;
   destinationPort: string;
   qualitySpecs: string;
+  idempotencyKey: string;
 }
 
 interface ValidationErrors {
@@ -60,6 +62,12 @@ const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 const PHONE_PATTERN = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\./0-9]{5,20}$/;
+
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+const DB_TIMEOUT_MS = 6000;
+const EMAIL_TIMEOUT_MS = 4000;
 
 /**
  * Sanitize and strip unsafe control characters
@@ -317,7 +325,7 @@ Notice: New commercial buyer inquiry submitted through the SHIVOM GLOBAL website
   `.trim();
 
   try {
-    // Standard Resend transactional API endpoint
+    // Standard Resend transactional API endpoint with timeout
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -332,6 +340,7 @@ Notice: New commercial buyer inquiry submitted through the SHIVOM GLOBAL website
         text: plainText,
         html: htmlContent,
       }),
+      signal: AbortSignal.timeout(EMAIL_TIMEOUT_MS),
     });
 
     if (!response.ok) {
@@ -491,8 +500,26 @@ export default async function handler(
     console.warn(`[HONEYPOT_TRIGGERED] Discarded automated submission from IP ${clientIp}. Decoy Ref: ${fakeRef}`);
     sendJsonResponse(200, {
       success: true,
+      status: 'ACCEPTED',
+      duplicate: false,
       referenceId: fakeRef,
       message: 'Your requirement specification has been received for commercial evaluation.',
+    });
+    return;
+  }
+
+  // Idempotency Key Extraction & Validation
+  const rawIdempotencyKey = (
+    (typeof body.idempotencyKey === 'string' && body.idempotencyKey) ||
+    (typeof req.headers['idempotency-key'] === 'string' && req.headers['idempotency-key']) ||
+    ''
+  ).trim();
+
+  if (!rawIdempotencyKey || !UUID_REGEX.test(rawIdempotencyKey)) {
+    sendJsonResponse(400, {
+      success: false,
+      status: 'VALIDATION_ERROR',
+      error: 'A valid submission idempotency key (UUID) is required.',
     });
     return;
   }
@@ -510,6 +537,7 @@ export default async function handler(
     packaging: sanitizeString(body.packaging, 100),
     destinationPort: sanitizeString(body.destinationPort, 120),
     qualitySpecs: sanitizeString(body.qualitySpecs, 2000),
+    idempotencyKey: rawIdempotencyKey.toLowerCase(),
   };
 
   // Validate Required Fields Server-Side
@@ -517,14 +545,15 @@ export default async function handler(
   if (Object.keys(validationErrors).length > 0) {
     sendJsonResponse(400, {
       success: false,
+      status: 'VALIDATION_ERROR',
       error: 'Please review the highlighted fields and try again.',
       details: validationErrors,
     });
     return;
   }
 
-  // Generate Authoritative Server Reference ID
-  const referenceId = generateServerReferenceId();
+  // Generate Candidate Reference ID (Used for new inserts)
+  const candidateReferenceId = generateServerReferenceId();
   const submittedAtIso = new Date().toISOString();
   const userAgent = sanitizeString(req.headers['user-agent'] || '', 255);
 
@@ -539,15 +568,17 @@ export default async function handler(
     console.error(
       '[CRITICAL_BACKEND_CONFIG] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SECRET_KEY in environment variables.'
     );
-    sendJsonResponse(500, {
+    sendJsonResponse(503, {
       success: false,
-      error: 'We could not submit your requirement at this time. Please try again.',
+      status: 'SERVICE_UNAVAILABLE',
+      error: 'The requirement intake service is temporarily unavailable. Please try again.',
     });
     return;
   }
 
   const dbRow = {
-    reference_id: referenceId,
+    idempotency_key: sanitized.idempotencyKey,
+    reference_id: candidateReferenceId,
     submitted_at: submittedAtIso,
     company_name: sanitized.companyName,
     contact_name: sanitized.contactPerson,
@@ -572,22 +603,29 @@ export default async function handler(
   };
 
   let dbInsertSuccess = false;
+  let persistedRow: Record<string, unknown> | null = null;
 
   try {
-    const supabaseEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements`;
+    // PostgREST Upsert with resolution=merge-duplicates on idempotency_key
+    const supabaseEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?on_conflict=idempotency_key`;
     const dbRes = await fetch(supabaseEndpoint, {
       method: 'POST',
       headers: {
         apikey: supabaseServiceRoleKey,
         Authorization: `Bearer ${supabaseServiceRoleKey}`,
         'Content-Type': 'application/json',
-        Prefer: 'return=representation',
+        Prefer: 'return=representation,resolution=merge-duplicates',
       },
       body: JSON.stringify(dbRow),
+      signal: AbortSignal.timeout(DB_TIMEOUT_MS),
     });
 
     if (dbRes.ok) {
       dbInsertSuccess = true;
+      const returnedJson = await dbRes.json().catch(() => null);
+      if (Array.isArray(returnedJson) && returnedJson.length > 0) {
+        persistedRow = returnedJson[0] as Record<string, unknown>;
+      }
     } else {
       const errBody = await dbRes.text().catch(() => '');
       console.error(
@@ -601,20 +639,59 @@ export default async function handler(
 
   // System of Record Safety Gate: NEVER give false success if DB write failed
   if (!dbInsertSuccess) {
-    sendJsonResponse(500, {
+    sendJsonResponse(503, {
       success: false,
+      status: 'SERVICE_UNAVAILABLE',
       error: 'We could not submit your requirement at this time. Please try again.',
     });
     return;
   }
 
-  // DB Insert Succeeded -> Attempt Email Dispatch
-  const emailResult = await sendTradeDeskEmail(referenceId, sanitized, submittedAtIso);
+  // Resolve Authoritative Reference ID and Detect Duplicates
+  const authoritativeReferenceId = String(persistedRow?.reference_id || candidateReferenceId);
+  const isDuplicate = Boolean(
+    persistedRow?.reference_id && persistedRow.reference_id !== candidateReferenceId
+  );
 
-  // Update Database with Email Dispatch Status (Fire-and-forget background patch)
+  // If this was an idempotent duplicate, resolve immediately without creating duplicate notification events
+  if (isDuplicate) {
+    sendJsonResponse(200, {
+      success: true,
+      status: 'DUPLICATE',
+      duplicate: true,
+      referenceId: authoritativeReferenceId,
+      message: 'Your requirement specification is already safely on file with the SHIVOM GLOBAL trade desk.',
+    });
+    return;
+  }
+
+  // Brand-New Submission: The database trigger (trg_buyer_requirements_outbox) has already atomically
+  // created the TRADE_DESK_ALERT event in public.inquiry_outbox.
+  // We attempt a fast, synchronous email dispatch as an immediate notification optimization.
+  const emailResult = await sendTradeDeskEmail(authoritativeReferenceId, sanitized, submittedAtIso);
+
+  // Update Database with Email Dispatch Status
   if (emailResult.success) {
     try {
-      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(referenceId)}`;
+      // 1. Mark outbox entry as SENT
+      const outboxPatchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/inquiry_outbox?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}&notification_type=eq.TRADE_DESK_ALERT`;
+      await fetch(outboxPatchEndpoint, {
+        method: 'PATCH',
+        headers: {
+          apikey: supabaseServiceRoleKey,
+          Authorization: `Bearer ${supabaseServiceRoleKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'SENT',
+          sent_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }),
+        signal: AbortSignal.timeout(3000),
+      }).catch(() => {});
+
+      // 2. Update buyer_requirements row for backward compatibility
+      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}`;
       await fetch(patchEndpoint, {
         method: 'PATCH',
         headers: {
@@ -627,13 +704,30 @@ export default async function handler(
           email_dispatched_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }),
-      });
+        signal: AbortSignal.timeout(3000),
+      }).catch(() => {});
     } catch {
       // Non-fatal if patch tracking fails
     }
   } else if (emailResult.error) {
     try {
-      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(referenceId)}`;
+      // Record last_error in outbox; remains PENDING/FAILED for the background retry cron worker
+      const outboxPatchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/inquiry_outbox?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}&notification_type=eq.TRADE_DESK_ALERT`;
+      await fetch(outboxPatchEndpoint, {
+        method: 'PATCH',
+        headers: {
+          apikey: supabaseServiceRoleKey,
+          Authorization: `Bearer ${supabaseServiceRoleKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          last_error: sanitizeString(emailResult.error, 255),
+          updated_at: new Date().toISOString(),
+        }),
+        signal: AbortSignal.timeout(3000),
+      }).catch(() => {});
+
+      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}`;
       await fetch(patchEndpoint, {
         method: 'PATCH',
         headers: {
@@ -646,7 +740,8 @@ export default async function handler(
           email_error: sanitizeString(emailResult.error, 255),
           updated_at: new Date().toISOString(),
         }),
-      });
+        signal: AbortSignal.timeout(3000),
+      }).catch(() => {});
     } catch {
       // Non-fatal
     }
@@ -655,7 +750,9 @@ export default async function handler(
   // Return Controlled Success Response
   sendJsonResponse(200, {
     success: true,
-    referenceId,
+    status: 'ACCEPTED',
+    duplicate: false,
+    referenceId: authoritativeReferenceId,
     message: 'Your commercial requirement has been received by the SHIVOM GLOBAL trade desk.',
   });
 }

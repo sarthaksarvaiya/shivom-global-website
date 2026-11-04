@@ -23,6 +23,20 @@ function apiDevPlugin() {
           }
           return;
         }
+        if (url === '/api/cron/retry-failed-inquiries') {
+          try {
+            const { default: handler } = await server.ssrLoadModule('./api/cron/retry-failed-inquiries.ts');
+            await handler(req, res);
+          } catch (err) {
+            console.error('Error in /api/cron/retry-failed-inquiries dev handler:', err);
+            if (!res.headersSent) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, error: 'Internal dev server error' }));
+            }
+          }
+          return;
+        }
         next();
       });
     },

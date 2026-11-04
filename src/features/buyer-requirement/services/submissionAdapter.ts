@@ -4,7 +4,7 @@
  * System of Record: Supabase Database (Table: buyer_requirements) + Transactional Email Notification
  */
 
-import { BuyerRequirementRecord } from '../types/buyerRequirement';
+import type { BuyerRequirementRecord } from '../types/buyerRequirement.ts';
 
 export interface SubmissionResponse {
   success: boolean;
@@ -14,6 +14,8 @@ export interface SubmissionResponse {
   record?: BuyerRequirementRecord;
   error?: string;
   details?: Record<string, string>;
+  isDuplicate?: boolean;
+  status?: 'ACCEPTED' | 'DUPLICATE' | 'VALIDATION_ERROR' | 'SERVICE_UNAVAILABLE' | 'ERROR';
 }
 
 /**
@@ -29,25 +31,35 @@ export const submitBuyerRequirement = async (
   try {
     const payload = {
       ...record,
+      idempotencyKey: record.idempotencyKey || '',
       website_hp: honeypot || '',
     };
 
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (record.idempotencyKey) {
+      headers['Idempotency-Key'] = record.idempotencyKey;
+    }
+
     const res = await fetch('/api/buyer-requirements', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(payload),
     });
 
     const data = await res.json().catch(() => null);
 
     if (res.ok && data?.success) {
+      const isDuplicate = Boolean(data.duplicate || data.isDuplicate || data.status === 'DUPLICATE');
       return {
         success: true,
         mode: 'LIVE',
         referenceId: data.referenceId,
         message: data.message || 'Your requirement has been received by the SHIVOM GLOBAL trade desk.',
+        isDuplicate,
+        status: isDuplicate ? 'DUPLICATE' : 'ACCEPTED',
         record: {
           ...record,
           referenceId: data.referenceId, // Authoritative server-side reference ID
@@ -66,6 +78,7 @@ export const submitBuyerRequirement = async (
       message: errorMessage,
       error: errorMessage,
       details: data?.details,
+      status: data?.status || 'ERROR',
     };
   } catch (err: unknown) {
     console.error('[SUBMISSION_ADAPTER_NETWORK_ERROR]', err);
@@ -75,6 +88,7 @@ export const submitBuyerRequirement = async (
       referenceId: record.referenceId,
       message: 'Network error communicating with the trade desk. Please verify your connection and try again.',
       error: 'Network connection issue. Please try again.',
+      status: 'SERVICE_UNAVAILABLE',
     };
   }
 };

@@ -11,8 +11,8 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
 
 export const HomePage: React.FC = () => {
-  const [formRequirementType, setFormRequirementType] = useState<string>('Assam CTC');
-  const [formGrade, setFormGrade] = useState<string>('BOP');
+  const [formRequirementType, setFormRequirementType] = useState<string>('');
+  const [formGrade, setFormGrade] = useState<string>('');
   const [formIntent, setFormIntent] = useState<'sample' | 'quote' | 'packing'>('sample');
 
   const scrollToForm = () => {
@@ -65,18 +65,18 @@ export const HomePage: React.FC = () => {
   const handleSelectGrade = (gradeCode: string) => {
     setFormGrade(gradeCode);
     if (gradeCode === 'TGFOP' || gradeCode === 'FBOP') {
-      setFormRequirementType('Orthodox');
+      setFormRequirementType('Assam Orthodox Black Tea');
     } else if (gradeCode === 'Custom Specification') {
-      setFormRequirementType('Custom Specification');
+      setFormRequirementType('Other / Custom Specification');
     } else {
-      setFormRequirementType('Assam CTC');
+      setFormRequirementType('Assam CTC Black Tea');
     }
     setFormIntent('quote');
     scrollToForm();
   };
 
   const handleStartPrivateLabel = () => {
-    setFormRequirementType('Private Label Retail Product');
+    // Retain existing tea category if already selected; do not invent a tea category from packaging intent
     setFormIntent('packing');
     scrollToForm();
   };

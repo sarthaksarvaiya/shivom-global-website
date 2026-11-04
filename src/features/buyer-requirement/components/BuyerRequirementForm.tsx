@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import {
   Send,
@@ -8,7 +8,8 @@ import {
   RefreshCw,
   Sparkles,
   ClipboardList,
-  MessageCircle
+  MessageCircle,
+  ArrowRight
 } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 import {
@@ -19,30 +20,33 @@ import {
 } from '../types/buyerRequirement.ts';
 import {
   validateRequirementForm,
-  buildRequirementRecord
+  buildRequirementRecord,
+  generateIdempotencyKey
 } from '../utils/requirementValidation.ts';
 import { submitBuyerRequirement } from '../services/submissionAdapter.ts';
+import {
+  CANONICAL_TEA_TYPES,
+  normalizeCategory,
+  resolvePackagingIntent,
+  formatSpecificationDisplay,
+  hasMeaningfulSpecification,
+  syncQuickToDetailed,
+  syncDetailedToQuick,
+  type QuickFormData,
+} from '../utils/formSpecificationUtils.ts';
 
 export interface BuyerRequirementFormProps {
   initialRequirementType?: string;
   initialGrade?: string;
   initialIntent?: 'sample' | 'quote' | 'packing';
-}
-
-interface QuickFormData {
-  name: string;
-  company: string;
-  email: string;
-  phone: string;
-  country: string;
-  message: string;
+  initialPackaging?: string;
 }
 
 const DEFAULT_DETAILED_DATA: BuyerRequirementFormData = {
-  requirementType: 'Assam CTC',
+  requirementType: 'Assam CTC Black Tea',
   grade: 'BOP',
   volume: 'Trial Batch / Initial Order',
-  packaging: 'Standard Bulk Export Sacks',
+  packaging: '',
   destinationPort: '',
   qualitySpecs: '',
   companyName: '',
@@ -77,6 +81,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   initialRequirementType,
   initialGrade,
   initialIntent = 'sample',
+  initialPackaging,
 }) => {
   // Form mode: 'quick' (Form A) or 'detailed' (Form B)
   const [formMode, setFormMode] = useState<'quick' | 'detailed'>('quick');
@@ -84,14 +89,34 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Quick form state
   const [quickData, setQuickData] = useState<QuickFormData>(DEFAULT_QUICK_DATA);
 
-  // Detailed form state
-  const [detailedData, setDetailedData] = useState<BuyerRequirementFormData>(DEFAULT_DETAILED_DATA);
+  // Detailed form state — neutral unselected packaging unless explicitly specified
+  const [detailedData, setDetailedData] = useState<BuyerRequirementFormData>(() => ({
+    ...DEFAULT_DETAILED_DATA,
+    packaging: resolvePackagingIntent(initialRequirementType, initialPackaging),
+    requirementType: initialRequirementType && normalizeCategory(initialRequirementType)
+      ? normalizeCategory(initialRequirementType)
+      : DEFAULT_DETAILED_DATA.requirementType,
+    grade: initialGrade ? initialGrade.trim() : DEFAULT_DETAILED_DATA.grade,
+  }));
+
+  // Authoritative active specification state (Rule A: source of truth)
+  const [activeCategory, setActiveCategory] = useState<string>(() =>
+    initialRequirementType ? normalizeCategory(initialRequirementType) : ''
+  );
+  const [activeGrade, setActiveGrade] = useState<string>(() =>
+    initialGrade ? initialGrade.trim() : ''
+  );
 
   // Error and submission states
   const [errors, setErrors] = useState<FieldValidationErrors>({});
   const [formStatus, setFormStatus] = useState<FormStatus>('IDLE');
   const [submissionError, setSubmissionError] = useState<string>('');
   const [submittedRecord, setSubmittedRecord] = useState<BuyerRequirementRecord | null>(null);
+  const [isDuplicateSubmission, setIsDuplicateSubmission] = useState<boolean>(false);
+
+  // Request Idempotency: One stable key per logical inquiry attempt
+  const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
+  const isSubmittingRef = useRef<boolean>(false);
 
   // Honeypot field for anti-bot protection
   const [honeypot, setHoneypot] = useState<string>('');
@@ -102,15 +127,29 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Synchronize incoming contextual preselection
   useEffect(() => {
     if (initialRequirementType) {
-      setDetailedData((prev) => ({ ...prev, requirementType: initialRequirementType }));
+      const normCat = normalizeCategory(initialRequirementType);
+      if (normCat) {
+        setActiveCategory(normCat);
+        setDetailedData((prev) => ({ ...prev, requirementType: normCat }));
+      }
+      const explicitPack = resolvePackagingIntent(initialRequirementType);
+      if (explicitPack) {
+        setDetailedData((prev) => ({ ...prev, packaging: explicitPack }));
+      }
+    }
+    if (initialPackaging) {
+      setDetailedData((prev) => ({ ...prev, packaging: initialPackaging }));
     }
     if (initialGrade) {
-      setDetailedData((prev) => ({ ...prev, grade: initialGrade }));
+      const cleanGrade = initialGrade.trim();
+      setActiveGrade(cleanGrade);
+      setDetailedData((prev) => ({ ...prev, grade: cleanGrade }));
     }
-    if (initialIntent === 'quote') {
+    if (initialIntent === 'quote' || initialIntent === 'packing') {
+      setDetailedData((prev) => syncQuickToDetailed(quickData, prev));
       setFormMode('detailed');
     }
-  }, [initialRequirementType, initialGrade, initialIntent]);
+  }, [initialRequirementType, initialGrade, initialIntent, initialPackaging]);
 
   // Quick form change handler
   const handleQuickChange = (field: keyof QuickFormData, value: string) => {
@@ -127,11 +166,38 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Detailed form change handler
   const handleDetailedChange = (field: keyof BuyerRequirementFormData, value: string) => {
     setDetailedData((prev) => ({ ...prev, [field]: value }));
+    if (field === 'requirementType') {
+      setActiveCategory(value);
+    }
+    if (field === 'grade') {
+      setActiveGrade(value);
+    }
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
     if (formStatus === 'VALIDATION_ERROR' || formStatus === 'SUBMISSION_ERROR') {
       setSubmissionError('');
+    }
+  };
+
+  // Mode switching handlers with bi-directional contact synchronization (Rule C)
+  const handleSwitchToQuick = () => {
+    setQuickData((prev) => syncDetailedToQuick(detailedData, prev));
+    setErrors({});
+    setSubmissionError('');
+    setFormMode('quick');
+  };
+
+  const handleSwitchToDetailed = (focusTargetId?: string) => {
+    setDetailedData((prev) => syncQuickToDetailed(quickData, prev));
+    setErrors({});
+    setSubmissionError('');
+    setFormMode('detailed');
+    if (focusTargetId) {
+      setTimeout(() => {
+        const el = document.getElementById(focusTargetId);
+        el?.focus();
+      }, 150);
     }
   };
 
@@ -158,9 +224,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  // Quick form submit
+  // Quick form submit (Rule A: uses authoritative active specification with idempotency)
   const handleQuickSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current) return;
     if (honeypot) return;
 
     if (!validateQuickForm()) {
@@ -168,46 +235,54 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
       return;
     }
 
+    isSubmittingRef.current = true;
     setFormStatus('SUBMITTING');
     setSubmissionError('');
 
     try {
-      // Map quick form into standard record payload for existing backend
       const normalizedPayload: BuyerRequirementFormData = {
         contactPerson: quickData.name.trim(),
         companyName: quickData.company.trim(),
         businessEmail: quickData.email.trim().toLowerCase(),
         phoneWhatsApp: quickData.phone.trim(),
         country: quickData.country.trim(),
-        requirementType: initialRequirementType || 'Assam CTC',
-        grade: initialGrade || 'BOP / Open to Recommendation',
+        requirementType: activeCategory || 'Assam CTC Black Tea',
+        grade: activeGrade || 'BOP / Open to Recommendation',
         volume: 'Trial Batch (Quick Enquiry / Samples)',
-        packaging: 'Standard Bulk Export Sacks',
+        packaging: detailedData.packaging || 'Standard Bulk Export Sacks',
         destinationPort: `${quickData.country.trim()} (Port TBD)`,
         qualitySpecs: quickData.message.trim()
           ? `[Form: Quick Enquiry]\n${quickData.message.trim()}`
           : '[Form: Quick Enquiry / Sample Request]',
+        idempotencyKey,
       };
 
-      const record = buildRequirementRecord(normalizedPayload);
+      const record = buildRequirementRecord(normalizedPayload, idempotencyKey);
       const response = await submitBuyerRequirement(record, honeypot);
 
       if (response.success && response.record) {
         setSubmittedRecord(response.record);
+        setIsDuplicateSubmission(Boolean(response.isDuplicate));
         setFormStatus('SUCCESS');
       } else {
+        if (response.details) {
+          setErrors(response.details);
+        }
         setFormStatus('SUBMISSION_ERROR');
         setSubmissionError(response.error || 'The enquiry could not be sent at this time. Please try again.');
       }
     } catch {
       setFormStatus('SUBMISSION_ERROR');
       setSubmissionError('Network error connecting to the trade desk. Please check your connection and retry.');
+    } finally {
+      isSubmittingRef.current = false;
     }
   };
 
-  // Detailed form submit
+  // Detailed form submit (Rule A: uses authoritative active specification with idempotency)
   const handleDetailedSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current) return;
     if (honeypot) return;
 
     setFormStatus('VALIDATING');
@@ -220,22 +295,27 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
       return;
     }
 
+    isSubmittingRef.current = true;
     setErrors({});
     setFormStatus('SUBMITTING');
 
     try {
       const enrichedPayload: BuyerRequirementFormData = {
         ...detailedData,
+        requirementType: activeCategory || detailedData.requirementType,
+        grade: activeGrade || detailedData.grade,
         qualitySpecs: detailedData.qualitySpecs
           ? `[Form: Detailed Tea Requirement]\n${detailedData.qualitySpecs}`
           : '[Form: Detailed Tea Requirement]',
+        idempotencyKey,
       };
 
-      const record = buildRequirementRecord(enrichedPayload);
+      const record = buildRequirementRecord(enrichedPayload, idempotencyKey);
       const response = await submitBuyerRequirement(record, honeypot);
 
       if (response.success && response.record) {
         setSubmittedRecord(response.record);
+        setIsDuplicateSubmission(Boolean(response.isDuplicate));
         setFormStatus('SUCCESS');
       } else {
         if (response.details) {
@@ -247,16 +327,23 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     } catch {
       setFormStatus('SUBMISSION_ERROR');
       setSubmissionError('Network error connecting to the trade desk. Please check your connection and retry.');
+    } finally {
+      isSubmittingRef.current = false;
     }
   };
 
   const handleReset = () => {
     setQuickData(DEFAULT_QUICK_DATA);
     setDetailedData(DEFAULT_DETAILED_DATA);
+    setActiveCategory(initialRequirementType ? normalizeCategory(initialRequirementType) : '');
+    setActiveGrade(initialGrade ? initialGrade.trim() : '');
     setErrors({});
     setFormStatus('IDLE');
     setSubmissionError('');
     setSubmittedRecord(null);
+    setIsDuplicateSubmission(false);
+    // Generate a fresh idempotency key only when explicitly resetting to submit a new inquiry
+    setIdempotencyKey(generateIdempotencyKey());
   };
 
   return (
@@ -278,7 +365,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               type="button"
               role="tab"
               aria-selected={formMode === 'quick'}
-              onClick={() => { setFormMode('quick'); setErrors({}); setSubmissionError(''); }}
+              onClick={handleSwitchToQuick}
               className={`mode-switch-btn ${formMode === 'quick' ? 'mode-switch-btn-active' : ''}`}
             >
               <Sparkles size={15} aria-hidden="true" />
@@ -289,7 +376,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               type="button"
               role="tab"
               aria-selected={formMode === 'detailed'}
-              onClick={() => { setFormMode('detailed'); setErrors({}); setSubmissionError(''); }}
+              onClick={() => handleSwitchToDetailed()}
               className={`mode-switch-btn ${formMode === 'detailed' ? 'mode-switch-btn-active' : ''}`}
             >
               <ClipboardList size={15} aria-hidden="true" />
@@ -311,18 +398,20 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="buyer-success-icon-wrap">
                   <CheckCircle2 size={36} className="buyer-success-icon" />
                 </div>
 
               <h3 className="buyer-success-title">
-                Requirement Received
+                {isDuplicateSubmission ? 'Requirement Confirmed' : 'Requirement Received'}
               </h3>
 
               <p className="buyer-success-lead">
-                Our trade desk will review the requirement and follow up using the contact details provided.
+                {isDuplicateSubmission
+                  ? 'Your requirement specification is already on file with our trade desk. We will follow up using the contact details provided.'
+                  : 'Our trade desk will review the requirement and follow up using the contact details provided.'}
               </p>
 
               <div className="buyer-success-ref-box">
@@ -379,7 +468,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Anti-Bot Honeypot */}
               <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
@@ -391,6 +480,32 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   autoComplete="off"
                 />
               </div>
+
+              {/* P4-03: Contextual Specification Confirmation Indicator */}
+              {hasMeaningfulSpecification(activeCategory, activeGrade) && (
+                <div
+                  className="buyer-form-context-pill"
+                  role="status"
+                  aria-live="polite"
+                  aria-label="Current selected tea specification"
+                >
+                  <div className="context-pill-content">
+                    <span className="context-pill-label">Inquiry Specification:</span>
+                    <strong className="context-pill-value font-spec">
+                      {formatSpecificationDisplay(activeCategory, activeGrade)}
+                    </strong>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleSwitchToDetailed('det-grade')}
+                    className="context-pill-action"
+                    aria-label={`Change specification from ${formatSpecificationDisplay(activeCategory, activeGrade)} in detailed form`}
+                  >
+                    <span>Change Specification</span>
+                    <ArrowRight size={13} aria-hidden="true" />
+                  </button>
+                </div>
+              )}
 
               <div className="buyer-form-grid-2">
                 {/* Full Name */}
@@ -568,7 +683,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Anti-Bot Honeypot */}
               <div style={{ display: 'none', position: 'absolute', left: '-9999px' }} aria-hidden="true">
@@ -685,6 +800,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
               </div>
 
               <div className="buyer-form-grid-2">
+                {/* P4-11: Exactly Six Botanical Tea Type Categories */}
                 <div className="form-group">
                   <label htmlFor="det-category" className="form-label form-label-required">
                     Tea Type
@@ -692,16 +808,14 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <select
                     id="det-category"
                     className="form-select"
-                    value={detailedData.requirementType}
+                    value={activeCategory}
                     onChange={(e) => handleDetailedChange('requirementType', e.target.value)}
                   >
-                    <option value="Assam CTC">Assam CTC Black Tea</option>
-                    <option value="Orthodox">Orthodox Black Tea</option>
-                    <option value="Darjeeling">Darjeeling Specialty Black Tea</option>
-                    <option value="Green Tea">Indian Green Tea</option>
-                    <option value="Bulk Tea Supply">Bulk Tea Supply (Export Sacks)</option>
-                    <option value="Private Label Retail Product">Private Label &amp; OEM Packing</option>
-                    <option value="Custom Specification">Custom Sieve Cut / Benchmark Match</option>
+                    {CANONICAL_TEA_TYPES.map((typeOption) => (
+                      <option key={typeOption} value={typeOption}>
+                        {typeOption}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -712,7 +826,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   <select
                     id="det-grade"
                     className="form-select font-spec"
-                    value={detailedData.grade}
+                    value={activeGrade}
                     onChange={(e) => handleDetailedChange('grade', e.target.value)}
                   >
                     <option value="BOP">BOP — Broken Orange Pekoe</option>
@@ -723,6 +837,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     <option value="Dust">Dust / D1</option>
                     <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe</option>
                     <option value="FBOP">FBOP — Flowery Broken Orange Pekoe</option>
+                    <option value="FTGFOP1">FTGFOP1 — Fine Tippy Golden Flowery Orange Pekoe 1</option>
                     <option value="Open to Recommendation">Open to Recommendation</option>
                     <option value="Custom">Custom Formulation / Target Sample</option>
                   </select>
@@ -753,15 +868,22 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                   </label>
                   <select
                     id="det-packaging"
-                    className="form-select"
+                    className={`form-select ${errors.packaging ? 'form-input-error' : ''}`}
                     value={detailedData.packaging}
                     onChange={(e) => handleDetailedChange('packaging', e.target.value)}
                   >
+                    <option value="">Select packaging preference...</option>
                     <option value="Standard Bulk Export Sacks">Standard Bulk Export Sacks</option>
                     <option value="Heavy-duty Woven Sacks">Heavy-duty Woven Sacks</option>
                     <option value="Retail Stand-up Pouches">Retail Pouches / Tins (OEM)</option>
                     <option value="Custom Packaging">Custom Packaging to Specification</option>
                   </select>
+                  {errors.packaging && (
+                    <span className="form-error-msg">
+                      <AlertCircle size={13} />
+                      <span>{errors.packaging}</span>
+                    </span>
+                  )}
                 </div>
 
                 <div className="form-group">

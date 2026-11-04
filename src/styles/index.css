@@ -2324,48 +2324,57 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .tea-categories-section {
   position: relative;
   background-color: var(--color-bg-alt);
-  padding-top: clamp(3.5rem, 6vw, 5rem);
-  padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
+  background-image: 
+    radial-gradient(circle at 14% 12%, rgba(var(--primitive-gold-500-rgb), 0.045) 0%, transparent 40%),
+    radial-gradient(circle at 86% 88%, rgba(var(--primitive-green-900-rgb), 0.035) 0%, transparent 45%),
+    radial-gradient(circle at 50% 45%, rgba(var(--primitive-gold-500-rgb), 0.015) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900' width='100%25' height='100%25' preserveAspectRatio='none'%3E%3Cpath d='M-100,100 Q240,40 620,130 T1340,90 T1600,150' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.030'/%3E%3Cpath d='M-100,220 Q280,160 680,250 T1380,210 T1600,270' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.028'/%3E%3Cpath d='M-100,360 Q210,300 590,390 T1300,350 T1600,410' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.028'/%3E%3Cpath d='M-100,510 Q320,440 710,530 T1410,480 T1600,550' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.025'/%3E%3Cpath d='M-100,660 Q240,590 640,680 T1350,630 T1600,700' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.024'/%3E%3Cpath d='M-100,810 Q300,740 700,830 T1390,780 T1600,850' fill='none' stroke='%230A281E' stroke-width='1.0' stroke-opacity='0.022'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center top;
+  padding-top: 0;
+  padding-bottom: 0;
   border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
 }
 
 .tea-categories-header {
   text-align: center;
-  max-width: 780px;
-  margin: 0 auto clamp(2rem, 4vw, 3rem);
+  max-width: 820px;
+  margin: 0 auto clamp(0.875rem, 2vh, 1.5rem);
 }
 
 .tea-categories-headline {
-  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.875rem, 3.4vw, 2.5rem);
   font-weight: 800;
   color: var(--color-primary-dark);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: var(--space-4);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(0.375rem, 1vh, 0.625rem);
 }
 
 .tea-categories-lead {
-  font-size: clamp(1rem, 1.4vw, 1.125rem);
-  line-height: var(--leading-relaxed);
+  font-size: clamp(0.9375rem, 1.35vw, 1.0625rem);
+  line-height: 1.55;
   color: var(--text-muted);
   margin: 0 auto;
-  max-width: 660px;
+  max-width: 720px;
 }
 
 /* Legacy 2x2 tea category cards retired in favor of the active Terroir Sourcing Console (tea-sourcing-console) */
 
 /* Bottom CTA Strip */
 .tea-categories-bottom-cta {
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-top: clamp(2rem, 3.5vw, 3rem);
   background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.10);
+  border-radius: var(--radius-lg, 14px);
   padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1.5rem, 4vw, 2.5rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 4px 16px rgba(var(--primitive-green-950-rgb), 0.04);
 }
 
 .tea-categories-cta-text {
@@ -5442,6 +5451,87 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   flex-direction: column;
 }
 
+/* Contextual Specification Confirmation Indicator (P4-03) */
+.buyer-form-context-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  padding: 12px 16px;
+  margin-bottom: var(--space-4, 16px);
+  background: rgba(var(--primitive-gold-500-rgb), 0.08);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  border-left: 4px solid var(--color-gold, #C59B27);
+  border-radius: var(--radius-sm, 6px);
+  transition: border-color var(--transition-fast, 0.2s ease);
+}
+
+.buyer-form-context-pill:hover {
+  border-color: rgba(var(--primitive-gold-500-rgb), 0.55);
+}
+
+.context-pill-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.context-pill-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.context-pill-value {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.context-pill-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--color-accent-gold, #C59B27);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm, 4px);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: all var(--transition-fast, 0.2s ease);
+  outline: none;
+}
+
+.context-pill-action:hover {
+  color: var(--color-primary-dark);
+  background: rgba(var(--primitive-gold-500-rgb), 0.15);
+  text-decoration: none;
+}
+
+.context-pill-action:focus-visible {
+  outline: 2px solid var(--color-gold, #C59B27);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .buyer-form-context-pill {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2, 8px);
+    padding: 10px 12px;
+  }
+
+  .context-pill-action {
+    padding-left: 0;
+  }
+}
+
 .buyer-form-group-section {
   padding-bottom: clamp(1.5rem, 2.5vw, 2rem);
   margin-bottom: clamp(1.5rem, 2.5vw, 2rem);
@@ -6312,15 +6402,17 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   z-index: 9000;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 13px 18px;
+  height: 56px;
+  padding: 0 20px;
   background-color: var(--color-whatsapp);
   color: var(--text-inverse);
-  border-radius: 50px;
+  border-radius: 9999px;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 700;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s ease, box-shadow 0.2s ease;
@@ -6335,7 +6427,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 
 .whatsapp-float:hover {
   background-color: #1ebe5a;
-  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.24);
   color: var(--text-inverse);
   transform: translateY(-2px);
 }
@@ -6350,14 +6442,17 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   display: inline;
 }
 
-/* On mobile: icon-only with thumb-friendly hit area and pulse ring */
+/* On mobile: icon-only with 50px hit area, no excessive halo */
 @media (max-width: 640px) {
   .whatsapp-float {
     bottom: 20px;
     right: 16px;
-    padding: 14px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
     border-radius: 50%;
-    animation: wa-pulse 2.2s ease-out 2.5s infinite;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.20);
+    animation: none;
   }
   .whatsapp-float-label {
     display: none;
@@ -7466,13 +7561,20 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
    PART 1: INTRODUCTORY SOURCING SPECTRUM & PROTOCOL SCREEN
    ========================================================================== */
 .tea-sourcing-intro-screen {
-  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  min-height: calc(100vh - 74px);
+  min-height: calc(100dvh - 74px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1.25rem, 3vh, 2.5rem) 0 clamp(1rem, 2.5vh, 2rem);
+  box-sizing: border-box;
   position: relative;
 }
 
 .tea-categories-disclaimer {
-  margin-top: var(--space-3);
-  font-size: 0.8125rem;
+  margin-top: clamp(0.375rem, 1vh, 0.625rem);
+  font-size: clamp(0.75rem, 1vw, 0.8125rem);
   color: var(--text-dim);
   font-style: italic;
   max-width: 720px;
@@ -7486,18 +7588,19 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   align-items: center;
   justify-content: space-between;
   max-width: 980px;
-  margin: 0 auto var(--space-6);
-  padding: var(--space-4) clamp(1.25rem, 2.5vw, 2.25rem);
+  width: 100%;
+  margin: 0 auto clamp(0.875rem, 2vh, 1.375rem);
+  padding: clamp(0.75rem, 1.6vh, 1rem) clamp(1.25rem, 2.2vw, 2rem);
   background: var(--bg-surface);
-  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.12);
-  border-radius: var(--radius-md, 12px);
-  box-shadow: 0 4px 16px rgba(var(--primitive-green-900-rgb), 0.04);
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.10);
+  border-radius: var(--radius-lg, 14px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 4px 18px -2px rgba(var(--primitive-green-950-rgb), 0.04);
 }
 
 .tea-protocol-item {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
 }
 
@@ -7531,40 +7634,46 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 
 .tea-protocol-divider {
   width: 1px;
-  height: 36px;
+  height: 32px;
   background-color: rgba(var(--primitive-green-900-rgb), 0.12);
-  margin: 0 var(--space-4);
+  margin: 0 clamp(0.75rem, 1.5vw, 1.25rem);
   flex-shrink: 0;
 }
 
 /* Scroll Cue Button linking Part 1 to Part 2 */
 .tea-intro-scroll-wrap {
-  margin-top: var(--space-5);
+  margin-top: clamp(0.375rem, 1.2vh, 0.75rem);
+  display: flex;
+  justify-content: center;
 }
 
 .tea-scroll-cue-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 18px;
+  min-height: 36px;
+  max-width: max-content;
   background: var(--bg-surface);
-  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.4);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--color-primary-dark);
   text-decoration: none;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(var(--primitive-green-900-rgb), 0.04);
+  box-shadow: 0 1px 4px rgba(var(--primitive-green-950-rgb), 0.04);
 }
 
 .tea-scroll-cue-btn:hover {
   background: var(--bg-surface-subtle);
   border-color: var(--color-accent-gold);
   color: var(--color-primary-green);
-  transform: translateY(2px);
-  box-shadow: 0 4px 12px rgba(var(--primitive-gold-500-rgb), 0.15);
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(var(--primitive-gold-500-rgb), 0.12);
 }
 
 .tea-bounce-icon {
@@ -7581,94 +7690,277 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
    PART 2: INTERACTIVE SOURCING CONSOLE SCREEN
    ========================================================================== */
 .tea-sourcing-console-screen {
-  scroll-margin-top: 85px;
-  padding-top: var(--space-2);
+  scroll-margin-top: 88px;
+  padding-top: clamp(1.25rem, 2.5vw, 1.875rem);
+  padding-bottom: clamp(3.5rem, 5vw, 4.75rem);
+  border-top: 1px solid rgba(var(--primitive-green-900-rgb), 0.08);
+  position: relative;
 }
 
-/* Category Navigation Bar */
+/* ==========================================================================
+   TERROIR ORIGIN NAVIGATION CONSOLE (SEC-03 PHASE 2)
+   ========================================================================== */
 .tea-category-nav-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: var(--space-6);
-  max-width: 940px;
+  scroll-margin-top: 88px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+  max-width: 1040px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0;
 }
 
 .tea-category-tab {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  border-radius: 9999px;
-  border: 1.5px solid #E2DDD5;
-  background: var(--bg-surface);
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md, 10px);
+  border: 1.5px solid rgba(var(--primitive-green-900-rgb), 0.12);
+  background-color: #FFFDF9;
   color: var(--color-primary-dark);
-  font-size: 0.9375rem;
-  font-weight: 700;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  text-align: left;
+  min-height: 58px;
+  overflow: hidden;
 }
 
-.tea-category-tab:hover {
-  border-color: var(--color-accent-gold);
-  background: #FFFDF9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(var(--primitive-green-900-rgb), 0.08);
+.tea-category-tab:hover:not(.active) {
+  background-color: #FAF6ED;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(var(--primitive-green-900-rgb), 0.08);
 }
 
-.tea-category-tab.active {
-  background: var(--color-primary-green);
-  color: var(--text-inverse);
-  border-color: var(--color-primary-green);
-  box-shadow: 0 4px 16px rgba(var(--primitive-green-900-rgb), 0.22);
+.tea-category-tab:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
 }
 
+/* Inactive Icon Badges with Distinctive Terroir Tints */
 .tea-tab-icon-wrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-accent-gold);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background-color: rgba(var(--primitive-green-900-rgb), 0.04);
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.08);
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.tea-category-tab.terroir-tab-assam-ctc .tea-tab-icon-wrap {
+  color: #B45309;
+  background-color: rgba(180, 83, 9, 0.06);
+  border-color: rgba(180, 83, 9, 0.15);
+}
+
+.tea-category-tab.terroir-tab-assam-orthodox .tea-tab-icon-wrap {
+  color: #C27803;
+  background-color: rgba(194, 120, 3, 0.06);
+  border-color: rgba(194, 120, 3, 0.15);
+}
+
+.tea-category-tab.terroir-tab-darjeeling .tea-tab-icon-wrap {
+  color: #2E5D4B;
+  background-color: rgba(46, 93, 75, 0.08);
+  border-color: rgba(46, 93, 75, 0.18);
+}
+
+.tea-category-tab.terroir-tab-green-wellness .tea-tab-icon-wrap {
+  color: #365D39;
+  background-color: rgba(54, 93, 57, 0.08);
+  border-color: rgba(54, 93, 57, 0.18);
+}
+
+/* Inactive Hover Micro-Borders */
+.tea-category-tab.terroir-tab-assam-ctc:hover {
+  border-color: rgba(180, 83, 9, 0.40);
+}
+
+.tea-category-tab.terroir-tab-assam-orthodox:hover {
+  border-color: rgba(194, 120, 3, 0.40);
+}
+
+.tea-category-tab.terroir-tab-darjeeling:hover {
+  border-color: rgba(46, 93, 75, 0.40);
+}
+
+.tea-category-tab.terroir-tab-green-wellness:hover {
+  border-color: rgba(54, 93, 57, 0.40);
+}
+
+/* Tab Text Block */
+.tea-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.tea-tab-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+.tea-tab-terroir {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease;
+}
+
+/* ==========================================================================
+   ACTIVE TERROIR SELECTION TREATMENTS
+   All 4 origin identities preserve deep forest green structure while
+   expressing their authentic regional terroir accents.
+   ========================================================================== */
+.tea-category-tab.active {
+  color: var(--text-inverse);
+}
+
+.tea-category-tab.active .tea-tab-title {
+  color: #FFFFFF !important;
+}
+
+.tea-category-tab.active .tea-tab-terroir {
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 
 .tea-category-tab.active .tea-tab-icon-wrap {
-  color: var(--color-gold);
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--color-accent-gold);
 }
 
-.tea-tab-text {
-  font-weight: 700;
+/* 1. Assam CTC: Forest green with bold terracotta/amber depth */
+.tea-category-tab.terroir-tab-assam-ctc.active {
+  background: linear-gradient(135deg, #0A281E 0%, #15382B 65%, #242E1F 100%);
+  border-color: rgba(217, 119, 6, 0.45);
+  box-shadow: 0 4px 20px rgba(10, 40, 30, 0.32), 0 0 0 1px rgba(217, 119, 6, 0.25);
 }
 
+/* 2. Assam Orthodox: Botanical green with royal golden tippy warmth */
+.tea-category-tab.terroir-tab-assam-orthodox.active {
+  background: linear-gradient(135deg, #09261D 0%, #0F3B2D 65%, #28371E 100%);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 4px 20px rgba(9, 38, 29, 0.32), 0 0 0 1px rgba(212, 175, 55, 0.25);
+}
+
+/* 3. Darjeeling Single Origin: Misty sage with Himalayan elevation clarity */
+.tea-category-tab.terroir-tab-darjeeling.active {
+  background: linear-gradient(135deg, #0B2B22 0%, #173E32 65%, #1C453A 100%);
+  border-color: rgba(197, 155, 39, 0.45);
+  box-shadow: 0 4px 20px rgba(11, 43, 34, 0.32), 0 0 0 1px rgba(133, 181, 154, 0.25);
+}
+
+/* 4. Green & Specialty: Botanical olive with fresh chlorophyll leaf identity */
+.tea-category-tab.terroir-tab-green-wellness.active {
+  background: linear-gradient(135deg, #0A291D 0%, #133D29 65%, #1D4327 100%);
+  border-color: rgba(78, 138, 60, 0.50);
+  box-shadow: 0 4px 20px rgba(10, 41, 29, 0.32), 0 0 0 1px rgba(78, 138, 60, 0.30);
+}
+
+/* Active Terroir Bottom Accent Blade */
 .tea-tab-active-indicator {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 2.5px;
+  border-radius: 9999px;
   background: var(--color-accent-gold);
-  margin-left: 2px;
-  box-shadow: 0 0 6px rgba(var(--primitive-gold-500-rgb), 0.8);
+}
+
+.tea-category-tab.terroir-tab-assam-ctc .tea-tab-active-indicator {
+  background: linear-gradient(90deg, #D97706, #F59E0B);
+}
+
+.tea-category-tab.terroir-tab-assam-orthodox .tea-tab-active-indicator {
+  background: linear-gradient(90deg, #D4AF37, #F3C952);
+}
+
+.tea-category-tab.terroir-tab-darjeeling .tea-tab-active-indicator {
+  background: linear-gradient(90deg, #E5B84B, #85B59A);
+}
+
+.tea-category-tab.terroir-tab-green-wellness .tea-tab-active-indicator {
+  background: linear-gradient(90deg, #4E8A3C, #86EFAC);
 }
 
 /* Full-Featured Split B2B Sourcing Console */
 .tea-sourcing-console {
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
-  gap: clamp(1.75rem, 3.2vw, 2.75rem);
+  grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+  column-gap: clamp(1.75rem, 3.2vw, 2.75rem);
+  row-gap: var(--space-4);
   background: var(--bg-surface);
   border: 1.5px solid rgba(var(--primitive-green-900-rgb), 0.12);
   border-radius: var(--radius-lg, 16px);
   padding: clamp(1.75rem, 3vw, 2.5rem);
-  box-shadow: 0 12px 36px -8px rgba(var(--primitive-green-900-rgb), 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 16px 44px -8px rgba(var(--primitive-green-950-rgb), 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
   position: relative;
   overflow: hidden;
   transition: background 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.45s ease,
               box-shadow 0.45s ease;
+}
+
+/* Desktop Grid Placement: Left Column (48fr) */
+.tea-sourcing-console > .tea-visual-frame {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.tea-sourcing-console > .tea-cupping-bar {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.tea-sourcing-console > .tea-sensory-panel {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+/* Desktop Grid Placement: Right Column (52fr) */
+.tea-sourcing-console > .tea-spec-header-block {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.tea-sourcing-console > .tea-grade-selection-block {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.tea-sourcing-console > .tea-specs-features-block {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.tea-sourcing-console > .tea-console-actions-block {
+  grid-column: 2;
+  grid-row: 4;
 }
 
 /* ==========================================================================
@@ -7743,27 +8035,30 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   color: #14532D;
 }
 
-/* Left Column: Visual Leaf & Sensory Profile */
-.tea-console-visual {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
+/* Left Column: Visual Leaf & Sensory Profile (Direct grid children in .tea-sourcing-console) */
 
 .tea-visual-frame {
   position: relative;
   border-radius: var(--radius-md, 12px);
   overflow: hidden;
   border: 1px solid rgba(var(--primitive-green-900-rgb), 0.12);
-  background-color: #F5F1EB;
+  background-color: var(--bg-surface-subtle);
   aspect-ratio: 16 / 10.5;
   min-height: 250px;
+  box-shadow: 0 4px 14px rgba(var(--primitive-green-950-rgb), 0.06);
+}
+
+.tea-visual-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .tea-visual-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   display: block;
   transition: transform 0.4s ease;
 }
@@ -7820,27 +8115,109 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 }
 
+/* ==========================================================================
+   ILLUSTRATIVE CUPPING INFUSION PROFILE (SEC-03 PHASE 3A)
+   Visual representation of liquor tone and indicative cup character
+   ========================================================================== */
+.tea-cupping-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle-warm);
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s ease;
+}
+
+.tea-cupping-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tea-cupping-label {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--color-primary-green);
+  text-transform: uppercase;
+}
+
+.tea-cupping-clarity {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-accent-gold);
+  line-height: 1.2;
+}
+
+.tea-cupping-gradient-strip {
+  height: 8px;
+  border-radius: 9999px;
+  width: 100%;
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.10);
+  transition: background 0.3s ease;
+}
+
+.tea-cupping-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tea-cupping-swatch-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tea-cupping-liquor-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.tea-cupping-character {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+.tea-cupping-disclaimer {
+  font-size: 0.625rem;
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.3;
+  display: block;
+}
+
 /* Sensory Organoleptic Matrix */
 .tea-sensory-panel {
   background: var(--bg-surface-subtle);
-  border: 1px solid #EBE6DE;
+  border: 1px solid var(--border-subtle-warm);
   border-radius: var(--radius-md, 10px);
-  padding: var(--space-4);
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .tea-sensory-header {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .tea-sensory-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 .tea-sensory-title {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -7848,7 +8225,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 .tea-sensory-disclaimer {
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   color: var(--text-dim);
   line-height: 1.3;
   font-style: italic;
@@ -7858,41 +8235,38 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .tea-sensory-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px 12px;
+  gap: 8px 10px;
 }
 
 .tea-organoleptic-item {
   background: var(--bg-surface);
-  border: 1px solid #E5E7EB;
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
-  padding: 7px 11px;
+  padding: 7px 10px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2px;
+  min-height: 50px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .tea-organoleptic-label {
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   font-weight: 800;
   color: var(--color-accent-gold);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .tea-organoleptic-val {
-  font-size: 0.8125rem;
+  font-size: 0.78125rem;
   font-weight: 600;
-  color: #1F2937;
+  color: var(--color-primary-dark);
   line-height: 1.3;
 }
 
-/* Right Column: Technical Sourcing Specifications */
-.tea-console-specs {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-5);
-}
+/* Right Column: Technical Sourcing Specifications (Direct grid children in .tea-sourcing-console) */
 
 .tea-spec-header-block {
   display: flex;
@@ -7917,7 +8291,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .tea-console-tagline {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--color-accent-gold);
+  color: var(--color-amber-deep);
   line-height: 1.4;
   margin-bottom: var(--space-3);
 }
@@ -7965,9 +8339,11 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 .tea-grade-badge-interactive {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
   background: var(--bg-surface);
-  border: 1.5px solid #D1D5DB;
+  border: 1.5px solid var(--border-medium);
   border-radius: 6px;
   font-family: var(--font-display, 'Space Grotesk', sans-serif);
   font-size: 0.8125rem;
@@ -7975,12 +8351,20 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   color: var(--color-primary-dark);
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  touch-action: manipulation;
 }
 
 .tea-grade-badge-interactive:hover {
   border-color: var(--color-accent-gold);
   background: #FFFDF9;
   transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(var(--primitive-green-900-rgb), 0.08);
+}
+
+.tea-grade-badge-interactive:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
 }
 
 .tea-grade-badge-interactive.active {
@@ -8001,12 +8385,17 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   font-weight: 700;
 }
 
-/* Active Grade In-Context Technical Callout with Animated Cross-Fade */
+/* Active Grade In-Context Technical Callout with Animated Cross-Fade (Stabilized min-height) */
 .tea-active-grade-callout {
   border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
   border-left: 3px solid var(--color-accent-gold);
   border-radius: 6px;
   padding: 10px 14px;
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
   animation: gradeCalloutFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -8026,6 +8415,7 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   align-items: center;
   gap: 8px;
   margin-bottom: 4px;
+  flex-wrap: wrap;
 }
 
 .tea-active-grade-badge {
@@ -8042,6 +8432,18 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--color-primary-dark);
+}
+
+.tea-active-grade-particle {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  background: rgba(var(--primitive-green-900-rgb), 0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.12);
+  white-space: nowrap;
 }
 
 .tea-active-grade-app {
@@ -8118,6 +8520,20 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   color: var(--color-primary-green);
 }
 
+.tea-sample-inquiry-note {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: center;
+  line-height: 1.35;
+  padding: 0 4px;
+}
+
+/* Mobile Tab Dots Indicator (SEC-03 Phase 3A) */
+.tea-mobile-tab-dots {
+  display: none;
+}
+
 /* Bottom CTA Subtext Styles */
 .tea-bottom-cta-heading {
   font-size: 1rem;
@@ -8134,9 +8550,32 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 
 /* Responsive Breakpoints */
 @media (max-width: 960px) {
+  .tea-sourcing-intro-screen {
+    min-height: auto;
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+  }
+
   .tea-sourcing-console {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-6);
+  }
+
+  .tea-sourcing-console > .tea-visual-frame,
+  .tea-sourcing-console > .tea-cupping-bar,
+  .tea-sourcing-console > .tea-sensory-panel,
+  .tea-sourcing-console > .tea-spec-header-block,
+  .tea-sourcing-console > .tea-grade-selection-block,
+  .tea-sourcing-console > .tea-specs-features-block,
+  .tea-sourcing-console > .tea-console-actions-block {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .tea-category-nav-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 680px;
   }
 
   .tea-protocol-banner {
@@ -8152,14 +8591,63 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 @media (max-width: 680px) {
+  .tea-sourcing-intro-screen {
+    min-height: auto;
+    padding: var(--space-4) 0 var(--space-5);
+  }
+
+  .tea-sourcing-console-screen {
+    scroll-margin-top: 74px;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-8);
+  }
+
+  .tea-protocol-banner {
+    padding: 10px 14px;
+    gap: 8px;
+    margin-bottom: var(--space-2);
+    border-radius: var(--radius-md, 10px);
+  }
+
+  .tea-protocol-item {
+    gap: 10px;
+  }
+
+  .tea-protocol-num {
+    font-size: 0.9375rem;
+  }
+
+  .tea-protocol-title {
+    font-size: 0.8125rem;
+    line-height: 1.25;
+  }
+
+  .tea-protocol-desc {
+    font-size: 0.6875rem;
+    line-height: 1.3;
+  }
+
+  .tea-scroll-cue-btn {
+    padding: 5px 14px;
+    min-height: 32px;
+    font-size: 0.6875rem;
+  }
+
   .tea-category-nav-bar {
+    display: flex;
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 4px;
+    padding: 6px 12px;
     width: 100%;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 12px;
+    mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+    gap: 8px;
+    margin-bottom: var(--space-2);
   }
 
   .tea-category-nav-bar::-webkit-scrollbar {
@@ -8167,13 +8655,95 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   }
 
   .tea-category-tab {
-    padding: 8px 16px;
-    font-size: 0.8125rem;
-    flex-shrink: 0;
+    flex: 0 0 auto;
+    min-width: 195px;
+    max-width: 215px;
+    padding: 10px 14px;
+    scroll-snap-align: start;
+    gap: 10px;
+    min-height: 52px;
+    border-radius: var(--radius-md, 10px);
   }
 
+  .tea-tab-icon-wrap {
+    width: 30px;
+    height: 30px;
+  }
+
+  .tea-tab-title {
+    font-size: 0.8125rem;
+  }
+
+  .tea-tab-terroir {
+    font-size: 0.625rem;
+  }
+
+  .tea-mobile-tab-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: var(--space-3);
+  }
+
+  .tea-mobile-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(var(--primitive-green-900-rgb), 0.2);
+    transition: all 0.25s ease;
+  }
+
+  .tea-mobile-dot.active {
+    width: 18px;
+    border-radius: 9999px;
+    background-color: var(--color-accent-gold);
+  }
+
+  .tea-mobile-dot-text {
+    font-size: 0.6875rem;
+    color: var(--text-dim);
+    margin-left: 6px;
+  }
+
+  /* Mobile Content Ordering & CTA Prioritization (Natural DOM flow, zero CSS order overrides) */
   .tea-sourcing-console {
+    display: flex;
+    flex-direction: column;
     padding: var(--space-4) !important;
+    gap: var(--space-4);
+  }
+
+  .tea-sourcing-console > .tea-visual-frame,
+  .tea-sourcing-console > .tea-cupping-bar,
+  .tea-sourcing-console > .tea-sensory-panel,
+  .tea-sourcing-console > .tea-spec-header-block,
+  .tea-sourcing-console > .tea-grade-selection-block,
+  .tea-sourcing-console > .tea-specs-features-block,
+  .tea-sourcing-console > .tea-console-actions-block {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .tea-visual-frame {
+    aspect-ratio: 16 / 10;
+    min-height: 200px;
+  }
+
+  .tea-console-actions-block {
+    margin-top: 0;
+    padding-top: var(--space-2);
+    border-top: none;
+  }
+
+  .tea-specs-features-block {
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .tea-grade-badge-interactive {
+    min-height: 40px;
+    padding: 8px 14px;
   }
 
   .tea-sensory-grid {
@@ -8194,7 +8764,10 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   .tea-grade-badge-interactive,
   .tea-visual-img,
   .tea-bounce-icon,
-  .tea-active-grade-callout {
+  .tea-active-grade-callout,
+  .tea-cupping-bar,
+  .tea-cupping-gradient-strip,
+  .tea-mobile-dot {
     transition: none !important;
     transform: none !important;
     animation: none !important;

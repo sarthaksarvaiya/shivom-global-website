@@ -2,7 +2,7 @@
  * SHIVOM GLOBAL — Buyer Requirement Validation & Sanitization
  *  */
 
-import { BuyerRequirementFormData, FieldValidationErrors, BuyerRequirementRecord } from '../types/buyerRequirement';
+import type { BuyerRequirementFormData, FieldValidationErrors, BuyerRequirementRecord } from '../types/buyerRequirement.ts';
 
 /**
  * Standard RFC 5322 compliant email regex for corporate email validation
@@ -117,6 +117,20 @@ export const validateRequirementForm = (data: BuyerRequirementFormData): FieldVa
 };
 
 /**
+ * Generate a RFC 4122 v4 compliant UUID string for request idempotency
+ */
+export const generateIdempotencyKey = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+};
+
+/**
  * Generate a cryptographically structured reference identifier
  * Format: SG-REQ-YYYYMMDD-XXXX
  */
@@ -138,7 +152,10 @@ export const generateRequirementReference = (): string => {
 /**
  * Build a sanitized commercial requirement record
  */
-export const buildRequirementRecord = (data: BuyerRequirementFormData): BuyerRequirementRecord => {
+export const buildRequirementRecord = (
+  data: BuyerRequirementFormData,
+  idempotencyKey?: string
+): BuyerRequirementRecord => {
   const specsParts: string[] = [];
   if (data.buyerRole && data.buyerRole.trim()) {
     specsParts.push(`Buyer Role: ${data.buyerRole.trim()}`);
@@ -169,6 +186,7 @@ export const buildRequirementRecord = (data: BuyerRequirementFormData): BuyerReq
     buyerRole: data.buyerRole ? sanitizeInput(data.buyerRole) : undefined,
     targetPrice: data.targetPrice ? sanitizeInput(data.targetPrice) : undefined,
     additionalMessage: data.additionalMessage ? sanitizeInput(data.additionalMessage) : undefined,
+    idempotencyKey: idempotencyKey || data.idempotencyKey || generateIdempotencyKey(),
     referenceId: generateRequirementReference(),
     submittedAt: new Date().toISOString(),
     schemaVersion: '1.0.0',

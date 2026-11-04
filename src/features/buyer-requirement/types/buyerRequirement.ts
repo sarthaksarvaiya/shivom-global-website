@@ -56,12 +56,14 @@ export interface BuyerRequirementFormData {
   buyerRole?: string;
   targetPrice?: string;
   additionalMessage?: string;
+  idempotencyKey?: string;
 }
 
 export interface BuyerRequirementRecord extends BuyerRequirementFormData {
   referenceId: string;
   submittedAt: string;
   schemaVersion: '1.0.0';
+  idempotencyKey?: string;
 }
 
 export type FieldValidationErrors = Partial<Record<keyof BuyerRequirementFormData, string>>;
