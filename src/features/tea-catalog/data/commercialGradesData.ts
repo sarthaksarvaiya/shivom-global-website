@@ -4,7 +4,7 @@ export const TEA_CATEGORIES_EXPLORER: TeaCategoryExplorerItem[] = [
   {
     id: 'ctc',
     name: 'Assam CTC',
-    badge: '6 Commercial Grades',
+    badge: 'Granular & Dust Sourcing',
     terroir: 'Assam Brahmaputra Valley & Upper Assam',
     gradeCount: 6,
     headline: 'Robust Granular Teas & Gulf Karak Chai Cuts',
@@ -17,7 +17,7 @@ export const TEA_CATEGORIES_EXPLORER: TeaCategoryExplorerItem[] = [
   {
     id: 'orthodox',
     name: 'Assam Orthodox',
-    badge: '4 Commercial Grades',
+    badge: 'Artisanal Whole & Broken Leaf',
     terroir: 'Upper Assam Foothills & Golaghat',
     gradeCount: 4,
     headline: 'Whole & Broken Leaf with Golden Tips',
@@ -30,7 +30,7 @@ export const TEA_CATEGORIES_EXPLORER: TeaCategoryExplorerItem[] = [
   {
     id: 'darjeeling',
     name: 'Darjeeling Single-Origin',
-    badge: '2 Seasonal Harvests',
+    badge: 'Himalayan High-Altitude Harvest',
     terroir: 'Himalayan High-Altitude Terroirs (1,000m–2,200m)',
     gradeCount: 2,
     headline: 'Himalayan Spring & Summer Muscatel Flushes',
@@ -43,7 +43,7 @@ export const TEA_CATEGORIES_EXPLORER: TeaCategoryExplorerItem[] = [
   {
     id: 'green',
     name: 'Indian Green Tea',
-    badge: '2 Specialty Cuts',
+    badge: 'Pan-Fired & Tea Bag Cuts',
     terroir: 'High-Elevation Indian Terroirs',
     gradeCount: 2,
     headline: 'Pan-Fired Whole Leaf & Fine Tea Bag Cuts',

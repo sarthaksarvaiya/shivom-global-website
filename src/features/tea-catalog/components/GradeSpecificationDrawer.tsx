@@ -23,9 +23,13 @@ export const GradeSpecificationDrawer: React.FC<GradeSpecificationDrawerProps> =
 }) => {
   const shouldReduceMotion = useReducedMotion();
 
-  // Escape key listener & body scroll lock
+  // Escape key listener, body scroll lock, and hiding floating WhatsApp FAB
   useEffect(() => {
     if (!isOpen) return;
+
+    document.body.classList.add('spec-drawer-open');
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -34,10 +38,9 @@ export const GradeSpecificationDrawer: React.FC<GradeSpecificationDrawerProps> =
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
 
     return () => {
+      document.body.classList.remove('spec-drawer-open');
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };

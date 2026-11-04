@@ -39,11 +39,11 @@ export const TeaOriginGradeExplorer: React.FC<TeaOriginGradeExplorerProps> = ({
   const shouldReduceMotion = useReducedMotion();
 
   const filterOptions = [
-    { key: 'ALL' as const, label: 'All Sourcing Grades', count: COMMERCIAL_GRADES_CATALOG.length },
-    { key: 'ctc' as const, label: 'Assam CTC', count: COMMERCIAL_GRADES_CATALOG.filter((g) => g.categorySlug === 'ctc').length },
-    { key: 'orthodox' as const, label: 'Assam Orthodox', count: COMMERCIAL_GRADES_CATALOG.filter((g) => g.categorySlug === 'orthodox').length },
-    { key: 'darjeeling' as const, label: 'Darjeeling Single-Origin', count: COMMERCIAL_GRADES_CATALOG.filter((g) => g.categorySlug === 'darjeeling').length },
-    { key: 'green' as const, label: 'Indian Green Tea', count: COMMERCIAL_GRADES_CATALOG.filter((g) => g.categorySlug === 'green').length },
+    { key: 'ALL' as const, label: 'All Sourcing Grades' },
+    { key: 'ctc' as const, label: 'Assam CTC' },
+    { key: 'orthodox' as const, label: 'Assam Orthodox' },
+    { key: 'darjeeling' as const, label: 'Darjeeling Single-Origin' },
+    { key: 'green' as const, label: 'Indian Green Tea' },
   ];
 
   const filteredGrades = activeCategoryFilter === 'ALL'
@@ -272,9 +272,9 @@ export const TeaOriginGradeExplorer: React.FC<TeaOriginGradeExplorerProps> = ({
                       type="button"
                       onClick={() => handleCategoryCardClick(cat.id)}
                       className={`tea-explorer-cat-btn ${isCatActive ? 'tea-explorer-cat-btn-active' : ''}`}
-                      aria-label={`Explore all ${cat.gradeCount} grades of ${cat.name}`}
+                      aria-label={`Explore ${cat.name} grades`}
                     >
-                      <span>Explore Grades ({cat.gradeCount})</span>
+                      <span>Explore Grades</span>
                       <ArrowRight size={14} aria-hidden="true" />
                     </button>
                   </div>
@@ -326,7 +326,6 @@ export const TeaOriginGradeExplorer: React.FC<TeaOriginGradeExplorerProps> = ({
                     className={`tea-explorer-tab-btn ${isActive ? 'tea-explorer-tab-btn-active' : ''}`}
                   >
                     <span>{opt.label}</span>
-                    <span className="tea-explorer-tab-count font-spec">({opt.count})</span>
                   </button>
                 );
               })}
@@ -516,35 +515,42 @@ export const TeaOriginGradeExplorer: React.FC<TeaOriginGradeExplorerProps> = ({
         {/* ==================================================================
             D. Indicative Sourcing Disclaimer & Quality Protocol
             ================================================================== */}
-        <div className="grade-disclaimer-strip" role="note" style={{ marginTop: '2.5rem' }}>
-          <Info size={16} className="grade-disclaimer-icon" aria-hidden="true" />
-          <p className="grade-disclaimer-text">
-            <strong>Indicative Sourcing Protocol:</strong> Listed grades represent standard Indian auction manufacturing cuts and regional sourcing capabilities. Specifications and cup profiles reflect indicative standards. Final sieve curve analysis (microns / &mu;m), bulk density, and organoleptic briskness are validated through physical pre-shipment counter-samples prior to contract confirmation.
+        <div className="tea-explorer-protocol-panel" role="note">
+          <div className="tea-explorer-protocol-header">
+            <div className="tea-explorer-protocol-icon-wrap" aria-hidden="true">
+              <Info size={16} className="tea-explorer-protocol-icon" />
+            </div>
+            <h4 className="tea-explorer-protocol-heading">
+              Indicative Sourcing Protocol
+            </h4>
+          </div>
+          <p className="tea-explorer-protocol-body">
+            Listed grades represent standard Indian auction manufacturing cuts and regional sourcing capabilities. Specifications and cup profiles reflect indicative standards. Final sieve curve analysis, bulk density and organoleptic characteristics are validated through physical pre-shipment counter-samples prior to contract confirmation.
           </p>
         </div>
 
         {/* ==================================================================
             E. Custom Benchmark Matching & Sieve Profiling Callout Box
             ================================================================== */}
-        <div className="grade-custom-box">
-          <div className="grade-custom-left">
-            <div className="grade-custom-badge font-spec">
+        <div className="tea-explorer-custom-panel">
+          <div className="tea-explorer-custom-content">
+            <div className="tea-explorer-custom-badge font-spec">
               <Sparkles size={13} aria-hidden="true" />
               <span>CUSTOM PARTICLE &amp; LIQUOR PROFILING</span>
             </div>
-            <h3 className="grade-custom-title">
+            <h3 className="tea-explorer-custom-title">
               Have a Target Benchmark Sample or Custom Sieve Specification?
             </h3>
-            <p className="grade-custom-copy">
+            <p className="tea-explorer-custom-desc">
               Send us your target liquor profile, custom mesh sieve distribution, or competitor benchmark details. 
               Our trade desk matches active origin auction lots and arranges calibrated counter-samples.
             </p>
           </div>
-          <div className="grade-custom-action">
+          <div className="tea-explorer-custom-action">
             <button
               type="button"
               onClick={handleCustomInquiry}
-              className="grade-custom-btn"
+              className="tea-explorer-custom-btn"
               aria-label="Request custom tea specification"
             >
               <span>Tell Us Your Specification</span>
