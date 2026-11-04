@@ -64,14 +64,31 @@ export const HomePage: React.FC = () => {
 
   const handleSelectGrade = (gradeCode: string) => {
     setFormGrade(gradeCode);
-    if (gradeCode === 'TGFOP' || gradeCode === 'FBOP') {
+    if (gradeCode.includes(' · ')) {
+      // Multi-grade buyer sample shortlist selection
+      setFormRequirementType('Commercial Blended Formulation');
+      setFormIntent('sample');
+    } else if (gradeCode.startsWith('FTGFOP1 (FF)') || gradeCode.startsWith('TGFOP1 (SF)')) {
+      setFormRequirementType('Darjeeling Specialty Black Tea');
+      setFormIntent('quote');
+    } else if (gradeCode.startsWith('Green')) {
+      setFormRequirementType('Indian Green Tea');
+      setFormIntent('quote');
+    } else if (
+      gradeCode === 'FTGFOP1' || 
+      gradeCode === 'TGFOP' || 
+      gradeCode === 'FBOP' || 
+      gradeCode === 'BOP (Orth)'
+    ) {
       setFormRequirementType('Assam Orthodox Black Tea');
+      setFormIntent('quote');
     } else if (gradeCode === 'Custom Specification') {
       setFormRequirementType('Other / Custom Specification');
+      setFormIntent('quote');
     } else {
       setFormRequirementType('Assam CTC Black Tea');
+      setFormIntent('quote');
     }
-    setFormIntent('quote');
     scrollToForm();
   };
 

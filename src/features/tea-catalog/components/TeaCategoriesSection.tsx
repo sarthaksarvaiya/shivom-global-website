@@ -727,14 +727,14 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
           </AnimatePresence>
         </div>
 
-        {/* Section Bottom Quick Link to Grade Specification Table */}
+        {/* Section Bottom Quick Link to Tea Origin & Grade Explorer */}
         <div className="tea-categories-bottom-cta">
           <div className="tea-categories-cta-text">
             <h4 className="tea-bottom-cta-heading">
-              Looking for exact particle sizes and technical mesh sieve data?
+              Looking for specialized cuts, terroir origins and technical specifications?
             </h4>
             <p className="tea-bottom-cta-subtext">
-              Compare particle sizing, cup strength, and blend applications in our single Grade Specification Table below.
+              Explore all 14 commercial sourcing grades and shortlist sample lots in the Tea Origin &amp; Grade Explorer below.
             </p>
           </div>
 
@@ -744,8 +744,9 @@ export const TeaCategoriesSection: React.FC<TeaCategoriesSectionProps> = ({
               onClick={handleGradeTableClick}
               className="btn btn-secondary btn-sm"
               id="btn-view-grades-table"
+              aria-label="Scroll to Section 4: Tea Origin & Grade Explorer"
             >
-              <span>View Grade Specification Table</span>
+              <span>Explore All Origins &amp; Grades</span>
               <ArrowRight size={14} aria-hidden="true" />
             </a>
           </div>

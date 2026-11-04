@@ -829,17 +829,41 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     value={activeGrade}
                     onChange={(e) => handleDetailedChange('grade', e.target.value)}
                   >
-                    <option value="BOP">BOP — Broken Orange Pekoe</option>
-                    <option value="BOPSM">BOPSM — BOP Small</option>
-                    <option value="BP">BP — Broken Pekoe</option>
-                    <option value="PF">PF — Pekoe Fannings</option>
-                    <option value="PD">PD — Pekoe Dust</option>
-                    <option value="Dust">Dust / D1</option>
-                    <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe</option>
-                    <option value="FBOP">FBOP — Flowery Broken Orange Pekoe</option>
-                    <option value="FTGFOP1">FTGFOP1 — Fine Tippy Golden Flowery Orange Pekoe 1</option>
-                    <option value="Open to Recommendation">Open to Recommendation</option>
-                    <option value="Custom">Custom Formulation / Target Sample</option>
+                    <optgroup label="Assam CTC (Granular &amp; Dust)">
+                      <option value="BOP">BOP — Broken Orange Pekoe</option>
+                      <option value="BOPSM">BOPSM — BOP Small</option>
+                      <option value="BP">BP — Broken Pekoe</option>
+                      <option value="PF">PF — Pekoe Fannings</option>
+                      <option value="PD">PD — Pekoe Dust (Karak Chai)</option>
+                      <option value="Dust / D1">Dust / D1 (High Color Yield)</option>
+                    </optgroup>
+                    <optgroup label="Assam Orthodox (Whole &amp; Broken)">
+                      <option value="FTGFOP1">FTGFOP1 — Finest Tippy Golden Flowery Orange Pekoe 1</option>
+                      <option value="TGFOP">TGFOP — Tippy Golden Flowery Orange Pekoe</option>
+                      <option value="FBOP">FBOP — Flowery Broken Orange Pekoe</option>
+                      <option value="BOP (Orth)">BOP (Orth) — Broken Orange Pekoe Orthodox</option>
+                    </optgroup>
+                    <optgroup label="Darjeeling Single-Origin">
+                      <option value="FTGFOP1 (FF)">FTGFOP1 (FF) — First Flush Spring Pluck</option>
+                      <option value="TGFOP1 (SF)">TGFOP1 (SF) — Second Flush Muscatel</option>
+                    </optgroup>
+                    <optgroup label="Indian Green Tea">
+                      <option value="Green Whole Leaf">Green Whole Leaf — Traditional Pan-Fired</option>
+                      <option value="Green Fannings">Green Fannings — Fine Cut (Tea Bags)</option>
+                    </optgroup>
+                    <optgroup label="Flexible &amp; Custom Specifications">
+                      <option value="Open to Recommendation">Open to Recommendation</option>
+                      <option value="Custom Formulation / Target Sample">Custom Formulation / Target Sample</option>
+                    </optgroup>
+                    {activeGrade && ![
+                      'BOP', 'BOPSM', 'BP', 'PF', 'PD', 'Dust / D1', 
+                      'FTGFOP1', 'TGFOP', 'FBOP', 'BOP (Orth)', 
+                      'FTGFOP1 (FF)', 'TGFOP1 (SF)', 
+                      'Green Whole Leaf', 'Green Fannings', 
+                      'Open to Recommendation', 'Custom Formulation / Target Sample'
+                    ].includes(activeGrade) && (
+                      <option value={activeGrade}>{activeGrade}</option>
+                    )}
                   </select>
                 </div>
               </div>

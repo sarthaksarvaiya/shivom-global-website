@@ -1,164 +1,137 @@
-# 04 — Tea Origins & Grades (Grade Specification Reference Table)
+# 04 — Tea Origins & Grades: The Tea Origin & Grade Explorer
 
 ## 1. Section Overview
-- **Section ID**: `sec-04` / `<section id="tea-by-grade" className="grade-matrix-section">`
-- **Section Name**: Tea Origins & Grades (Commercial Grade Specification Table)
-- **Position on Website**: Section 3 of the main content flow, rendered directly below `TeaCategoriesSection`.
-- **Main Purpose**: Provide a definitive, authoritative commercial reference table of standard Indian tea manufacturing cuts (Assam CTC and Orthodox), their visual style, industry applications, and direct specification mechanisms.
-- **Target Audience**: Professional tea tasters, commercial packet tea brand managers, tea bag manufacturers, institutional buyers, and import brokers who evaluate teas by specific sieve grades and commercial mesh codes.
-- **Business Objective**: Establish technical mastery over Indian auction classifications, enable granular grade preselection that automatically routes into the Buyer Requirement Form, and facilitate custom mesh or benchmark counter-sample matching.
+- **Section ID**: `sec-04` / `<section id="tea-by-grade" className="tea-explorer-section">`
+- **Section Name**: The Tea Origin & Grade Explorer (Commercial Sourcing Catalog & Technical Specification System)
+- **Position on Website**: Section 3 of the main content flow, rendered directly below `TeaCategoriesSection` (`#our-teas`) and above `PrivateLabelSection` (`#private-label`).
+- **Main Purpose**: Deliver an interactive, editorial digital sourcing showroom that combines terroir discovery, visual grade selection across all 14 commercial sourcing cuts, deep technical specification drawers, and multi-grade sample shortlisting.
+- **Target Audience**: Professional tea tasters, commercial packet tea brand managers, tea bag manufacturers, institutional blenders, and import brokers who evaluate teas by specific sieve cuts, auction classifications, and organoleptic liquor chemistry.
+- **Business Objective**: Establish technical competence over Indian tea classifications, enable granular grade preselection and multi-grade shortlists that automatically route into the Buyer Requirement Form, and facilitate custom mesh or benchmark counter-sample matching without claiming unverified standing stock (Buyer-First, Inventory-Last principle).
 
-## 2. Current Implementation
-- **Existing Design Description**: Precision technical data-dense layout rendered in a clean corporate tabular format with Warm Gold badge accents, monospace grade codes, interactive filter tabs, and responsive horizontal overflow handling.
-- **Existing Layout**:
-  - **Section Header**: Centered gold eyebrow badge ("COMMERCIAL GRADE REFERENCE"), authoritative H2 title, and lead disclosure clarifying that grades represent sourcing classifications rather than speculative standing stock.
-  - **Category Filter Bar**: Tablist allowing instant filtering by manufacturing type: "All Sourcing Grades (8)", "Assam CTC Granular (6)", and "Orthodox Whole Leaf (2)".
-  - **Mobile Scroll Hint**: Visual indicator prompting touch users on smaller viewports.
-  - **Grade Specification Table**: 5-column accessible data table wrapped in an overflow container.
-  - **Organoleptic Disclaimer Strip**: Subtle amber-bordered information block emphasizing physical counter-sample cupping prior to contract commitment.
-  - **Custom Specification Match Card**: Dark-accented callout box for buyers requiring custom mesh sizing, sieve distributions, or benchmark sample matching.
-- **Content Structure**:
-  - **8 Documented Tea Grades**:
-    - **CTC BOP**: Broken Orange Pekoe (Largest CTC grade, robust granular leaf; packet tea foundation).
-    - **CTC BOPSM**: BOP Small (Medium-to-bold even cut; consumer packet tea).
-    - **CTC BP**: Broken Pekoe (Medium granular size; strong everyday milk chai).
-    - **CTC PF**: Pekoe Fannings (Fine particles, rapid liquor release; tea bags & single-serve).
-    - **CTC PD**: Pekoe Dust (Fine granular dust, instantaneous extraction; Karak chai & vending).
-    - **CTC Dust / D1**: Dust 1 (Micro-cut particles, maximum color yield; foodservice & catering).
-    - **Orthodox TGFOP**: Tippy Golden Flowery Orange Pekoe (Whole wiry leaf with golden tips; specialty loose-leaf).
-    - **Orthodox FBOP**: Flowery Broken Orange Pekoe (Aromatic broken leaf with tips; English breakfast).
-- **Visual Elements**:
-  - Monospace font styling (`Space Grotesk`, `.font-spec`) for tea grades and industry abbreviations.
-  - Interactive "Specify" / "Selected" state button with checkmark icon.
-  - Compact green WhatsApp icon button for contextual instant chat.
-- **Current Functionality**:
-  - Filter tabs dynamically filter displayed table rows with smooth layout animation.
-  - Clicking "Specify" selects the grade, synchronizes it with parent page state, and smoothly scrolls to `#requirement-form`.
-  - Contextual WhatsApp icon generates pre-filled message specific to the selected grade code.
-  - "Tell Us Your Specification" button preselects "Custom Specification" in the form.
+---
 
-## 3. Component Mapping
-- **React Component Name**: `GradeSpecificationTable`
-- **Exact Source File Path**: `src/features/tea-catalog/components/GradeSpecificationTable.tsx`
-- **Related Subcomponents**: None (self-contained tabular component).
-- **Shared Components & Utilities**:
-  - `src/constants/contact.ts` (`CONTACT_INFO` for WhatsApp links).
-  - `motion`, `AnimatePresence`, `useReducedMotion` from `motion/react`.
-  - Icons from `lucide-react`: `ArrowRight`, `Info`, `Check`, `MessageCircle`.
+## 2. Interactive Architecture & Design System
 
-## 4. Styling Mapping
-- **CSS File Paths**:
-  - `src/styles/index.css` (Lines 3334–3750: Table container, filter bar, table headers, grade badges, custom box, and mobile horizontal scroll styles).
-  - `src/styles/tokens.css` (Design tokens).
-- **Design Tokens**:
-  - Colors: `var(--bg-surface)` (#FFFFFF), `var(--border-subtle)` (#E5E7EB), `var(--color-primary-green)` (#0D3829), `var(--color-gold)` (#C59B27).
-  - Spacing: `var(--space-2)` (8px), `var(--space-4)` (16px), `var(--space-6)` (24px), `var(--space-8)` (32px).
-  - Radii: `var(--radius-sm)` (4px), `var(--radius-md)` (8px).
-- **Typography**:
-  - Grade codes: `var(--font-mono)` (Space Grotesk) with tabular numbers (`tnum`).
-  - Table headers: Uppercase 12px with 0.05em letter spacing.
-- **Layout Behaviour**:
-  - Table wrapper: `overflow-x: auto; -webkit-overflow-scrolling: touch;`.
-  - Table: `width: 100%; border-collapse: separate; border-spacing: 0; min-width: 720px;`.
-- **Animation Styles**:
-  - Row entrance and exit animations powered by Framer Motion / Motion `motion.tr`.
+The section has evolved from a static spreadsheet table into **The Tea Origin & Grade Explorer**, featuring five integrated layers:
 
-## 5. Asset Mapping
-- **Image Paths**: None (Data table utilizes typographical clarity and SVG iconography).
-- **SVG Paths**: None (inline Lucide icons).
-- **Video Paths**: None.
-- **Icon References**: `ArrowRight`, `Info`, `Check`, `MessageCircle`.
-- **Fonts**: Space Grotesk (monospace specs) and Plus Jakarta Sans (body & headings).
-- **Other Assets**: None.
+### A. Editorial Hero — Tea Collection Introduction
+- **Eyebrow Badge**: Gold-bordered capsule: `INDIAN TEA SOURCING COLLECTION`.
+- **Heading**: `Discover the Character of Indian Tea` with an editorial serif display aesthetic.
+- **Lead Description**: Communicates the Buyer-First model: every requirement is matched against harvest availability, terroir documentation, and pre-shipment counter-samples rather than speculative standing stock.
+- **Trust Metrics Bar**:
+  - `14` Commercial Sourcing Grades
+  - `4` Distinguishable Indian Terroirs
+  - `100%` Pre-Shipment Counter-Samples
+  - `3–5 Days` Western Sea Logistics Corridor (Mundra / Kandla to Jebel Ali)
 
-## 6. Functional Behaviour
-- **Buttons and CTAs**:
-  - Filter Buttons (3): Filter grades by All, CTC, and Orthodox.
-  - "Specify" Button: Calls `onSelectGrade(gradeCode)`, sets parent form grade, and scrolls to `#requirement-form`.
-  - Contextual WhatsApp Button: Direct link to WhatsApp with grade name and category preloaded.
-  - "Tell Us Your Specification" CTA: Calls `handleCustomInquiry()`, setting grade to "Custom Specification".
-- **Navigation**:
-  - Section anchor `#tea-by-grade`.
-  - Jump-down navigation to `#requirement-form` on grade selection.
-- **Form Behaviour**: Injects selected grade into parent state in `HomePage.tsx` which populates `BuyerRequirementForm`.
-- **Interactions**:
-  - Filter tab activation toggles `activeFilter` state.
-  - Row hover highlights background (`rgba(13, 56, 41, 0.03)`).
-- **Animations**: Rows reorder with `layout` transitions and fade animations.
-- **API Integrations**: None.
-- **External Integrations**: WhatsApp link generation via `CONTACT_INFO.whatsapp.getContextualLink()`.
+### B. Visual Tea Category Explorer
+Displays four distinct interactive category cards with authentic photography and terroir badges:
+1. **Assam CTC**: 6 commercial grades; bold granular cuts; Gulf Karak chai foundation; Brahmaputra Valley & Upper Assam terroirs.
+2. **Assam Orthodox**: 4 commercial grades; whole wiry leaves and golden tips; traditional orthodox processing; Brahmaputra Valley terroirs.
+3. **Darjeeling Single-Origin**: 2 specialty grades (FF & SF); high-elevation Himalayan foothills; GI-compliant sourcing documentation.
+4. **Indian Green Tea**: 2 specialty grades (Whole Leaf & Fannings); pan-fired processing; loose-leaf and pyramid tea bag cuts.
+- **Interactive Filtering**: Clicking any category card smoothly updates the grade collection below without page reload.
 
-## 7. Responsive Behaviour
-- **Desktop (>= 1025px)**: Full width 5-column table displaying Type, Grade, Appearance, Typical Use, and Actions without horizontal scroll.
-- **Tablet (769px – 1024px)**: Table remains comfortably legible; column widths adapt fluidly.
-- **Mobile (<= 768px & <= 480px)**:
-  - Table wrapper enables horizontal scrolling (`min-width: 680px` table inside scrollable container).
-  - Scroll hint banner (`.grade-table-scroll-hint`) appears above table alerting users.
-  - Filter buttons wrap or become horizontally scrollable.
-  - Custom specification box stacks vertically (Copy on top, button full width below).
-- **Existing Responsive Issues**: On small mobile devices, horizontal scrolling requires two-finger swipe or conscious sideways dragging; table container has explicit `tabIndex={0}` to allow keyboard panning.
+### C. Interactive Grade Collection (14 Visual Cards)
+14 cards arranged in a responsive 3-column desktop / 2-column tablet / 1-column mobile grid:
+- **Card Header**: Monospace grade code badge, terroir origin tag, and specification status indicator (`Supplier-Confirmed Sourcing` vs `Provisional Sourcing Matrix`).
+- **Representative Photography**: High-resolution authentic tea leaf/cut visual with subtle hover zoom.
+- **Cut & Sieve Profile**: Industrial cut description, standardized commercial sieve classification, and cupping liquor behavior.
+- **Application Tags**: Clear pills including `Karak Chai`, `Tea Bags`, `Consumer Packet`, `Specialty Retail`, `Loose-Leaf Blends`.
+- **Primary Actions**:
+  - **"Specs"**: Opens the technical specification slide-out drawer.
+  - **"Shortlist" / "Shortlisted"**: Adds/removes grade from the sticky bottom shortlist bar.
+  - **"Specify"**: 1-click router directly into the Buyer Requirement Form.
+  - **WhatsApp**: Direct contextual chat link pre-populated with grade code and sourcing territory.
 
-## 8. SEO & Accessibility
-- **Heading Hierarchy**:
-  - `<h2>`: "Tea Grades & Specification Reference" (`id="grade-table-heading"`)
-  - `<h3>`: "Have a Target Benchmark Sample or Custom Mesh Specification?"
-- **Semantic HTML**: `<section id="tea-by-grade" aria-labelledby="grade-table-heading">`, `<table>`, `<thead>`, `<tbody>`, `<th scope="col">`, `<tr>`, `<td>`.
-- **Image Alt Attributes**: N/A (no images).
-- **ARIA Attributes**:
-  - Filter bar: `role="tablist" aria-label="Filter tea grades by manufacturing type"`.
-  - Filter tabs: `role="tab" aria-selected={true/false}`.
-  - Table wrapper: `role="region" aria-label="Tea Grades Specification Table" tabIndex={0}`.
-  - Action buttons: Clear `aria-label` including grade code (e.g. `aria-label="Select BOP in requirement form"`).
-- **Keyboard Accessibility**:
-  - Full keyboard focusability across table container, filter buttons, and row action triggers.
-  - Space and Enter keys trigger filters and selection.
-- **Relevant SEO Considerations**:
-  - Direct indexing of commercial tea grade terms (BOP, BOPSM, BP, PF, PD, Dust, TGFOP, FBOP).
+### D. Technical Specification Drawer (`GradeSpecificationDrawer.tsx`)
+- Slide-out right panel (desktop $\ge 768\text{px}$) and bottom-sheet modal (mobile $< 768\text{px}$).
+- Accessible WAI-ARIA modal dialog (`role="dialog"`, `aria-modal="true"`, `Escape` key listener, focus trap, and background scroll locking).
+- Four detailed specification tabs/sections:
+  1. *Product Identification & Terroir*: Category, origin, statutory compliance (FSSAI / Tea Board / GI), and harvest windows.
+  2. *Cut, Particle & Sieve Protocol*: Industrial cut type, sieve classification, mesh guidelines, and laboratory laser diffraction notes.
+  3. *Organoleptic Cupping Profile*: Dry leaf visual, liquor infusion color, briskness/body notes, and extraction behavior.
+  4. *Commercial Packing & Logistics*: Export packaging options (multi-wall paper sacks, bulk corrugated cartons, food-grade foil caddies), MOQ benchmarks, and pre-shipment sample dispatch protocols.
 
-## 9. Dependencies & Integration
-- **Dependencies on Other Website Sections**:
-  - Interlinked from `TeaCategoriesSection` ("View Full Grade Specifications" CTA).
-  - Passes selected grade to `BuyerRequirementForm` (Section 08).
-- **Shared Components**:
-  - `src/constants/contact.ts`
-- **Global CSS Dependencies**:
-  - `src/styles/tokens.css`
-  - `.container`, `.spec-badge`, `.btn`, `.font-spec`
-- **API Dependencies**: None.
-- **Navigation Dependencies**: Anchor `#tea-by-grade` and `#requirement-form`.
+### E. Buyer Sample Shortlist Bar (`SampleShortlistBar.tsx`)
+- Persistent floating bottom toolbar activated when 1 or more grades are shortlisted.
+- Displays interactive grade code pills with individual remove (`X`) buttons.
+- Supports single-click "Clear All" or "Proceed to Requirement Form".
+- Transfers multi-grade selections (`BOP · PD · FTGFOP1 (FF)`) directly into the Buyer Requirement Form with zero loss of context.
 
-## 10. Current Issues & Improvement Backlog
+---
 
-| ID | Issue | Proposed Improvement | Priority | Status |
+## 3. Commercial Data Governance
+
+To protect SHIVOM GLOBAL's reputation and avoid misrepresenting specifications to international buyers:
+1. **No Invented Micron/Millimeter Numbers**: Sieve classifications are identified by commercial standards (`Standard Bold Commercial Sieve`, `Fine Tea Bag Sieve Cut`, `Specialized Dust Sieve`) rather than rigid unverified millimeter ranges. Sieve distributions are confirmed against laboratory laser diffraction on buyer counter-samples.
+2. **Explicit Verification Statuses**: Each grade carries a `specificationStatus`:
+   - `supplier-confirmed`: Backed by established auction cataloging and garden grading protocols.
+   - `provisional`: Sourced against buyer-mandated counter-sample matching.
+3. **Traceable Origin Attribution**: Sourcing territories are tied to actual regional terroirs (`Assam Brahmaputra Valley Terroirs`, `High-Elevation Darjeeling Foothills`, `High-Elevation Indian Terroirs`). Darjeeling teas note mandatory GI origin documentation and Tea Board registration.
+4. **Buyer-First Sourcing Principle**: Transparently disclaims that all offerings represent commercial sourcing capabilities, with physical pre-shipment counter-samples dispatched for laboratory evaluation prior to export contract execution.
+
+---
+
+## 4. Component & Data Mapping
+
+- **Main Container**: [`src/features/tea-catalog/components/TeaOriginGradeExplorer.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/components/TeaOriginGradeExplorer.tsx)
+- **Specification Drawer**: [`src/features/tea-catalog/components/GradeSpecificationDrawer.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/components/GradeSpecificationDrawer.tsx)
+- **Shortlist Floating Bar**: [`src/features/tea-catalog/components/SampleShortlistBar.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/components/SampleShortlistBar.tsx)
+- **Backwards Compatibility Wrapper**: [`src/features/tea-catalog/components/GradeSpecificationTable.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/components/GradeSpecificationTable.tsx) (re-exports `TeaOriginGradeExplorer`)
+- **Centralized Types**: [`src/features/tea-catalog/types/gradeMatrix.ts`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/types/gradeMatrix.ts)
+  - `CommercialGradeSpecification`: Full commercial and organoleptic schema.
+  - `TeaCategoryExplorerItem`: Category metadata and authentic photography paths.
+  - `SpecificationStatus`: `'provisional' | 'supplier-confirmed' | 'verified'`.
+  - `SourcingTerritory`: Authentic regional origin territories.
+- **Centralized Data**: [`src/features/tea-catalog/data/commercialGradesData.ts`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/tea-catalog/data/commercialGradesData.ts) (14 commercial grades, 4 categories)
+- **Form Integration**:
+  - [`src/pages/HomePage.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/pages/HomePage.tsx) (`handleSelectGrade`, `handleShortlistSubmit`)
+  - [`src/features/buyer-requirement/components/BuyerRequirementForm.tsx`](file:///Users/sarthak/SHIVOM%20GLOBAL%20WEBSITE/src/features/buyer-requirement/components/BuyerRequirementForm.tsx) (Dynamic shortlisted grade option + grouped catalog optgroups)
+
+---
+
+## 5. Styling & Token Architecture
+
+- **Primary CSS File**: `src/styles/index.css`
+  - `.tea-explorer-section`: Deep obsidian green backdrop (`#081E15`), ivory text, gold accents.
+  - `.tea-category-card`: Interactive grid cards with authentic photography and hover depth.
+  - `.tea-grade-card`: Technical card layout with monospace badges, tag pills, and dual-tier action buttons.
+  - `.tea-spec-drawer`: Slide-out panel / bottom-sheet with backdrop blur, accessible close button, and tabbed specifications.
+  - `.sample-shortlist-bar`: Fixed bottom docking bar (`z-index: 90`) with badge counters, individual removable pills, and clear triggers.
+- **Design Tokens**: Centralized in `src/styles/tokens.css` (`--color-primary-green`, `--color-primary-dark`, `--color-gold`, `--color-surface`, `--font-mono`).
+- **Responsive Breakpoints**:
+  - Desktop ($\ge 1024\text{px}$): 3-column grade grid, 4-column category grid, 540px right-hand slide drawer.
+  - Tablet ($768\text{px} - 1023\text{px}$): 2-column grade grid, 2-column category grid.
+  - Mobile ($< 768\text{px}$): 1-column stacked cards, bottom-sheet drawer (92vh max), touch targets $\ge 44\text{px}$, floating shortlist bar with horizontal scroll for chips.
+
+---
+
+## 6. Accessibility & WAI-ARIA
+- **Category Filter Tabs**: `role="tablist"` with APG roving tabindex (`0` active, `-1` inactive), full keyboard arrow navigation (`ArrowLeft`, `ArrowRight`, `Home`, `End`), `role="tab"`, and `role="tabpanel"`.
+- **Specification Drawer**: `role="dialog"`, `aria-modal="true"`, focus retention on trigger upon close, and keyboard `Escape` key dismissal.
+- **Screen Reader Announcements**: Live region (`aria-live="polite"`) updates when shortlisting grades; explicit `aria-label` attributes on all icon-only buttons.
+- **Reduced Motion**: Full support for `prefers-reduced-motion: reduce`, disabling slide transitions in favor of instantaneous opacity fades.
+
+---
+
+## 7. Issue Backlog & Resolution
+
+| ID | Issue | Solution | Priority | Status |
 |---|---|---|---|---|
-| `SEC04-01` | Table has 8 primary grades; Darjeeling & Green grades are listed only in Section 03 | Add Darjeeling (First/Second Flush) and Green Tea rows to the table with a category filter tab | Medium | Open |
-| `SEC04-02` | Mobile card-based layout alternative for small screens | Provide optional responsive toggle switching table to stacked cards on mobile | Low | Open |
-| `SEC04-03` | Mesh size (sieve range) data is described in text rather than numeric micrometers | Add optional particle size column (microns/mesh) for technical blenders | Low | Open |
+| `SEC04-01` | Table had only 8 grades; Darjeeling & Green missing | Added Darjeeling (First/Second Flush) and Green Tea (Whole Leaf/Fannings) with category tabs (14 grades total) | High | **Resolved** |
+| `SEC04-02` | Mobile horizontal table scroll required dragging | Replaced with native responsive visual grade cards and mobile bottom-sheet drawer | Medium | **Resolved** |
+| `SEC04-03` | Unclear particle sizing & blender guidance | Added industrial cut classifications, commercial sieve guidance, and custom mesh targeting notes without unverified millimeters | Medium | **Resolved** |
+| `P4-04` | UAE / Gulf Karak chai suitability unrepresented | Highlighted Pekoe Dust (PD) and Dust 1 (D1) with dedicated `[Karak Chai]` tags and extraction profiles | High | **Resolved** |
+| `P4-05` | Complete absence of Darjeeling & Green Tea grades | Integrated full 14-grade commercial spectrum across all 4 categories | High | **Resolved** |
+| `P4-06` | Inflexible single-grade inquiry limitation | Implemented multi-grade sample shortlisting bar synchronized with Buyer Requirement Form | High | **Resolved** |
 
-## 11. Testing & Acceptance Criteria
-- **Visual Verification**:
-  - Table header and rows align cleanly with correct column proportions.
-  - Monospace font renders with uniform width on grade codes.
-  - Selected grade displays checkmark and highlighted background.
-- **Functional Verification**:
-  - Clicking "CTC" filter isolates 6 CTC grades; "Orthodox" filter isolates 2 Orthodox grades.
-  - Clicking "Specify" updates parent state and smoothly scrolls to `#requirement-form`.
-  - WhatsApp icon opens chat with grade prefilled.
-- **Desktop Verification**:
-  - Full table fits inside 1240px container without horizontal scrollbar.
-- **Tablet Verification**:
-  - Table fits comfortably down to 768px viewport.
-- **Mobile Verification**:
-  - Horizontal scroll container allows smooth panning on 375px and 414px viewports.
-  - Custom specification box wraps cleanly.
-- **Regression Testing**:
-  - Ensure filter state changes do not reset parent form values.
-- **Performance Checks**:
-  - Row filter transitions execute with zero lag or dropped frames.
+---
 
-## 12. Change History
+## 8. Change History
 
 | Date | Change Description | Files Modified | Verification |
 |---|---|---|---|
-| 2026-11-02 | Initial technical documentation created from codebase audit | `docs/website-sections/04_TEA_ORIGINS_AND_GRADES.md` | Verified against `GradeSpecificationTable.tsx` & `src/styles/index.css` |
-
+| 2026-11-04 | Implemented complete redesign into **The Tea Origin & Grade Explorer**: 14 visual cards, 4 terroir category cards, technical specification drawer, multi-grade sample shortlisting bar, and Buyer Requirement Form multi-grade synchronization. | `TeaOriginGradeExplorer.tsx`, `GradeSpecificationDrawer.tsx`, `SampleShortlistBar.tsx`, `GradeSpecificationTable.tsx`, `gradeMatrix.ts`, `commercialGradesData.ts`, `HomePage.tsx`, `BuyerRequirementForm.tsx`, `TeaCategoriesSection.tsx`, `index.css`, `04_TEA_ORIGINS_AND_GRADES.md` | `npm run build` passed (0 errors), Chrome DevTools CDP headless browser verification across desktop & mobile (6 screenshots captured). |
+| 2026-11-04 | Implemented Option 1 Modernization: 14 commercial grades, centralized data model (`gradeMatrix.ts`, `commercialGradesData.ts`), mobile specification cards, WAI-ARIA tabs with roving tabindex, Karak tags, and parent form routing. | `GradeSpecificationTable.tsx`, `commercialGradesData.ts`, `gradeMatrix.ts`, `HomePage.tsx`, `index.css`, `04_TEA_ORIGINS_AND_GRADES.md` | `npm run build` (tsc & vite passed), verification across viewports |
+| 2026-11-02 | Initial documentation created from codebase audit | `04_TEA_ORIGINS_AND_GRADES.md` | Codebase inspection |

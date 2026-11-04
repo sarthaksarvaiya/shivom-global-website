@@ -4602,75 +4602,302 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
 }
 
 /* --------------------------------------------------------------------------
-   SECTION 8: TEA GRADE / SPECIFICATION MATRIX
+   SECTION 8: THE TEA ORIGIN & GRADE EXPLORER (SEC-04 / #tea-by-grade)
    -------------------------------------------------------------------------- */
-.grade-matrix-section {
+.tea-explorer-section {
   position: relative;
   background-color: var(--bg-surface-subtle);
-  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0;
   border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
 }
 
-.grade-matrix-header {
+/* Editorial Hero Header */
+.tea-explorer-hero {
   text-align: center;
-  max-width: 760px;
-  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 840px;
+  margin: 0 auto clamp(2.75rem, 5vw, 4rem);
 }
 
-.grade-matrix-eyebrow {
+.tea-explorer-eyebrow {
   margin-bottom: var(--space-3);
 }
 
-.grade-matrix-title {
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
+.tea-explorer-title {
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
   font-weight: 800;
   color: var(--color-primary-dark);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
   margin: 0 0 var(--space-4) 0;
 }
 
-.grade-matrix-lead {
-  font-size: 1.0625rem;
+.tea-explorer-lead {
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
   font-weight: 500;
   color: var(--text-muted);
-  line-height: 1.6;
-  margin: 0;
+  line-height: 1.65;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.25rem);
 }
 
-/* Grade Filter Segmented Bar */
-.grade-filter-bar-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
-}
-
-.grade-filter-bar {
+/* Sourcing Metrics Highlight Strip */
+.tea-explorer-metrics {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 24px);
+  padding: 12px clamp(16px, 3vw, 28px);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle-warm);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.tea-explorer-metric-item {
+  display: inline-flex;
+  align-items: baseline;
   gap: 6px;
-  background: #EBE7DF;
+}
+
+.tea-explorer-metric-num {
+  font-size: 1.0625rem;
+  font-weight: 800;
+  color: var(--color-primary-green);
+}
+
+.tea-explorer-metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.tea-explorer-metric-sep {
+  color: var(--color-gold);
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+   B. Visual Tea Category Explorer Deck (4 Distinct Cards)
+   -------------------------------------------------------------------------- */
+.tea-explorer-category-deck {
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+
+.tea-explorer-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.tea-explorer-cat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle-warm);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.tea-explorer-cat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 12px 28px rgba(var(--primitive-green-900-rgb), 0.1);
+}
+
+.tea-explorer-cat-card-active {
+  border-color: var(--color-gold) !important;
+  box-shadow: 0 0 0 2px var(--color-gold), 0 8px 24px rgba(var(--primitive-gold-500-rgb), 0.15) !important;
+}
+
+.tea-explorer-cat-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--color-primary-dark);
+}
+
+.tea-explorer-cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tea-explorer-cat-card:hover .tea-explorer-cat-img {
+  transform: scale(1.05);
+}
+
+.tea-explorer-cat-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(var(--primitive-green-950-rgb), 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--color-gold);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.4);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tea-explorer-cat-body {
+  padding: clamp(1.25rem, 2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tea-explorer-cat-terroir {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.tea-explorer-cat-terroir svg {
+  color: var(--color-gold);
+}
+
+.tea-explorer-cat-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.tea-explorer-cat-headline {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+}
+
+.tea-explorer-cat-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 14px 0;
+  flex: 1;
+}
+
+.tea-explorer-cat-apps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.tea-explorer-cat-app-pill {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.3;
+}
+
+.tea-explorer-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: var(--color-primary-green);
+  color: var(--text-inverse);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border: 1px solid var(--color-primary-green);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tea-explorer-cat-btn:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.tea-explorer-cat-btn-active {
+  background: var(--color-gold) !important;
+  color: var(--color-primary-green) !important;
+  border-color: var(--color-gold) !important;
+}
+
+/* --------------------------------------------------------------------------
+   C. Interactive Visual Grade Collection
+   -------------------------------------------------------------------------- */
+.tea-explorer-grades-section {
+  position: relative;
+}
+
+.tea-explorer-grades-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle-warm);
+}
+
+.tea-explorer-grades-title-wrap {
+  max-width: 500px;
+}
+
+.tea-explorer-grades-heading {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.015em;
+  margin: 0 0 4px 0;
+}
+
+.tea-explorer-grades-sub {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Tablist */
+.tea-explorer-tablist {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-surface);
   padding: 5px;
   border-radius: var(--radius-full);
-  border: 1px solid #DCD5C9;
-  max-width: fit-content;
+  border: 1px solid var(--border-subtle-warm);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-@media (max-width: 640px) {
-  .grade-filter-bar {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-radius: var(--radius-lg);
-  }
-}
-
-.grade-filter-btn {
+.tea-explorer-tab-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px 18px;
+  gap: 5px;
+  padding: 7px 15px;
   border-radius: var(--radius-full);
   background: transparent;
   border: none;
@@ -4679,334 +4906,834 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   font-weight: 600;
   cursor: pointer;
   outline: none;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
-  -webkit-appearance: none;
-  appearance: none;
 }
 
-.grade-filter-btn:hover {
+.tea-explorer-tab-btn:hover {
   color: var(--color-primary-dark);
+  background: rgba(var(--primitive-green-900-rgb), 0.04);
 }
 
-.grade-filter-btn-active {
+.tea-explorer-tab-btn-active {
   background: var(--color-primary-green) !important;
   color: var(--text-inverse) !important;
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(var(--primitive-green-900-rgb), 0.2);
 }
 
-/* Table Wrapper */
-.grade-matrix-table-wrap {
-  width: 100%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle-warm);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-  margin-bottom: clamp(1.5rem, 3vw, 2rem);
-}
-
-.grade-matrix-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.grade-matrix-table thead tr {
-  background-color: var(--color-primary-green);
-  color: var(--text-inverse);
-}
-
-.grade-matrix-table th {
-  padding: 16px 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--color-gold);
-  text-transform: uppercase;
-  border-bottom: 2px solid rgba(var(--primitive-gold-500-rgb), 0.3);
-}
-
-.grade-matrix-table td {
-  padding: 16px 20px;
-  vertical-align: middle;
-  border-bottom: 1px solid #F0ECE4;
-  font-size: 0.9375rem;
-  transition: background-color 0.2s ease;
-}
-
-.grade-row {
-  cursor: pointer;
-}
-
-.grade-row:hover td {
-  background-color: #F8F5EE;
-}
-
-.grade-row-selected td {
-  background-color: #F5EFE3;
-  border-bottom-color: #E2D7C3;
-}
-
-.grade-code-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.grade-code-text {
-  font-weight: 800;
-  font-size: 1.125rem;
-  color: var(--color-primary-dark);
-  background: var(--bg-surface-subtle);
-  border: 1px solid #D1C7B7;
-  padding: 4px 10px;
-  border-radius: 4px;
-}
-
-.grade-feature-pill {
+.tea-explorer-tab-count {
   font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-amber-deep);
-  background: #FEF3C7;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  white-space: nowrap;
+  opacity: 0.85;
 }
 
-.grade-full-name {
-  font-weight: 700;
-  color: var(--color-primary-dark);
+/* Visual Grade Cards Grid */
+.tea-explorer-grades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: clamp(16px, 2vw, 24px);
 }
 
-.grade-app-text {
-  color: #374151;
-  font-weight: 500;
-  line-height: 1.45;
-}
-
-.grade-pos-text {
-  color: #6B7280;
-  font-size: 0.875rem;
-}
-
-.grade-inquire-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--color-primary-green);
-  background-color: var(--bg-surface);
-  border: 1px solid var(--color-gold);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.grade-row:hover .grade-inquire-btn,
-.grade-inquire-btn-active {
-  background-color: var(--color-gold);
-  color: var(--color-primary-green);
-  border-color: var(--color-gold);
-  box-shadow: 0 2px 6px rgba(var(--primitive-gold-500-rgb), 0.25);
-}
-
-/* Mobile Stacked Cards Layout */
-.grade-matrix-mobile-cards {
-  display: none;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.grade-mobile-card {
+.tea-grade-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle-warm);
   border-radius: var(--radius-md);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
-.grade-mobile-card:hover,
-.grade-mobile-card-selected {
+.tea-grade-card:hover {
   border-color: var(--color-gold);
-  box-shadow: 0 6px 16px rgba(var(--primitive-green-900-rgb), 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(var(--primitive-green-900-rgb), 0.08);
+}
+
+.tea-grade-card-selected {
+  border-color: var(--color-gold) !important;
+  box-shadow: 0 0 0 2px var(--color-gold), 0 6px 18px rgba(var(--primitive-gold-500-rgb), 0.15) !important;
   background: #FFFDF9;
 }
 
-.grade-mobile-top {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #F0ECE4;
+.tea-grade-card-shortlisted {
+  border-color: var(--color-primary-green) !important;
 }
 
-.grade-mobile-field {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.grade-mobile-label {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #6B7280;
-}
-
-.grade-mobile-val {
-  font-size: 0.9375rem;
-  color: #1F2937;
-  line-height: 1.4;
-}
-
-.grade-mobile-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 16px;
-  margin-top: 6px;
-  background-color: var(--color-primary-green);
-  color: var(--text-inverse);
-  font-size: 0.875rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.grade-mobile-btn:hover {
-  background-color: #14533C;
-}
-
-/* Disclaimer Note */
-.grade-disclaimer-strip {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle-warm);
-  border-left: 3px solid var(--color-gold);
-  border-radius: 6px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-.grade-disclaimer-icon {
-  color: var(--color-warning-text);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.grade-disclaimer-text {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
-/* Custom Specification Banner */
-.grade-custom-box {
-  background: linear-gradient(135deg, var(--color-primary-green) 0%, #154734 100%);
-  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.3);
-  border-radius: var(--radius-md);
-  padding: clamp(1.5rem, 3vw, 2rem);
+.tea-grade-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-6);
-  color: var(--text-inverse);
-  box-shadow: 0 8px 24px -4px rgba(var(--primitive-green-900-rgb), 0.25);
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle-warm);
+  margin-bottom: 8px;
 }
 
-.grade-custom-left {
-  max-width: 680px;
-}
-
-.grade-custom-badge {
-  display: inline-flex;
+.tea-grade-card-code-wrap {
+  display: flex;
   align-items: center;
   gap: 6px;
-  color: #FBBF24;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
-.grade-custom-title {
-  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+.tea-grade-card-code {
   font-weight: 800;
-  color: var(--text-inverse);
+  font-size: 1.0625rem;
+  color: var(--color-primary-dark);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle-warm);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: -0.01em;
+}
+
+.tea-grade-card-cat {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tea-grade-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 0 0 2px 0;
+  line-height: 1.35;
+}
+
+.tea-grade-card-territory {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Representative Media Frame */
+.tea-grade-card-media {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--color-primary-dark);
+}
+
+.tea-grade-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tea-grade-card-img-label {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(var(--primitive-green-950-rgb), 0.85);
+  backdrop-filter: blur(4px);
+  color: rgba(var(--primitive-white-rgb), 0.9);
+  font-size: 0.625rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(var(--primitive-white-rgb), 0.15);
+}
+
+/* Specs Block */
+.tea-grade-card-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.8125rem;
   margin-bottom: 6px;
 }
 
-.grade-custom-copy {
-  font-size: 0.875rem;
-  color: rgba(var(--primitive-white-rgb), 0.85);
-  line-height: 1.5;
-  margin: 0;
+.tea-grade-card-spec-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 6px;
+  line-height: 1.35;
 }
 
-.grade-custom-action {
+.tea-grade-card-spec-label {
+  font-weight: 700;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.tea-grade-card-spec-val {
+  color: var(--text-main);
+  font-size: 0.8125rem;
+}
+
+.tea-grade-card-compliance {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 0.6875rem;
+  color: var(--color-primary-green);
+  font-weight: 600;
+  background: rgba(var(--primitive-green-900-rgb), 0.04);
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--primitive-green-900-rgb), 0.1);
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.tea-grade-card-compliance svg {
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
-.grade-custom-btn {
+/* Actions Row */
+.tea-grade-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle-warm);
+}
+
+.tea-grade-card-spec-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background-color: var(--color-gold);
-  color: var(--color-primary-green);
-  font-size: 0.875rem;
-  font-weight: 700;
+  gap: 4px;
+  padding: 7px 11px;
   border-radius: 6px;
-  border: none;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
-.grade-custom-btn:hover {
-  background-color: #E2BF4A;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(var(--primitive-gold-500-rgb), 0.35);
+.tea-grade-card-spec-btn:hover {
+  background: var(--color-primary-green);
+  color: var(--text-inverse);
+  border-color: var(--color-primary-green);
+}
+
+.tea-grade-card-shortlist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 11px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle-warm);
+  color: var(--color-primary-green);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tea-grade-card-shortlist-btn:hover {
+  border-color: var(--color-primary-green);
+  background: rgba(var(--primitive-green-900-rgb), 0.04);
+}
+
+.tea-grade-card-shortlist-btn-active {
+  background: var(--color-primary-green) !important;
+  color: var(--text-inverse) !important;
+  border-color: var(--color-primary-green) !important;
+}
+
+.tea-grade-card-specify-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--color-gold);
+  color: var(--color-primary-green);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tea-grade-card-specify-btn:hover,
+.tea-grade-card-specify-btn-active {
+  background: var(--color-gold);
+  color: var(--color-primary-green);
+  box-shadow: 0 2px 6px rgba(var(--primitive-gold-500-rgb), 0.25);
+}
+
+.tea-grade-card-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background-color: rgba(var(--primitive-whatsapp-rgb), 0.12);
+  color: var(--color-whatsapp);
+  border: 1px solid rgba(var(--primitive-whatsapp-rgb), 0.3);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tea-grade-card-wa-btn:hover {
+  background-color: rgba(var(--primitive-whatsapp-rgb), 0.22);
+  transform: scale(1.05);
+}
+
+.grade-market-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.grade-market-tag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  background: var(--bg-surface-subtle);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  line-height: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   D. Interactive Technical Specification Drawer / Panel
+   -------------------------------------------------------------------------- */
+.tea-spec-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tea-spec-drawer {
+  width: 100%;
+  max-width: 580px;
+  height: 100%;
+  background: var(--bg-surface);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.tea-spec-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-subtle-warm);
+  background: var(--bg-surface);
+}
+
+.tea-spec-drawer-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tea-spec-drawer-status-pill {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary-green);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tea-spec-drawer-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.tea-spec-drawer-close-btn:hover {
+  background: var(--bg-surface-subtle);
+  color: var(--color-primary-dark);
+}
+
+.tea-spec-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(18px, 3vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tea-spec-drawer-hero {
+  border-bottom: 1px solid var(--border-subtle-warm);
+  padding-bottom: 16px;
+}
+
+.tea-spec-drawer-code-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.tea-spec-drawer-code {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle-warm);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.tea-spec-drawer-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.tea-spec-drawer-territory {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.tea-spec-drawer-image-frame {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle-warm);
+  background: var(--color-primary-dark);
+}
+
+.tea-spec-drawer-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tea-spec-drawer-img-caption {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  background: var(--bg-surface-subtle);
+  line-height: 1.4;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.tea-spec-drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tea-spec-drawer-section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 6px 0;
+}
+
+.tea-spec-drawer-section-title svg {
+  color: var(--color-gold);
+}
+
+.tea-spec-drawer-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tea-spec-drawer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tea-spec-drawer-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tea-spec-drawer-val {
+  font-size: 0.875rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.tea-spec-drawer-desc {
+  font-size: 0.875rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.tea-spec-drawer-note-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #FFFDF9;
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.tea-spec-drawer-note-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tea-spec-drawer-note-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.tea-spec-drawer-compliance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.tea-spec-drawer-compliance-list li {
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.tea-spec-drawer-compliance-list li::before {
+  content: "•";
+  color: var(--color-gold);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.tea-spec-drawer-compliance-list strong {
+  color: var(--color-primary-dark);
+}
+
+.tea-spec-drawer-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle-warm);
+  background: var(--bg-surface-subtle);
+}
+
+.tea-spec-drawer-footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tea-spec-drawer-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  background: var(--color-primary-green);
+  color: var(--text-inverse);
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tea-spec-drawer-primary-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.tea-spec-drawer-footer-row {
+  display: flex;
+  gap: 8px;
+}
+
+.tea-spec-drawer-shortlist-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--color-gold);
+  color: var(--color-primary-green);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tea-spec-drawer-shortlist-btn:hover,
+.tea-spec-drawer-shortlist-btn-active {
+  background: var(--color-gold);
+  color: var(--color-primary-green);
+}
+
+.tea-spec-drawer-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(var(--primitive-whatsapp-rgb), 0.12);
+  color: var(--color-success-text);
+  border: 1px solid rgba(var(--primitive-whatsapp-rgb), 0.3);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.tea-spec-drawer-wa-btn:hover {
+  background: rgba(var(--primitive-whatsapp-rgb), 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   E. Buyer Sample Shortlist Floating Bar
+   -------------------------------------------------------------------------- */
+.sample-shortlist-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: 950;
+  pointer-events: none;
+  padding: 0 16px;
+}
+
+.sample-shortlist-container {
+  pointer-events: auto;
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--color-primary-dark);
+  color: var(--text-inverse);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sample-shortlist-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sample-shortlist-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sample-shortlist-count {
+  background: var(--color-gold);
+  color: var(--color-primary-green);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 9999px;
+}
+
+.sample-shortlist-hint {
+  font-size: 0.6875rem;
+  color: rgba(var(--primitive-white-rgb), 0.65);
+  margin: 0;
+}
+
+.sample-shortlist-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 68px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sample-shortlist-pill {
+  background: rgba(var(--primitive-white-rgb), 0.1);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.4);
+  color: var(--color-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sample-shortlist-pill-remove {
+  background: transparent;
+  border: none;
+  color: rgba(var(--primitive-white-rgb), 0.6);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.sample-shortlist-pill-remove:hover {
+  color: var(--text-inverse);
+}
+
+.sample-shortlist-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sample-shortlist-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(var(--primitive-white-rgb), 0.2);
+  border-radius: 6px;
+  color: rgba(var(--primitive-white-rgb), 0.75);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sample-shortlist-clear-btn:hover {
+  border-color: rgba(var(--primitive-white-rgb), 0.5);
+  color: var(--text-inverse);
+}
+
+.sample-shortlist-proceed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: var(--color-gold);
+  color: var(--color-primary-green);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sample-shortlist-proceed-btn:hover {
+  background: #E2BF4A;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout Rules for Section 04
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .tea-explorer-cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .grade-matrix-table-wrap {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: var(--space-4);
+  .tea-explorer-cat-grid {
+    grid-template-columns: 1fr;
   }
-  .grade-custom-box {
+  .tea-explorer-metrics {
+    border-radius: var(--radius-lg);
     flex-direction: column;
+    gap: 8px;
     align-items: flex-start;
-    padding: var(--space-5) var(--space-4);
-  }
-  .grade-custom-btn {
     width: 100%;
-    justify-content: center;
-    margin-top: var(--space-3);
+  }
+  .tea-explorer-metric-sep {
+    display: none;
+  }
+  .tea-explorer-tablist {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+  .tea-explorer-tab-btn {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 7px 10px;
+    font-size: 0.75rem;
+  }
+  .tea-explorer-grades-grid {
+    grid-template-columns: 1fr;
+  }
+  .tea-spec-drawer {
+    max-width: 100%;
+    height: 92vh;
+    border-radius: 16px 16px 0 0;
+    margin-top: auto;
+  }
+  .sample-shortlist-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sample-shortlist-actions {
+    justify-content: flex-end;
   }
 }
 
@@ -6483,76 +7210,6 @@ p, span, h1, h2, h3, h4, h5, h6, a, label {
   font-weight: 700;
 }
 
-/* --- 2. Authoritative Grade Specification Table --- */
-.grade-table-scroll-hint {
-  display: none;
-  font-size: 0.75rem;
-  color: var(--color-accent-gold);
-  text-align: center;
-  margin-bottom: var(--space-3);
-  font-weight: 600;
-  letter-spacing: 0.03em;
-}
-
-@media (max-width: 900px) {
-  .grade-table-scroll-hint {
-    display: block;
-  }
-}
-
-.grade-matrix-table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  margin-bottom: var(--space-6);
-}
-
-.grade-matrix-table {
-  width: 100%;
-  min-width: 780px;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.grade-matrix-table th {
-  background-color: var(--color-primary-dark);
-  color: var(--text-inverse);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 14px 16px;
-  border-bottom: 2px solid var(--color-accent-gold);
-}
-
-.grade-matrix-table td {
-  padding: 16px;
-  border-bottom: 1px solid var(--border-subtle);
-  vertical-align: middle;
-  font-size: 0.875rem;
-}
-
-.grade-row:nth-child(even) {
-  background-color: #faf9f6;
-}
-
-.grade-row:hover {
-  background-color: rgba(var(--primitive-green-900-rgb), 0.04);
-}
-
-.grade-row-selected {
-  background-color: rgba(var(--primitive-gold-500-rgb), 0.08) !important;
-}
-
-.grade-profile-detail {
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  margin-top: 3px;
-  line-height: var(--leading-normal);
-}
 
 /* --- 3. Private Label Streamlined Capabilities --- */
 .private-label-capabilities-box {

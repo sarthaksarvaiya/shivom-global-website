@@ -26,8 +26,8 @@
 | `P4-01` | Backend / API (`sec-08`) | **P0** | Supabase Dependency Single-Point-of-Failure: Missing Env Vars Return Hard 500 | `api/buyer-requirements.ts` |
 | `P4-02` | Backend / Form (`sec-08`) | **P0** | Absence of Automated Transactional Buyer Acknowledgment Email | `api/buyer-requirements.ts`, Resend API |
 | `P4-03` | Form UI (`sec-08`) | **P1** | Form A Contextual Blindness: Pre-Selected Grade Hidden in Quick Form | `src/features/buyer-requirement/components/BuyerRequirementForm.tsx` |
-| `P4-04` | Catalog & Specs (`sec-03`/`04`)| **P1** | Suboptimal Prominence for UAE Karak Chai Market (CTC Dust/PD/D1) | `TeaCategoriesSection.tsx`, `GradeSpecificationTable.tsx` |
-| `P4-05` | Grade Matrix (`sec-04`) | **P1** | Complete Absence of Darjeeling & Green Tea Grades in Reference Table | `src/features/tea-catalog/components/GradeSpecificationTable.tsx` |
+| `P4-04` | Catalog & Specs (`sec-03`/`04`)| **P1** | Suboptimal Prominence for UAE Karak Chai Market (CTC Dust/PD/D1) | `TeaCategoriesSection.tsx`, `GradeSpecificationTable.tsx` (SEC04 **Resolved**) |
+| `P4-05` | Grade Matrix (`sec-04`) | **P1** | Complete Absence of Darjeeling & Green Tea Grades in Reference Table | `src/features/tea-catalog/components/GradeSpecificationTable.tsx` (**Resolved**) |
 | `P4-06` | Commercial Positioning (`sec-02`/`07`)| **P1** | Unleveraged Logistics Speed Advantage: Mundra/Kandla to Jebel Ali (3–5 Days) | `HeroSection.tsx`, `WhyShivomGlobal.tsx`, `SiteFooter.tsx` |
 | `P4-07` | Packaging (`sec-05`) | **P1** | Complete Absence of Baseline MOQs & UAE Food Regulatory Standards | `src/features/private-label/components/PrivateLabelSection.tsx` |
 | `P4-08` | Export Process (`sec-06`) | **P1** | Operational Ambiguity: Missing Sampling Turnaround SLAs & Payment Terms | `src/features/export-process/components/HowItWorksSection.tsx` |
@@ -118,39 +118,27 @@
 
 ---
 
-### Finding P4-04: Suboptimal Prominence for UAE Karak Chai Market (CTC Dust/PD/D1) (P1 — High)
+### Finding P4-04: Suboptimal Prominence for UAE Karak Chai Market (CTC Dust/PD/D1) (P1 — High) [RESOLVED]
 
-- **Scope**: Catalog & Specifications (`sec-03`, `sec-04`).
-- **Evidence**:
-  - In SEC03 (TeaCategoriesSection), Assam CTC displays 4 grade buttons: `BOP`, `BOPSM`, `BP`, `PF`.
-  - The two highest-volume commercial tea grades in the Arabian Gulf — **Pekoe Dust (PD)** and **Dust 1 (D1)** — are not available as primary selection buttons in SEC03.
-  - In SEC04, PD and Dust/D1 are listed, but their description focuses on generic catering rather than the specific culinary chemistry required for Karak chai (heavy color extraction within 60s, tannin density, milk emulsification).
-- **Buyer Impact**: Importers and blenders supplying cafeteria chains in Dubai and Sharjah may conclude that SHIVOM GLOBAL focuses on loose leaf rather than the high-yield dust required for Karak brewing.
-- **Business Impact**: Loss of the largest recurring bulk volume trade in the UAE market.
-- **Recommended Action**:
-  1. Highlight Karak chai compatibility in the Assam CTC organoleptic profile copy.
-  2. In Section 04, expand the typical application note for PD and Dust/D1 to mention "Karak Chai Blends, High Color Yield, Instant Extraction with Evaporated Milk".
-  3. In Form B dropdowns, ensure `PD (Pekoe Dust)` and `Dust / D1` are explicitly labeled with "(Karak Chai)".
-- **Affected Files**: `src/features/tea-catalog/components/GradeSpecificationTable.tsx`, `src/features/buyer-requirement/components/BuyerRequirementForm.tsx`.
-- **Verification Method**: Browser review of SEC04 descriptions and Form B grade selector options.
+- **Status**: **RESOLVED** (2026-11-04)
+- **Remediation**:
+  1. Highlighted Karak chai suitability across Pekoe Dust (`PD`) and Dust 1 (`Dust / D1`) in `commercialGradesData.ts` with prominent `[Karak Chai]` tags and dedicated high-extraction profiles.
+  2. Integrated dedicated visual cards and technical specification drawers in `TeaOriginGradeExplorer.tsx` detailing instant liquor yield with evaporated milk.
+  3. Added explicit Karak Chai designations in `BuyerRequirementForm.tsx` dropdown options.
+- **Affected Files**: `src/features/tea-catalog/components/TeaOriginGradeExplorer.tsx`, `src/features/tea-catalog/data/commercialGradesData.ts`, `src/features/buyer-requirement/components/BuyerRequirementForm.tsx`.
+- **Verification Method**: Browser inspection and responsive visual capture on desktop and mobile viewports.
 
 ---
 
-### Finding P4-05: Complete Absence of Darjeeling & Green Tea Grades in Reference Table (P1 — High)
+### Finding P4-05: Complete Absence of Darjeeling & Green Tea Grades in Reference Table (P1 — High) [RESOLVED]
 
-- **Scope**: Specification Reference Table (`src/features/tea-catalog/components/GradeSpecificationTable.tsx`).
-- **Evidence**:
-  - SEC04's filter bar contains only: `All Sourcing Grades (8)`, `Assam CTC Granular (6)`, `Orthodox Whole Leaf (2)`.
-  - Total rows = 8.
-  - **Darjeeling and Green Tea are 100% absent**, despite being featured as 2 of the 4 core categories in SEC03.
-- **Buyer Impact**: A specialty buyer who clicks "Explore All Tea Grades & Specifications" from Darjeeling in SEC03 arrives at a table that contains zero Darjeeling grades!
-- **Business Impact**: Damages technical credibility; gives the impression of an unfinished catalog.
-- **Recommended Action**:
-  - Add Darjeeling grades: `FTGFOP1` (Finest Tippy Golden Flowery Orange Pekoe First Flush), `TGFOP` (Tippy Golden Flowery Orange Pekoe Autumn/Summer).
-  - Add Indian Green Tea grades: `Traditional Pan-Fired Whole Leaf`, `Fine Cut / Fannings (Green Tea Bag Sourcing)`.
-  - Update the tab filter bar to include `Darjeeling` and `Green Tea` or maintain an unified multi-origin matrix.
-- **Affected Files**: `src/features/tea-catalog/components/GradeSpecificationTable.tsx`.
-- **Verification Method**: Inspect table under "ALL" filter; confirm Darjeeling and Green Tea rows render with proper descriptions and action buttons.
+- **Status**: **RESOLVED** (2026-11-04)
+- **Remediation**:
+  1. Expanded commercial grade catalog to 14 entries in `commercialGradesData.ts`, incorporating Darjeeling First Flush (`FTGFOP1 (FF)`), Darjeeling Second Flush (`TGFOP1 (SF)`), Indian Green Tea Whole Leaf (`Green Whole Leaf`), and Green Tea Bag Sieve Cut (`Green Fannings`).
+  2. Implemented 4-category visual explorer cards with authentic photography and WAI-ARIA tab navigation filtering across all 4 manufacturing classifications.
+  3. Linked Darjeeling entries with statutory GI-compliance and Tea Board registration provenance disclosures.
+- **Affected Files**: `src/features/tea-catalog/components/TeaOriginGradeExplorer.tsx`, `src/features/tea-catalog/data/commercialGradesData.ts`, `src/features/tea-catalog/types/gradeMatrix.ts`.
+- **Verification Method**: Browser inspection of category tabs, drawer specifications, and Form B dropdown pre-population across all 14 grades.
 
 ---
 
