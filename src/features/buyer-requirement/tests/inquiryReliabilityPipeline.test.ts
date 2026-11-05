@@ -347,20 +347,22 @@ describe('Phase 4A.2 — Inquiry Reliability & Idempotency Pipeline', () => {
       const originalFetch = globalThis.fetch;
       const existingRef = 'SG-REQ-20261104-ORIGINAL';
 
-      // Mock PostgREST returning existing row on conflict
-      globalThis.fetch = async (input: RequestInfo | URL) => {
+      // Mock PostgREST: conflict-ignore insert returns [] on conflict, subsequent GET retrieves original
+      globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
         const url = input.toString();
+        const method = init?.method || 'GET';
         if (url.includes('/rest/v1/buyer_requirements')) {
-          return new Response(
-            JSON.stringify([
-              {
-                id: '11111111-2222-3333-4444-555555555555',
-                reference_id: existingRef,
-                created_at: '2026-11-04T00:00:00Z',
-              },
-            ]),
-            { status: 200, headers: { 'Content-Type': 'application/json' } }
-          );
+          if (method === 'POST') {
+            // PostgREST with resolution=ignore-duplicates returns [] when idempotency_key conflicts
+            return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (method === 'GET') {
+            // Lookup retrieves original un-modified row
+            return new Response(
+              JSON.stringify([{ reference_id: existingRef }]),
+              { status: 200, headers: { 'Content-Type': 'application/json' } }
+            );
+          }
         }
         return new Response('{}', { status: 200 });
       };
@@ -407,235 +409,46 @@ describe('Phase 4A.2 — Inquiry Reliability & Idempotency Pipeline', () => {
         process.env.SUPABASE_SERVICE_ROLE_KEY = prevKey;
       }
     });
-  });
 
-  describe('4. Notification Retry Worker Contract Verification', () => {
-    const loadCronWorker = async () => {
-      const mod = await import('../../../../api/cron/retry-failed-inquiries.ts');
-      return mod.default;
-    };
-
-    it('should reject request with HTTP 500 when CRON_SECRET is missing in production', async () => {
-      const cronWorker = await loadCronWorker();
-      const prevEnv = process.env.NODE_ENV;
-      const prevSecret = process.env.CRON_SECRET;
-      process.env.NODE_ENV = 'production';
-      delete process.env.CRON_SECRET;
-
+    it('should create new record and return status ACCEPTED when idempotency key is novel', async () => {
+      const handler = await loadHandler();
       let capturedStatus = 0;
       let capturedPayload: any = null;
 
-      const mockReq: any = {
-        method: 'POST',
-        headers: {},
-      };
-
-      const mockRes: any = {
-        setHeader: () => {},
-        end: (bodyStr: string) => {
-          capturedPayload = JSON.parse(bodyStr);
-        },
-      };
-      Object.defineProperty(mockRes, 'statusCode', {
-        set(val: number) {
-          capturedStatus = val;
-        },
-        get() {
-          return capturedStatus;
-        },
-      });
-
-      try {
-        await cronWorker(mockReq, mockRes);
-        assert.equal(capturedStatus, 500);
-        assert.equal(capturedPayload.success, false);
-        assert.ok(capturedPayload.error.includes('CRON_SECRET must be configured in production'));
-      } finally {
-        process.env.NODE_ENV = prevEnv;
-        if (prevSecret !== undefined) process.env.CRON_SECRET = prevSecret;
-      }
-    });
-
-    it('should reject unauthorized requests when CRON_SECRET is configured with invalid token', async () => {
-      const cronWorker = await loadCronWorker();
-      const prevSecret = process.env.CRON_SECRET;
-      process.env.CRON_SECRET = 'super-secret-token-123';
-
-      let capturedStatus = 0;
-      let capturedPayload: any = null;
-
-      const mockReq: any = {
-        method: 'POST',
-        headers: {
-          authorization: 'Bearer wrong-token',
-        },
-      };
-
-      const mockRes: any = {
-        setHeader: () => {},
-        end: (bodyStr: string) => {
-          capturedPayload = JSON.parse(bodyStr);
-        },
-      };
-      Object.defineProperty(mockRes, 'statusCode', {
-        set(val: number) {
-          capturedStatus = val;
-        },
-        get() {
-          return capturedStatus;
-        },
-      });
-
-      try {
-        await cronWorker(mockReq, mockRes);
-        assert.equal(capturedStatus, 401);
-        assert.equal(capturedPayload.success, false);
-      } finally {
-        if (prevSecret !== undefined) {
-          process.env.CRON_SECRET = prevSecret;
-        } else {
-          delete process.env.CRON_SECRET;
-        }
-      }
-    });
-
-    it('should reject request when bearer token is completely missing in production', async () => {
-      const cronWorker = await loadCronWorker();
-      const prevEnv = process.env.NODE_ENV;
-      const prevSecret = process.env.CRON_SECRET;
-      process.env.NODE_ENV = 'production';
-      process.env.CRON_SECRET = 'production-secret-token-456';
-
-      let capturedStatus = 0;
-      let capturedPayload: any = null;
-
-      const mockReq: any = {
-        method: 'POST',
-        headers: {},
-      };
-
-      const mockRes: any = {
-        setHeader: () => {},
-        end: (bodyStr: string) => {
-          capturedPayload = JSON.parse(bodyStr);
-        },
-      };
-      Object.defineProperty(mockRes, 'statusCode', {
-        set(val: number) {
-          capturedStatus = val;
-        },
-        get() {
-          return capturedStatus;
-        },
-      });
-
-      try {
-        await cronWorker(mockReq, mockRes);
-        assert.equal(capturedStatus, 401);
-        assert.equal(capturedPayload.success, false);
-        assert.ok(capturedPayload.error.includes('Unauthorized'));
-      } finally {
-        process.env.NODE_ENV = prevEnv;
-        if (prevSecret !== undefined) {
-          process.env.CRON_SECRET = prevSecret;
-        } else {
-          delete process.env.CRON_SECRET;
-        }
-      }
-    });
-
-    it('should authenticate successfully when valid CRON_SECRET token is provided in production', async () => {
-      const cronWorker = await loadCronWorker();
-      const prevEnv = process.env.NODE_ENV;
-      const prevSecret = process.env.CRON_SECRET;
-      const prevUrl = process.env.SUPABASE_URL;
-      const prevKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-      process.env.NODE_ENV = 'production';
-      process.env.CRON_SECRET = 'valid-production-secret-789';
-      process.env.SUPABASE_URL = 'https://mock.supabase.co';
-      process.env.SUPABASE_SERVICE_ROLE_KEY = 'mock-service-role-key';
-
-      const originalFetch = globalThis.fetch;
-      globalThis.fetch = async () => {
-        return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } });
-      };
-
-      let capturedStatus = 0;
-      let capturedPayload: any = null;
-
-      const mockReq: any = {
-        method: 'POST',
-        headers: {
-          authorization: 'Bearer valid-production-secret-789',
-        },
-      };
-
-      const mockRes: any = {
-        setHeader: () => {},
-        end: (bodyStr: string) => {
-          capturedPayload = JSON.parse(bodyStr);
-        },
-      };
-      Object.defineProperty(mockRes, 'statusCode', {
-        set(val: number) {
-          capturedStatus = val;
-        },
-        get() {
-          return capturedStatus;
-        },
-      });
-
-      try {
-        await cronWorker(mockReq, mockRes);
-        assert.equal(capturedStatus, 200);
-        assert.equal(capturedPayload.success, true);
-      } finally {
-        globalThis.fetch = originalFetch;
-        process.env.NODE_ENV = prevEnv;
-        if (prevSecret !== undefined) process.env.CRON_SECRET = prevSecret;
-        else delete process.env.CRON_SECRET;
-        process.env.SUPABASE_URL = prevUrl;
-        process.env.SUPABASE_SERVICE_ROLE_KEY = prevKey;
-      }
-    });
-
-    it('should claim batch and skip BUYER_ACKNOWLEDGMENT events per Phase 4A.2 boundary rule', async () => {
-      const cronWorker = await loadCronWorker();
       const prevUrl = process.env.SUPABASE_URL;
       const prevKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
       process.env.SUPABASE_URL = 'https://mock.supabase.co';
       process.env.SUPABASE_SERVICE_ROLE_KEY = 'mock-service-role-key';
 
       const originalFetch = globalThis.fetch;
-      const claimedJobs = [
-        {
-          id: 'job-1',
-          inquiry_id: 'inq-1',
-          reference_id: 'SG-REQ-20261104-JOB1',
-          notification_type: 'BUYER_ACKNOWLEDGMENT', // Should be skipped!
-          recipient_email: 'buyer@example.com',
-          status: 'PROCESSING',
-          attempt_count: 1,
-          max_attempts: 5,
-          payload: {},
-        },
-      ];
+      const expectedRef = 'SG-REQ-20261105-NEWREF';
 
-      globalThis.fetch = async (input: RequestInfo | URL) => {
+      // Mock PostgREST: insert succeeds and returns representation with new reference_id
+      globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
         const url = input.toString();
-        if (url.includes('claim_inquiry_outbox_jobs')) {
-          return new Response(JSON.stringify(claimedJobs), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          });
+        const method = init?.method || 'GET';
+        if (url.includes('/rest/v1/buyer_requirements') && method === 'POST') {
+          return new Response(
+            JSON.stringify([{ reference_id: expectedRef }]),
+            { status: 201, headers: { 'Content-Type': 'application/json' } }
+          );
         }
         return new Response('{}', { status: 200 });
       };
 
-      let capturedStatus = 0;
-      let capturedPayload: any = null;
+      const mockReq: any = {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'content-length': '100',
+        },
+        body: {
+          ...SAMPLE_DATA,
+          idempotencyKey: 'b2c3d4e5-f6a7-4b2c-9d3e-4f5a6b7c8d9e',
+        },
+        socket: { remoteAddress: '127.0.0.1' },
+      };
 
-      const mockReq: any = { method: 'POST', headers: {} };
       const mockRes: any = {
         setHeader: () => {},
         end: (bodyStr: string) => {
@@ -652,12 +465,13 @@ describe('Phase 4A.2 — Inquiry Reliability & Idempotency Pipeline', () => {
       });
 
       try {
-        await cronWorker(mockReq, mockRes);
+        await handler(mockReq, mockRes);
 
         assert.equal(capturedStatus, 200);
         assert.equal(capturedPayload.success, true);
-        assert.equal(capturedPayload.skipped, 1);
-        assert.equal(capturedPayload.succeeded, 0);
+        assert.equal(capturedPayload.status, 'ACCEPTED');
+        assert.equal(capturedPayload.duplicate, false);
+        assert.equal(capturedPayload.referenceId, expectedRef);
       } finally {
         globalThis.fetch = originalFetch;
         process.env.SUPABASE_URL = prevUrl;
@@ -665,72 +479,46 @@ describe('Phase 4A.2 — Inquiry Reliability & Idempotency Pipeline', () => {
       }
     });
 
-    it('should claim TRADE_DESK_ALERT, dispatch via Resend, and mark status SENT on success', async () => {
-      const cronWorker = await loadCronWorker();
-      const prevUrl = process.env.SUPABASE_URL;
-      const prevKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-      const prevApiKey = process.env.EMAIL_API_KEY;
-      process.env.SUPABASE_URL = 'https://mock.supabase.co';
-      process.env.SUPABASE_SERVICE_ROLE_KEY = 'mock-service-role-key';
-      process.env.EMAIL_API_KEY = 'mock-resend-api-key';
-
-      const originalFetch = globalThis.fetch;
-      const patchedStatuses: string[] = [];
-
-      const claimedJobs = [
-        {
-          id: 'job-trade-1',
-          inquiry_id: 'inq-trade-1',
-          reference_id: 'SG-REQ-20261104-TRADE',
-          notification_type: 'TRADE_DESK_ALERT',
-          recipient_email: 'shivomglobal1010@gmail.com',
-          status: 'PROCESSING',
-          attempt_count: 1,
-          max_attempts: 5,
-          payload: {
-            reference_id: 'SG-REQ-20261104-TRADE',
-            company_name: 'Gulf Beverages LLC',
-            contact_name: 'Rashid Khan',
-            corporate_email: 'rashid@gulfbev.ae',
-            phone: '+971 50 999 8888',
-            buyer_country: 'United Arab Emirates',
-            requirement_type: 'Assam CTC Black Tea',
-            grade: 'BP',
-            quantity: '1x20ft FCL',
-            packaging_requirements: 'Standard Bulk Export Sacks',
-            target_market: 'Jebel Ali',
-          },
-        },
-      ];
-
-      globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
-        const url = input.toString();
-        if (url.includes('claim_inquiry_outbox_jobs')) {
-          return new Response(JSON.stringify(claimedJobs), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          });
-        }
-        if (url.includes('api.resend.com/emails')) {
-          return new Response(JSON.stringify({ id: 'resend-msg-123' }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          });
-        }
-        if (url.includes('/rest/v1/inquiry_outbox')) {
-          if (init?.method === 'PATCH') {
-            const body = JSON.parse(init.body as string);
-            if (body.status) patchedStatuses.push(body.status);
-          }
-          return new Response('[]', { status: 200 });
-        }
-        return new Response('[]', { status: 200 });
-      };
-
+    it('should return HTTP 503 SERVICE_UNAVAILABLE when duplicate is detected but subsequent lookup fails', async () => {
+      const handler = await loadHandler();
       let capturedStatus = 0;
       let capturedPayload: any = null;
 
-      const mockReq: any = { method: 'POST', headers: {} };
+      const prevUrl = process.env.SUPABASE_URL;
+      const prevKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+      process.env.SUPABASE_URL = 'https://mock.supabase.co';
+      process.env.SUPABASE_SERVICE_ROLE_KEY = 'mock-service-role-key';
+
+      const originalFetch = globalThis.fetch;
+
+      // Mock PostgREST: insert returns [] (conflict), but lookup GET fails with 500
+      globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+        const url = input.toString();
+        const method = init?.method || 'GET';
+        if (url.includes('/rest/v1/buyer_requirements')) {
+          if (method === 'POST') {
+            return new Response('[]', { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+          if (method === 'GET') {
+            return new Response('Database timeout during lookup', { status: 500 });
+          }
+        }
+        return new Response('{}', { status: 200 });
+      };
+
+      const mockReq: any = {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'content-length': '100',
+        },
+        body: {
+          ...SAMPLE_DATA,
+          idempotencyKey: 'c3d4e5f6-a7b8-4c3d-ae4f-5a6b7c8d9e0f',
+        },
+        socket: { remoteAddress: '127.0.0.1' },
+      };
+
       const mockRes: any = {
         setHeader: () => {},
         end: (bodyStr: string) => {
@@ -747,81 +535,41 @@ describe('Phase 4A.2 — Inquiry Reliability & Idempotency Pipeline', () => {
       });
 
       try {
-        await cronWorker(mockReq, mockRes);
+        await handler(mockReq, mockRes);
 
-        assert.equal(capturedStatus, 200);
-        assert.equal(capturedPayload.success, true);
-        assert.equal(capturedPayload.succeeded, 1);
-        assert.ok(patchedStatuses.includes('SENT'));
+        assert.equal(capturedStatus, 503);
+        assert.equal(capturedPayload.success, false);
+        assert.equal(capturedPayload.status, 'SERVICE_UNAVAILABLE');
       } finally {
         globalThis.fetch = originalFetch;
         process.env.SUPABASE_URL = prevUrl;
         process.env.SUPABASE_SERVICE_ROLE_KEY = prevKey;
-        process.env.EMAIL_API_KEY = prevApiKey;
       }
     });
   });
 
-  describe('5. Database Migration Static Verification', () => {
-    const migrationPath = path.resolve(
-      process.cwd(),
-      'supabase/migrations/20261104000000_inquiry_reliability_hardening.sql'
-    );
+  describe('4. Buyer Requirements Schema Static Verification', () => {
+    it('should verify the primary buyer_requirements table definition exists', () => {
+      const primaryMigrationPath = path.resolve(
+        process.cwd(),
+        'supabase/migrations/20261021000000_buyer_requirements.sql'
+      );
+      const sql = fs.readFileSync(primaryMigrationPath, 'utf-8');
+      assert.ok(sql.includes('CREATE TABLE IF NOT EXISTS public.buyer_requirements'));
+      assert.ok(sql.includes('reference_id TEXT NOT NULL UNIQUE'));
+      assert.ok(sql.includes('ALTER TABLE public.buyer_requirements ENABLE ROW LEVEL SECURITY'));
+      assert.ok(sql.includes('GRANT ALL ON public.buyer_requirements TO service_role'));
+    });
 
-    it('should contain the idempotency_key column and unique index', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
+    it('should verify the buyer_requirements idempotency key unique constraint', () => {
+      const hardeningMigrationPath = path.resolve(
+        process.cwd(),
+        'supabase/migrations/20261104000000_inquiry_reliability_hardening.sql'
+      );
+      const sql = fs.readFileSync(hardeningMigrationPath, 'utf-8');
       assert.ok(sql.includes('ADD COLUMN IF NOT EXISTS idempotency_key TEXT;'));
       assert.ok(sql.includes('idx_buyer_requirements_idempotency_key'));
       assert.ok(sql.includes('CREATE UNIQUE INDEX IF NOT EXISTS'));
-    });
-
-    it('should define public.inquiry_outbox with all required fields', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
-      assert.ok(sql.includes('CREATE TABLE IF NOT EXISTS public.inquiry_outbox'));
-      assert.ok(sql.includes('notification_type TEXT NOT NULL CHECK'));
-      assert.ok(sql.includes('TRADE_DESK_ALERT'));
-      assert.ok(sql.includes('BUYER_ACKNOWLEDGMENT'));
-      assert.ok(sql.includes('status TEXT NOT NULL DEFAULT \'PENDING\''));
-      assert.ok(sql.includes('locked_at TIMESTAMPTZ'));
-      assert.ok(sql.includes('locked_by TEXT'));
-      assert.ok(sql.includes('lease_expires_at TIMESTAMPTZ'));
-      assert.ok(sql.includes('attempt_count INTEGER'));
-      assert.ok(sql.includes('max_attempts INTEGER'));
-      assert.ok(sql.includes('uq_inquiry_outbox_event UNIQUE (inquiry_id, notification_type)'));
-    });
-
-    it('should define the atomic AFTER INSERT trigger for outbox event creation', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
-      assert.ok(sql.includes('CREATE OR REPLACE FUNCTION public.trg_enqueue_inquiry_outbox'));
-      assert.ok(sql.includes('AFTER INSERT ON public.buyer_requirements'));
-      assert.ok(sql.includes('ON CONFLICT (inquiry_id, notification_type) DO NOTHING'));
-    });
-
-    it('should define the claim_inquiry_outbox_jobs function with FOR UPDATE SKIP LOCKED', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
-      assert.ok(sql.includes('CREATE OR REPLACE FUNCTION public.claim_inquiry_outbox_jobs'));
-      assert.ok(sql.includes('FOR UPDATE SKIP LOCKED'));
-      assert.ok(sql.includes('p_batch_size INTEGER'));
-      assert.ok(sql.includes('p_lease_seconds INTEGER'));
-    });
-
-    it('should harden SECURITY DEFINER functions with explicit search_path and schema qualification', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
-      // Verify SET search_path = '' on both security definer functions
-      assert.ok(sql.includes("CREATE OR REPLACE FUNCTION public.trg_enqueue_inquiry_outbox()\nRETURNS TRIGGER\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = ''"));
-      assert.ok(sql.includes("CREATE OR REPLACE FUNCTION public.claim_inquiry_outbox_jobs(\n  p_batch_size INTEGER DEFAULT 10,\n  p_worker_id TEXT DEFAULT 'worker',\n  p_lease_seconds INTEGER DEFAULT 180\n)\nRETURNS SETOF public.inquiry_outbox\nLANGUAGE plpgsql\nSECURITY DEFINER\nSET search_path = ''"));
-      // Verify schema qualification
-      assert.ok(sql.includes('pg_catalog.current_setting'));
-      assert.ok(sql.includes('pg_catalog.jsonb_build_object'));
-      assert.ok(sql.includes('pg_catalog.timezone'));
-      assert.ok(sql.includes('pg_catalog.now()'));
-    });
-
-    it('should enforce strict Row-Level Security and service_role grants', () => {
-      const sql = fs.readFileSync(migrationPath, 'utf-8');
-      assert.ok(sql.includes('ALTER TABLE public.inquiry_outbox ENABLE ROW LEVEL SECURITY'));
-      assert.ok(sql.includes('REVOKE ALL ON public.inquiry_outbox FROM anon, authenticated'));
-      assert.ok(sql.includes('GRANT ALL ON public.inquiry_outbox TO service_role'));
     });
   });
 });

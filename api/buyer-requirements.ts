@@ -4,8 +4,8 @@ import crypto from 'crypto';
 /**
  * SHIVOM GLOBAL — Commercial Buyer Requirement Submission Endpoint
  * Runtime: Vercel Serverless Function (Node.js) / Local Dev Middleware
- * Pipeline: Validate -> Sanitize -> DB Insert (Supabase) -> Email Notification -> Controlled Response
- * Policy: DEC-WEBSITE-02 (Option 4: Dual Pipeline Persistence)
+ * Pipeline: Validate -> Sanitize -> DB Insert (Supabase) -> Controlled Response
+ * System of Record: Supabase Database (public.buyer_requirements)
  */
 
 interface RawBuyerPayload {
@@ -44,9 +44,9 @@ interface ValidationErrors {
   [key: string]: string;
 }
 
-// Allowed Origins for CORS protection
+// Allowed Origins for CORS protection (strictly scoped to project domains)
 const ALLOWED_ORIGIN_PATTERNS = [
-  /^https:\/\/.*\.vercel\.app$/,
+  /^https:\/\/shivom-global-website(-[a-z0-9-]+)?\.vercel\.app$/,
   /^https:\/\/shivomglobal\.com$/,
   /^https:\/\/www\.shivomglobal\.com$/,
   /^http:\/\/localhost(:\d+)?$/,
@@ -67,7 +67,6 @@ const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const DB_TIMEOUT_MS = 6000;
-const EMAIL_TIMEOUT_MS = 4000;
 
 /**
  * Sanitize and strip unsafe control characters
@@ -225,139 +224,6 @@ function isRateLimited(ip: string): boolean {
 }
 
 /**
- * Dispatch transactional email to Trade Desk
- */
-async function sendTradeDeskEmail(
-  referenceId: string,
-  reqData: SanitizedBuyerRequirement,
-  submittedAtIso: string
-): Promise<{ success: boolean; error?: string }> {
-  const apiKey = process.env.EMAIL_API_KEY?.trim();
-  const emailTo = process.env.EMAIL_TO?.trim() || 'shivomglobal1010@gmail.com';
-  const emailFrom = process.env.EMAIL_FROM?.trim() || 'SHIVOM GLOBAL Inquiries <inquiries@shivomglobal.com>';
-
-  if (!apiKey) {
-    console.warn(
-      `[TRADE_DESK_EMAIL_NOTICE] EMAIL_API_KEY is not provisioned. Lead ${referenceId} is safely stored in Supabase.`
-    );
-    return { success: false, error: 'EMAIL_API_KEY not configured' };
-  }
-
-  const subject = `[SHIVOM GLOBAL] New Buyer Requirement — ${referenceId}`;
-
-  const plainText = `
-SHIVOM GLOBAL — COMMERCIAL BUYER REQUIREMENT INTAKE
-Reference ID: ${referenceId}
-Submitted At: ${submittedAtIso}
-
-BUYER CORPORATE PROFILE:
-----------------------------------------
-Company Name:   ${reqData.companyName}
-Contact Person: ${reqData.contactPerson}
-Corporate Email:${reqData.businessEmail}
-Phone/WhatsApp: ${reqData.phoneWhatsApp}
-Country:        ${reqData.country}
-
-TEA COMMERCIAL SPECIFICATIONS:
-----------------------------------------
-Requirement Scope: ${reqData.requirementType}
-Preferred Grade:   ${reqData.grade}
-Order Volume:      ${reqData.volume}
-Packaging:         ${reqData.packaging}
-Destination Port:  ${reqData.destinationPort}
-Special Specs:     ${reqData.qualitySpecs || 'None specified'}
-
-Status: NEW
-System of Record: Supabase Database (Table: buyer_requirements)
-Notice: New commercial buyer inquiry submitted through the SHIVOM GLOBAL website.
-  `.trim();
-
-  const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7f9f8; color: #1a2e22; margin: 0; padding: 24px; }
-    .card { background-color: #ffffff; max-width: 640px; margin: 0 auto; border-radius: 8px; border: 1px solid #d4dfd8; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .header { background-color: #0D3829; color: #ffffff; padding: 24px; text-align: left; }
-    .header h1 { margin: 0 0 6px; font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
-    .header .ref { color: #C5A059; font-size: 14px; font-weight: 600; }
-    .body { padding: 24px; }
-    .section-title { font-size: 13px; font-weight: 700; color: #0D3829; text-transform: uppercase; letter-spacing: 0.05em; margin: 18px 0 8px; border-bottom: 2px solid #EBF2EE; padding-bottom: 4px; }
-    .field-row { display: flex; padding: 6px 0; font-size: 14px; line-height: 1.5; }
-    .field-label { width: 160px; font-weight: 600; color: #4B6356; flex-shrink: 0; }
-    .field-value { flex-grow: 1; color: #111827; }
-    .specs-box { background-color: #F8FAF9; border-left: 3px solid #C5A059; padding: 12px; margin-top: 6px; font-size: 14px; color: #2D3748; white-space: pre-wrap; }
-    .footer { background-color: #F4F7F5; padding: 16px 24px; font-size: 12px; color: #6B7280; text-align: center; border-top: 1px solid #E5E7EB; }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <div class="header">
-      <h1>New Commercial Buyer Requirement</h1>
-      <div class="ref">Reference: ${referenceId}</div>
-    </div>
-    <div class="body">
-      <div class="section-title">Buyer Corporate Profile</div>
-      <div class="field-row"><div class="field-label">Company Legal Name:</div><div class="field-value"><strong>${reqData.companyName}</strong> (${reqData.country})</div></div>
-      <div class="field-row"><div class="field-label">Contact Person:</div><div class="field-value">${reqData.contactPerson}</div></div>
-      <div class="field-row"><div class="field-label">Corporate Email:</div><div class="field-value"><a href="mailto:${reqData.businessEmail}">${reqData.businessEmail}</a></div></div>
-      <div class="field-row"><div class="field-label">WhatsApp / Phone:</div><div class="field-value">${reqData.phoneWhatsApp}</div></div>
-
-      <div class="section-title">Tea Commercial Specifications</div>
-      <div class="field-row"><div class="field-label">Requirement Scope:</div><div class="field-value">${reqData.requirementType}</div></div>
-      <div class="field-row"><div class="field-label">Preferred Grade / Cut:</div><div class="field-value"><strong>${reqData.grade}</strong></div></div>
-      <div class="field-row"><div class="field-label">Volume Tier:</div><div class="field-value">${reqData.volume}</div></div>
-      <div class="field-row"><div class="field-label">Packaging Format:</div><div class="field-value">${reqData.packaging}</div></div>
-      <div class="field-row"><div class="field-label">Discharging Port:</div><div class="field-value"><strong>${reqData.destinationPort}</strong></div></div>
-
-      <div class="section-title">Additional Technical Notes</div>
-      <div class="specs-box">${reqData.qualitySpecs || 'None provided.'}</div>
-    </div>
-    <div class="footer">
-      New commercial buyer inquiry submitted through the SHIVOM GLOBAL website.<br>
-      Captured at ${submittedAtIso} UTC • System of Record: Supabase (buyer_requirements)
-    </div>
-  </div>
-</body>
-</html>
-  `.trim();
-
-  try {
-    // Standard Resend transactional API endpoint with timeout
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: emailFrom,
-        to: [emailTo],
-        reply_to: reqData.businessEmail,
-        subject,
-        text: plainText,
-        html: htmlContent,
-      }),
-      signal: AbortSignal.timeout(EMAIL_TIMEOUT_MS),
-    });
-
-    if (!response.ok) {
-      const errBody = await response.text().catch(() => '');
-      console.error(`[EMAIL_DISPATCH_FAILED] Resend status ${response.status}: ${errBody}`);
-      return { success: false, error: `Resend status ${response.status}` };
-    }
-
-    return { success: true };
-  } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : 'Unknown network error';
-    console.error(`[EMAIL_DISPATCH_EXCEPTION] ${errorMsg}`);
-    return { success: false, error: errorMsg };
-  }
-}
-
-/**
  * Helper to read raw body if not pre-parsed
  */
 async function readRequestBody(req: IncomingMessage): Promise<string> {
@@ -413,7 +279,7 @@ export default async function handler(
 
   res.setHeader('Access-Control-Allow-Origin', matchingOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Idempotency-Key');
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
   // Handle preflight OPTIONS
@@ -602,11 +468,13 @@ export default async function handler(
     updated_at: submittedAtIso,
   };
 
-  let dbInsertSuccess = false;
-  let persistedRow: Record<string, unknown> | null = null;
+  let authoritativeReferenceId = candidateReferenceId;
+  let isDuplicate = false;
+  let submissionSuccess = false;
 
   try {
-    // PostgREST Upsert with resolution=merge-duplicates on idempotency_key
+    // 1. Conflict-Ignore Insert (ON CONFLICT DO NOTHING)
+    // Resolution=ignore-duplicates guarantees existing buyer records are NEVER overwritten on retry
     const supabaseEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?on_conflict=idempotency_key`;
     const dbRes = await fetch(supabaseEndpoint, {
       method: 'POST',
@@ -614,31 +482,65 @@ export default async function handler(
         apikey: supabaseServiceRoleKey,
         Authorization: `Bearer ${supabaseServiceRoleKey}`,
         'Content-Type': 'application/json',
-        Prefer: 'return=representation,resolution=merge-duplicates',
+        Prefer: 'return=representation,resolution=ignore-duplicates',
       },
       body: JSON.stringify(dbRow),
       signal: AbortSignal.timeout(DB_TIMEOUT_MS),
     });
 
     if (dbRes.ok) {
-      dbInsertSuccess = true;
       const returnedJson = await dbRes.json().catch(() => null);
-      if (Array.isArray(returnedJson) && returnedJson.length > 0) {
-        persistedRow = returnedJson[0] as Record<string, unknown>;
+      if (Array.isArray(returnedJson) && returnedJson.length > 0 && returnedJson[0]?.reference_id) {
+        // Brand-new inquiry record created
+        authoritativeReferenceId = String(returnedJson[0].reference_id);
+        isDuplicate = false;
+        submissionSuccess = true;
+      } else {
+        // Conflict detected: 0 rows returned because idempotency_key already exists
+        // Must retrieve original record without modifying existing data
+        isDuplicate = true;
       }
+    } else if (dbRes.status === 409) {
+      // Direct HTTP 409 conflict signal
+      isDuplicate = true;
     } else {
       const errBody = await dbRes.text().catch(() => '');
       console.error(
         `[SUPABASE_INSERT_FAILED] HTTP ${dbRes.status}. Table: buyer_requirements. Details: ${errBody}`
       );
     }
+
+    // 2. If a duplicate was detected (or 0 rows returned on conflict), query the original record
+    if (isDuplicate) {
+      const lookupEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?idempotency_key=eq.${encodeURIComponent(sanitized.idempotencyKey)}&select=reference_id`;
+      const lookupRes = await fetch(lookupEndpoint, {
+        method: 'GET',
+        headers: {
+          apikey: supabaseServiceRoleKey,
+          Authorization: `Bearer ${supabaseServiceRoleKey}`,
+          'Content-Type': 'application/json',
+        },
+        signal: AbortSignal.timeout(DB_TIMEOUT_MS),
+      });
+
+      if (lookupRes.ok) {
+        const lookupRows = await lookupRes.json().catch(() => null);
+        if (Array.isArray(lookupRows) && lookupRows.length > 0 && lookupRows[0]?.reference_id) {
+          authoritativeReferenceId = String(lookupRows[0].reference_id);
+          submissionSuccess = true;
+        }
+      } else {
+        const lookupErr = await lookupRes.text().catch(() => '');
+        console.error(`[SUPABASE_LOOKUP_FAILED] HTTP ${lookupRes.status}: ${lookupErr}`);
+      }
+    }
   } catch (dbErr: unknown) {
     const errorMsg = dbErr instanceof Error ? dbErr.message : 'Unknown database error';
     console.error(`[SUPABASE_NETWORK_EXCEPTION] ${errorMsg}`);
   }
 
-  // System of Record Safety Gate: NEVER give false success if DB write failed
-  if (!dbInsertSuccess) {
+  // System of Record Safety Gate: NEVER give false success if DB write or duplicate lookup failed
+  if (!submissionSuccess) {
     sendJsonResponse(503, {
       success: false,
       status: 'SERVICE_UNAVAILABLE',
@@ -647,13 +549,7 @@ export default async function handler(
     return;
   }
 
-  // Resolve Authoritative Reference ID and Detect Duplicates
-  const authoritativeReferenceId = String(persistedRow?.reference_id || candidateReferenceId);
-  const isDuplicate = Boolean(
-    persistedRow?.reference_id && persistedRow.reference_id !== candidateReferenceId
-  );
-
-  // If this was an idempotent duplicate, resolve immediately without creating duplicate notification events
+  // If this was an idempotent duplicate, resolve immediately without altering existing data
   if (isDuplicate) {
     sendJsonResponse(200, {
       success: true,
@@ -665,89 +561,7 @@ export default async function handler(
     return;
   }
 
-  // Brand-New Submission: The database trigger (trg_buyer_requirements_outbox) has already atomically
-  // created the TRADE_DESK_ALERT event in public.inquiry_outbox.
-  // We attempt a fast, synchronous email dispatch as an immediate notification optimization.
-  const emailResult = await sendTradeDeskEmail(authoritativeReferenceId, sanitized, submittedAtIso);
-
-  // Update Database with Email Dispatch Status
-  if (emailResult.success) {
-    try {
-      // 1. Mark outbox entry as SENT
-      const outboxPatchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/inquiry_outbox?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}&notification_type=eq.TRADE_DESK_ALERT`;
-      await fetch(outboxPatchEndpoint, {
-        method: 'PATCH',
-        headers: {
-          apikey: supabaseServiceRoleKey,
-          Authorization: `Bearer ${supabaseServiceRoleKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          status: 'SENT',
-          sent_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }),
-        signal: AbortSignal.timeout(3000),
-      }).catch(() => {});
-
-      // 2. Update buyer_requirements row for backward compatibility
-      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}`;
-      await fetch(patchEndpoint, {
-        method: 'PATCH',
-        headers: {
-          apikey: supabaseServiceRoleKey,
-          Authorization: `Bearer ${supabaseServiceRoleKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email_sent: true,
-          email_dispatched_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }),
-        signal: AbortSignal.timeout(3000),
-      }).catch(() => {});
-    } catch {
-      // Non-fatal if patch tracking fails
-    }
-  } else if (emailResult.error) {
-    try {
-      // Record last_error in outbox; remains PENDING/FAILED for the background retry cron worker
-      const outboxPatchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/inquiry_outbox?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}&notification_type=eq.TRADE_DESK_ALERT`;
-      await fetch(outboxPatchEndpoint, {
-        method: 'PATCH',
-        headers: {
-          apikey: supabaseServiceRoleKey,
-          Authorization: `Bearer ${supabaseServiceRoleKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          last_error: sanitizeString(emailResult.error, 255),
-          updated_at: new Date().toISOString(),
-        }),
-        signal: AbortSignal.timeout(3000),
-      }).catch(() => {});
-
-      const patchEndpoint = `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/buyer_requirements?reference_id=eq.${encodeURIComponent(authoritativeReferenceId)}`;
-      await fetch(patchEndpoint, {
-        method: 'PATCH',
-        headers: {
-          apikey: supabaseServiceRoleKey,
-          Authorization: `Bearer ${supabaseServiceRoleKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email_sent: false,
-          email_error: sanitizeString(emailResult.error, 255),
-          updated_at: new Date().toISOString(),
-        }),
-        signal: AbortSignal.timeout(3000),
-      }).catch(() => {});
-    } catch {
-      // Non-fatal
-    }
-  }
-
-  // Return Controlled Success Response
+  // Brand-New Submission: Return Controlled Success Response
   sendJsonResponse(200, {
     success: true,
     status: 'ACCEPTED',
