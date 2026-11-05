@@ -7497,31 +7497,6 @@ body.spec-drawer-open .whatsapp-float {
   }
 }
 
-/* --- 4. How It Works (4-Step Concise Process) --- */
-.how-it-works-section {
-  padding: clamp(4rem, 7vw, 6rem) 0;
-  background: linear-gradient(180deg, var(--bg-surface-subtle) 0%, #F5F1E8 100%);
-}
-
-.how-it-works-header {
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto var(--space-10);
-}
-
-.how-it-works-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 800;
-  color: var(--color-primary-dark);
-  margin: 0 0 var(--space-3) 0;
-}
-
-.how-it-works-lead {
-  font-size: 1rem;
-  color: var(--text-muted);
-  line-height: var(--leading-relaxed);
-  margin: 0;
-}
 
 
 /* --- 5. Contact Section Direct Strip --- */
@@ -9764,13 +9739,30 @@ body.spec-drawer-open .whatsapp-float {
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 16px -2px rgba(var(--primitive-green-900-rgb), 0.05);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+  cursor: pointer;
+  outline: none;
+}
+
+.export-step-card:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 .export-step-card:hover {
   transform: translateY(-3px);
   border-color: var(--color-accent-gold);
   box-shadow: 0 10px 24px -4px rgba(var(--primitive-green-900-rgb), 0.1);
+}
+
+.export-step-card-active {
+  border-color: var(--color-accent-gold);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFCF8 100%);
+  box-shadow: 0 12px 32px -4px rgba(var(--primitive-green-900-rgb), 0.12);
+}
+
+.export-step-card-completed {
+  border-color: rgba(var(--primitive-sage-500-rgb), 0.55);
 }
 
 .export-step-card-approval {
@@ -9800,6 +9792,19 @@ body.spec-drawer-open .whatsapp-float {
   font-size: 0.9375rem;
   font-weight: 800;
   font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.export-step-number-active {
+  background: var(--color-primary-green);
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.export-step-number-completed {
+  background: rgba(var(--primitive-sage-500-rgb), 0.18);
+  color: var(--color-primary-green);
+  border-color: var(--color-primary-green);
 }
 
 .export-step-card-approval .export-step-number {
@@ -9854,6 +9859,93 @@ body.spec-drawer-open .whatsapp-float {
   color: var(--text-muted);
   line-height: 1.55;
   margin: 0;
+}
+
+/* Detail Drawer (Interactive Operational Disclosure) */
+.export-step-detail-drawer {
+  display: none;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.export-step-detail-drawer.drawer-open {
+  display: block;
+  animation: fadeInDrawer 0.25s ease-out;
+}
+
+@keyframes fadeInDrawer {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.export-step-detail-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.export-step-detail-heading {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-primary-green);
+  margin-bottom: 2px;
+}
+
+.export-step-parameter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.export-step-parameter-item {
+  font-size: 0.78125rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  padding-left: 12px;
+  position: relative;
+}
+
+.export-step-parameter-item::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent-gold);
+  font-weight: bold;
+}
+
+.param-label {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.param-desc {
+  color: var(--text-muted);
+}
+
+.export-step-notice {
+  margin-top: var(--space-2);
+  padding: 6px 10px;
+  background: rgba(var(--primitive-gold-500-rgb), 0.08);
+  border-left: 2px solid var(--color-gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.export-step-notice-text {
+  font-size: 0.71875rem;
+  line-height: 1.4;
+  color: var(--color-primary-dark);
+  display: block;
 }
 
 .export-step-card-footer {
@@ -9916,6 +10008,76 @@ body.spec-drawer-open .whatsapp-float {
 
 .export-approval-check {
   color: var(--color-primary-green);
+}
+
+/* Phase 1 Verification Callout Banner */
+.export-phase-1-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  background: rgba(var(--primitive-green-900-rgb), 0.04);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  margin-top: var(--space-6);
+}
+
+.export-phase-1-banner-copy {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1 1 500px;
+}
+
+.export-phase-1-banner-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  background: var(--color-primary-green);
+  color: var(--color-gold);
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.export-phase-1-banner-text {
+  font-size: 0.875rem;
+  color: var(--color-primary-dark);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.export-phase-1-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-primary-green);
+  color: var(--color-gold);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gold);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.export-phase-1-cta-btn:hover {
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(var(--primitive-green-900-rgb), 0.25);
+}
+
+.export-phase-1-cta-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 /* 3. PHASE 02 — Commercial Execution Console (Step 05) */
@@ -10134,6 +10296,22 @@ body.spec-drawer-open .whatsapp-float {
   .export-console-title-row {
     flex-direction: column;
   }
+
+  .export-phase-1-banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-4);
+  }
+
+  .export-phase-1-banner-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .export-phase-1-cta-btn {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -10142,8 +10320,12 @@ body.spec-drawer-open .whatsapp-float {
   }
   .export-step-card,
   .export-console-cta-btn,
-  .export-step-btn {
+  .export-step-btn,
+  .export-phase-1-cta-btn {
     transition: none !important;
+  }
+  .export-step-detail-drawer.drawer-open {
+    animation: none !important;
   }
 }
 
