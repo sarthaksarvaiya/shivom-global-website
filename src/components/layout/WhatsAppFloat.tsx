@@ -3,6 +3,7 @@ import { CONTACT_INFO } from '@/constants/contact';
 
 export const WhatsAppFloat: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [isInFormView, setIsInFormView] = useState<boolean>(false);
 
   // Show the button only after a brief delay so it doesn't flash on first paint
   useEffect(() => {
@@ -10,12 +11,30 @@ export const WhatsAppFloat: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Observe whether the buyer is viewing/interacting with the requirement form
+  useEffect(() => {
+    const formEl = document.getElementById('requirement-form');
+    if (!formEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInFormView(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(formEl);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <a
       href={CONTACT_INFO.whatsapp.getLink()}
       target="_blank"
       rel="noopener noreferrer"
-      className={`whatsapp-float ${visible ? 'whatsapp-float-visible' : ''}`}
+      className={`whatsapp-float ${visible ? 'whatsapp-float-visible' : ''} ${
+        isInFormView ? 'whatsapp-float-in-form' : ''
+      }`}
       aria-label={CONTACT_INFO.whatsapp.ariaLabel}
       title={`WhatsApp: ${CONTACT_INFO.whatsapp.display}`}
     >

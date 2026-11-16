@@ -6720,6 +6720,172 @@ body.spec-drawer-open .whatsapp-float {
   text-align: center;
 }
 
+/* Option 1: Sample Kit Request Toggle */
+.buyer-sample-toggle-wrap {
+  background: rgba(var(--primitive-gold-500-rgb), 0.06);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.3);
+  border-radius: var(--radius-md, 8px);
+  padding: 14px 16px;
+  margin-bottom: var(--space-4);
+  transition: all var(--transition-fast, 0.2s ease);
+}
+
+.buyer-sample-toggle-wrap:hover {
+  background: rgba(var(--primitive-gold-500-rgb), 0.1);
+  border-color: rgba(var(--primitive-gold-500-rgb), 0.45);
+}
+
+.buyer-sample-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.buyer-sample-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.buyer-sample-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.buyer-sample-toggle-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.buyer-sample-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.buyer-sample-toggle-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Option 1: Direct WhatsApp Hint Under Form */
+.form-direct-wa-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.form-direct-wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #128C7E;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast, 0.2s ease);
+}
+
+.form-direct-wa-link:hover {
+  color: #075E54;
+}
+
+/* Option 1: Commercial Trade Reassurance Grid */
+.buyer-trade-reassurance-grid {
+  max-width: 880px;
+  margin: clamp(2rem, 4vw, 3rem) auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4, 16px);
+}
+
+.reassurance-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.22);
+  border-radius: var(--radius-md, 8px);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all var(--transition-fast, 0.2s ease);
+}
+
+.reassurance-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(var(--primitive-gold-500-rgb), 0.45);
+  transform: translateY(-2px);
+}
+
+.reassurance-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(var(--primitive-gold-500-rgb), 0.15);
+  color: var(--color-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reassurance-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reassurance-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-inverse, #FFFFFF);
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.reassurance-desc {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .buyer-trade-reassurance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .buyer-trade-reassurance-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3, 12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reassurance-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 .buyer-badge-item {
   display: flex;
   align-items: center;
@@ -7456,6 +7622,11 @@ body.spec-drawer-open .whatsapp-float {
     border-radius: 50%;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.20);
     animation: none;
+  }
+  .whatsapp-float.whatsapp-float-in-form {
+    opacity: 0 !important;
+    transform: translateY(24px) scale(0.85) !important;
+    pointer-events: none !important;
   }
   .whatsapp-float-label {
     display: none;

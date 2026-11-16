@@ -9,7 +9,11 @@ import {
   Sparkles,
   ClipboardList,
   MessageCircle,
-  ArrowRight
+  ArrowRight,
+  Clock,
+  Anchor,
+  ShieldCheck,
+  Scale
 } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 import {
@@ -117,6 +121,9 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
   // Request Idempotency: One stable key per logical inquiry attempt
   const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
   const isSubmittingRef = useRef<boolean>(false);
+
+  // Counter-samples request toggle (Option 1: one-click sample kit request)
+  const [requestSamples, setRequestSamples] = useState<boolean>(true);
 
   // Honeypot field for anti-bot protection
   const [honeypot, setHoneypot] = useState<string>('');
@@ -243,6 +250,10 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     setSubmissionError('');
 
     try {
+      const samplePrefix = requestSamples
+        ? '[SAMPLE_REQUEST: YES — Pre-shipment physical counter-sample cupping kit requested]\n'
+        : '';
+
       const normalizedPayload: BuyerRequirementFormData = {
         contactPerson: quickData.name.trim(),
         companyName: quickData.company.trim(),
@@ -255,8 +266,8 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
         packaging: detailedData.packaging || 'Standard Bulk Export Sacks',
         destinationPort: `${quickData.country.trim()} (Port TBD)`,
         qualitySpecs: quickData.message.trim()
-          ? `[Form: Quick Enquiry]\n${quickData.message.trim()}`
-          : '[Form: Quick Enquiry / Sample Request]',
+          ? `${samplePrefix}[Form: Quick Enquiry]\n${quickData.message.trim()}`
+          : `${samplePrefix}[Form: Quick Enquiry / Sample Request]`,
         idempotencyKey,
       };
 
@@ -303,13 +314,17 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     setFormStatus('SUBMITTING');
 
     try {
+      const samplePrefix = requestSamples
+        ? '[SAMPLE_REQUEST: YES — Pre-shipment physical counter-sample cupping kit requested]\n'
+        : '';
+
       const enrichedPayload: BuyerRequirementFormData = {
         ...detailedData,
         requirementType: activeCategory || detailedData.requirementType,
         grade: activeGrade || detailedData.grade,
         qualitySpecs: detailedData.qualitySpecs
-          ? `[Form: Detailed Tea Requirement]\n${detailedData.qualitySpecs}`
-          : '[Form: Detailed Tea Requirement]',
+          ? `${samplePrefix}[Form: Detailed Tea Requirement]\n${detailedData.qualitySpecs}`
+          : `${samplePrefix}[Form: Detailed Tea Requirement]`,
         idempotencyKey,
       };
 
@@ -345,6 +360,7 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
     setSubmissionError('');
     setSubmittedRecord(null);
     setIsDuplicateSubmission(false);
+    setRequestSamples(true);
     // Generate a fresh idempotency key only when explicitly resetting to submit a new inquiry
     setIdempotencyKey(generateIdempotencyKey());
   };
@@ -629,6 +645,27 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </div>
               </div>
 
+              {/* Sample Kit Request Toggle (Option 1) */}
+              <div className="buyer-sample-toggle-wrap">
+                <label className="buyer-sample-checkbox-label">
+                  <input
+                    type="checkbox"
+                    className="buyer-sample-checkbox"
+                    checked={requestSamples}
+                    onChange={(e) => setRequestSamples(e.target.checked)}
+                  />
+                  <div className="buyer-sample-toggle-info">
+                    <span className="buyer-sample-toggle-title">
+                      <CheckCircle2 size={16} className="buyer-sample-icon" aria-hidden="true" />
+                      <span>Request Physical Counter-Samples (Recommended for Importers)</span>
+                    </span>
+                    <span className="buyer-sample-toggle-desc">
+                      Check to dispatch laboratory-sealed pre-shipment sample tins for sensory cupping before contract finalization.
+                    </span>
+                  </div>
+                </label>
+              </div>
+
               {/* Message */}
               <div className="form-group" style={{ marginBottom: 'var(--space-4)' }}>
                 <label htmlFor="quick-message" className="form-label">
@@ -674,6 +711,19 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     </span>
                   )}
                 </button>
+
+                <div className="form-direct-wa-hint">
+                  <span>Prefer instant trade messaging?</span>
+                  <a
+                    href={CONTACT_INFO.whatsapp.getLink('Hello SHIVOM GLOBAL Trade Desk, I would like to enquire about tea sourcing and counter-samples.')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="form-direct-wa-link"
+                  >
+                    <MessageCircle size={14} aria-hidden="true" />
+                    <span>Chat with Trade Desk on WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </motion.form>
           ) : (
@@ -964,6 +1014,27 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                 </div>
               </div>
 
+              {/* Sample Kit Request Toggle (Option 1) */}
+              <div className="buyer-sample-toggle-wrap" style={{ margin: 'var(--space-3) 0 var(--space-4)' }}>
+                <label className="buyer-sample-checkbox-label">
+                  <input
+                    type="checkbox"
+                    className="buyer-sample-checkbox"
+                    checked={requestSamples}
+                    onChange={(e) => setRequestSamples(e.target.checked)}
+                  />
+                  <div className="buyer-sample-toggle-info">
+                    <span className="buyer-sample-toggle-title">
+                      <CheckCircle2 size={16} className="buyer-sample-icon" aria-hidden="true" />
+                      <span>Dispatch Physical Pre-Shipment Counter-Samples</span>
+                    </span>
+                    <span className="buyer-sample-toggle-desc">
+                      Dispatches laboratory-sealed counter-samples matching your exact grade, mesh cut, and liquor profile.
+                    </span>
+                  </div>
+                </label>
+              </div>
+
               {/* Section 3: Additional Notes */}
               <div className="form-group" style={{ marginBottom: 'var(--space-4)' }}>
                 <label htmlFor="det-specs" className="form-label">
@@ -1009,11 +1080,75 @@ export const BuyerRequirementForm: React.FC<BuyerRequirementFormProps> = ({
                     </span>
                   )}
                 </button>
+
+                <div className="form-direct-wa-hint">
+                  <span>Prefer instant trade messaging?</span>
+                  <a
+                    href={CONTACT_INFO.whatsapp.getLink('Hello SHIVOM GLOBAL Trade Desk, I would like to discuss detailed tea specifications.')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="form-direct-wa-link"
+                  >
+                    <MessageCircle size={14} aria-hidden="true" />
+                    <span>Chat with Trade Desk on WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </motion.form>
           )}
         </AnimatePresence>
 
+        </div>
+
+        {/* Commercial Trade Reassurance Grid (Option 1) */}
+        <div className="buyer-trade-reassurance-grid" aria-label="Commercial Trade Terms & Standards">
+          <div className="reassurance-card">
+            <div className="reassurance-icon-box">
+              <Clock size={20} aria-hidden="true" />
+            </div>
+            <div className="reassurance-content">
+              <h4 className="reassurance-title">24–48h Commercial Response SLA</h4>
+              <p className="reassurance-desc">
+                Every inquiry is evaluated by dedicated origin tea tasters with proforma indication dispatched within 1–2 business days.
+              </p>
+            </div>
+          </div>
+
+          <div className="reassurance-card">
+            <div className="reassurance-icon-box">
+              <Anchor size={20} aria-hidden="true" />
+            </div>
+            <div className="reassurance-content">
+              <h4 className="reassurance-title">FOB &amp; CIF IncoTerms 2020</h4>
+              <p className="reassurance-desc">
+                Direct ocean container freight from Mundra Port &amp; Kolkata Port to Jebel Ali, European, and worldwide destination ports.
+              </p>
+            </div>
+          </div>
+
+          <div className="reassurance-card">
+            <div className="reassurance-icon-box">
+              <ShieldCheck size={20} aria-hidden="true" />
+            </div>
+            <div className="reassurance-content">
+              <h4 className="reassurance-title">Institutional Payment Terms</h4>
+              <p className="reassurance-desc">
+                Bank-backed international trade supported via Irrevocable Documentary Letter of Credit (LC at Sight) &amp; Telegraphic Transfer (T/T).
+              </p>
+            </div>
+          </div>
+
+          <div className="reassurance-card">
+            <div className="reassurance-icon-box">
+              <Scale size={20} aria-hidden="true" />
+            </div>
+            <div className="reassurance-content">
+              <h4 className="reassurance-title">Physical Counter-Sample Guarantee</h4>
+              <p className="reassurance-desc">
+                Full laboratory moisture, leaf particle size, and sensory cupping consistency matched against approved pre-shipment samples.
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>
