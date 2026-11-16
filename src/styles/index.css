@@ -8747,7 +8747,333 @@ body.spec-drawer-open .whatsapp-float {
   color: var(--color-primary-dark) !important;
 }
 
-/* Compact Footer */
+/* Complete Enterprise Footer (Option C) */
+.footer-enterprise-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.15fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(2.5rem, 4vw, 3.5rem) 0 var(--space-6);
+}
+
+.footer-enterprise-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-enterprise-logo {
+  max-height: 44px;
+  height: auto;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.footer-enterprise-desc {
+  color: var(--text-inverse-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.footer-statutory-card {
+  background: rgba(var(--primitive-white-rgb), 0.04);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  color: var(--text-inverse-muted);
+  line-height: 1.5;
+}
+
+.footer-statutory-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--color-gold);
+  font-size: 0.65625rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.footer-statutory-icon {
+  color: var(--color-gold);
+}
+
+.footer-statutory-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.font-gold {
+  color: var(--color-accent-gold, #C59B27);
+}
+
+.footer-col-heading {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 var(--space-3) 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  display: inline-block;
+  width: fit-content;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-link {
+  color: var(--text-inverse-muted);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  line-height: 1.45;
+}
+
+.footer-link:hover {
+  color: var(--text-inverse);
+  transform: translateX(3px);
+}
+
+.footer-link-gold {
+  color: var(--color-gold) !important;
+  font-weight: 600;
+}
+
+.footer-link-gold:hover {
+  color: #FBBF24 !important;
+}
+
+.footer-sla-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(var(--primitive-gold-500-rgb), 0.12);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  color: var(--color-gold);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: var(--space-3);
+  width: fit-content;
+}
+
+.footer-contact-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-inverse);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-link:hover {
+  color: var(--color-gold);
+}
+
+.footer-wa-link {
+  font-weight: 600;
+}
+
+.footer-wa-icon {
+  color: #25D366;
+  flex-shrink: 0;
+}
+
+.footer-static-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.78125rem;
+  color: var(--text-inverse-muted);
+  line-height: 1.4;
+}
+
+.footer-primary-cta {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--space-3);
+  font-weight: 700;
+}
+
+/* Commercial Trade Terms & Port Gateway Ribbon */
+.footer-gateway-ribbon {
+  background: rgba(var(--primitive-white-rgb), 0.03);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.22);
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.78125rem;
+  color: var(--text-inverse-muted);
+  text-align: center;
+}
+
+.gateway-ribbon-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.gateway-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.gateway-ribbon-sep {
+  color: rgba(var(--primitive-gold-500-rgb), 0.5);
+}
+
+/* Commercial Confidentiality & Trade Privacy Notice */
+.footer-confidentiality-notice {
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid var(--color-gold);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.confidentiality-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.confidentiality-text {
+  font-size: 0.75rem;
+  color: rgba(var(--primitive-white-rgb), 0.7);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.confidentiality-text strong {
+  color: var(--text-inverse);
+}
+
+/* Bottom Minimal Copyright Bar with Back to Top */
+.footer-bottom-bar {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-top: 1px solid rgba(var(--primitive-white-rgb), 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-copyright-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-copyright-line {
+  color: rgba(var(--primitive-white-rgb), 0.65);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
+.footer-copyright-line strong {
+  color: var(--text-inverse);
+}
+
+.footer-location-sub {
+  font-size: 0.75rem;
+  color: rgba(var(--primitive-white-rgb), 0.45);
+}
+
+.footer-back-to-top {
+  background: rgba(var(--primitive-white-rgb), 0.06);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.3);
+  color: var(--text-inverse);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.footer-back-to-top:hover {
+  background: rgba(var(--primitive-gold-500-rgb), 0.2);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .footer-enterprise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-enterprise-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .footer-gateway-ribbon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+  }
+  .gateway-ribbon-sep {
+    display: none;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-link,
+  .footer-back-to-top {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Compact Footer (Backwards compatibility) */
 .footer-compact-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1.5fr;

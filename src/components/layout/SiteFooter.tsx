@@ -1,5 +1,16 @@
 import React from 'react';
-import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
+import { 
+  ArrowRight, 
+  MessageCircle, 
+  Mail, 
+  ArrowUp, 
+  ShieldCheck, 
+  Anchor, 
+  Clock, 
+  Lock, 
+  CheckCircle2, 
+  MapPin 
+} from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
 import { BRAND_CONFIG } from '@/constants/branding';
 
@@ -19,21 +30,28 @@ export const SiteFooter: React.FC = () => {
     }
   };
 
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <footer className="site-footer" role="contentinfo" aria-label="SHIVOM GLOBAL Footer">
+    <footer className="site-footer" role="contentinfo" aria-label="SHIVOM GLOBAL Enterprise Footer">
       <div className="container">
         
-        {/* Compact 3-Column Footer Grid */}
-        <div className="footer-compact-grid">
+        {/* 4-Column Balanced Enterprise Grid */}
+        <div className="footer-enterprise-grid">
           
           {/* Column 1: Brand & Verified Entity Transparency */}
-          <div className="footer-compact-col footer-col-brand" style={{ maxWidth: '340px' }}>
-            <a href="#hero" onClick={(e) => handleScrollTo(e, 'hero')} className="footer-logo-link">
+          <div className="footer-enterprise-col footer-col-identity">
+            <a href="#hero" onClick={(e) => handleScrollTo(e, 'hero')} className="footer-logo-link" aria-label="SHIVOM GLOBAL Homepage">
               {BRAND_CONFIG.logoPath ? (
                 <img 
                   src={BRAND_CONFIG.logoPath} 
                   alt={BRAND_CONFIG.logoAlt} 
-                  className="footer-compact-logo"
+                  className="footer-enterprise-logo"
                 />
               ) : (
                 <div className="footer-brand-mark">
@@ -42,32 +60,143 @@ export const SiteFooter: React.FC = () => {
                 </div>
               )}
             </a>
-            <p className="footer-compact-desc" style={{ marginTop: '8px', lineHeight: 1.45 }}>
-              Indian tea sourcing &amp; export business coordinating bulk supply and private-label packaging to international specifications.
+            <p className="footer-enterprise-desc">
+              India-based tea sourcing and export business coordinating primary garden auction lots, bulk container logistics, and private-label packaging to international buyer specifications.
             </p>
 
-            {/* Factual Statutory Disclosure Block */}
-            <div style={{
-              marginTop: 'var(--space-3)',
-              padding: '10px 12px',
-              backgroundColor: 'rgba(var(--primitive-white-rgb), var(--alpha-04))',
-              border: '1px solid rgba(var(--primitive-white-rgb), var(--alpha-10))',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.75rem',
-              color: 'var(--text-inverse-muted)',
-              lineHeight: 1.5,
-            }}>
-              <div><strong>Proprietorship:</strong> Sarthak Sarvaiya</div>
-              <div><strong>Base:</strong> Bhavnagar, Gujarat, India</div>
-              <div><strong>Udyam MSME:</strong> <span className="font-spec">UDYAM-GJ-05-0105835</span></div>
-              <div><strong>GSTIN:</strong> <span className="font-spec" style={{ color: 'var(--color-accent-gold)' }}>24KWEPS2703C1ZQ</span></div>
+            {/* Factual Statutory Disclosure Card */}
+            <div className="footer-statutory-card">
+              <div className="footer-statutory-heading font-spec">
+                <ShieldCheck size={13} className="footer-statutory-icon" aria-hidden="true" />
+                <span>REGISTERED INDIAN ENTERPRISE</span>
+              </div>
+              <div className="footer-statutory-grid">
+                <div><strong>Proprietorship:</strong> Sarthak Sarvaiya</div>
+                <div><strong>Base:</strong> Bhavnagar, Gujarat, India</div>
+                <div><strong>Udyam MSME:</strong> <span className="font-spec">UDYAM-GJ-05-0105835</span></div>
+                <div><strong>GSTIN:</strong> <span className="font-spec font-gold">24KWEPS2703C1ZQ</span></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Tea Origins & Sourcing Matrix */}
+          <div className="footer-enterprise-col">
+            <h4 className="footer-col-heading">Tea Origins &amp; Grades</h4>
+            <ul className="footer-links-list">
+              <li>
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-link">
+                  Assam CTC Granular &amp; Dust
+                </a>
+              </li>
+              <li>
+                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-link">
+                  Assam Orthodox Leaf (FTGFOP / TGFOP)
+                </a>
+              </li>
+              <li>
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-link">
+                  Darjeeling Single-Origin Flush
+                </a>
+              </li>
+              <li>
+                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-link">
+                  Indian Green Tea (Whole Leaf &amp; Fannings)
+                </a>
+              </li>
+              <li>
+                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-link">
+                  14 Commercial Grade Specifications
+                </a>
+              </li>
+              <li>
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-link">
+                  Private Label Packaging &amp; Pouches
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Logistics & Trade Governance */}
+          <div className="footer-enterprise-col">
+            <h4 className="footer-col-heading">Trade &amp; Logistics</h4>
+            <ul className="footer-links-list">
+              <li>
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-link">
+                  Container Stuffing (20ft &amp; 40ft FCL)
+                </a>
+              </li>
+              <li>
+                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-link">
+                  Ocean Transit Times (3–5d to UAE)
+                </a>
+              </li>
+              <li>
+                <a href="#how-it-works" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="footer-link">
+                  Two-Phase Quality Export Flow
+                </a>
+              </li>
+              <li>
+                <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="footer-link">
+                  Official Export Documentation Kit
+                </a>
+              </li>
+              <li>
+                <a href="#procurement-faq" onClick={(e) => handleScrollTo(e, 'procurement-faq')} className="footer-link">
+                  Institutional Procurement FAQ
+                </a>
+              </li>
+              <li>
+                <a href="#requirement-form" onClick={(e) => handleScrollTo(e, 'requirement-form')} className="footer-link footer-link-gold">
+                  Request Pre-Shipment Counter-Samples
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Direct Trade Desk & Communications */}
+          <div className="footer-enterprise-col footer-col-desk">
+            <h4 className="footer-col-heading">Direct Trade Desk</h4>
+            
+            {/* SLA Badge */}
+            <div className="footer-sla-badge font-spec">
+              <Clock size={13} aria-hidden="true" />
+              <span>24–48h Commercial Response SLA</span>
             </div>
 
-            <div style={{ marginTop: 'var(--space-3)' }}>
+            <ul className="footer-contact-links">
+              <li>
+                <a
+                  href={CONTACT_INFO.whatsapp.getLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-contact-link footer-wa-link"
+                  aria-label={CONTACT_INFO.whatsapp.ariaLabel}
+                >
+                  <MessageCircle size={15} className="footer-wa-icon" aria-hidden="true" />
+                  <span>WhatsApp: {CONTACT_INFO.whatsapp.display}</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href={CONTACT_INFO.email.mailtoLink} 
+                  className="footer-contact-link"
+                  aria-label={CONTACT_INFO.email.ariaLabel}
+                >
+                  <Mail size={15} aria-hidden="true" />
+                  <span>{CONTACT_INFO.email.address}</span>
+                </a>
+              </li>
+              <li className="footer-static-info">
+                <MapPin size={15} aria-hidden="true" />
+                <span>Primary Loading: Mundra &amp; Kolkata Ports</span>
+              </li>
+            </ul>
+
+            <div className="footer-cta-wrap">
               <a 
                 href="#requirement-form" 
                 onClick={(e) => handleScrollTo(e, 'requirement-form')}
-                className="btn btn-primary btn-sm footer-compact-cta"
+                className="btn btn-primary btn-sm footer-primary-cta"
               >
                 <span>Tell Us What Tea You Need</span>
                 <ArrowRight size={13} aria-hidden="true" />
@@ -75,92 +204,55 @@ export const SiteFooter: React.FC = () => {
             </div>
           </div>
 
-          {/* Column 2: Navigation (Sourcing & Export) */}
-          <div className="footer-compact-col">
-            <h4 className="footer-compact-title">Sourcing &amp; Export</h4>
-            <ul className="footer-compact-list">
-              <li>
-                <a href="#our-teas" onClick={(e) => handleScrollTo(e, 'our-teas')} className="footer-compact-link">
-                  Tea Sourcing Portfolio
-                </a>
-              </li>
-              <li>
-                <a href="#tea-by-grade" onClick={(e) => handleScrollTo(e, 'tea-by-grade')} className="footer-compact-link">
-                  Grades &amp; Specifications
-                </a>
-              </li>
-              <li>
-                <a href="#private-label" onClick={(e) => handleScrollTo(e, 'private-label')} className="footer-compact-link">
-                  Private Label Packaging
-                </a>
-              </li>
-              <li>
-                <a href="#how-it-works" onClick={(e) => handleScrollTo(e, 'how-it-works')} className="footer-compact-link">
-                  5-Step Sourcing Flow
-                </a>
-              </li>
-              <li>
-                <a href="#why-us" onClick={(e) => handleScrollTo(e, 'why-us')} className="footer-compact-link">
-                  Export Compliance &amp; Docs
-                </a>
-              </li>
-              <li>
-                <a href="#procurement-faq" onClick={(e) => handleScrollTo(e, 'procurement-faq')} className="footer-compact-link">
-                  Procurement &amp; Trade FAQ
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Contact & Trade Desk */}
-          <div className="footer-compact-col">
-            <h4 className="footer-compact-title">Direct Trade Desk</h4>
-            <ul className="footer-compact-list">
-              <li>
-                <a
-                  href={CONTACT_INFO.whatsapp.getLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-compact-link footer-compact-wa"
-                  aria-label={CONTACT_INFO.whatsapp.ariaLabel}
-                >
-                  <MessageCircle size={14} style={{ color: 'var(--color-whatsapp)' }} aria-hidden="true" />
-                  <span>WhatsApp: {CONTACT_INFO.whatsapp.display}</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href={CONTACT_INFO.email.mailtoLink} 
-                  className="footer-compact-link"
-                  aria-label={CONTACT_INFO.email.ariaLabel}
-                >
-                  <Mail size={14} aria-hidden="true" />
-                  <span>{CONTACT_INFO.email.address}</span>
-                </a>
-              </li>
-              <li>
-                <span className="footer-compact-link" style={{ color: 'var(--text-inverse-muted)', cursor: 'default' }}>
-                  Ports: Mundra, Kandla, Kolkata, JNPT
-                </span>
-              </li>
-              <li>
-                <span className="footer-compact-link" style={{ color: 'var(--text-inverse-muted)', cursor: 'default' }}>
-                  Terms: FOB Indian Ports / CIF Destination
-                </span>
-              </li>
-            </ul>
-          </div>
-
         </div>
 
-        {/* Bottom Minimal Copyright Bar with Buyer-First Governance Note */}
-        <div className="footer-compact-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <p className="footer-copyright-text" style={{ margin: 0 }}>
-            &copy; {new Date().getFullYear()} <strong>SHIVOM GLOBAL</strong> (Proprietor: Sarthak Sarvaiya). All rights reserved.
+        {/* Commercial Trade Terms & Port Gateway Ribbon (Option B / C) */}
+        <div className="footer-gateway-ribbon" role="region" aria-label="Port Gateways & Commercial Terms">
+          <div className="gateway-ribbon-item">
+            <Anchor size={15} className="gateway-icon" aria-hidden="true" />
+            <span><strong>Mundra Port (Gujarat):</strong> 3–5 Days direct ocean transit to Port Jebel Ali (Dubai, UAE)</span>
+          </div>
+          <div className="gateway-ribbon-sep" aria-hidden="true">&bull;</div>
+          <div className="gateway-ribbon-item">
+            <CheckCircle2 size={15} className="gateway-icon" aria-hidden="true" />
+            <span><strong>IncoTerms 2020:</strong> FOB Indian Ports &amp; CIF Destination Worldwide</span>
+          </div>
+          <div className="gateway-ribbon-sep" aria-hidden="true">&bull;</div>
+          <div className="gateway-ribbon-item">
+            <ShieldCheck size={15} className="gateway-icon" aria-hidden="true" />
+            <span><strong>Payment:</strong> Irrevocable LC at Sight &amp; Commercial T/T (30/70)</span>
+          </div>
+        </div>
+
+        {/* Commercial Confidentiality & Trade Privacy Notice */}
+        <div className="footer-confidentiality-notice">
+          <Lock size={14} className="confidentiality-icon" aria-hidden="true" />
+          <p className="confidentiality-text">
+            <strong>Commercial Confidentiality Guarantee:</strong> All tea specifications, target price brackets, cupping benchmarks, and buyer contact details submitted to SHIVOM GLOBAL are held strictly confidential and never shared with third-party brokers, competing buyers, or marketing agencies.
           </p>
-          <span style={{ fontSize: '0.75rem', color: 'rgba(var(--primitive-white-rgb), var(--alpha-50))' }}>
-            Buyer-First Sourcing Desk &bull; Bhavnagar, Gujarat, India
-          </span>
+        </div>
+
+        {/* Bottom Minimal Copyright Bar with Back to Top */}
+        <div className="footer-bottom-bar">
+          <div className="footer-copyright-info">
+            <p className="footer-copyright-line">
+              &copy; {new Date().getFullYear()} <strong>SHIVOM GLOBAL</strong> (Proprietor: Sarthak Sarvaiya). All rights reserved.
+            </p>
+            <span className="footer-location-sub">
+              Bhavnagar, Gujarat, India &bull; Indian Tea Origin Sourcing &amp; Export Desk
+            </span>
+          </div>
+
+          <button 
+            type="button"
+            onClick={handleScrollToTop}
+            className="footer-back-to-top"
+            aria-label="Back to top of page"
+            title="Back to top"
+          >
+            <span>Top</span>
+            <ArrowUp size={14} aria-hidden="true" />
+          </button>
         </div>
 
       </div>
