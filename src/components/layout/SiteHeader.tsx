@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { BRAND_CONFIG } from '@/constants/branding';
 
 export interface SiteHeaderProps {
   onNavigate?: (targetId: string) => void;
@@ -153,21 +154,26 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ onNavigate, onRequestSam
   return (
     <header className={`site-header ${isScrolled ? 'site-header-scrolled' : ''}`} role="banner">
       <div className="header-container">
-        {/* Brand Logo */}
+        {/* Brand Logo / Identity */}
         <div className="header-brand-cluster">
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, 'hero')}
             className="header-brand-link"
-            aria-label="SHIVOM GLOBAL — Indian Tea Sourcing & Export (Return to top)"
+            aria-label={`${BRAND_CONFIG.legalName} — ${BRAND_CONFIG.tagline} (Return to top)`}
           >
-            <img
-              src="/Shivom_Global_Header_Logo.svg"
-              alt="SHIVOM GLOBAL"
-              width="192"
-              height="48"
-              className="header-brand-img"
-            />
+            {BRAND_CONFIG.logoPath ? (
+              <img
+                src={BRAND_CONFIG.logoPath}
+                alt={BRAND_CONFIG.logoAlt}
+                className="header-brand-img"
+              />
+            ) : (
+              <div className="header-brand-mark">
+                <span className="header-brand-title">{BRAND_CONFIG.legalName}</span>
+                <span className="header-brand-tagline">{BRAND_CONFIG.subTagline}</span>
+              </div>
+            )}
           </a>
         </div>
 

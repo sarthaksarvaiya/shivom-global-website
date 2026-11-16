@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
 import { CONTACT_INFO } from '@/constants/contact';
+import { BRAND_CONFIG } from '@/constants/branding';
 
 export const SiteFooter: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -28,11 +29,18 @@ export const SiteFooter: React.FC = () => {
           {/* Column 1: Brand & Verified Entity Transparency */}
           <div className="footer-compact-col footer-col-brand" style={{ maxWidth: '340px' }}>
             <a href="#hero" onClick={(e) => handleScrollTo(e, 'hero')} className="footer-logo-link">
-              <img 
-                src="/Shivom_Global_Header_Logo.svg" 
-                alt="SHIVOM GLOBAL — Indian Tea Sourcing & Export" 
-                className="footer-compact-logo"
-              />
+              {BRAND_CONFIG.logoPath ? (
+                <img 
+                  src={BRAND_CONFIG.logoPath} 
+                  alt={BRAND_CONFIG.logoAlt} 
+                  className="footer-compact-logo"
+                />
+              ) : (
+                <div className="footer-brand-mark">
+                  <span className="footer-brand-title">{BRAND_CONFIG.legalName}</span>
+                  <span className="footer-brand-tagline">{BRAND_CONFIG.subTagline}</span>
+                </div>
+              )}
             </a>
             <p className="footer-compact-desc" style={{ marginTop: '8px', lineHeight: 1.45 }}>
               Indian tea sourcing &amp; export business coordinating bulk supply and private-label packaging to international specifications.

@@ -62,10 +62,7 @@ export const DesignSystemFoundation: React.FC = () => {
               <h2 style={{ fontSize: '1.5rem', margin: 0 }}>P2-01 & P2-02: Official Logo & Brand Integration</h2>
             </div>
             <p style={{ maxWidth: '800px' }}>
-              <strong>Design System Rule:</strong> The official vector brandmark (<code className="font-spec">Shivom_Global_Logo.svg</code>) 
-              retains its metallic gold linear gradients (<code className="font-spec">#CA8A04</code> / <code className="font-spec">#FACC15</code> / <code className="font-spec">#EAB308</code>) 
-              and deep navy typography (<code className="font-spec">#1E3A8A</code> / <code className="font-spec">#0F172A</code>) completely unchanged. 
-              The website UI wraps the mark within the approved Deep Estate Green (<code className="font-spec">#0D3829</code>) and Warm Gold (<code className="font-spec">#C59B27</code>) palette.
+              <strong>Design System Status:</strong> Existing logos removed in preparation for new brand assets.
             </p>
           </div>
 
@@ -73,11 +70,7 @@ export const DesignSystemFoundation: React.FC = () => {
             {/* Logo on Light Surface */}
             <div className="card" style={{ padding: 'var(--space-8)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '180px' }}>
               <div style={{ width: '260px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img 
-                  src="/Shivom_Global_Logo.svg" 
-                  alt="SHIVOM GLOBAL Official Logo (Light Context)" 
-                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                />
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-primary-green)' }}>SHIVOM GLOBAL</span>
               </div>
               <span className="spec-badge" style={{ marginTop: 'var(--space-4)' }}>Light Surface Context (Navbar / Footer)</span>
             </div>
@@ -103,11 +96,7 @@ export const DesignSystemFoundation: React.FC = () => {
                 padding: '12px 20px',
                 borderRadius: 'var(--radius-sm)'
               }}>
-                <img 
-                  src="/Shivom_Global_Logo.svg" 
-                  alt="SHIVOM GLOBAL Official Logo (Dark Context Plaque)" 
-                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                />
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-accent-gold)' }}>SHIVOM GLOBAL</span>
               </div>
               <span className="spec-badge" style={{ marginTop: 'var(--space-4)', backgroundColor: 'rgba(255, 255, 255, 0.1)', color: 'var(--text-inverse)' }}>
                 Hero / Dark Section Enclosure

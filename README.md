@@ -85,7 +85,7 @@ The public gateway is structured as an intentional 8-section discovery funnel:
 The visual language follows the locked design system:
 
 - **Color Distribution:** Light surfaces ~70% (`#FBFBFA` / `#FFFFFF`), Dark surfaces ~25% (`#0D3829` / `#072218`), Warm Gold accents $\le 5\%$ (`#C59B27`).
-- **Official Brandmark Preservation:** Official vector logo (`Shivom_Global_Logo.svg`) retains its original metallic gold gradients and deep maritime navy typography.
+- **Brandmark Identity:** Centralized branding configured via `src/constants/branding.ts`. Prepared for new PNG/JPEG branding assets.
 - **Button Primitives:** High-contrast Warm Gold conversion buttons (`.btn-primary`), Deep Estate Green outline buttons (`.btn-secondary`), and dark surface variants (`.btn-secondary-dark`).
 - **Cards:** Crisp white modules with 1px subtle borders (`#E5E7EB`), 8px radii, and gold hover highlights.
 
@@ -99,12 +99,10 @@ SHIVOM GLOBAL WEBSITE/
 │   └── buyer-requirements.ts        # Serverless backend (Supabase DB + Resend email dispatch)
 ├── public/
 │   ├── images/
+│   │   ├── branding/                # Dedicated folder for new PNG/JPEG logo assets
 │   │   └── indian_tea_landscape_hero.jpg # Hero landscape visual
 │   ├── robots.txt                   # Search crawler directives
-│   ├── sitemap.xml                  # XML sitemap
-│   ├── Shivom_Global_Logo.svg       # Official vector brandmark (favicon)
-│   ├── Shivom_Global_Header_Logo.svg# Primary header logo
-│   └── Shivom Global Trade.png      # Social sharing OpenGraph asset (1254x1254)
+│   └── sitemap.xml                  # XML sitemap
 ├── src/
 │   ├── app/
 │   │   └── App.tsx                  # Root application component
