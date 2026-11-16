@@ -9,7 +9,10 @@ import {
   Search, 
   Sliders, 
   CheckCircle2, 
-  Truck 
+  Truck,
+  Ship,
+  Anchor,
+  MapPin
 } from 'lucide-react';
 
 export interface PrivateLabelSectionProps {
@@ -67,6 +70,77 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
       moq: 'Trial batches discussed on requirement',
       bestFor: 'Supermarket retail brands, hospitality private labels, and brand creators.',
       icon: Sparkles,
+    },
+  ];
+
+  const containerSpecs = [
+    {
+      id: 'fcl-20',
+      badge: 'STANDARD 20FT FCL',
+      title: '1x20ft Full Container Load',
+      capacity: '~10–12 Metric Tons (MT)',
+      sacksCount: '220 – 240 Standard Export Sacks',
+      stuffingMethod: 'Floor-stuffed with heavy kraft liners & dunnage bags, or 10 ISPM-15 export pallets',
+      bestFor: 'Single-origin garden invoices, regional tea wholesalers, and custom blend importers.',
+      icon: Ship,
+    },
+    {
+      id: 'fcl-40',
+      badge: 'HIGH-VOLUME 40FT HC',
+      title: '1x40ft High Cube Container',
+      capacity: '~22–24 Metric Tons (MT)',
+      sacksCount: '440 – 480 Standard Export Sacks',
+      stuffingMethod: 'High-density loading with container desiccant poles & moisture-barrier ceiling protection',
+      bestFor: 'Commercial packaging factories, Karak chai blenders, and supermarket private-label programs.',
+      icon: Layers,
+    },
+    {
+      id: 'lcl-trial',
+      badge: 'LCL TRIAL BATCH',
+      title: 'LCL Consolidated Consignment',
+      capacity: '1 – 5 Metric Tons (MT)',
+      sacksCount: '20 – 100 Multi-Wall Sacks on Pallets',
+      stuffingMethod: 'Fumigated heat-treated timber pallets (ISPM-15), reinforced edge guards & stretch wrap',
+      bestFor: 'Initial trial consignments, specialty Darjeeling invoices, and new market formulation testing.',
+      icon: Package,
+    },
+  ];
+
+  const transitRoutes = [
+    {
+      origin: 'Mundra Port / Kandla (Gujarat)',
+      destination: 'Port Jebel Ali (Dubai)',
+      region: 'United Arab Emirates & GCC',
+      transitTime: '3 – 5 Days',
+      frequency: 'Daily / Weekly Direct Feeders',
+    },
+    {
+      origin: 'Mundra Port (Gujarat)',
+      destination: 'Dammam / Jeddah Port',
+      region: 'Kingdom of Saudi Arabia',
+      transitTime: '6 – 8 Days',
+      frequency: 'Direct Gulf Liner Services',
+    },
+    {
+      origin: 'Mundra Port (Gujarat)',
+      destination: 'Felixstowe / Rotterdam / Hamburg',
+      region: 'United Kingdom & Northern Europe',
+      transitTime: '18 – 22 Days',
+      frequency: 'Scheduled Direct Ocean Liners',
+    },
+    {
+      origin: 'Mundra Port (Gujarat)',
+      destination: 'Alexandria / Port Said',
+      region: 'Egypt & North Africa',
+      transitTime: '12 – 15 Days',
+      frequency: 'Direct Mediterranean Feeders',
+    },
+    {
+      origin: 'Kolkata Port (West Bengal)',
+      destination: 'Singapore / Port Klang',
+      region: 'Southeast Asia Trade Hubs',
+      transitTime: '7 – 10 Days',
+      frequency: 'Direct Bay of Bengal Lines',
     },
   ];
 
@@ -243,7 +317,122 @@ export const PrivateLabelSection: React.FC<PrivateLabelSectionProps> = ({
           </div>
         </div>
 
-        {/* 3. 4-Stage Coordination Workflow */}
+        {/* 3. Ocean Logistics, Container Stuffing & Transit Benchmarks (Option 2) */}
+        <div className="private-label-logistics-block">
+          <div className="private-label-subtitle-wrap">
+            <div className="spec-badge spec-badge-gold" style={{ marginBottom: 'var(--space-2)' }}>
+              OCEAN LOGISTICS &amp; CONTAINER METRICS
+            </div>
+            <h3 className="private-label-subheading">
+              Container Loading Capacities &amp; Ocean Transit Benchmarks
+            </h3>
+            <p className="private-label-subintro">
+              Direct ocean freight from India's premier export gateways with calibrated multi-wall barrier packaging to preserve dry leaf aromatics, moisture content (&le; 8%), and cup briskness across tropical voyages.
+            </p>
+          </div>
+
+          {/* Container Capacities Grid */}
+          <div className="container-specs-grid" role="list" aria-label="Container Loading Specifications">
+            {containerSpecs.map((c) => {
+              const Icon = c.icon;
+              return (
+                <div key={c.id} className="container-spec-card" role="listitem">
+                  <div className="container-spec-top">
+                    <span className="container-spec-badge font-spec">{c.badge}</span>
+                    <div className="container-spec-icon-box" aria-hidden="true">
+                      <Icon size={18} />
+                    </div>
+                  </div>
+
+                  <h4 className="container-spec-title">{c.title}</h4>
+
+                  <div className="container-spec-metric-row">
+                    <div className="container-metric-item">
+                      <span className="container-metric-label font-spec">NET WEIGHT SCOPE</span>
+                      <strong className="container-metric-val font-spec">{c.capacity}</strong>
+                    </div>
+                    <div className="container-metric-item">
+                      <span className="container-metric-label font-spec">SACKS STUFFING</span>
+                      <strong className="container-metric-val font-spec">{c.sacksCount}</strong>
+                    </div>
+                  </div>
+
+                  <div className="container-spec-handling">
+                    <span className="container-handling-label font-spec">STUFFING &amp; HANDLING</span>
+                    <p className="container-handling-val">{c.stuffingMethod}</p>
+                  </div>
+
+                  <div className="container-spec-best">
+                    <span className="container-best-label font-spec">RECOMMENDED FOR</span>
+                    <p className="container-best-val">{c.bestFor}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Ocean Transit Matrix Table Card */}
+          <div className="transit-matrix-card">
+            <div className="transit-matrix-header">
+              <div className="transit-matrix-title-wrap">
+                <div className="transit-matrix-icon-pill" aria-hidden="true">
+                  <Anchor size={18} />
+                </div>
+                <div>
+                  <h4 className="transit-matrix-title">Strategic Export Gateways &amp; Ocean Transit Times</h4>
+                  <p className="transit-matrix-sub">Indicative port-to-port ocean transit from primary Indian maritime hubs</p>
+                </div>
+              </div>
+              <span className="transit-matrix-tag font-spec">INCOTERMS 2020: FOB &amp; CIF</span>
+            </div>
+
+            <div className="transit-table-wrapper">
+              <table className="transit-table" aria-label="Port Transit Times and Frequencies">
+                <thead>
+                  <tr>
+                    <th scope="col">Origin Dispatch Port</th>
+                    <th scope="col">Destination Port</th>
+                    <th scope="col">Destination Region</th>
+                    <th scope="col">Est. Ocean Transit</th>
+                    <th scope="col">Sailing Frequency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transitRoutes.map((route, rIdx) => (
+                    <tr key={rIdx}>
+                      <td className="font-spec origin-cell">
+                        <MapPin size={13} className="table-pin-icon" aria-hidden="true" />
+                        <span>{route.origin}</span>
+                      </td>
+                      <td className="dest-port-cell">
+                        <strong>{route.destination}</strong>
+                      </td>
+                      <td className="region-cell">{route.region}</td>
+                      <td className="transit-time-cell">
+                        <span className="transit-time-pill font-spec">{route.transitTime}</span>
+                      </td>
+                      <td className="frequency-cell font-spec">{route.frequency}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Quality & Quarantine Protection Footer */}
+            <div className="transit-protection-footer font-spec">
+              <div className="protection-item">
+                <ShieldCheck size={15} className="protection-icon" aria-hidden="true" />
+                <span><strong>Moisture Preservation:</strong> Multi-wall kraft paper + food-grade LDPE liner guarantees destination moisture &le; 8%.</span>
+              </div>
+              <div className="protection-item">
+                <Check size={15} className="protection-icon" aria-hidden="true" />
+                <span><strong>Phytosanitary &amp; Fumigation:</strong> Full statutory export quarantine clearance and container fumigation included.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. 4-Stage Coordination Workflow */}
         <div className="private-label-workflow-block">
           <div className="private-label-subtitle-wrap">
             <h3 className="private-label-subheading">

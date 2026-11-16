@@ -486,7 +486,7 @@ export const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
               </div>
               <h4 className="export-console-card-title">Export Documentation &amp; Port Freight</h4>
               <p className="export-console-card-text">
-                Tea Board of India export clearance, Phytosanitary Certificate, Certificate of Origin, container inspection, fumigation, customs clearance, and Bill of Lading dispatch.
+                Tea Board of India export clearance, Phytosanitary Certificate, Certificate of Origin, container inspection, fumigation, customs clearance, and direct ocean freight via Mundra Port (3–5 days to Jebel Ali) or Kolkata Port.
               </p>
             </div>
           </div>
