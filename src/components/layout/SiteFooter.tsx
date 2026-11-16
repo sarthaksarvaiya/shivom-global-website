@@ -104,6 +104,11 @@ export const SiteFooter: React.FC = () => {
                   Export Compliance &amp; Docs
                 </a>
               </li>
+              <li>
+                <a href="#procurement-faq" onClick={(e) => handleScrollTo(e, 'procurement-faq')} className="footer-compact-link">
+                  Procurement &amp; Trade FAQ
+                </a>
+              </li>
             </ul>
           </div>
 

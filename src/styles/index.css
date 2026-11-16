@@ -11187,4 +11187,234 @@ body.spec-drawer-open .whatsapp-float {
   }
 }
 
+/* ==========================================================================
+   Option 3: Institutional Procurement FAQ & Documentation Kit
+   ========================================================================== */
+.compliance-item-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.compliance-authority-tag {
+  font-size: 0.625rem;
+  color: var(--color-gold);
+  background: rgba(var(--primitive-gold-500-rgb), 0.15);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.35);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Procurement FAQ Block */
+.procurement-faq-block {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid rgba(var(--primitive-gold-500-rgb), 0.2);
+}
+
+.procurement-faq-header {
+  max-width: 680px;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.procurement-faq-title {
+  font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+
+.procurement-faq-lead {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.procurement-faq-accordion {
+  max-width: 840px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item-card {
+  background: var(--bg-surface);
+  border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-md, 10px);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.faq-item-card:hover {
+  border-color: rgba(var(--primitive-gold-500-rgb), 0.45);
+}
+
+.faq-item-card.faq-item-open {
+  border-color: var(--color-gold);
+  box-shadow: 0 8px 24px -4px rgba(var(--primitive-green-900-rgb), 0.08);
+  background: #FFFDF9;
+}
+
+.faq-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+.faq-question-btn:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: -2px;
+}
+
+.faq-question-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1.4;
+}
+
+.faq-question-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.faq-chevron {
+  color: #64748B;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-chevron-open {
+  transform: rotate(180deg);
+  color: var(--color-primary-green);
+}
+
+.faq-answer-panel {
+  padding: 0 20px 18px 49px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.faq-answer-text {
+  font-size: 0.84375rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Quick Trade Reassurance Bar */
+.faq-trade-reassurance {
+  max-width: 840px;
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
+  background: rgba(var(--primitive-green-900-rgb), 0.05);
+  border: 1px solid rgba(var(--primitive-gold-500-rgb), 0.3);
+  border-radius: var(--radius-md, 10px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.faq-reassurance-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8125rem;
+  color: var(--color-primary-dark);
+  line-height: 1.4;
+}
+
+.faq-reassurance-text strong {
+  color: var(--color-primary-dark);
+}
+
+.faq-reassurance-text span {
+  color: var(--text-muted);
+}
+
+.faq-reassurance-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.faq-wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #128C7E;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast, 0.2s ease);
+}
+
+.faq-wa-link:hover {
+  color: #075E54;
+}
+
+@media (max-width: 640px) {
+  .faq-question-btn {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .faq-question-text {
+    font-size: 0.875rem;
+    gap: 8px;
+  }
+  .faq-answer-panel {
+    padding: 0 16px 16px 16px;
+  }
+  .faq-trade-reassurance {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .faq-reassurance-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .faq-reassurance-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .faq-wa-link {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item-card,
+  .faq-chevron {
+    transition: none !important;
+  }
+  .faq-answer-panel {
+    animation: none !important;
+  }
+}
+
 
