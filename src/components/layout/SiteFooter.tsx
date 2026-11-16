@@ -63,20 +63,6 @@ export const SiteFooter: React.FC = () => {
             <p className="footer-enterprise-desc">
               India-based tea sourcing and export business coordinating primary garden auction lots, bulk container logistics, and private-label packaging to international buyer specifications.
             </p>
-
-            {/* Factual Statutory Disclosure Card */}
-            <div className="footer-statutory-card">
-              <div className="footer-statutory-heading font-spec">
-                <ShieldCheck size={13} className="footer-statutory-icon" aria-hidden="true" />
-                <span>REGISTERED INDIAN ENTERPRISE</span>
-              </div>
-              <div className="footer-statutory-grid">
-                <div><strong>Proprietorship:</strong> Sarthak Sarvaiya</div>
-                <div><strong>Base:</strong> Bhavnagar, Gujarat, India</div>
-                <div><strong>Udyam MSME:</strong> <span className="font-spec">UDYAM-GJ-05-0105835</span></div>
-                <div><strong>GSTIN:</strong> <span className="font-spec font-gold">24KWEPS2703C1ZQ</span></div>
-              </div>
-            </div>
           </div>
 
           {/* Column 2: Tea Origins & Sourcing Matrix */}
