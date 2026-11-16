@@ -42,9 +42,9 @@ export const BRAND_CONFIG: BrandConfig = {
   legalName: 'SHIVOM GLOBAL',
   tagline: 'Indian Tea Sourcing & Export',
   subTagline: 'INDIAN TEA EXPORTERS',
-  // Awaiting user-provided PNG or JPEG logo
-  logoPath: '',
+  // Active primary luxury brandmark (PNG format)
+  logoPath: '/images/branding/logo.png',
   logoAlt: 'SHIVOM GLOBAL — Indian Tea Sourcing & Export',
-  // Awaiting user-provided PNG or JPEG favicon / launcher icon
-  faviconPath: '',
+  // Active Google Search compliant favicon (48x48 PNG)
+  faviconPath: '/favicon-48x48.png',
 };
